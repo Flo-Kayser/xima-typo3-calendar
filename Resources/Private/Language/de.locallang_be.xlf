@@ -3,6 +3,18 @@
 	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2026-04-17T12:43:45Z"
 		  product-name="xima_typo3_calendar">
 		<body>
+			<trans-unit id="indexer.event.title" approved="yes">
+				<source>Calendar events (xima_typo3_calendar)</source>
+				<target>Kalender-Veranstaltungen (xima_typo3_calendar)</target>
+			</trans-unit>
+			<trans-unit id="indexer.event.indexPastEvents" approved="yes">
+				<source>Index past events</source>
+				<target>Vergangene Veranstaltungen indizieren</target>
+			</trans-unit>
+			<trans-unit id="indexer.event.indexPastEvents.description" approved="yes">
+				<source>Also index events whose appointments have all ended. Without this option an event leaves the index once its last appointment is over.</source>
+				<target>Auch Veranstaltungen indizieren, deren Termine alle vorbei sind. Ohne diese Option verlässt eine Veranstaltung den Index, sobald ihr letzter Termin vorüber ist.</target>
+			</trans-unit>
 			<trans-unit id="extConf.unrestrictedRecordTypes">
 				<source />
 				<target>Datensatztypen, die von den Frontend-Abfrageeinschränkungen ausgeschlossen sind (durch Kommas getrennte record_type-Werte, z. B. "private-event"). Veranstaltungen und Einträge dieser Datensatztypen umgehen die Status-/Besitzer-Sichtbarkeitseinschränkungen.</target>

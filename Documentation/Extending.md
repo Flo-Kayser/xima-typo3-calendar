@@ -11,6 +11,8 @@ What other extensions can hook into, and how to register it.
 | `Event\RequirementBookingChangedEvent` | same | Requirement booking changes |
 | `Event\BeforeWidgetItemsFetchedEvent` | all four widget data providers | Modify a widget's query before it runs |
 | `Event\ModifyEventDetailViewEvent` | `Controller\EventController::showAction()` | Add or replace the detail view's assigned variables |
+| `Event\ModifyKeSearchIndexerQueryEvent` | `Indexer\EventIndexer` | Narrow which events the ke_search indexer picks up |
+| `Event\ModifyKeSearchIndexEntryEvent` | same | Shape a single ke_search index entry |
 
 The three record-change events share `AbstractRecordChangedEvent` (`uid`, `table`, `changeType`,
 `changedFields`) and are documented in detail in [DataHandler Events](DataHandlerEvents.md). They
@@ -73,6 +75,67 @@ final readonly class EnrichEventDetailView
         );
 
         $event->setAssignedValues($values);
+    }
+}
+```
+
+### ke_search indexing
+
+Registered only when `ke_search` is installed — see [ke_search indexing](KeSearch.md) for what
+the indexer selects and how to set it up.
+
+`ModifyKeSearchIndexerQueryEvent` carries the mutable query that collects what to index. It
+selects `a.uid AS appointment_uid` and `e.uid AS event_uid` from the entry table aliased `a`,
+joined to the event table aliased `e`; the aliases and both column aliases are part of the
+contract. The extension filters on the configured folders, the live status, the deleted and
+hidden flags of both tables, and the time window; project rules go here — on either table, since
+the appointments this query admits are the ones the time window and the sort date are measured
+against:
+
+```php
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Database\Connection;
+use Xima\XimaTypo3Calendar\Event\ModifyKeSearchIndexerQueryEvent;
+
+#[AsEventListener(identifier: 'my-ext/scope-indexed-events')]
+final readonly class ScopeIndexedEvents
+{
+    public function __invoke(ModifyKeSearchIndexerQueryEvent $event): void
+    {
+        $queryBuilder = $event->getQueryBuilder();
+        $queryBuilder->andWhere(
+            // Keep the project's own record types out of the index
+            $queryBuilder->expr()->notIn(
+                'e.record_type',
+                $queryBuilder->createNamedParameter(
+                    ['private-event', 'internal-event'],
+                    Connection::PARAM_STR_ARRAY,
+                ),
+            ),
+            // And index only the dates that are actually going ahead
+            $queryBuilder->expr()->eq('a.canceled', 0),
+        );
+        $event->setQueryBuilder($queryBuilder);
+    }
+}
+```
+
+`ModifyKeSearchIndexEntryEvent` is dispatched once per event, right before the entry
+is stored, and carries the title, content, abstract, tags, params, target page and additional
+fields. Project-specific columns are the usual reason to reach for it:
+
+```php
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use Xima\XimaTypo3Calendar\Event\ModifyKeSearchIndexEntryEvent;
+
+#[AsEventListener(identifier: 'my-ext/event-index-entry')]
+final readonly class ShapeEventIndexEntry
+{
+    public function __invoke(ModifyKeSearchIndexEntryEvent $event): void
+    {
+        $event->setContent(
+            $event->getContent() . "\n" . (string)$event->getEventRow()['tx_myext_keywords'],
+        );
     }
 }
 ```
