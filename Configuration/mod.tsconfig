@@ -1,0 +1,4 @@
+mod.calendar_calendar {
+    showDetailView = 1
+}
+

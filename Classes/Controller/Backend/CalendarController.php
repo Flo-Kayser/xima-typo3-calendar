@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Imaging\IconFactory;
@@ -46,6 +47,7 @@ class CalendarController extends ActionController
 
         $moduleTemplate->assignMultiple([
             'ajaxUrl' => $ajaxUrl,
+            'showDetailView' => $this->isDetailViewEnabled(),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
@@ -64,5 +66,14 @@ class CalendarController extends ActionController
         $events = VkurkoCalendarSerializer::serializeBackendEntries($rows);
 
         return new JsonResponse($events);
+    }
+
+    private function isDetailViewEnabled(): bool
+    {
+        /** @var BackendUserAuthentication $backendUser */
+        $backendUser = $GLOBALS['BE_USER'];
+        $tsConfig = $backendUser->getTSConfig();
+
+        return (bool)($tsConfig['mod.']['calendar_calendar.']['showDetailView'] ?? false);
     }
 }
