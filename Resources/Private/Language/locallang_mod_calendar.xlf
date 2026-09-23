@@ -14,6 +14,9 @@
 			<trans-unit id="newEvent" resname="newEvent">
 				<source>New Event</source>
 			</trans-unit>
+			<trans-unit id="newEventAppointment" resname="newEventAppointment">
+				<source>New Event Appointment</source>
+			</trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source>What do you want to create?</source>
 			</trans-unit>

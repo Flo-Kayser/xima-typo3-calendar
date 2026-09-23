@@ -31,6 +31,7 @@ use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 class CalendarController extends ActionController
 {
     private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
+    private const ENTRY_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
 
     public function __construct(
         protected ConnectionPool $connectionPool,
@@ -71,13 +72,36 @@ class CalendarController extends ActionController
                 ],
                 'returnUrl' => (string)$request->getUri(),
             ]);
+            $newAppointmentUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
+                'edit' => [
+                    self::ENTRY_TABLE => [
+                        $appointmentPid => 'new',
+                    ],
+                ],
+                'defVals' => [
+                    self::ENTRY_TABLE => [
+                        'record_type' => 'event-appointment',
+                    ],
+                ],
+                'returnUrl' => (string)$request->getUri(),
+            ]);
             $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
+            $newAppointmentTitle = $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventAppointment');
+            if ($newAppointmentTitle === '' || str_starts_with($newAppointmentTitle, 'LLL:')) {
+                $newAppointmentTitle = 'New Event Appointment';
+            }
             $newEventButton = $buttonBar->makeLinkButton()
                 ->setHref((string)$newEventUrl)
                 ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEvent'))
                 ->setShowLabelText(true)
                 ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
             $buttonBar->addButton($newEventButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
+            $newAppointmentButton = $buttonBar->makeLinkButton()
+                ->setHref((string)$newAppointmentUrl)
+                ->setTitle($newAppointmentTitle)
+                ->setShowLabelText(true)
+                ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
+            $buttonBar->addButton($newAppointmentButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
         }
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');

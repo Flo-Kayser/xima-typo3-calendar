@@ -18,6 +18,10 @@
 				<source />
 				<target>Event erstellen</target>
 			</trans-unit>
+			<trans-unit id="newEventAppointment" resname="newEventAppointment">
+				<source />
+				<target>Event-Termin erstellen</target>
+			</trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source />
 				<target>Was möchten Sie erstellen?</target>
