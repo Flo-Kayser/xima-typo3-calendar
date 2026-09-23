@@ -2,7 +2,6 @@ import Calendar from '@event-calendar/core';
 import DayGrid from '@event-calendar/day-grid';
 import TimeGrid from '@event-calendar/time-grid';
 import List from '@event-calendar/list';
-import '@event-calendar/core/index.css';
 import DocumentService from '@typo3/core/document-service.js';
 import {createCalendarDetailsController} from './calendar-details';
 

@@ -38,7 +38,7 @@
         color-mix(in srgb, var(--typo3-component-bg), #fff 8%)
     );
 
-    &__title {
+    & .xima-calendar-event-detail__title {
         color: var(--typo3-component-color);
         font-size: 1rem;
         font-weight: 600;
