@@ -16,3 +16,7 @@ TCEMAIN.preview {
     }
   }
 }
+
+mod.calendar_detailEventView {
+    showDetailEventView = 0
+}
