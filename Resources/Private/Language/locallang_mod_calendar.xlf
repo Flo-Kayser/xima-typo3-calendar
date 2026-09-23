@@ -11,6 +11,9 @@
 			<trans-unit id="mlang_tabs_tab" resname="mlang_tabs_tab">
 				<source>Calendar</source>
 			</trans-unit>
+			<trans-unit id="newEvent" resname="newEvent">
+				<source>New Event</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

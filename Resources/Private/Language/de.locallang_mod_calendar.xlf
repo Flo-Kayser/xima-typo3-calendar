@@ -14,6 +14,10 @@
 				<source />
 				<target>Kalender</target>
 			</trans-unit>
+			<trans-unit id="newEvent" resname="newEvent">
+				<source />
+				<target>Event erstellen</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
