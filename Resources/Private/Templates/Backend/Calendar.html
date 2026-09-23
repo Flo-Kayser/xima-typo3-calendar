@@ -8,26 +8,18 @@
     }" />
 
     <div class="xima-calendar-module">
-        <f:if condition="{calendars}">
-            <div class="xima-cal-filter mb-3 d-flex flex-wrap gap-3">
-                <f:for each="{calendars}" as="calendar">
-                    <div class="form-check form-check-inline">
-                        <input class="xima-cal-filter__checkbox form-check-input"
-                            type="checkbox"
-                            id="cal-{calendar.uid}"
-                            value="{calendar.uid}"
-                            checked="checked" />
-                        <label class="form-check-label" for="cal-{calendar.uid}">
-                            {calendar.title}
-                        </label>
-                    </div>
-                </f:for>
-            </div>
-        </f:if>
-
         <div class="xima-calendar-content">
             <div id="xima-calendar-mount"
-                data-ajax-url="{ajaxUrl}">
+                data-ajax-url="{ajaxUrl}"
+                data-create-event-url="{createEventUrl}"
+                data-cleanup-event-url="{cleanupEventUrl}"
+                data-appointment-pid="{appointmentPid}"
+                data-create-allowed="{canCreateAppointments}"
+                data-enable-drag-new-event="{enableDragNewEvent}"
+                data-enable-click-new-event="{enableClickNewEvent}"
+                data-new-event-default-start-time="{newEventDefaultStartTime}"
+                data-new-event-default-end-time="{newEventDefaultEndTime}"
+                data-new-event-default-all-day="{newEventDefaultAllDay}">
             </div>
 
             <f:if condition="{showDetailEventView}">

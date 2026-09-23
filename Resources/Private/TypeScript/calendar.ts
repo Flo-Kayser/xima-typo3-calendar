@@ -2,9 +2,12 @@ import Calendar from '@event-calendar/core';
 import DayGrid from '@event-calendar/day-grid';
 import TimeGrid from '@event-calendar/time-grid';
 import List from '@event-calendar/list';
+import Interaction from '@event-calendar/interaction';
 import '@event-calendar/core/index.css';
 import DocumentService from '@typo3/core/document-service.js';
+import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
+import {createCalendarInteractionController} from './calendar-interaction';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
@@ -30,20 +33,24 @@ DocumentService.ready().then(() => {
     }
 
     const ajaxUrl = container.dataset.ajaxUrl ?? '';
+    const enableDragNewEvent = container.dataset.enableDragNewEvent === '1';
+    const enableClickNewEvent = container.dataset.enableClickNewEvent === '1';
     const calendarOptions = {
         firstDay: 0,
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const detailsController = createCalendarDetailsController(container, typo3Top);
+    const creationController = createCalendarCreationController(container, typo3Top);
 
     const ec = new Calendar({
         target: container,
         props: {
-            plugins: [DayGrid, TimeGrid, List],
+            plugins: [DayGrid, TimeGrid, List, Interaction],
             options: {
                 ...calendarOptions,
                 height: '100%',
+                selectable: enableDragNewEvent,
                 scrollTime: '08:00:00',
                 dayMaxEvents: true,
                 moreLinkContent: ({num}: {num: number}) => `+${num} weitere`,
@@ -67,6 +74,8 @@ DocumentService.ready().then(() => {
                     end: 'dayGridMonth,timeGridWeek,listMonth',
                 },
                 datesSet: detailsController.datesSet,
+                select: enableDragNewEvent ? creationController.select : undefined,
+                dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
                 eventSources: [
                     {
                         url: ajaxUrl,
@@ -77,19 +86,16 @@ DocumentService.ready().then(() => {
         },
     });
 
-    const highlightCurrentWeekday = (): void => {
-        const today = new Date();
-        const currentWeekday = (today.getDay() - calendarOptions.firstDay + 7) % 7;
-        const weekdayHeaders = container.querySelectorAll<HTMLElement>('.ec-header .ec-days .ec-day');
+    createCalendarInteractionController(container, ec, creationController, {
+        firstDay: calendarOptions.firstDay,
+        enableDragNewEvent,
+    });
 
-        weekdayHeaders.forEach((header, index) => {
-            header.classList.toggle('active', index === currentWeekday);
-        });
+    const cleanupPendingEvent = (): void => {
+        void creationController.cleanupPendingEvent().then(() => ec.refetchEvents());
     };
-
-    const calendarObserver = new MutationObserver(highlightCurrentWeekday);
-    calendarObserver.observe(container, {childList: true, subtree: true});
-    requestAnimationFrame(highlightCurrentWeekday);
+    cleanupPendingEvent();
+    window.addEventListener('pageshow', cleanupPendingEvent);
 
     document.querySelectorAll<HTMLInputElement>('.xima-cal-filter__checkbox').forEach(cb => {
         cb.addEventListener('change', () => ec.refetchEvents());

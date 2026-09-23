@@ -258,3 +258,30 @@
         font-size: 1.2rem;
     }
 }
+
+#xima-calendar-mount .ec .ec-event.ec-preview {
+    z-index: 2;
+}
+
+#xima-calendar-mount .ec.ec-selecting.ec-day-grid .ec-events.ec-preview {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#xima-calendar-mount .ec.ec-selecting.ec-time-grid .ec-event.ec-preview {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#xima-calendar-mount.xima-calendar-selection-cancelled .ec-event.ec-preview,
+#xima-calendar-mount.xima-calendar-selection-cancelled .ec-events.ec-preview {
+    display: none !important;
+}
+
+.xima-calendar-selection-overlay {
+    position: fixed;
+    z-index: 1000;
+    box-sizing: border-box;
+    border: 2px dashed var(--typo3-state-default-color);
+    pointer-events: none;
+}
