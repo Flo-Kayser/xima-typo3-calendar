@@ -285,3 +285,46 @@
     border: 2px dashed var(--typo3-state-default-color);
     pointer-events: none;
 }
+.xima-calendar-creation-modal {
+    --modal-width: 800px;
+    --modal-height: auto !important;
+}
+
+.xima-calendar-creation-modal .modal-content {
+    height: auto;
+}
+
+.xima-calendar-creation-modal .modal-body {
+    flex: 0 0 auto;
+}
+
+.xima-calendar-creation-form > .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.xima-calendar-creation-form__fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: end;
+}
+
+.xima-calendar-creation-form__separator {
+    margin: 3.5rem 0 1.5rem;
+}
+
+.xima-calendar-creation-form__all-day {
+    white-space: nowrap;
+}
+
+.xima-calendar-creation-form__date-disabled {
+    opacity: .55;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .xima-calendar-creation-form__fields {
+        grid-template-columns: 1fr;
+        gap: .5rem;
+    }
+}

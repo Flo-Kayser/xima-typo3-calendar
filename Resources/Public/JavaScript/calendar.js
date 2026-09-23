@@ -1,1 +1,12681 @@
-function re(){}var Mn=e=>e;function Hi(e,t){for(let n in t)e[n]=t[n];return e}function tr(e){return e()}function Fn(){return Object.create(null)}function pe(e){e.forEach(tr)}function R(e){return typeof e=="function"}function fe(e,t){return e!=e?t==t:e!==t||e&&typeof e=="object"||typeof e=="function"}function Gr(e){return Object.keys(e).length===0}function Ln(e,...t){if(e==null){for(let r of t)r(void 0);return re}let n=e.subscribe(...t);return n.unsubscribe?()=>n.unsubscribe():n}function en(e){let t;return Ln(e,n=>t=n)(),t}function h(e,t,n){e.$$.on_destroy.push(Ln(t,n))}function Tt(e,t,n,r){if(e){let o=Wr(e,t,n,r);return e[0](o)}}function Wr(e,t,n,r){return e[1]&&r?Hi(n.ctx.slice(),e[1](r(t))):n.ctx}function St(e,t,n,r){if(e[2]&&r){let o=e[2](r(n));if(t.dirty===void 0)return o;if(typeof o=="object"){let l=[],i=Math.max(t.dirty.length,o.length);for(let s=0;s<i;s+=1)l[s]=t.dirty[s]|o[s];return l}return t.dirty|o}return t.dirty}function Mt(e,t,n,r,o,l){if(o){let i=Wr(t,n,r,l);e.p(i,o)}}function Ft(e){if(e.ctx.length>32){let t=[],n=e.ctx.length/32;for(let r=0;r<n;r++)t[r]=-1;return t}return-1}function de(e,t,n){return e.set(n),t}function He(e){return e&&R(e.destroy)?e.destroy:re}var yn=typeof window<"u"?window:typeof globalThis<"u"?globalThis:global;var An=class e{_listeners="WeakMap"in yn?new WeakMap:void 0;_observer=void 0;options;constructor(t){this.options=t}observe(t,n){return this._listeners.set(t,n),this._getObserver().observe(t,this.options),()=>{this._listeners.delete(t),this._observer.unobserve(t)}}_getObserver(){return this._observer??(this._observer=new ResizeObserver(t=>{for(let n of t)e.entries.set(n.target,n),this._listeners.get(n.target)?.(n)}))}};An.entries="WeakMap"in yn?new WeakMap:void 0;var Yr=!1;function jr(){Yr=!0}function Vr(){Yr=!1}function Y(e,t){e.appendChild(t)}function G(e,t,n){e.insertBefore(t,n||null)}function q(e){e.parentNode&&e.parentNode.removeChild(e)}function Ve(e,t){for(let n=0;n<e.length;n+=1)e[n]&&e[n].d(t)}function N(e){return document.createElement(e)}function Lt(e){return document.createTextNode(e)}function le(){return Lt(" ")}function we(){return Lt("")}function j(e,t,n,r){return e.addEventListener(t,n,r),()=>e.removeEventListener(t,n,r)}function bn(e){return function(t){return t.stopPropagation(),e.call(this,t)}}function y(e,t,n){n==null?e.removeAttribute(t):e.getAttribute(t)!==n&&e.setAttribute(t,n)}function Xr(e){return Array.from(e.childNodes)}function On(e,t){t=""+t,e.data!==t&&(e.data=t)}function tn(e,t,n,r){n==null?e.style.removeProperty(t):e.style.setProperty(t,n,r?"important":"")}function Kr(e){let t={};return e.childNodes.forEach(n=>{t[n.slot||"default"]=!0}),t}function et(e,t){return new e(t)}var At;function _t(e){At=e}function Ot(){if(!At)throw new Error("Function called outside component initialization");return At}function nr(e){Ot().$$.before_update.push(e)}function Pt(e){Ot().$$.on_mount.push(e)}function ct(e){Ot().$$.after_update.push(e)}function rr(e,t){return Ot().$$.context.set(e,t),t}function he(e){return Ot().$$.context.get(e)}function nn(e,t){let n=e.$$.callbacks[t.type];n&&n.slice().forEach(r=>r.call(this,t))}var Bt=[];var Se=[],on=[],Zr=[],Qr=Promise.resolve(),ir=!1;function lr(){ir||(ir=!0,Qr.then(Pn))}function qt(){return lr(),Qr}function vn(e){on.push(e)}var or=new Set,rn=0;function Pn(){if(rn!==0)return;let e=At;do{try{for(;rn<Bt.length;){let t=Bt[rn];rn++,_t(t),Wi(t.$$)}}catch(t){throw Bt.length=0,rn=0,t}for(_t(null),Bt.length=0,rn=0;Se.length;)Se.pop()();for(let t=0;t<on.length;t+=1){let n=on[t];or.has(n)||(or.add(n),n())}on.length=0}while(Bt.length);for(;Zr.length;)Zr.pop()();ir=!1,or.clear(),_t(e)}function Wi(e){if(e.fragment!==null){e.update(),pe(e.before_update);let t=e.dirty;e.dirty=[-1],e.fragment&&e.fragment.p(e.ctx,t),e.after_update.forEach(vn)}}function xr(e){let t=[],n=[];on.forEach(r=>e.indexOf(r)===-1?t.push(r):n.push(r)),n.forEach(r=>r()),on=t}var Rn=new Set,zt;function se(){zt={r:0,c:[],p:zt}}function ue(){zt.r||pe(zt.c),zt=zt.p}function F(e,t){e&&e.i&&(Rn.delete(e),e.i(t))}function P(e,t,n,r){if(e&&e.o){if(Rn.has(e))return;Rn.add(e),zt.c.push(()=>{Rn.delete(e),r&&(n&&e.d(1),r())}),e.o(t)}else r&&r()}function ee(e){return e?.length!==void 0?e:Array.from(e)}function pt(e,t){P(e,1,1,()=>{t.delete(e.key)})}function mt(e,t,n,r,o,l,i,s,u,a,c,d){let f=e.length,_=l.length,p=f,g={};for(;p--;)g[e[p].key]=p;let v=[],w=new Map,E=new Map,C=[];for(p=_;p--;){let b=d(o,l,p),m=n(b),L=i.get(m);L?r&&C.push(()=>L.p(b,t)):(L=a(m,b),L.c()),w.set(m,v[p]=L),m in g&&E.set(m,Math.abs(p-g[m]))}let T=new Set,D=new Set;function k(b){F(b,1),b.m(s,c),i.set(b.key,b),c=b.first,_--}for(;f&&_;){let b=v[_-1],m=e[f-1],L=b.key,M=m.key;b===m?(c=b.first,f--,_--):w.has(M)?!i.has(L)||T.has(L)?k(b):D.has(M)?f--:E.get(L)>E.get(M)?(D.add(L),k(b)):(T.add(M),f--):(u(m,i),f--)}for(;f--;){let b=e[f];w.has(b.key)||u(b,i)}for(;_;)k(v[_-1]);return pe(C),v}var Yi=["allowfullscreen","allowpaymentrequest","async","autofocus","autoplay","checked","controls","default","defer","disabled","formnovalidate","hidden","inert","ismap","loop","multiple","muted","nomodule","novalidate","open","playsinline","readonly","required","reversed","selected"],ji=new Set([...Yi]);function x(e){e&&e.c()}function Q(e,t,n){let{fragment:r,after_update:o}=e.$$;r&&r.m(t,n),vn(()=>{let l=e.$$.on_mount.map(tr).filter(R);e.$$.on_destroy?e.$$.on_destroy.push(...l):pe(l),e.$$.on_mount=[]}),o.forEach(vn)}function Z(e,t){let n=e.$$;n.fragment!==null&&(xr(n.after_update),pe(n.on_destroy),n.fragment&&n.fragment.d(t),n.on_destroy=n.fragment=null,n.ctx=[])}function Xi(e,t){e.$$.dirty[0]===-1&&(Bt.push(e),lr(),e.$$.dirty.fill(0)),e.$$.dirty[t/31|0]|=1<<t%31}function _e(e,t,n,r,o,l,i=null,s=[-1]){let u=At;_t(e);let a=e.$$={fragment:null,ctx:[],props:l,update:re,not_equal:o,bound:Fn(),on_mount:[],on_destroy:[],on_disconnect:[],before_update:[],after_update:[],context:new Map(t.context||(u?u.$$.context:[])),callbacks:Fn(),dirty:s,skip_bound:!1,root:t.target||u.$$.root};i&&i(a.root);let c=!1;if(a.ctx=n?n(e,t.props||{},(d,f,..._)=>{let p=_.length?_[0]:f;return a.ctx&&o(a.ctx[d],a.ctx[d]=p)&&(!a.skip_bound&&a.bound[d]&&a.bound[d](p),c&&Xi(e,d)),f}):[],a.update(),c=!0,pe(a.before_update),a.fragment=r?r(a.ctx):!1,t.target){if(t.hydrate){jr();let d=Xr(t.target);a.fragment&&a.fragment.l(d),d.forEach(q)}else a.fragment&&a.fragment.c();t.intro&&F(e.$$.fragment),Q(e,t.target,t.anchor),Vr(),Pn()}_t(u)}var Ki;typeof HTMLElement=="function"&&(Ki=class extends HTMLElement{$$ctor;$$s;$$c;$$cn=!1;$$d={};$$r=!1;$$p_d={};$$l={};$$l_u=new Map;constructor(e,t,n){super(),this.$$ctor=e,this.$$s=t,n&&this.attachShadow({mode:"open"})}addEventListener(e,t,n){if(this.$$l[e]=this.$$l[e]||[],this.$$l[e].push(t),this.$$c){let r=this.$$c.$on(e,t);this.$$l_u.set(t,r)}super.addEventListener(e,t,n)}removeEventListener(e,t,n){if(super.removeEventListener(e,t,n),this.$$c){let r=this.$$l_u.get(t);r&&(r(),this.$$l_u.delete(t))}if(this.$$l[e]){let r=this.$$l[e].indexOf(t);r>=0&&this.$$l[e].splice(r,1)}}async connectedCallback(){if(this.$$cn=!0,!this.$$c){let e=function(o){return()=>{let l;return{c:function(){l=N("slot"),o!=="default"&&y(l,"name",o)},m:function(u,a){G(u,l,a)},d:function(u){u&&q(l)}}}};if(await Promise.resolve(),!this.$$cn||this.$$c)return;let t={},n=Kr(this);for(let o of this.$$s)o in n&&(t[o]=[e(o)]);for(let o of this.attributes){let l=this.$$g_p(o.name);l in this.$$d||(this.$$d[l]=sr(l,o.value,this.$$p_d,"toProp"))}for(let o in this.$$p_d)!(o in this.$$d)&&this[o]!==void 0&&(this.$$d[o]=this[o],delete this[o]);this.$$c=new this.$$ctor({target:this.shadowRoot||this,props:{...this.$$d,$$slots:t,$$scope:{ctx:[]}}});let r=()=>{this.$$r=!0;for(let o in this.$$p_d)if(this.$$d[o]=this.$$c.$$.ctx[this.$$c.$$.props[o]],this.$$p_d[o].reflect){let l=sr(o,this.$$d[o],this.$$p_d,"toAttribute");l==null?this.removeAttribute(this.$$p_d[o].attribute||o):this.setAttribute(this.$$p_d[o].attribute||o,l)}this.$$r=!1};this.$$c.$$.after_update.push(r),r();for(let o in this.$$l)for(let l of this.$$l[o]){let i=this.$$c.$on(o,l);this.$$l_u.set(l,i)}this.$$l={}}}attributeChangedCallback(e,t,n){this.$$r||(e=this.$$g_p(e),this.$$d[e]=sr(e,n,this.$$p_d,"toProp"),this.$$c?.$set({[e]:this.$$d[e]}))}disconnectedCallback(){this.$$cn=!1,Promise.resolve().then(()=>{!this.$$cn&&this.$$c&&(this.$$c.$destroy(),this.$$c=void 0)})}$$g_p(e){return Object.keys(this.$$p_d).find(t=>this.$$p_d[t].attribute===e||!this.$$p_d[t].attribute&&t.toLowerCase()===e)||e}});function sr(e,t,n,r){let o=n[e]?.type;if(t=o==="Boolean"&&typeof t!="boolean"?t!=null:t,!r||!n[e])return t;if(r==="toAttribute")switch(o){case"Object":case"Array":return t==null?null:JSON.stringify(t);case"Boolean":return t?"":null;case"Number":return t??null;default:return t}else switch(o){case"Object":case"Array":return t&&JSON.parse(t);case"Boolean":return t;case"Number":return t!=null?+t:t;default:return t}}var ae=class{$$=void 0;$$set=void 0;$destroy(){Z(this,1),this.$destroy=re}$on(t,n){if(!R(n))return re;let r=this.$$.callbacks[t]||(this.$$.callbacks[t]=[]);return r.push(n),()=>{let o=r.indexOf(n);o!==-1&&r.splice(o,1)}}$set(t){this.$$set&&!Gr(t)&&(this.$$.skip_bound=!0,this.$$set(t),this.$$.skip_bound=!1)}};var ln=[];function ur(e,t){return{subscribe:Le(e,t).subscribe}}function Le(e,t=re){let n,r=new Set;function o(s){if(fe(e,s)&&(e=s,n)){let u=!ln.length;for(let a of r)a[1](),ln.push(a,e);if(u){for(let a=0;a<ln.length;a+=2)ln[a][0](ln[a+1]);ln.length=0}}}function l(s){o(s(e))}function i(s,u=re){let a=[s,u];return r.add(a),r.size===1&&(n=t(o,l)||re),s(e),()=>{r.delete(a),r.size===0&&n&&(n(),n=null)}}return{set:o,update:l,subscribe:i}}function Xe(e,t,n){let r=!Array.isArray(e),o=r?[e]:e;if(!o.every(Boolean))throw new Error("derived() expects stores as input, got a falsy value");let l=t.length<2;return ur(n,(i,s)=>{let u=!1,a=[],c=0,d=re,f=()=>{if(c)return;d();let p=t(r?a[0]:a,i,s);l?i(p):d=R(p)?p:re},_=o.map((p,g)=>Ln(p,v=>{a[g]=v,c&=~(1<<g),u&&f()},()=>{c|=1<<g}));return u=!0,f(),function(){pe(_),d(),u=!1}})}function nt(e){return function(t){return t.key==="Enter"||t.key===" "&&!t.preventDefault()?e.call(this,t):void 0}}function We(e,t){let n={update(r){typeof r=="string"?e.innerText=r:r?.domNodes?e.replaceChildren(...r.domNodes):r?.html&&(e.innerHTML=r.html)}};return n.update(t),n}function _o(e,t){let n=r=>{e&&!e.contains(r.target)&&e.dispatchEvent(new CustomEvent(t+"outside",{detail:{jsEvent:r}}))};return document.addEventListener(t,n,!0),{destroy(){document.removeEventListener(t,n,!0)}}}var Bn=86400;function yt(e=void 0){return e!==void 0?e instanceof Date?eo(e):Qi(e):eo(new Date)}function tt(e){if(typeof e=="number")e={seconds:e};else if(typeof e=="string"){let n=0,r=2;for(let o of e.split(":",3))n+=parseInt(o,10)*Math.pow(60,r--);e={seconds:n}}else e instanceof Date&&(e={hours:e.getUTCHours(),minutes:e.getUTCMinutes(),seconds:e.getUTCSeconds()});let t=e.weeks||e.week||0;return{years:e.years||e.year||0,months:e.months||e.month||0,days:t*7+(e.days||e.day||0),seconds:(e.hours||e.hour||0)*60*60+(e.minutes||e.minute||0)*60+(e.seconds||e.second||0),inWeeks:!!t}}function oe(e){return new Date(e.getTime())}function Me(e,t,n=1){e.setUTCFullYear(e.getUTCFullYear()+n*t.years);let r=e.getUTCMonth()+n*t.months;for(e.setUTCMonth(r),r%=12,r<0&&(r+=12);e.getUTCMonth()!==r;)Gt(e);return e.setUTCDate(e.getUTCDate()+n*t.days),e.setUTCSeconds(e.getUTCSeconds()+n*t.seconds),e}function _r(e,t,n=1){return Me(e,t,-n)}function Je(e,t=1){return e.setUTCDate(e.getUTCDate()+t),e}function Gt(e,t=1){return Je(e,-t)}function ft(e){return e.setUTCHours(0,0,0,0),e}function Ke(e){return new Date(e.getUTCFullYear(),e.getUTCMonth(),e.getUTCDate(),e.getUTCHours(),e.getUTCMinutes(),e.getUTCSeconds())}function Ie(e,t=19){return e.toISOString().substring(0,t)}function Oe(e,...t){return t.every(n=>e.getTime()===n.getTime())}function Ji(e,t){let n=t-e.getUTCDay();return e.setUTCDate(e.getUTCDate()+(n>=0?n:n+7)),e}function po(e,t){let n=t-e.getUTCDay();return e.setUTCDate(e.getUTCDate()+(n<=0?n:n-7)),e}function $r(e){return typeof e=="string"&&e.length<=10}function Zi(e,t){return e.setUTCHours(t.getUTCHours(),t.getUTCMinutes(),t.getUTCSeconds(),0),e}function eo(e){return new Date(Date.UTC(e.getFullYear(),e.getMonth(),e.getDate(),e.getHours(),e.getMinutes(),e.getSeconds()))}function Qi(e){let t=e.match(/\d+/g);return new Date(Date.UTC(Number(t[0]),Number(t[1])-1,Number(t[2]),Number(t[3]||0),Number(t[4]||0),Number(t[5]||0)))}function sn(e,t,n){n.update(r=>r.set(t,e))}function to(e){pe(e),e.clear()}function Ut(e,t,n){t??=e,n.has(t)||n.set(t,setTimeout(()=>{n.delete(t),e()}))}function bt(...e){return Object.assign(...e)}function Rt(e){return Object.keys(e)}function qn(e){return Math.floor(e)}function vt(...e){return Math.min(...e)}function it(...e){return Math.max(...e)}function xi(){return Symbol("ec")}function mo(e,t,n,r=[]){let o=document.createElement(e);o.className=t,typeof n=="string"?o.innerText=n:n.domNodes?o.replaceChildren(...n.domNodes):n.html&&(o.innerHTML=n.html);for(let l of r)o.setAttribute(...l);return o}function $i(e){return e.scrollHeight>e.clientHeight}function lt(e){return e.getBoundingClientRect()}function Wt(e,t){for(;t--;)e=e.parentElement;return e}function Yt(e){return lt(e).height}var pr=xi();function jt(e,t){e[pr]=t}function el(e){return!!e?.[pr]}function wn(e){return e[pr]}function un(e,t,n=document){for(let r of n.elementsFromPoint(e,t)){if(el(r))return r;if(r.shadowRoot){let o=un(e,t,r.shadowRoot);if(o)return o}}return null}function tl(e,t,n,r){return{type:e,title:t,currentStart:n.start,currentEnd:n.end,activeStart:r.start,activeEnd:r.end,calendar:void 0}}function ve(e){return e=bt({},e),e.currentStart=Ke(e.currentStart),e.currentEnd=Ke(e.currentEnd),e.activeStart=Ke(e.activeStart),e.activeEnd=Ke(e.activeEnd),e}function Un(e){return e.startsWith("list")}var nl=1;function Hn(e){return e.map(t=>({id:"id"in t?String(t.id):`{generated-${nl++}}`,resourceIds:Array.isArray(t.resourceIds)?t.resourceIds.map(String):"resourceId"in t?[String(t.resourceId)]:[],allDay:t.allDay??($r(t.start)&&$r(t.end)),start:yt(t.start),end:yt(t.end),title:t.title||"",titleHTML:t.titleHTML||"",editable:t.editable,startEditable:t.startEditable,durationEditable:t.durationEditable,display:t.display||"auto",extendedProps:t.extendedProps||{},backgroundColor:t.backgroundColor||t.color,textColor:t.textColor}))}function rl(e){return e.map(t=>({events:t.events,url:t.url&&t.url.trimEnd("&")||"",method:t.method&&t.method.toUpperCase()||"GET",extraParams:t.extraParams||{}}))}function at(e,t,n){return{start:e.start>t?e.start:t,end:e.end<n?e.end:n,event:e}}function kn(e){e.sort((t,n)=>t.start-n.start||n.event.allDay-t.event.allDay)}function Vt(e,t,n,r,o,l){let i=o.formatRange(e.start,t&&e.event.display!=="pointer"?Zi(oe(e.start),e.end):e.start),s;if(n)s=R(n)?n({event:Re(e.event),timeText:i,view:ve(l)}):n;else{let u;switch(e.event.display){case"background":u=[];break;case"pointer":u=[no(i,e,r)];break;default:u=[...e.event.allDay?[]:[no(i,e,r)],mo("h4",r.eventTitle,e.event.title)]}s={domNodes:u}}return[i,s]}function no(e,t,n){return mo("time",n.eventTime,e,[["datetime",Ie(t.start)]])}function Xt(e,t,n){return e?(R(e)&&(e=e({event:Re(t),view:ve(n)})),Array.isArray(e)?e:[e]):[]}function Re(e){return go(e,Ke)}function mr(e){return go(e,oe)}function go(e,t){return e=bt({},e),e.start=t(e.start),e.end=t(e.end),e}function an(e,t){let n={};if(e.length){kn(e);let r;for(let o of e){let l=[],i=ft(oe(o.start));for(;o.end>i;){if(!t.includes(i.getUTCDay())&&(l.push(oe(i)),l.length>1)){let s=i.getTime();n[s]?n[s].chunks.push(o):n[s]={sorted:!1,chunks:[o]}}Je(i)}l.length?(o.date=l[0],o.days=l.length,o.dates=l,o.start<l[0]&&(o.start=l[0]),ft(oe(o.end))>l[l.length-1]&&(o.end=l[l.length-1])):(o.date=ft(oe(o.start)),o.days=1,o.dates=[o.date]),r&&Oe(r.date,o.date)&&(o.prev=r),r=o}}return n}function zn(e,t,n){e.top=0,e.prev&&(e.top=e.prev.bottom+1),e.bottom=e.top+n;let r=1,o=e.date.getTime();if(t[o]?.sorted||t[o]?.chunks.every(l=>"top"in l)){t[o].sorted||(t[o].chunks.sort((l,i)=>l.top-i.top),t[o].sorted=!0);for(let l of t[o].chunks)if(e.top<l.bottom&&e.bottom>l.top){let i=l.bottom-e.top+1;r+=i,e.top+=i,e.bottom+=i}}return r}function cn(e,t){e.length=t.length;for(let n of e)n?.reposition?.()}function dt(e,t,n,r,o){return(e.start<n&&e.end>t||!o&&Oe(e.start,e.end,t))&&(r===void 0||e.resourceIds.includes(r.id))}function Ye(e){return ol(e)||gr(e)||il(e)}function Ze(e){return e==="background"}function ol(e){return e==="preview"}function gr(e){return e==="ghost"}function il(e){return e==="pointer"}function Gn(e){return jn(e,"day")}function Wn(e){return jn(e,"week")}function Yn(e){return jn(e,"month")}function yo(e){return jn(e,"year")}function jn(e,t){return{...e,next:"Next "+t,prev:"Previous "+t}}function ht(e){return t=>({...t,view:e})}function gt(e,t){return Xe([e,t],([n,r])=>{let o=R(r)?{format:r}:new Intl.DateTimeFormat(n,r);return{format:l=>o.format(Ke(l))}})}function ro(e,t){return Xe([e,t],([n,r])=>{let o;if(R(r))o=r;else{let l=new Intl.DateTimeFormat(n,r);o=(i,s)=>{if(i<=s)return l.formatRange(i,s);{let u=l.formatRangeToParts(s,i),a="",c=["startRange","endRange"],d=[!1,!1];for(let f of u){let _=c.indexOf(f.source);_>=0?d[_]||(a+=ll(c[1-_],u),d[_]=!0):a+=f.value}return a}}}return{formatRange:(l,i)=>o(Ke(l),Ke(i))}})}function ll(e,t){let n="";for(let r of t)r.source==e&&(n+=r.value);return n}function sl(e){let t={allDayContent:void 0,allDaySlot:!0,buttonText:{today:"today"},customButtons:{},date:new Date,datesSet:void 0,dayHeaderFormat:{weekday:"short",month:"numeric",day:"numeric"},dayHeaderAriaLabelFormat:{dateStyle:"long"},displayEventEnd:!0,duration:{weeks:1},events:[],eventAllUpdated:void 0,eventBackgroundColor:void 0,eventTextColor:void 0,eventClassNames:void 0,eventClick:void 0,eventColor:void 0,eventContent:void 0,eventDidMount:void 0,eventMouseEnter:void 0,eventMouseLeave:void 0,eventSources:[],eventTimeFormat:{hour:"numeric",minute:"2-digit"},firstDay:0,flexibleSlotTimeLimits:!1,headerToolbar:{start:"title",center:"",end:"today prev,next"},height:void 0,hiddenDays:[],highlightedDates:[],lazyFetching:!0,loading:void 0,locale:void 0,nowIndicator:!1,selectable:!1,scrollTime:"06:00:00",slotDuration:"00:30:00",slotEventOverlap:!0,slotHeight:24,slotLabelFormat:{hour:"numeric",minute:"2-digit"},slotMaxTime:"24:00:00",slotMinTime:"00:00:00",theme:{allDay:"ec-all-day",active:"ec-active",bgEvent:"ec-bg-event",bgEvents:"ec-bg-events",body:"ec-body",button:"ec-button",buttonGroup:"ec-button-group",calendar:"ec",compact:"ec-compact",content:"ec-content",day:"ec-day",dayHead:"ec-day-head",days:"ec-days",event:"ec-event",eventBody:"ec-event-body",eventTime:"ec-event-time",eventTitle:"ec-event-title",events:"ec-events",extra:"ec-extra",handle:"ec-handle",header:"ec-header",hiddenScroll:"ec-hidden-scroll",highlight:"ec-highlight",icon:"ec-icon",line:"ec-line",lines:"ec-lines",nowIndicator:"ec-now-indicator",otherMonth:"ec-other-month",sidebar:"ec-sidebar",sidebarTitle:"ec-sidebar-title",today:"ec-today",time:"ec-time",title:"ec-title",toolbar:"ec-toolbar",view:"",weekdays:["ec-sun","ec-mon","ec-tue","ec-wed","ec-thu","ec-fri","ec-sat"],withScroll:"ec-with-scroll"},titleFormat:{year:"numeric",month:"short",day:"numeric"},view:void 0,viewDidMount:void 0,views:{}};for(let n of e)n.createOptions?.(t);return t}function ul(e){let t={date:n=>ft(yt(n)),duration:tt,events:Hn,eventSources:rl,hiddenDays:n=>[...new Set(n)],highlightedDates:n=>n.map(yt),scrollTime:tt,slotDuration:tt,slotMaxTime:tt,slotMinTime:tt};for(let n of e)n.createParsers?.(t);return t}function al(e,t){let n=[];for(let r of Rt(e))e[r]!==t[r]&&n.push([r,e[r]]);return bt(t,e),n}function cl(e){return Xe(e.view,t=>t?.startsWith("dayGrid"))}function fl(e){return Xe([e._currentRange,e.firstDay,e.slotMaxTime,e._dayGrid],([t,n,r,o])=>{let l=oe(t.start),i=oe(t.end);if(o)po(l,n),Ji(i,n);else if(r.days||r.seconds>Bn){Me(Gt(i),r);let s=Gt(oe(i));s<l&&(l=s)}return{start:l,end:i}})}function dl(e){return Xe([e.date,e.duration,e.firstDay,e._dayGrid],([t,n,r,o])=>{let l=oe(t),i;return o?l.setUTCDate(1):n.inWeeks&&po(l,r),i=Me(oe(l),n),{start:l,end:i}})}function hl(e){return Xe([e._activeRange,e.hiddenDays],([t,n])=>{let r=[],o=ft(oe(t.start)),l=ft(oe(t.end));for(;o<l;)n.includes(o.getUTCDay())||r.push(oe(o)),Je(o);return!r.length&&n.length&&n.length<7&&(e.date.update(i=>{for(;n.includes(i.getUTCDay());)Je(i);return i}),r=en(e._viewDates)),r})}function _l(e){return Xe([e.date,e._activeRange,e._intlTitle,e._dayGrid],([t,n,r,o])=>o?r.formatRange(t,t):r.formatRange(n.start,Gt(oe(n.end))))}function pl(e){return Xe([e.view,e._viewTitle,e._currentRange,e._activeRange],t=>tl(...t))}function ml(e){let t=Le([]),n,r=0,o={};return Xe([e.events,e.eventSources,e._activeRange,e._fetchedRange,e.lazyFetching,e.loading],(l,i)=>sn(()=>{let[s,u,a,c,d,f]=l;if(!u.length){i(s);return}if(!c.start||c.start>a.start||c.end<a.end||!d){n&&n.abort(),n=new AbortController,R(f)&&!r&&f(!0);let _=()=>{--r===0&&R(f)&&f(!1)},p=[],g=C=>_(),v=C=>{p=p.concat(Hn(C)),i(p),_()},w=Ie(a.start),E=Ie(a.end);for(let C of u){if(R(C.events)){let T=C.events({start:Ke(a.start),end:Ke(a.end),startStr:w,endStr:E},v,g);T!==void 0&&Promise.resolve(T).then(v,g)}else{let T=R(C.extraParams)?C.extraParams():bt({},C.extraParams);T.start=w,T.end=E,T=new URLSearchParams(T);let D=C.url,k={},b;["GET","HEAD"].includes(C.method)?D+=(D.includes("?")?"&":"?")+T:(k["content-type"]="application/x-www-form-urlencoded;charset=UTF-8",b=String(T)),fetch(D,{method:C.method,headers:k,body:b,signal:n.signal,credentials:"same-origin"}).then(m=>m.json()).then(v).catch(g)}++r}c.start=a.start,c.end=a.end}},o,e._queue),[]).subscribe(t.set),t}function gl(){return ur(yt(),e=>{let t=setInterval(()=>{e(yt())},1e3);return()=>clearInterval(t)})}function yl(e){return Xe(e._now,t=>ft(oe(t)))}var ar=class{constructor(t,n){t=t||[];let r=sl(t),o=ul(t);r=cr(r,o),n=cr(n,o);for(let[i,s]of Object.entries(r))this[i]=Le(s);this._queue=Le(new Map),this._queue2=Le(new Map),this._tasks=new Map,this._auxiliary=Le([]),this._dayGrid=cl(this),this._currentRange=dl(this),this._activeRange=fl(this),this._fetchedRange=Le({start:void 0,end:void 0}),this._events=ml(this),this._now=gl(),this._today=yl(this),this._intlEventTime=ro(this.locale,this.eventTimeFormat),this._intlSlotLabel=gt(this.locale,this.slotLabelFormat),this._intlDayHeader=gt(this.locale,this.dayHeaderFormat),this._intlDayHeaderAL=gt(this.locale,this.dayHeaderAriaLabelFormat),this._intlTitle=ro(this.locale,this.titleFormat),this._bodyEl=Le(void 0),this._scrollable=Le(!1),this._viewTitle=_l(this),this._viewDates=hl(this),this._view=pl(this),this._viewComponent=Le(void 0),this._resBgColor=Le(re),this._resTxtColor=Le(re),this._interaction=Le({}),this._iEvents=Le([null,null]),this._iClasses=Le(Mn),this._iClass=Le(void 0),this._set=(i,s)=>{fr(i,this)&&(o[i]&&(s=o[i](s)),this[i].set(s))},this._get=i=>fr(i,this)?en(this[i]):void 0;for(let i of t)i.createStores?.(this);n.view&&this.view.set(n.view);let l=new Set([...Rt(r.views),...Rt(n.views??{})]);for(let i of l){let s=oo(r,r.views[i]??{}),u=oo(s,n,n.views?.[i]??{}),a=u.component;bl(u,this);for(let c of Rt(u)){let{set:d,_set:f=d,..._}=this[c];this[c]={set:["buttonText","theme"].includes(c)?p=>{if(R(p)){let g=p(s[c]);u[c]=g,d(d===f?g:p)}else u[c]=p,d(p)}:p=>{u[c]=p,d(p)},_set:f,..._}}this.view.subscribe(c=>{if(c===i){this._viewComponent.set(a),R(u.viewDidMount)&&qt().then(()=>u.viewDidMount(en(this._view)));for(let d of Rt(u))this[d]._set(u[d])}})}}};function cr(e,t){let n={...e};for(let r of Rt(t))r in n&&(n[r]=t[r](n[r]));if(e.views){n.views={};for(let r of Rt(e.views))n.views[r]=cr(e.views[r],t)}return n}function oo(...e){let t={};for(let n of e){let r={};for(let o of["buttonText","theme"])R(n[o])&&(r[o]=n[o](t[o]));t={...t,...n,...r}}return t}function bl(e,t){Rt(e).filter(n=>!fr(n,t)||n=="view").forEach(n=>delete e[n])}function fr(e,t){return t.hasOwnProperty(e)&&e[0]!=="_"}function io(e,t,n){let r=e.slice();return r[25]=t[n],r}function vl(e){let t,n=e[5][e[25]]+"",r,o,l,i;function s(){return e[22](e[25])}return{c(){t=N("button"),r=Lt(n),y(t,"class",o=e[3].button+(e[7]===e[25]?" "+e[3].active:"")+" ec-"+e[25])},m(u,a){G(u,t,a),Y(t,r),l||(i=j(t,"click",s),l=!0)},p(u,a){e=u,a&33&&n!==(n=e[5][e[25]]+"")&&On(r,n),a&137&&o!==(o=e[3].button+(e[7]===e[25]?" "+e[3].active:"")+" ec-"+e[25])&&y(t,"class",o)},d(u){u&&q(t),l=!1,i()}}}function wl(e){let t,n=e[6][e[25]].text+"",r,o,l,i;return{c(){t=N("button"),r=Lt(n),y(t,"class",o=e[3].button+" ec-"+e[25])},m(s,u){G(s,t,u),Y(t,r),l||(i=j(t,"click",function(){R(e[6][e[25]].click)&&e[6][e[25]].click.apply(this,arguments)}),l=!0)},p(s,u){e=s,u&65&&n!==(n=e[6][e[25]].text+"")&&On(r,n),u&9&&o!==(o=e[3].button+" ec-"+e[25])&&y(t,"class",o)},d(s){s&&q(t),l=!1,i()}}}function kl(e){let t,n=e[5][e[25]]+"",r,o,l,i;return{c(){t=N("button"),r=Lt(n),y(t,"class",o=e[3].button+" ec-"+e[25]),t.disabled=e[1]},m(s,u){G(s,t,u),Y(t,r),l||(i=j(t,"click",e[21]),l=!0)},p(s,u){u&33&&n!==(n=s[5][s[25]]+"")&&On(r,n),u&9&&o!==(o=s[3].button+" ec-"+s[25])&&y(t,"class",o),u&2&&(t.disabled=s[1])},d(s){s&&q(t),l=!1,i()}}}function Cl(e){let t,n,r,o,l,i,s,u;return{c(){t=N("button"),n=N("i"),y(n,"class",r=e[3].icon+" ec-"+e[25]),y(t,"class",o=e[3].button+" ec-"+e[25]),y(t,"aria-label",l=e[5].next),y(t,"title",i=e[5].next)},m(a,c){G(a,t,c),Y(t,n),s||(u=j(t,"click",e[19]),s=!0)},p(a,c){c&9&&r!==(r=a[3].icon+" ec-"+a[25])&&y(n,"class",r),c&9&&o!==(o=a[3].button+" ec-"+a[25])&&y(t,"class",o),c&32&&l!==(l=a[5].next)&&y(t,"aria-label",l),c&32&&i!==(i=a[5].next)&&y(t,"title",i)},d(a){a&&q(t),s=!1,u()}}}function El(e){let t,n,r,o,l,i,s,u;return{c(){t=N("button"),n=N("i"),y(n,"class",r=e[3].icon+" ec-"+e[25]),y(t,"class",o=e[3].button+" ec-"+e[25]),y(t,"aria-label",l=e[5].prev),y(t,"title",i=e[5].prev)},m(a,c){G(a,t,c),Y(t,n),s||(u=j(t,"click",e[18]),s=!0)},p(a,c){c&9&&r!==(r=a[3].icon+" ec-"+a[25])&&y(n,"class",r),c&9&&o!==(o=a[3].button+" ec-"+a[25])&&y(t,"class",o),c&32&&l!==(l=a[5].prev)&&y(t,"aria-label",l),c&32&&i!==(i=a[5].prev)&&y(t,"title",i)},d(a){a&&q(t),s=!1,u()}}}function Dl(e){let t,n,r,o,l;return{c(){t=N("h2"),y(t,"class",n=e[3].title)},m(i,s){G(i,t,s),o||(l=He(r=We.call(null,t,e[4])),o=!0)},p(i,s){s&8&&n!==(n=i[3].title)&&y(t,"class",n),r&&R(r.update)&&s&16&&r.update.call(null,i[4])},d(i){i&&q(t),o=!1,l()}}}function lo(e){let t;function n(l,i){if(l[25]=="title")return Dl;if(l[25]=="prev")return El;if(l[25]=="next")return Cl;if(l[25]=="today")return kl;if(l[6][l[25]])return wl;if(l[25]!="")return vl}let r=n(e),o=r&&r(e);return{c(){o&&o.c(),t=we()},m(l,i){o&&o.m(l,i),G(l,t,i)},p(l,i){r===(r=n(l))&&o?o.p(l,i):(o&&o.d(1),o=r&&r(l),o&&(o.c(),o.m(t.parentNode,t)))},d(l){l&&q(t),o&&o.d(l)}}}function Tl(e){let t,n=ee(e[0]),r=[];for(let o=0;o<n.length;o+=1)r[o]=lo(io(e,n,o));return{c(){for(let o=0;o<r.length;o+=1)r[o].c();t=we()},m(o,l){for(let i=0;i<r.length;i+=1)r[i]&&r[i].m(o,l);G(o,t,l)},p(o,[l]){if(l&917759){n=ee(o[0]);let i;for(i=0;i<n.length;i+=1){let s=io(o,n,i);r[i]?r[i].p(s,l):(r[i]=lo(s),r[i].c(),r[i].m(t.parentNode,t))}for(;i<r.length;i+=1)r[i].d(1);r.length=n.length}},i:re,o:re,d(o){o&&q(t),Ve(r,o)}}}function Sl(e,t,n){let r,o,l,i,s,u,a,c,d,{buttons:f}=t,{_currentRange:_,_viewTitle:p,buttonText:g,customButtons:v,date:w,duration:E,hiddenDays:C,theme:T,view:D}=he("state");h(e,_,S=>n(20,i=S)),h(e,p,S=>n(4,u=S)),h(e,g,S=>n(5,a=S)),h(e,v,S=>n(6,c=S)),h(e,w,S=>n(2,o=S)),h(e,E,S=>n(23,r=S)),h(e,C,S=>n(24,l=S)),h(e,T,S=>n(3,s=S)),h(e,D,S=>n(7,d=S));let k=ft(yt()),b;function m(){let S=_r(o,r);if(l.length&&l.length<7)for(;l.includes(S.getUTCDay());)Gt(S);de(w,o=S,o)}function L(){de(w,o=Me(o,r),o)}let M=()=>de(w,o=oe(k),o),A=S=>de(D,d=S,d);return e.$$set=S=>{"buttons"in S&&n(0,f=S.buttons)},e.$$.update=()=>{e.$$.dirty&1048576&&n(1,b=k>=i.start&&k<i.end||null)},[f,b,o,s,u,a,c,d,_,p,g,v,w,E,C,T,D,k,m,L,i,M,A]}var In=class extends ae{constructor(t){super(),_e(this,t,Sl,Tl,fe,{buttons:0})}};function so(e,t,n){let r=e.slice();return r[5]=t[n],r}function uo(e,t,n){let r=e.slice();return r[8]=t[n],r}function Ml(e){let t,n;return t=new In({props:{buttons:e[8]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o&1&&(l.buttons=r[8]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Fl(e){let t,n,r,o;return n=new In({props:{buttons:e[8]}}),{c(){t=N("div"),x(n.$$.fragment),y(t,"class",r=e[1].buttonGroup)},m(l,i){G(l,t,i),Q(n,t,null),o=!0},p(l,i){let s={};i&1&&(s.buttons=l[8]),n.$set(s),(!o||i&2&&r!==(r=l[1].buttonGroup))&&y(t,"class",r)},i(l){o||(F(n.$$.fragment,l),o=!0)},o(l){P(n.$$.fragment,l),o=!1},d(l){l&&q(t),Z(n)}}}function ao(e){let t,n,r,o,l=[Fl,Ml],i=[];function s(u,a){return u[8].length>1?0:1}return t=s(e),n=i[t]=l[t](e),{c(){n.c(),r=we()},m(u,a){i[t].m(u,a),G(u,r,a),o=!0},p(u,a){let c=t;t=s(u),t===c?i[t].p(u,a):(se(),P(i[c],1,1,()=>{i[c]=null}),ue(),n=i[t],n?n.p(u,a):(n=i[t]=l[t](u),n.c()),F(n,1),n.m(r.parentNode,r))},i(u){o||(F(n),o=!0)},o(u){P(n),o=!1},d(u){u&&q(r),i[t].d(u)}}}function co(e){let t,n,r,o=ee(e[0][e[5]]),l=[];for(let s=0;s<o.length;s+=1)l[s]=ao(uo(e,o,s));let i=s=>P(l[s],1,1,()=>{l[s]=null});return{c(){t=N("div");for(let s=0;s<l.length;s+=1)l[s].c();n=le()},m(s,u){G(s,t,u);for(let a=0;a<l.length;a+=1)l[a]&&l[a].m(t,null);Y(t,n),r=!0},p(s,u){if(u&3){o=ee(s[0][s[5]]);let a;for(a=0;a<o.length;a+=1){let c=uo(s,o,a);l[a]?(l[a].p(c,u),F(l[a],1)):(l[a]=ao(c),l[a].c(),F(l[a],1),l[a].m(t,n))}for(se(),a=o.length;a<l.length;a+=1)i(a);ue()}},i(s){if(!r){for(let u=0;u<o.length;u+=1)F(l[u]);r=!0}},o(s){l=l.filter(Boolean);for(let u=0;u<l.length;u+=1)P(l[u]);r=!1},d(s){s&&q(t),Ve(l,s)}}}function Ll(e){let t,n,r,o=ee(Object.keys(e[0])),l=[];for(let s=0;s<o.length;s+=1)l[s]=co(so(e,o,s));let i=s=>P(l[s],1,1,()=>{l[s]=null});return{c(){t=N("nav");for(let s=0;s<l.length;s+=1)l[s].c();y(t,"class",n=e[1].toolbar)},m(s,u){G(s,t,u);for(let a=0;a<l.length;a+=1)l[a]&&l[a].m(t,null);r=!0},p(s,[u]){if(u&3){o=ee(Object.keys(s[0]));let a;for(a=0;a<o.length;a+=1){let c=so(s,o,a);l[a]?(l[a].p(c,u),F(l[a],1)):(l[a]=co(c),l[a].c(),F(l[a],1),l[a].m(t,null))}for(se(),a=o.length;a<l.length;a+=1)i(a);ue()}(!r||u&2&&n!==(n=s[1].toolbar))&&y(t,"class",n)},i(s){if(!r){for(let u=0;u<o.length;u+=1)F(l[u]);r=!0}},o(s){l=l.filter(Boolean);for(let u=0;u<l.length;u+=1)P(l[u]);r=!1},d(s){s&&q(t),Ve(l,s)}}}function Al(e,t,n){let r,o,{headerToolbar:l,theme:i}=he("state");h(e,l,u=>n(4,r=u)),h(e,i,u=>n(1,o=u));let s={start:[],center:[],end:[]};return e.$$.update=()=>{if(e.$$.dirty&17)for(let u of Object.keys(s))n(0,s[u]=r[u].split(" ").map(a=>a.split(",")),s)},[s,o,l,i,r]}var dr=class extends ae{constructor(t){super(),_e(this,t,Al,Ll,fe,{})}};function fo(e,t,n){let r=e.slice();return r[11]=t[n],r}function ho(e){let t,n,r;var o=e[11];function l(i,s){return{}}return o&&(t=et(o,l())),{c(){t&&x(t.$$.fragment),n=we()},m(i,s){t&&Q(t,i,s),G(i,n,s),r=!0},p(i,s){if(s&1&&o!==(o=i[11])){if(t){se();let u=t;P(u.$$.fragment,1,0,()=>{Z(u,1)}),ue()}o?(t=et(o,l()),x(t.$$.fragment),F(t.$$.fragment,1),Q(t,n.parentNode,n)):t=null}},i(i){r||(t&&F(t.$$.fragment,i),r=!0)},o(i){t&&P(t.$$.fragment,i),r=!1},d(i){i&&q(n),t&&Z(t,i)}}}function Ol(e){let t,n,r=ee(e[0]),o=[];for(let i=0;i<r.length;i+=1)o[i]=ho(fo(e,r,i));let l=i=>P(o[i],1,1,()=>{o[i]=null});return{c(){for(let i=0;i<o.length;i+=1)o[i].c();t=we()},m(i,s){for(let u=0;u<o.length;u+=1)o[u]&&o[u].m(i,s);G(i,t,s),n=!0},p(i,[s]){if(s&1){r=ee(i[0]);let u;for(u=0;u<r.length;u+=1){let a=fo(i,r,u);o[u]?(o[u].p(a,s),F(o[u],1)):(o[u]=ho(a),o[u].c(),F(o[u],1),o[u].m(t.parentNode,t))}for(se(),u=r.length;u<o.length;u+=1)l(u);ue()}},i(i){if(!n){for(let s=0;s<r.length;s+=1)F(o[s]);n=!0}},o(i){o=o.filter(Boolean);for(let s=0;s<o.length;s+=1)P(o[s]);n=!1},d(i){i&&q(t),Ve(o,i)}}}function Pl(e,t,n){let r,o,l,i,{datesSet:s,_auxiliary:u,_activeRange:a,_queue:c,_view:d}=he("state");h(e,s,p=>n(7,o=p)),h(e,u,p=>n(0,i=p)),h(e,a,p=>n(5,l=p)),h(e,d,p=>n(6,r=p));let f={};function _(p){R(o)&&sn(()=>o({start:Ke(p.start),end:Ke(p.end),startStr:Ie(p.start),endStr:Ie(p.end),view:ve(r)}),f,c)}return e.$$.update=()=>{e.$$.dirty&32&&_(l)},[i,s,u,a,d,l]}var hr=class extends ae{constructor(t){super(),_e(this,t,Pl,Ol,fe,{})}};function Rl(e){let t,n,r,o,l,i,s,u,a,c,d;n=new dr({});var f=e[5];function _(p,g){return{}}return f&&(o=et(f,_())),u=new hr({}),{c(){t=N("div"),x(n.$$.fragment),r=le(),o&&x(o.$$.fragment),s=le(),x(u.$$.fragment),y(t,"class",l=e[1].calendar+" "+e[1].view+(e[0]?" "+e[1].withScroll:"")+(e[2]?" "+e[1][e[2]]:"")),y(t,"role",i=Un(e[4])?"list":"table"),tn(t,"height",e[3])},m(p,g){G(p,t,g),Q(n,t,null),Y(t,r),o&&Q(o,t,null),G(p,s,g),Q(u,p,g),a=!0,c||(d=j(window,"resize",e[17]),c=!0)},p(p,g){if(g[0]&32&&f!==(f=p[5])){if(o){se();let v=o;P(v.$$.fragment,1,0,()=>{Z(v,1)}),ue()}f?(o=et(f,_()),x(o.$$.fragment),F(o.$$.fragment,1),Q(o,t,null)):o=null}(!a||g[0]&7&&l!==(l=p[1].calendar+" "+p[1].view+(p[0]?" "+p[1].withScroll:"")+(p[2]?" "+p[1][p[2]]:"")))&&y(t,"class",l),(!a||g[0]&16&&i!==(i=Un(p[4])?"list":"table"))&&y(t,"role",i),g[0]&8&&tn(t,"height",p[3])},i(p){a||(F(n.$$.fragment,p),o&&F(o.$$.fragment,p),F(u.$$.fragment,p),a=!0)},o(p){P(n.$$.fragment,p),o&&P(o.$$.fragment,p),P(u.$$.fragment,p),a=!1},d(p){p&&(q(t),q(s)),Z(n),o&&Z(o),Z(u,p),c=!1,d()}}}function Ul(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,{plugins:p=[]}=t,{options:g={}}=t,v=Ot(),w=new ar(p,g);rr("state",w);let{_viewComponent:E,_bodyEl:C,_interaction:T,_iClass:D,_events:k,_queue:b,_queue2:m,_tasks:L,_scrollable:M,height:A,theme:S,view:H}=w;h(e,E,X=>n(5,_=X)),h(e,C,X=>n(32,r=X)),h(e,T,X=>n(35,s=X)),h(e,D,X=>n(2,c=X)),h(e,k,X=>n(36,u=X)),h(e,b,X=>n(34,i=X)),h(e,m,X=>n(33,l=X)),h(e,M,X=>n(0,o=X)),h(e,A,X=>n(3,d=X)),h(e,S,X=>n(1,a=X)),h(e,H,X=>n(4,f=X));let z={...g};function K(X,U){return w._set(X,U),this}function $(X){let U=w._get(X);return U instanceof Date?Ke(U):U}function me(){return w._fetchedRange.set({start:void 0,end:void 0}),this}function ce(){return u.map(Re)}function ye(X){for(let U of u)if(U.id==X)return Re(U);return null}function W(X){return u.push(Hn([X])[0]),k.set(u),this}function te(X){for(let U of u)if(U.id==X.id){bt(U,Hn([X])[0]),k.set(u);break}return this}function Ae(X){let U=u.findIndex(be=>be.id==X);return U>=0&&(u.splice(U,1),k.set(u)),this}function Ee(){return ve(en(w._view))}function ke(){return s.action&&s.action.unselect(),this}function je(X,U){let be=un(X,U);return be?wn(be)(U):null}function Ce(){Z(v,!0)}nr(()=>{to(i)}),ct(()=>{to(l),Ut(ge,null,L)});function ge(){r&&de(M,o=$i(r),o)}return e.$$set=X=>{"plugins"in X&&n(18,p=X.plugins),"options"in X&&n(19,g=X.options)},e.$$.update=()=>{if(e.$$.dirty[0]&524288)for(let[X,U]of al(g,z))K(X,U)},[o,a,c,d,f,_,E,C,T,D,k,b,m,M,A,S,H,ge,p,g,K,$,me,ce,ye,W,te,Ae,Ee,ke,je,Ce]}var Nn=class extends ae{constructor(t){super(),_e(this,t,Ul,Rl,fe,{plugins:18,options:19,setOption:20,getOption:21,refetchEvents:22,getEvents:23,getEventById:24,addEvent:25,updateEvent:26,removeEventById:27,getView:28,unselect:29,dateFromPoint:30,destroy:31},null,[-1,-1])}get setOption(){return this.$$.ctx[20]}get getOption(){return this.$$.ctx[21]}get refetchEvents(){return this.$$.ctx[22]}get getEvents(){return this.$$.ctx[23]}get getEventById(){return this.$$.ctx[24]}get addEvent(){return this.$$.ctx[25]}get updateEvent(){return this.$$.ctx[26]}get removeEventById(){return this.$$.ctx[27]}get getView(){return this.$$.ctx[28]}get unselect(){return this.$$.ctx[29]}get dateFromPoint(){return this.$$.ctx[30]}get destroy(){return this.$$.ctx[31]}};function Hl(e){return Xe([e.date,e.firstDay,e.hiddenDays],([t,n,r])=>{let o=[],l=oe(t),i=7;for(;l.getUTCDay()!==n&&i;)Gt(l),--i;for(let s=0;s<7;++s)r.includes(l.getUTCDay())||o.push(oe(l)),Je(l);return o})}function bo(e,t,n){let r=e.slice();return r[8]=t[n],r}function vo(e){let t,n,r,o,l,i,s,u;return{c(){t=N("div"),n=N("span"),l=le(),y(n,"aria-label",r=e[2].format(e[8])),y(t,"class",i=e[0].day+" "+e[0].weekdays?.[e[8].getUTCDay()]),y(t,"role","columnheader")},m(a,c){G(a,t,c),Y(t,n),Y(t,l),s||(u=He(o=We.call(null,n,e[3].format(e[8]))),s=!0)},p(a,c){e=a,c&6&&r!==(r=e[2].format(e[8]))&&y(n,"aria-label",r),o&&R(o.update)&&c&10&&o.update.call(null,e[3].format(e[8])),c&3&&i!==(i=e[0].day+" "+e[0].weekdays?.[e[8].getUTCDay()])&&y(t,"class",i)},d(a){a&&q(t),s=!1,u()}}}function Il(e){let t,n,r,o,l,i,s,u=ee(e[1]),a=[];for(let c=0;c<u.length;c+=1)a[c]=vo(bo(e,u,c));return{c(){t=N("div"),n=N("div");for(let c=0;c<a.length;c+=1)a[c].c();o=le(),l=N("div"),y(n,"class",r=e[0].days),y(n,"role","row"),y(l,"class",i=e[0].hiddenScroll),y(t,"class",s=e[0].header)},m(c,d){G(c,t,d),Y(t,n);for(let f=0;f<a.length;f+=1)a[f]&&a[f].m(n,null);Y(t,o),Y(t,l)},p(c,[d]){if(d&15){u=ee(c[1]);let f;for(f=0;f<u.length;f+=1){let _=bo(c,u,f);a[f]?a[f].p(_,d):(a[f]=vo(_),a[f].c(),a[f].m(n,null))}for(;f<a.length;f+=1)a[f].d(1);a.length=u.length}d&1&&r!==(r=c[0].days)&&y(n,"class",r),d&1&&i!==(i=c[0].hiddenScroll)&&y(l,"class",i),d&1&&s!==(s=c[0].header)&&y(t,"class",s)},i:re,o:re,d(c){c&&q(t),Ve(a,c)}}}function Nl(e,t,n){let r,o,l,i,{theme:s,_intlDayHeader:u,_intlDayHeaderAL:a,_days:c}=he("state");return h(e,s,d=>n(0,r=d)),h(e,u,d=>n(3,i=d)),h(e,a,d=>n(2,l=d)),h(e,c,d=>n(1,o=d)),[r,o,l,i,s,u,a,c]}var yr=class extends ae{constructor(t){super(),_e(this,t,Nl,Il,fe,{})}};function Bl(e){let t,n,r,o,l,i=e[7].default,s=Tt(i,e,e[6],null);return{c(){t=N("div"),n=N("div"),s&&s.c(),y(n,"class",r=e[0].content),y(t,"class",o=e[0].body+(e[1]===!0?" "+e[0].uniform:""))},m(u,a){G(u,t,a),Y(t,n),s&&s.m(n,null),e[8](t),l=!0},p(u,[a]){s&&s.p&&(!l||a&64)&&Mt(s,i,u,u[6],l?St(i,u[6],a,null):Ft(u[6]),null),(!l||a&1&&r!==(r=u[0].content))&&y(n,"class",r),(!l||a&3&&o!==(o=u[0].body+(u[1]===!0?" "+u[0].uniform:"")))&&y(t,"class",o)},i(u){l||(F(s,u),l=!0)},o(u){P(s,u),l=!1},d(u){u&&q(t),s&&s.d(u),e[8](null)}}}function ql(e,t,n){let r,o,l,{$$slots:i={},$$scope:s}=t,{dayMaxEvents:u,_bodyEl:a,theme:c}=he("state");h(e,u,f=>n(1,o=f)),h(e,a,f=>n(2,l=f)),h(e,c,f=>n(0,r=f));function d(f){Se[f?"unshift":"push"](()=>{l=f,a.set(l)})}return e.$$set=f=>{"$$scope"in f&&n(6,s=f.$$scope)},[r,o,l,u,a,c,s,i,d]}var br=class extends ae{constructor(t){super(),_e(this,t,ql,Bl,fe,{})}};function zl(e){let t,n,r,o,l,i,s,u,a,c,d;var f=e[8].resizer;function _(p,g){return{props:{event:p[0]}}}return f&&(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[33](e[8],!0))&&e[33](e[8],!0).apply(this,arguments)})),{c(){t=N("article"),n=N("div"),l=le(),i&&x(i.$$.fragment),y(n,"class",r=e[2].eventBody),y(t,"class",e[4]),y(t,"style",e[5]),y(t,"role",s=e[7]?"button":void 0),y(t,"tabindex",u=e[7]?0:void 0)},m(p,g){G(p,t,g),Y(t,n),Y(t,l),i&&Q(i,t,null),e[52](t),a=!0,c||(d=[He(o=We.call(null,n,e[6])),j(t,"click",function(){R(e[7]||void 0)&&(e[7]||void 0).apply(this,arguments)}),j(t,"keydown",function(){R(e[7]&&nt(e[7]))&&(e[7]&&nt(e[7])).apply(this,arguments)}),j(t,"mouseenter",function(){R(e[32](e[9],e[1]))&&e[32](e[9],e[1]).apply(this,arguments)}),j(t,"mouseleave",function(){R(e[32](e[10],e[1]))&&e[32](e[10],e[1]).apply(this,arguments)}),j(t,"pointerdown",function(){R(!Ye(e[1])&&e[33](e[8]))&&(!Ye(e[1])&&e[33](e[8])).apply(this,arguments)})],c=!0)},p(p,g){if(e=p,(!a||g[0]&4&&r!==(r=e[2].eventBody))&&y(n,"class",r),o&&R(o.update)&&g[0]&64&&o.update.call(null,e[6]),g[0]&256&&f!==(f=e[8].resizer)){if(i){se();let v=i;P(v.$$.fragment,1,0,()=>{Z(v,1)}),ue()}f?(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[33](e[8],!0))&&e[33](e[8],!0).apply(this,arguments)}),x(i.$$.fragment),F(i.$$.fragment,1),Q(i,t,null)):i=null}else if(f){let v={};g[0]&1&&(v.event=e[0]),i.$set(v)}(!a||g[0]&16)&&y(t,"class",e[4]),(!a||g[0]&32)&&y(t,"style",e[5]),(!a||g[0]&128&&s!==(s=e[7]?"button":void 0))&&y(t,"role",s),(!a||g[0]&128&&u!==(u=e[7]?0:void 0))&&y(t,"tabindex",u)},i(p){a||(i&&F(i.$$.fragment,p),a=!0)},o(p){i&&P(i.$$.fragment,p),a=!1},d(p){p&&q(t),i&&Z(i),e[52](null),c=!1,pe(d)}}}function Gl(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,p,g,v,w,E,C,T,D,k,b,{chunk:m}=t,{longChunks:L={}}=t,{inPopup:M=!1}=t,{dayMaxEvents:A,displayEventEnd:S,eventAllUpdated:H,eventBackgroundColor:z,eventTextColor:K,eventClick:$,eventColor:me,eventContent:ce,eventClassNames:ye,eventDidMount:W,eventMouseEnter:te,eventMouseLeave:Ae,theme:Ee,_view:ke,_intlEventTime:je,_interaction:Ce,_iClasses:ge,_resBgColor:X,_resTxtColor:U,_hiddenEvents:be,_popupDate:qe,_tasks:J}=he("state");h(e,A,B=>n(55,l=B)),h(e,S,B=>n(44,p=B)),h(e,H,B=>n(57,a=B)),h(e,z,B=>n(50,T=B)),h(e,K,B=>n(47,w=B)),h(e,$,B=>n(40,r=B)),h(e,me,B=>n(49,C=B)),h(e,ce,B=>n(43,_=B)),h(e,ye,B=>n(45,g=B)),h(e,W,B=>n(58,c=B)),h(e,te,B=>n(9,k=B)),h(e,Ae,B=>n(10,b=B)),h(e,Ee,B=>n(2,f=B)),h(e,ke,B=>n(41,u=B)),h(e,je,B=>n(42,d=B)),h(e,Ce,B=>n(8,s=B)),h(e,ge,B=>n(46,v=B)),h(e,X,B=>n(51,D=B)),h(e,U,B=>n(48,E=B)),h(e,be,B=>n(54,o=B)),h(e,qe,B=>n(56,i=B));let Fe,De,Pe,Ue,st,$e,V=1,ze=!1,Qe,wt;Pt(()=>{R(c)&&c({event:Re(De),timeText:$e,el:Fe,view:ve(u)})}),ct(()=>{R(a)&&!Ye(Qe)&&Ut(()=>a({view:ve(u)}),"eau",J)});function It(B,Ne){return!Ye(Ne)&&R(B)?Te=>B({event:Re(De),el:Fe,jsEvent:Te,view:ve(u)}):void 0}function Kt(B,Ne){return B.action?Te=>s.action.drag(De,Te,Ne,M?i:void 0):void 0}function I(){Fe&&(n(38,V=zn(m,L,Yt(Fe))),l===!0?xe():n(39,ze=!1))}function xe(){let B=Wt(Fe,2),Ne=Yt(B)-Yt(B.firstElementChild)-ie(B);n(39,ze=m.bottom>Ne);let Te=!1;for(let ut of m.dates){let rt=o[ut.getTime()];if(rt){let hn=rt.size;ze?rt.add(m.event):rt.delete(m.event),hn!==rt.size&&(Te=!0)}}Te&&be.set(o)}function ie(B){let Ne=0;for(let Te=0;Te<m.days&&(Ne=it(Ne,Yt(B.lastElementChild)),B=B.nextElementSibling,!!B);++Te);return Ne}function Nt(B){Se[B?"unshift":"push"](()=>{Fe=B,n(3,Fe)})}return e.$$set=B=>{"chunk"in B&&n(34,m=B.chunk),"longChunks"in B&&n(35,L=B.longChunks),"inPopup"in B&&n(36,M=B.inPopup)},e.$$.update=()=>{if(e.$$.dirty[1]&8&&n(0,De=m.event),e.$$.dirty[0]&37|e.$$.dirty[1]&2082184){n(1,Qe=De.display);let B=De.backgroundColor||D(De)||T||C,Ne=De.textColor||E(De)||w;n(5,Ue=`width:calc(${m.days*100}% + ${(m.days-1)*7}px);margin-top:${V}px;`),B&&n(5,Ue+=`background-color:${B};`),Ne&&n(5,Ue+=`color:${Ne};`),ze&&n(5,Ue+="visibility:hidden;"),n(4,Pe=[f.event,...v([],De),...Xt(g,De,u)].join(" "))}e.$$.dirty[0]&4|e.$$.dirty[1]&15368&&n(6,[$e,st]=Vt(m,p,_,f,d,u),st),e.$$.dirty[0]&2|e.$$.dirty[1]&512&&n(7,wt=It(r,Qe))},[De,Qe,f,Fe,Pe,Ue,st,wt,s,k,b,A,S,H,z,K,$,me,ce,ye,W,te,Ae,Ee,ke,je,Ce,ge,X,U,be,qe,It,Kt,m,L,M,I,V,ze,r,u,d,_,p,g,v,w,E,C,T,D,Nt]}var fn=class extends ae{constructor(t){super(),_e(this,t,Gl,zl,fe,{chunk:34,longChunks:35,inPopup:36,reposition:37},null,[-1,-1])}get reposition(){return this.$$.ctx[37]}};function wo(e,t,n){let r=e.slice();return r[20]=t[n],r}function ko(e,t){let n,r,o;return r=new fn({props:{chunk:t[20],inPopup:!0}}),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(l,i){G(l,n,i),Q(r,l,i),o=!0},p(l,i){t=l;let s={};i&1&&(s.chunk=t[20]),r.$set(s)},i(l){o||(F(r.$$.fragment,l),o=!0)},o(l){P(r.$$.fragment,l),o=!1},d(l){l&&q(n),Z(r,l)}}}function Wl(e){let t,n,r,o,l,i,s,u,a,c,d,f,_=[],p=new Map,g,v,w,E,C,T=ee(e[0]),D=k=>k[20].event;for(let k=0;k<T.length;k+=1){let b=wo(e,T,k),m=D(b);p.set(m,_[k]=ko(m,b))}return{c(){t=N("div"),n=N("div"),r=N("time"),i=le(),s=N("a"),u=Lt("\xD7"),d=le(),f=N("div");for(let k=0;k<_.length;k+=1)_[k].c();y(r,"datetime",o=Ie(e[3],10)),y(s,"role","button"),y(s,"tabindex","0"),y(s,"aria-label",a=e[6].close),y(n,"class",c=e[4].dayHead),y(f,"class",g=e[4].events),y(t,"class",v=e[4].popup),y(t,"style",e[2])},m(k,b){G(k,t,b),Y(t,n),Y(n,r),Y(n,i),Y(n,s),Y(s,u),Y(t,d),Y(t,f);for(let m=0;m<_.length;m+=1)_[m]&&_[m].m(f,null);e[16](t),w=!0,E||(C=[He(l=We.call(null,r,e[5].format(e[3]))),j(s,"click",bn(e[13])),j(s,"keydown",nt(e[13])),He(_o.call(null,t,"pointerdown")),j(t,"pointerdown",bn(e[15])),j(t,"pointerdownoutside",e[14])],E=!0)},p(k,[b]){(!w||b&8&&o!==(o=Ie(k[3],10)))&&y(r,"datetime",o),l&&R(l.update)&&b&40&&l.update.call(null,k[5].format(k[3])),(!w||b&64&&a!==(a=k[6].close))&&y(s,"aria-label",a),(!w||b&16&&c!==(c=k[4].dayHead))&&y(n,"class",c),b&1&&(T=ee(k[0]),se(),_=mt(_,b,D,1,k,T,p,f,pt,ko,null,wo),ue()),(!w||b&16&&g!==(g=k[4].events))&&y(f,"class",g),(!w||b&16&&v!==(v=k[4].popup))&&y(t,"class",v),(!w||b&4)&&y(t,"style",k[2])},i(k){if(!w){for(let b=0;b<T.length;b+=1)F(_[b]);w=!0}},o(k){for(let b=0;b<_.length;b+=1)P(_[b]);w=!1},d(k){k&&q(t);for(let b=0;b<_.length;b+=1)_[b].d();e[16](null),E=!1,pe(C)}}}function Yl(e,t,n){let r,o,l,i,s,u,{buttonText:a,theme:c,_interaction:d,_intlDayPopover:f,_popupDate:_,_popupChunks:p}=he("state");h(e,a,b=>n(6,u=b)),h(e,c,b=>n(4,i=b)),h(e,d,b=>n(17,r=b)),h(e,f,b=>n(5,s=b)),h(e,_,b=>n(3,o=b)),h(e,p,b=>n(0,l=b));let g,v="";function w(){let b=Wt(g,1),m=Wt(b,3),L=lt(g),M=lt(b),A=lt(m);n(2,v="");let S;if(L.width>=A.width){S=A.left-M.left;let z=M.right-A.right;n(2,v+=`right:${z}px;`)}else S=(M.width-L.width)/2,M.left+S<A.left?S=A.left-M.left:M.left+S+L.width>A.right&&(S=A.right-M.left-L.width);n(2,v+=`left:${S}px;`);let H;if(L.height>=A.height){H=A.top-M.top;let z=M.bottom-A.bottom;n(2,v+=`bottom:${z}px;`)}else H=(M.height-L.height)/2,M.top+H<A.top?H=A.top-M.top:M.top+H+L.height>A.bottom&&(H=A.bottom-M.top-L.height);n(2,v+=`top:${H}px;`)}function E(){g&&(n(2,v=""),qt().then(()=>{l.length?w():C()}))}function C(b){de(_,o=null,o)}function T(b){C(),r.action?.noClick()}function D(b){nn.call(this,e,b)}function k(b){Se[b?"unshift":"push"](()=>{g=b,n(1,g)})}return e.$$.update=()=>{e.$$.dirty&1&&l&&E()},[l,g,v,o,i,s,u,a,c,d,f,_,p,C,T,D,k]}var vr=class extends ae{constructor(t){super(),_e(this,t,Yl,Wl,fe,{})}};function Co(e,t,n){let r=e.slice();return r[42]=t[n],r[43]=t,r[44]=n,r}function Eo(e){let t,n,r,o;return n=new fn({props:{chunk:e[2][1]}}),{c(){t=N("div"),x(n.$$.fragment),y(t,"class",r=e[12].events)},m(l,i){G(l,t,i),Q(n,t,null),o=!0},p(l,i){let s={};i[0]&4&&(s.chunk=l[2][1]),n.$set(s),(!o||i[0]&4096&&r!==(r=l[12].events))&&y(t,"class",r)},i(l){o||(F(n.$$.fragment,l),o=!0)},o(l){P(n.$$.fragment,l),o=!1},d(l){l&&q(t),Z(n)}}}function Do(e){let t,n,r,o;return n=new fn({props:{chunk:e[2][0]}}),{c(){t=N("div"),x(n.$$.fragment),y(t,"class",r=e[12].events+" "+e[12].preview)},m(l,i){G(l,t,i),Q(n,t,null),o=!0},p(l,i){let s={};i[0]&4&&(s.chunk=l[2][0]),n.$set(s),(!o||i[0]&4096&&r!==(r=l[12].events+" "+l[12].preview))&&y(t,"class",r)},i(l){o||(F(n.$$.fragment,l),o=!0)},o(l){P(n.$$.fragment,l),o=!1},d(l){l&&q(t),Z(n)}}}function To(e,t){let n,r,o=t[44],l,i=()=>t[36](r,o),s=()=>t[36](null,o),u={chunk:t[42],longChunks:t[1]};return r=new fn({props:u}),i(),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(a,c){G(a,n,c),Q(r,a,c),l=!0},p(a,c){t=a,o!==t[44]&&(s(),o=t[44],i());let d={};c[0]&16&&(d.chunk=t[42]),c[0]&2&&(d.longChunks=t[1]),r.$set(d)},i(a){l||(F(r.$$.fragment,a),l=!0)},o(a){P(r.$$.fragment,a),l=!1},d(a){a&&q(n),s(),Z(r,a)}}}function So(e){let t,n;return t=new vr({}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Mo(e){let t,n,r,o;return{c(){t=N("a"),y(t,"role","button"),y(t,"tabindex","0"),y(t,"aria-haspopup","true")},m(l,i){G(l,t,i),r||(o=[j(t,"click",bn(e[26])),j(t,"keydown",nt(e[26])),j(t,"pointerdown",bn(e[35])),He(n=We.call(null,t,e[10]))],r=!0)},p(l,i){n&&R(n.update)&&i[0]&1024&&n.update.call(null,l[10])},d(l){l&&q(t),r=!1,pe(o)}}}function jl(e){let t,n,r,o,l,i,s=e[2][1]&&Oe(e[2][1].date,e[0]),u,a=e[2][0]&&Oe(e[2][0].date,e[0]),c,d,f=[],_=new Map,p,g,v,w,E,C,T,D,k,b=s&&Eo(e),m=a&&Do(e),L=ee(e[4]),M=H=>H[42].event;for(let H=0;H<L.length;H+=1){let z=Co(e,L,H),K=M(z);_.set(K,f[H]=To(K,z))}let A=e[6]&&So(),S=e[5].size&&Mo(e);return{c(){t=N("div"),n=N("time"),i=le(),b&&b.c(),u=le(),m&&m.c(),c=le(),d=N("div");for(let H=0;H<f.length;H+=1)f[H].c();g=le(),A&&A.c(),v=le(),w=N("div"),S&&S.c(),y(n,"class",r=e[12].dayHead),y(n,"datetime",o=Ie(e[0],10)),y(d,"class",p=e[12].events),y(w,"class",E=e[12].dayFoot),y(t,"class",C=e[12].day+" "+e[12].weekdays?.[e[0].getUTCDay()]+(e[7]?" "+e[12].today:"")+(e[8]?" "+e[12].otherMonth:"")+(e[9]?" "+e[12].highlight:"")),y(t,"role","cell")},m(H,z){G(H,t,z),Y(t,n),Y(t,i),b&&b.m(t,null),Y(t,u),m&&m.m(t,null),Y(t,c),Y(t,d);for(let K=0;K<f.length;K+=1)f[K]&&f[K].m(d,null);Y(t,g),A&&A.m(t,null),Y(t,v),Y(t,w),S&&S.m(w,null),e[37](t),T=!0,D||(k=[He(l=We.call(null,n,e[14].format(e[0]))),j(t,"pointerenter",function(){R(e[25](e[13]))&&e[25](e[13]).apply(this,arguments)}),j(t,"pointerleave",function(){R(e[13].pointer?.leave)&&e[13].pointer?.leave.apply(this,arguments)}),j(t,"pointerdown",function(){R(e[13].action?.select)&&e[13].action?.select.apply(this,arguments)})],D=!0)},p(H,z){e=H,(!T||z[0]&4096&&r!==(r=e[12].dayHead))&&y(n,"class",r),(!T||z[0]&1&&o!==(o=Ie(e[0],10)))&&y(n,"datetime",o),l&&R(l.update)&&z[0]&16385&&l.update.call(null,e[14].format(e[0])),z[0]&5&&(s=e[2][1]&&Oe(e[2][1].date,e[0])),s?b?(b.p(e,z),z[0]&5&&F(b,1)):(b=Eo(e),b.c(),F(b,1),b.m(t,u)):b&&(se(),P(b,1,1,()=>{b=null}),ue()),z[0]&5&&(a=e[2][0]&&Oe(e[2][0].date,e[0])),a?m?(m.p(e,z),z[0]&5&&F(m,1)):(m=Do(e),m.c(),F(m,1),m.m(t,c)):m&&(se(),P(m,1,1,()=>{m=null}),ue()),z[0]&2066&&(L=ee(e[4]),se(),f=mt(f,z,M,1,e,L,_,d,pt,To,null,Co),ue()),(!T||z[0]&4096&&p!==(p=e[12].events))&&y(d,"class",p),e[6]?A?z[0]&64&&F(A,1):(A=So(),A.c(),F(A,1),A.m(t,v)):A&&(se(),P(A,1,1,()=>{A=null}),ue()),e[5].size?S?S.p(e,z):(S=Mo(e),S.c(),S.m(w,null)):S&&(S.d(1),S=null),(!T||z[0]&4096&&E!==(E=e[12].dayFoot))&&y(w,"class",E),(!T||z[0]&4993&&C!==(C=e[12].day+" "+e[12].weekdays?.[e[0].getUTCDay()]+(e[7]?" "+e[12].today:"")+(e[8]?" "+e[12].otherMonth:"")+(e[9]?" "+e[12].highlight:"")))&&y(t,"class",C)},i(H){if(!T){F(b),F(m);for(let z=0;z<L.length;z+=1)F(f[z]);F(A),T=!0}},o(H){P(b),P(m);for(let z=0;z<f.length;z+=1)P(f[z]);P(A),T=!1},d(H){H&&q(t),b&&b.d(),m&&m.d();for(let z=0;z<f.length;z+=1)f[z].d();A&&A.d(),S&&S.d(),e[37](null),D=!1,pe(k)}}}function Vl(e,t,n){let r,o,l,i,s,u,a,c,d,f,{date:_}=t,{chunks:p}=t,{longChunks:g}=t,{iChunks:v=[]}=t,{date:w,dayMaxEvents:E,highlightedDates:C,moreLinkContent:T,theme:D,_hiddenEvents:k,_intlDayCell:b,_popupDate:m,_popupChunks:L,_today:M,_interaction:A,_queue:S}=he("state");h(e,w,U=>n(33,u=U)),h(e,C,U=>n(32,s=U)),h(e,T,U=>n(30,l=U)),h(e,D,U=>n(12,c=U)),h(e,k,U=>n(31,i=U)),h(e,b,U=>n(14,f=U)),h(e,m,U=>n(29,o=U)),h(e,L,U=>n(38,r=U)),h(e,M,U=>n(34,a=U)),h(e,A,U=>n(13,d=U));let H,z,K,$,me,ce=new Set,ye="",W,te=[];function Ae(U){return U.pointer?be=>U.pointer.enterDayGrid(_,be):void 0}function Ee(){de(m,o=_,o)}function ke(){let U=Je(oe(_)),be=z.concat(g[_.getTime()]?.chunks||[]);de(L,r=be.map(qe=>bt({},qe,at(qe.event,_,U),{days:1,dates:[_]})).sort((qe,J)=>qe.top-J.top),r)}function je(){cn(te,z)}function Ce(U){nn.call(this,e,U)}function ge(U,be){Se[U?"unshift":"push"](()=>{te[be]=U,n(11,te)})}function X(U){Se[U?"unshift":"push"](()=>{H=U,n(3,H)})}return e.$$set=U=>{"date"in U&&n(0,_=U.date),"chunks"in U&&n(27,p=U.chunks),"longChunks"in U&&n(1,g=U.longChunks),"iChunks"in U&&n(2,v=U.iChunks)},e.$$.update=()=>{if(e.$$.dirty[0]&134217777){n(4,z=[]),ce.clear(),n(5,ce),n(27,p),n(0,_),n(4,z);for(let U of p)Oe(U.date,_)&&z.push(U)}if(e.$$.dirty[0]&33&&de(k,i[_.getTime()]=ce,i),e.$$.dirty[0]&1|e.$$.dirty[1]&8&&n(7,K=Oe(_,a)),e.$$.dirty[0]&1|e.$$.dirty[1]&6&&(n(8,$=_.getUTCMonth()!==u.getUTCMonth()),n(9,me=s.some(U=>Oe(U,_)))),e.$$.dirty[0]&1073741856|e.$$.dirty[1]&1&&i&&ce.size){let U="+"+ce.size+" more";l?n(10,ye=R(l)?l({num:ce.size,text:U}):l):n(10,ye=U)}e.$$.dirty[0]&536870913&&n(6,W=o&&Oe(_,o)),e.$$.dirty[0]&82&&W&&g&&z&&qt().then(ke),e.$$.dirty[0]&9&&H&&jt(H,()=>({allDay:!0,date:_,resource:void 0,dayEl:H}))},[_,g,v,H,z,ce,W,K,$,me,ye,te,c,d,f,w,C,T,D,k,b,m,L,M,A,Ae,Ee,p,je,o,l,i,s,u,a,Ce,ge,X]}var wr=class extends ae{constructor(t){super(),_e(this,t,Vl,jl,fe,{date:0,chunks:27,longChunks:1,iChunks:2,reposition:28},null,[-1,-1])}get reposition(){return this.$$.ctx[28]}};function Fo(e,t,n){let r=e.slice();return r[21]=t[n],r[22]=t,r[23]=n,r}function Lo(e){let t,n=e[23],r,o=()=>e[18](t,n),l=()=>e[18](null,n),i={date:e[21],chunks:e[1],longChunks:e[2],iChunks:e[3]};return t=new wr({props:i}),o(),{c(){x(t.$$.fragment)},m(s,u){Q(t,s,u),r=!0},p(s,u){n!==s[23]&&(l(),n=s[23],o());let a={};u&1&&(a.date=s[21]),u&2&&(a.chunks=s[1]),u&4&&(a.longChunks=s[2]),u&8&&(a.iChunks=s[3]),t.$set(a)},i(s){r||(F(t.$$.fragment,s),r=!0)},o(s){P(t.$$.fragment,s),r=!1},d(s){l(),Z(t,s)}}}function Xl(e){let t,n,r,o,l,i=ee(e[0]),s=[];for(let a=0;a<i.length;a+=1)s[a]=Lo(Fo(e,i,a));let u=a=>P(s[a],1,1,()=>{s[a]=null});return{c(){t=N("div");for(let a=0;a<s.length;a+=1)s[a].c();y(t,"class",n=e[5].days),y(t,"role","row")},m(a,c){G(a,t,c);for(let d=0;d<s.length;d+=1)s[d]&&s[d].m(t,null);r=!0,o||(l=j(window,"resize",e[11]),o=!0)},p(a,[c]){if(c&31){i=ee(a[0]);let d;for(d=0;d<i.length;d+=1){let f=Fo(a,i,d);s[d]?(s[d].p(f,c),F(s[d],1)):(s[d]=Lo(f),s[d].c(),F(s[d],1),s[d].m(t,null))}for(se(),d=i.length;d<s.length;d+=1)u(d);ue()}(!r||c&32&&n!==(n=a[5].days))&&y(t,"class",n)},i(a){if(!r){for(let c=0;c<i.length;c+=1)F(s[c]);r=!0}},o(a){s=s.filter(Boolean);for(let c=0;c<s.length;c+=1)P(s[c]);r=!1},d(a){a&&q(t),Ve(s,a),o=!1,l()}}}function Kl(e,t,n){let r,o,l,i,s,{dates:u}=t,{_events:a,_iEvents:c,_queue2:d,_hiddenEvents:f,hiddenDays:_,theme:p}=he("state");h(e,a,m=>n(17,i=m)),h(e,c,m=>n(16,l=m)),h(e,f,m=>n(14,r=m)),h(e,_,m=>n(15,o=m)),h(e,p,m=>n(5,s=m));let g,v,w=[],E,C,T=[],D={};function k(){sn(()=>cn(T,u),D,d)}function b(m,L){Se[m?"unshift":"push"](()=>{T[L]=m,n(4,T)})}return e.$$set=m=>{"dates"in m&&n(0,u=m.dates)},e.$$.update=()=>{if(e.$$.dirty&1&&(n(12,E=u[0]),n(13,C=Je(oe(u[u.length-1])))),e.$$.dirty&176130){n(1,g=[]);for(let m of i)if(!Ze(m.display)&&dt(m,E,C)){let L=at(m,E,C);g.push(L)}n(2,v=an(g,o)),k()}e.$$.dirty&110592&&n(3,w=l.map(m=>{let L;return m&&dt(m,E,C)?(L=at(m,E,C),an([L],o)):L=null,L})),e.$$.dirty&16384&&r&&qt().then(k)},[u,g,v,w,T,s,a,c,f,_,p,k,E,C,r,o,l,i,b]}var kr=class extends ae{constructor(t){super(),_e(this,t,Kl,Xl,fe,{dates:0})}};function Ao(e,t,n){let r=e.slice();return r[10]=t[n],r}function Oo(e){let t,n;return t=new kr({props:{dates:e[10]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o&1&&(l.dates=r[10]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Jl(e){let t,n,r=ee(e[0]),o=[];for(let i=0;i<r.length;i+=1)o[i]=Oo(Ao(e,r,i));let l=i=>P(o[i],1,1,()=>{o[i]=null});return{c(){for(let i=0;i<o.length;i+=1)o[i].c();t=we()},m(i,s){for(let u=0;u<o.length;u+=1)o[u]&&o[u].m(i,s);G(i,t,s),n=!0},p(i,s){if(s&1){r=ee(i[0]);let u;for(u=0;u<r.length;u+=1){let a=Ao(i,r,u);o[u]?(o[u].p(a,s),F(o[u],1)):(o[u]=Oo(a),o[u].c(),F(o[u],1),o[u].m(t.parentNode,t))}for(se(),u=r.length;u<o.length;u+=1)l(u);ue()}},i(i){if(!n){for(let s=0;s<r.length;s+=1)F(o[s]);n=!0}},o(i){o=o.filter(Boolean);for(let s=0;s<o.length;s+=1)P(o[s]);n=!1},d(i){i&&q(t),Ve(o,i)}}}function Zl(e){let t,n,r,o;return t=new yr({}),r=new br({props:{$$slots:{default:[Jl]},$$scope:{ctx:e}}}),{c(){x(t.$$.fragment),n=le(),x(r.$$.fragment)},m(l,i){Q(t,l,i),G(l,n,i),Q(r,l,i),o=!0},p(l,[i]){let s={};i&8193&&(s.$$scope={dirty:i,ctx:l}),r.$set(s)},i(l){o||(F(t.$$.fragment,l),F(r.$$.fragment,l),o=!0)},o(l){P(t.$$.fragment,l),P(r.$$.fragment,l),o=!1},d(l){l&&q(n),Z(t,l),Z(r,l)}}}function Ql(e,t,n){let r,o,l,i,{_viewDates:s,_hiddenEvents:u,dayMaxEvents:a,hiddenDays:c}=he("state");h(e,s,_=>n(6,r=_)),h(e,u,_=>n(9,l=_)),h(e,a,_=>n(7,o=_)),h(e,c,_=>n(8,i=_));let d,f;return e.$$.update=()=>{if(e.$$.dirty&481){n(0,d=[]),n(5,f=7-i.length),de(u,l={},l);for(let _=0;_<r.length/f;++_){let p=[];for(let g=0;g<f;++g)p.push(r[_*f+g]);d.push(p)}}},[d,s,u,a,c,f,r,o,i]}var Cr=class extends ae{constructor(t){super(),_e(this,t,Ql,Zl,fe,{})}},Po={createOptions(e){e.dayMaxEvents=!1,e.dayCellFormat={day:"numeric"},e.dayPopoverFormat={month:"long",day:"numeric",year:"numeric"},e.moreLinkContent=void 0,e.buttonText.dayGridMonth="month",e.buttonText.close="Close",e.theme.uniform="ec-uniform",e.theme.dayFoot="ec-day-foot",e.theme.popup="ec-popup",e.view="dayGridMonth",e.views.dayGridMonth={buttonText:Yn,component:Cr,dayHeaderFormat:{weekday:"short"},dayHeaderAriaLabelFormat:{weekday:"long"},displayEventEnd:!1,duration:{months:1},theme:ht("ec-day-grid ec-month-view"),titleFormat:{year:"numeric",month:"long"}}},createStores(e){e._days=Hl(e),e._intlDayCell=gt(e.locale,e.dayCellFormat),e._intlDayPopover=gt(e.locale,e.dayPopoverFormat),e._hiddenEvents=Le({}),e._popupDate=Le(null),e._popupChunks=Le([])}};function xl(e){return Xe([e._slotTimeLimits,e._intlSlotLabel,e.slotDuration],([t,n,r])=>{let o=r.seconds>=3600,l=[],i=ft(yt()),s=oe(i),u=1;for(Me(i,t.min),Me(s,t.max);i<s;)l.push([Ie(i),l.length&&(u||o)?n.format(i):""]),Me(i,r),u=1-u;return l})}function $l(e){return Xe([e._events,e._viewDates,e.flexibleSlotTimeLimits,e.slotMinTime,e.slotMaxTime],([t,n,r,o,l])=>{let i=tt(o),s=tt(l);if(r){let u=tt(vt(i.seconds,it(0,s.seconds-Bn))),a=tt(it(s.seconds,u.seconds+Bn)),c=R(r?.eventFilter)?r.eventFilter:d=>!Ze(d.display);e:for(let d of n){let f=Me(oe(d),i),_=Me(oe(d),s),p=Me(oe(d),u),g=Me(oe(d),a);for(let v of t)if(!v.allDay&&c(v)&&v.start<g&&v.end>p){if(v.start<f){let w=it((v.start-d)/1e3,u.seconds);w<i.seconds&&(i.seconds=w)}if(v.end>_){let w=vt((v.end-d)/1e3,a.seconds);w>s.seconds&&(s.seconds=w)}if(i.seconds===u.seconds&&s.seconds===a.seconds)break e}}}return{min:i,max:s}})}function es(e){if(!e.length)return;kn(e);let t={columns:[],end:e[0].end};for(let n of e){let r=0;if(n.start<t.end){for(;r<t.columns.length&&!(t.columns[r][t.columns[r].length-1].end<=n.start);++r);n.end>t.end&&(t.end=n.end)}else t={columns:[],end:n.end};t.columns.length<r+1&&t.columns.push([]),t.columns[r].push(n),n.group=t,n.column=r}}function ts(e){let t="all-day",n;return e?(n=R(e)?e({text:t}):e,typeof n=="string"&&(n={html:n})):n={html:t},n}var ns=e=>({}),Ro=e=>({});function Uo(e,t,n){let r=e.slice();return r[9]=t[n],r}function Ho(e){let t,n,r,o,l,i;return{c(){t=N("time"),y(t,"class",n=e[1].time),y(t,"datetime",r=e[9][0])},m(s,u){G(s,t,u),l||(i=He(o=We.call(null,t,e[9][1])),l=!0)},p(s,u){e=s,u&2&&n!==(n=e[1].time)&&y(t,"class",n),u&4&&r!==(r=e[9][0])&&y(t,"datetime",r),o&&R(o.update)&&u&4&&o.update.call(null,e[9][1])},d(s){s&&q(t),l=!1,i()}}}function rs(e){let t,n,r,o,l,i,s,u,a,c,d,f,_,p,g,v=ee(e[2]),w=[];for(let k=0;k<v.length;k+=1)w[k]=Ho(Uo(e,v,k));let E=e[8].lines,C=Tt(E,e,e[7],Ro),T=e[8].default,D=Tt(T,e,e[7],null);return{c(){t=N("div"),n=N("div"),l=le();for(let k=0;k<w.length;k+=1)w[k].c();s=le(),u=N("div"),a=N("div"),C&&C.c(),d=le(),D&&D.c(),y(n,"class",r=e[1].sidebarTitle),y(t,"class",i=e[1].sidebar),y(a,"class",c=e[1].lines),y(u,"class",f=e[1].days),y(u,"role","row")},m(k,b){G(k,t,b),Y(t,n),Y(t,l);for(let m=0;m<w.length;m+=1)w[m]&&w[m].m(t,null);G(k,s,b),G(k,u,b),Y(u,a),C&&C.m(a,null),Y(u,d),D&&D.m(u,null),_=!0,p||(g=He(o=We.call(null,n,e[0])),p=!0)},p(k,[b]){if((!_||b&2&&r!==(r=k[1].sidebarTitle))&&y(n,"class",r),o&&R(o.update)&&b&1&&o.update.call(null,k[0]),b&6){v=ee(k[2]);let m;for(m=0;m<v.length;m+=1){let L=Uo(k,v,m);w[m]?w[m].p(L,b):(w[m]=Ho(L),w[m].c(),w[m].m(t,null))}for(;m<w.length;m+=1)w[m].d(1);w.length=v.length}(!_||b&2&&i!==(i=k[1].sidebar))&&y(t,"class",i),C&&C.p&&(!_||b&128)&&Mt(C,E,k,k[7],_?St(E,k[7],b,ns):Ft(k[7]),Ro),(!_||b&2&&c!==(c=k[1].lines))&&y(a,"class",c),D&&D.p&&(!_||b&128)&&Mt(D,T,k,k[7],_?St(T,k[7],b,null):Ft(k[7]),null),(!_||b&2&&f!==(f=k[1].days))&&y(u,"class",f)},i(k){_||(F(C,k),F(D,k),_=!0)},o(k){P(C,k),P(D,k),_=!1},d(k){k&&(q(t),q(s),q(u)),Ve(w,k),C&&C.d(k),D&&D.d(k),p=!1,g()}}}function os(e,t,n){let r,o,l,{$$slots:i={},$$scope:s}=t,{allDayContent:u,theme:a,_times:c}=he("state");h(e,u,f=>n(6,r=f)),h(e,a,f=>n(1,o=f)),h(e,c,f=>n(2,l=f));let d;return e.$$set=f=>{"$$scope"in f&&n(7,s=f.$$scope)},e.$$.update=()=>{e.$$.dirty&64&&n(0,d=ts(r))},[d,o,l,u,a,c,r,s,i]}var Cn=class extends ae{constructor(t){super(),_e(this,t,os,rs,fe,{})}};function Io(e,t,n){let r=e.slice();return r[23]=t[n],r}function is(e){let t,n=e[16].default,r=Tt(n,e,e[18],null);return{c(){r&&r.c()},m(o,l){r&&r.m(o,l),t=!0},p(o,l){r&&r.p&&(!t||l&262144)&&Mt(r,n,o,o[18],t?St(n,o[18],l,null):Ft(o[18]),null)},i(o){t||(F(r,o),t=!0)},o(o){P(r,o),t=!1},d(o){r&&r.d(o)}}}function No(e){let t,n;return{c(){t=N("div"),y(t,"class",n=e[3].line)},m(r,o){G(r,t,o)},p(r,o){o&8&&n!==(n=r[3].line)&&y(t,"class",n)},d(r){r&&q(t)}}}function ls(e){let t,n=ee(e[2]),r=[];for(let o=0;o<n.length;o+=1)r[o]=No(Io(e,n,o));return{c(){for(let o=0;o<r.length;o+=1)r[o].c();t=we()},m(o,l){for(let i=0;i<r.length;i+=1)r[i]&&r[i].m(o,l);G(o,t,l)},p(o,l){if(l&12){n=ee(o[2]);let i;for(i=0;i<n.length;i+=1){let s=Io(o,n,i);r[i]?r[i].p(s,l):(r[i]=No(s),r[i].c(),r[i].m(t.parentNode,t))}for(;i<r.length;i+=1)r[i].d(1);r.length=n.length}},d(o){o&&q(t),Ve(r,o)}}}function ss(e){let t,n,r,o,l,i;return r=new Cn({props:{$$slots:{lines:[ls],default:[is]},$$scope:{ctx:e}}}),{c(){t=N("div"),n=N("div"),x(r.$$.fragment),y(n,"class",o=e[3].content),y(t,"class",l=e[3].body+(e[1]?" "+e[3].compact:""))},m(s,u){G(s,t,u),Y(t,n),Q(r,n,null),e[17](t),i=!0},p(s,[u]){let a={};u&262156&&(a.$$scope={dirty:u,ctx:s}),r.$set(a),(!i||u&8&&o!==(o=s[3].content))&&y(n,"class",o),(!i||u&10&&l!==(l=s[3].body+(s[1]?" "+s[3].compact:"")))&&y(t,"class",l)},i(s){i||(F(r.$$.fragment,s),i=!0)},o(s){P(r.$$.fragment,s),i=!1},d(s){s&&q(t),Z(r),e[17](null)}}}function us(e,t,n){let r,o,l,i,s,u,a,c,{$$slots:d={},$$scope:f}=t,{_bodyEl:_,_viewDates:p,_slotTimeLimits:g,_times:v,scrollTime:w,slotDuration:E,slotHeight:C,theme:T}=he("state");h(e,_,M=>n(21,a=M)),h(e,p,M=>n(14,s=M)),h(e,g,M=>n(20,l=M)),h(e,v,M=>n(15,u=M)),h(e,w,M=>n(13,i=M)),h(e,E,M=>n(12,o=M)),h(e,C,M=>n(19,r=M)),h(e,T,M=>n(3,c=M));let D,k,b=[];function m(){n(0,D.scrollTop=((i.seconds-l.min.seconds)/o.seconds-.5)*r,D)}function L(M){Se[M?"unshift":"push"](()=>{D=M,n(0,D)})}return e.$$set=M=>{"$$scope"in M&&n(18,f=M.$$scope)},e.$$.update=()=>{e.$$.dirty&1&&de(_,a=D,a),e.$$.dirty&36864&&(n(1,k=o.seconds>=3600),n(2,b.length=u.length,b)),e.$$.dirty&24577&&D&&m()},[D,k,b,c,_,p,g,v,w,E,C,T,o,i,s,u,d,L,f]}var Er=class extends ae{constructor(t){super(),_e(this,t,us,ss,fe,{})}};function as(e){let t,n,r,o,l,i,s,u,a,c,d;var f=e[10].resizer;function _(p,g){return{props:{event:p[0]}}}return f&&(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[34](e[10],!0))&&e[34](e[10],!0).apply(this,arguments)})),{c(){t=N("article"),n=N("div"),l=le(),i&&x(i.$$.fragment),y(n,"class",r=e[2].eventBody),y(t,"class",e[4]),y(t,"style",e[5]),y(t,"role",s=e[7]?"button":void 0),y(t,"tabindex",u=e[7]?0:void 0)},m(p,g){G(p,t,g),Y(t,n),Y(t,l),i&&Q(i,t,null),e[53](t),a=!0,c||(d=[He(o=We.call(null,n,e[6])),j(t,"click",function(){R(e[7])&&e[7].apply(this,arguments)}),j(t,"keydown",function(){R(e[7]&&nt(e[7]))&&(e[7]&&nt(e[7])).apply(this,arguments)}),j(t,"mouseenter",function(){R(e[33](e[8],e[1]))&&e[33](e[8],e[1]).apply(this,arguments)}),j(t,"mouseleave",function(){R(e[33](e[9],e[1]))&&e[33](e[9],e[1]).apply(this,arguments)}),j(t,"pointerdown",function(){R(!Ze(e[1])&&!Ye(e[1])&&e[34](e[10]))&&(!Ze(e[1])&&!Ye(e[1])&&e[34](e[10])).apply(this,arguments)})],c=!0)},p(p,g){if(e=p,(!a||g[0]&4&&r!==(r=e[2].eventBody))&&y(n,"class",r),o&&R(o.update)&&g[0]&64&&o.update.call(null,e[6]),g[0]&1024&&f!==(f=e[10].resizer)){if(i){se();let v=i;P(v.$$.fragment,1,0,()=>{Z(v,1)}),ue()}f?(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[34](e[10],!0))&&e[34](e[10],!0).apply(this,arguments)}),x(i.$$.fragment),F(i.$$.fragment,1),Q(i,t,null)):i=null}else if(f){let v={};g[0]&1&&(v.event=e[0]),i.$set(v)}(!a||g[0]&16)&&y(t,"class",e[4]),(!a||g[0]&32)&&y(t,"style",e[5]),(!a||g[0]&128&&s!==(s=e[7]?"button":void 0))&&y(t,"role",s),(!a||g[0]&128&&u!==(u=e[7]?0:void 0))&&y(t,"tabindex",u)},i(p){a||(i&&F(i.$$.fragment,p),a=!0)},o(p){i&&P(i.$$.fragment,p),a=!1},d(p){p&&q(t),i&&Z(i),e[53](null),c=!1,pe(d)}}}function cs(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,p,g,v,w,E,C,T,D,k,b,m,{date:L}=t,{chunk:M}=t,{displayEventEnd:A,eventAllUpdated:S,eventBackgroundColor:H,eventTextColor:z,eventColor:K,eventContent:$,eventClick:me,eventDidMount:ce,eventClassNames:ye,eventMouseEnter:W,eventMouseLeave:te,slotEventOverlap:Ae,slotDuration:Ee,slotHeight:ke,theme:je,_view:Ce,_intlEventTime:ge,_interaction:X,_iClasses:U,_resBgColor:be,_resTxtColor:qe,_slotTimeLimits:J,_tasks:Fe}=he("state");h(e,A,I=>n(41,c=I)),h(e,S,I=>n(55,l=I)),h(e,H,I=>n(48,w=I)),h(e,z,I=>n(45,p=I)),h(e,K,I=>n(47,v=I)),h(e,$,I=>n(40,a=I)),h(e,me,I=>n(37,r=I)),h(e,ce,I=>n(56,i=I)),h(e,ye,I=>n(42,d=I)),h(e,W,I=>n(8,k=I)),h(e,te,I=>n(9,b=I)),h(e,Ae,I=>n(44,_=I)),h(e,Ee,I=>n(52,D=I)),h(e,ke,I=>n(50,C=I)),h(e,je,I=>n(2,u=I)),h(e,Ce,I=>n(38,o=I)),h(e,ge,I=>n(39,s=I)),h(e,X,I=>n(10,m=I)),h(e,U,I=>n(43,f=I)),h(e,be,I=>n(49,E=I)),h(e,qe,I=>n(46,g=I)),h(e,J,I=>n(51,T=I));let De,Pe,Ue,st,$e,V,ze,Qe;Pt(()=>{R(i)&&i({event:Re(Pe),timeText:ze,el:De,view:ve(o)})}),ct(()=>{R(l)&&!Ye(Ue)&&Ut(()=>l({view:ve(o)}),"eau",Fe)});function wt(I,xe){return!Ye(xe)&&R(I)?ie=>I({event:Re(Pe),el:De,jsEvent:ie,view:ve(o)}):void 0}function It(I,xe){return I.action?ie=>I.action.drag(Pe,ie,xe):void 0}function Kt(I){Se[I?"unshift":"push"](()=>{De=I,n(3,De)})}return e.$$set=I=>{"date"in I&&n(35,L=I.date),"chunk"in I&&n(36,M=I.chunk)},e.$$.update=()=>{if(e.$$.dirty[1]&32&&n(0,Pe=M.event),e.$$.dirty[0]&39|e.$$.dirty[1]&4192432){n(1,Ue=Pe.display);let I=D.seconds/60,xe=T.min.seconds/60,ie=(M.start-L)/1e3/60,Nt=(M.end-L)/1e3/60,B=(ie-xe)/I*C,Ne=(Nt-ie)/I*C,Te=(T.max.seconds/60-ie)/I*C,ut=Pe.backgroundColor||E(Pe)||w||v,rt=Pe.textColor||g(Pe)||p;n(5,$e=`top:${B}px;min-height:${Ne}px;height:${Ne}px;max-height:${Te}px;`),ut&&n(5,$e+=`background-color:${ut};`),rt&&n(5,$e+=`color:${rt};`),(!Ze(Ue)&&!Ye(Ue)||gr(Ue))&&n(5,$e+=`z-index:${M.column+1};left:${100/M.group.columns.length*M.column}%;width:${100/M.group.columns.length*(_?.5*(1+M.group.columns.length-M.column):1)}%;`),n(4,st=[Ze(Ue)?u.bgEvent:u.event,...f([],Pe),...Xt(d,Pe,o)].join(" "))}e.$$.dirty[0]&4|e.$$.dirty[1]&1952&&n(6,[ze,V]=Vt(M,c,a,u,s,o),V),e.$$.dirty[0]&2|e.$$.dirty[1]&64&&n(7,Qe=!Ze(Ue)&&wt(r,Ue))},[Pe,Ue,u,De,st,$e,V,Qe,k,b,m,A,S,H,z,K,$,me,ce,ye,W,te,Ae,Ee,ke,je,Ce,ge,X,U,be,qe,J,wt,It,L,M,r,o,s,a,c,d,f,_,p,g,v,w,E,C,T,D,Kt]}var Kn=class extends ae{constructor(t){super(),_e(this,t,cs,as,fe,{date:35,chunk:36},null,[-1,-1])}};function fs(e){let t,n;return{c(){t=N("div"),y(t,"class",n=e[1].nowIndicator),tn(t,"top",e[0]+"px")},m(r,o){G(r,t,o)},p(r,[o]){o&2&&n!==(n=r[1].nowIndicator)&&y(t,"class",n),o&1&&tn(t,"top",r[0]+"px")},i:re,o:re,d(r){r&&q(t)}}}function ds(e,t,n){let r,o,l,i,s,u,{slotDuration:a,slotHeight:c,theme:d,_now:f,_today:_,_slotTimeLimits:p}=he("state");h(e,a,w=>n(11,l=w)),h(e,c,w=>n(9,r=w)),h(e,d,w=>n(1,u=w)),h(e,f,w=>n(13,s=w)),h(e,_,w=>n(12,i=w)),h(e,p,w=>n(10,o=w));let g,v=0;return e.$$.update=()=>{if(e.$$.dirty&12288&&n(8,g=(s-i)/1e3/60),e.$$.dirty&3840){let w=l.seconds/60,E=o.min.seconds/60;n(0,v=(g-E)/w*r)}},[v,u,a,c,d,f,_,p,g,r,o,l,i,s]}var Dr=class extends ae{constructor(t){super(),_e(this,t,ds,fs,fe,{})}};function Bo(e,t,n){let r=e.slice();return r[33]=t[n],r}function qo(e,t,n){let r=e.slice();return r[33]=t[n],r}function zo(e,t){let n,r,o;return r=new Kn({props:{date:t[0],chunk:t[33]}}),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(l,i){G(l,n,i),Q(r,l,i),o=!0},p(l,i){t=l;let s={};i[0]&1&&(s.date=t[0]),i[0]&8&&(s.chunk=t[33]),r.$set(s)},i(l){o||(F(r.$$.fragment,l),o=!0)},o(l){P(r.$$.fragment,l),o=!1},d(l){l&&q(n),Z(r,l)}}}function Go(e){let t,n;return t=new Kn({props:{date:e[0],chunk:e[4][1]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o[0]&1&&(l.date=r[0]),o[0]&16&&(l.chunk=r[4][1]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Wo(e,t){let n,r,o;return r=new Kn({props:{date:t[0],chunk:t[33]}}),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(l,i){G(l,n,i),Q(r,l,i),o=!0},p(l,i){t=l;let s={};i[0]&1&&(s.date=t[0]),i[0]&4&&(s.chunk=t[33]),r.$set(s)},i(l){o||(F(r.$$.fragment,l),o=!0)},o(l){P(r.$$.fragment,l),o=!1},d(l){l&&q(n),Z(r,l)}}}function Yo(e){let t,n;return t=new Kn({props:{date:e[0],chunk:e[4][0]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o[0]&1&&(l.date=r[0]),o[0]&16&&(l.chunk=r[4][0]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function jo(e){let t,n;return t=new Dr({}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function hs(e){let t,n,r=[],o=new Map,l,i,s,u,a=[],c=new Map,d,f,_,p,g,v,w,E,C,T=ee(e[3]),D=A=>A[33].event;for(let A=0;A<T.length;A+=1){let S=qo(e,T,A),H=D(S);o.set(H,r[A]=zo(H,S))}let k=e[4][1]&&Go(e),b=ee(e[2]),m=A=>A[33].event;for(let A=0;A<b.length;A+=1){let S=Bo(e,b,A),H=m(S);c.set(H,a[A]=Wo(H,S))}let L=e[4][0]&&!e[4][0].event.allDay&&Yo(e),M=e[9]&&e[5]&&jo();return{c(){t=N("div"),n=N("div");for(let A=0;A<r.length;A+=1)r[A].c();i=le(),s=N("div"),k&&k.c(),u=le();for(let A=0;A<a.length;A+=1)a[A].c();d=le(),L&&L.c(),_=le(),p=N("div"),M&&M.c(),y(n,"class",l=e[7].bgEvents),y(s,"class",f=e[7].events),y(p,"class",g=e[7].extra),y(t,"class",v=e[7].day+" "+e[7].weekdays?.[e[0].getUTCDay()]+(e[5]?" "+e[7].today:"")+(e[6]?" "+e[7].highlight:"")),y(t,"role","cell")},m(A,S){G(A,t,S),Y(t,n);for(let H=0;H<r.length;H+=1)r[H]&&r[H].m(n,null);Y(t,i),Y(t,s),k&&k.m(s,null),Y(s,u);for(let H=0;H<a.length;H+=1)a[H]&&a[H].m(s,null);Y(s,d),L&&L.m(s,null),Y(t,_),Y(t,p),M&&M.m(p,null),e[29](t),w=!0,E||(C=[j(t,"pointerenter",function(){R(e[20](e[8]))&&e[20](e[8]).apply(this,arguments)}),j(t,"pointerleave",function(){R(e[8].pointer?.leave)&&e[8].pointer?.leave.apply(this,arguments)}),j(t,"pointerdown",function(){R(e[8].action?.select)&&e[8].action?.select.apply(this,arguments)})],E=!0)},p(A,S){e=A,S[0]&9&&(T=ee(e[3]),se(),r=mt(r,S,D,1,e,T,o,n,pt,zo,null,qo),ue()),(!w||S[0]&128&&l!==(l=e[7].bgEvents))&&y(n,"class",l),e[4][1]?k?(k.p(e,S),S[0]&16&&F(k,1)):(k=Go(e),k.c(),F(k,1),k.m(s,u)):k&&(se(),P(k,1,1,()=>{k=null}),ue()),S[0]&5&&(b=ee(e[2]),se(),a=mt(a,S,m,1,e,b,c,s,pt,Wo,d,Bo),ue()),e[4][0]&&!e[4][0].event.allDay?L?(L.p(e,S),S[0]&16&&F(L,1)):(L=Yo(e),L.c(),F(L,1),L.m(s,null)):L&&(se(),P(L,1,1,()=>{L=null}),ue()),(!w||S[0]&128&&f!==(f=e[7].events))&&y(s,"class",f),e[9]&&e[5]?M?S[0]&544&&F(M,1):(M=jo(),M.c(),F(M,1),M.m(p,null)):M&&(se(),P(M,1,1,()=>{M=null}),ue()),(!w||S[0]&128&&g!==(g=e[7].extra))&&y(p,"class",g),(!w||S[0]&225&&v!==(v=e[7].day+" "+e[7].weekdays?.[e[0].getUTCDay()]+(e[5]?" "+e[7].today:"")+(e[6]?" "+e[7].highlight:"")))&&y(t,"class",v)},i(A){if(!w){for(let S=0;S<T.length;S+=1)F(r[S]);F(k);for(let S=0;S<b.length;S+=1)F(a[S]);F(L),F(M),w=!0}},o(A){for(let S=0;S<r.length;S+=1)P(r[S]);P(k);for(let S=0;S<a.length;S+=1)P(a[S]);P(L),P(M),w=!1},d(A){A&&q(t);for(let S=0;S<r.length;S+=1)r[S].d();k&&k.d();for(let S=0;S<a.length;S+=1)a[S].d();L&&L.d(),M&&M.d(),e[29](null),E=!1,pe(C)}}}function _s(e,t,n){let r,o,l,i,s,u,a,c,d,f,{date:_}=t,{resource:p=void 0}=t,{_events:g,_iEvents:v,highlightedDates:w,nowIndicator:E,slotDuration:C,slotHeight:T,theme:D,_interaction:k,_today:b,_slotTimeLimits:m}=he("state");h(e,g,W=>n(28,a=W)),h(e,v,W=>n(27,u=W)),h(e,w,W=>n(25,i=W)),h(e,E,W=>n(9,f=W)),h(e,C,W=>n(31,o=W)),h(e,T,W=>n(30,r=W)),h(e,D,W=>n(7,c=W)),h(e,k,W=>n(8,d=W)),h(e,b,W=>n(26,s=W)),h(e,m,W=>n(24,l=W));let L,M,A,S=[],H,z,K,$;function me(W){return W-=lt(L).top,{allDay:!1,date:Me(Me(oe(_),l.min),o,qn(W/r)),resource:p,dayEl:L}}function ce(W){return W.pointer?te=>W.pointer.enterTimeGrid(_,L,te,p):void 0}function ye(W){Se[W?"unshift":"push"](()=>{L=W,n(1,L)})}return e.$$set=W=>{"date"in W&&n(0,_=W.date),"resource"in W&&n(21,p=W.resource)},e.$$.update=()=>{if(e.$$.dirty[0]&16777217&&(n(22,K=Me(oe(_),l.min)),n(23,$=Me(oe(_),l.max))),e.$$.dirty[0]&283115532){n(2,M=[]),n(3,A=[]);for(let W of a)if(!W.allDay&&dt(W,K,$,p,!0)){let te=at(W,K,$);switch(W.display){case"background":A.push(te);break;default:M.push(te)}}es(M)}e.$$.dirty[0]&148897792&&n(4,S=u.map(W=>W&&dt(W,K,$,p,!0)?at(W,K,$):null)),e.$$.dirty[0]&67108865&&n(5,H=Oe(_,s)),e.$$.dirty[0]&33554433&&n(6,z=i.some(W=>Oe(W,_))),e.$$.dirty[0]&2&&L&&jt(L,me)},[_,L,M,A,S,H,z,c,d,f,g,v,w,E,C,T,D,k,b,m,ce,p,K,$,l,i,s,u,a,ye]}var ps=class extends ae{constructor(t){super(),_e(this,t,_s,hs,fe,{date:0,resource:21},null,[-1,-1])}};function ms(e){let t,n,r,o,l,i,s,u,a,c,d;var f=e[10].resizer;function _(p,g){return{props:{event:p[0]}}}return f&&(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[30](e[10],!0))&&e[30](e[10],!0).apply(this,arguments)})),{c(){t=N("article"),n=N("div"),l=le(),i&&x(i.$$.fragment),y(n,"class",r=e[2].eventBody),y(t,"class",e[4]),y(t,"style",e[5]),y(t,"role",s=e[7]?"button":void 0),y(t,"tabindex",u=e[7]?0:void 0)},m(p,g){G(p,t,g),Y(t,n),Y(t,l),i&&Q(i,t,null),e[47](t),a=!0,c||(d=[He(o=We.call(null,n,e[6])),j(t,"click",function(){R(e[7])&&e[7].apply(this,arguments)}),j(t,"keydown",function(){R(e[7]&&nt(e[7]))&&(e[7]&&nt(e[7])).apply(this,arguments)}),j(t,"mouseenter",function(){R(e[29](e[8],e[1]))&&e[29](e[8],e[1]).apply(this,arguments)}),j(t,"mouseleave",function(){R(e[29](e[9],e[1]))&&e[29](e[9],e[1]).apply(this,arguments)}),j(t,"pointerdown",function(){R(!Ye(e[1])&&e[30](e[10]))&&(!Ye(e[1])&&e[30](e[10])).apply(this,arguments)})],c=!0)},p(p,g){if(e=p,(!a||g[0]&4&&r!==(r=e[2].eventBody))&&y(n,"class",r),o&&R(o.update)&&g[0]&64&&o.update.call(null,e[6]),g[0]&1024&&f!==(f=e[10].resizer)){if(i){se();let v=i;P(v.$$.fragment,1,0,()=>{Z(v,1)}),ue()}f?(i=et(f,_(e)),i.$on("pointerdown",function(){R(e[30](e[10],!0))&&e[30](e[10],!0).apply(this,arguments)}),x(i.$$.fragment),F(i.$$.fragment,1),Q(i,t,null)):i=null}else if(f){let v={};g[0]&1&&(v.event=e[0]),i.$set(v)}(!a||g[0]&16)&&y(t,"class",e[4]),(!a||g[0]&32)&&y(t,"style",e[5]),(!a||g[0]&128&&s!==(s=e[7]?"button":void 0))&&y(t,"role",s),(!a||g[0]&128&&u!==(u=e[7]?0:void 0))&&y(t,"tabindex",u)},i(p){a||(i&&F(i.$$.fragment,p),a=!0)},o(p){i&&P(i.$$.fragment,p),a=!1},d(p){p&&q(t),i&&Z(i),e[47](null),c=!1,pe(d)}}}function gs(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,p,g,v,w,E,C,T,{chunk:D}=t,{longChunks:k={}}=t,{displayEventEnd:b,eventAllUpdated:m,eventBackgroundColor:L,eventTextColor:M,eventClick:A,eventColor:S,eventContent:H,eventClassNames:z,eventDidMount:K,eventMouseEnter:$,eventMouseLeave:me,theme:ce,_view:ye,_intlEventTime:W,_interaction:te,_iClasses:Ae,_resBgColor:Ee,_resTxtColor:ke,_tasks:je}=he("state");h(e,b,V=>n(39,c=V)),h(e,m,V=>n(49,l=V)),h(e,L,V=>n(45,v=V)),h(e,M,V=>n(42,_=V)),h(e,A,V=>n(35,r=V)),h(e,S,V=>n(44,g=V)),h(e,H,V=>n(38,a=V)),h(e,z,V=>n(40,d=V)),h(e,K,V=>n(50,i=V)),h(e,$,V=>n(8,E=V)),h(e,me,V=>n(9,C=V)),h(e,ce,V=>n(2,u=V)),h(e,ye,V=>n(36,o=V)),h(e,W,V=>n(37,s=V)),h(e,te,V=>n(10,T=V)),h(e,Ae,V=>n(41,f=V)),h(e,Ee,V=>n(46,w=V)),h(e,ke,V=>n(43,p=V));let Ce,ge,X,U,be,qe,J=1,Fe,De;Pt(()=>{R(i)&&i({event:Re(ge),timeText:qe,el:Ce,view:ve(o)})}),ct(()=>{R(l)&&!Ye(Fe)&&Ut(()=>l({view:ve(o)}),"eau",je)});function Pe(V,ze){return!Ye(ze)&&R(V)?Qe=>V({event:Re(ge),el:Ce,jsEvent:Qe,view:ve(o)}):void 0}function Ue(V,ze){return V.action?Qe=>V.action.drag(ge,Qe,ze):void 0}function st(){Ce&&n(34,J=zn(D,k,Yt(Ce)))}function $e(V){Se[V?"unshift":"push"](()=>{Ce=V,n(3,Ce)})}return e.$$set=V=>{"chunk"in V&&n(31,D=V.chunk),"longChunks"in V&&n(32,k=V.longChunks)},e.$$.update=()=>{if(e.$$.dirty[1]&1&&n(0,ge=D.event),e.$$.dirty[0]&37|e.$$.dirty[1]&65065){n(1,Fe=ge.display);let V=ge.backgroundColor||w(ge)||v||g,ze=ge.textColor||p(ge)||_;n(5,U=`width:calc(${D.days*100}% + ${(D.days-1)*7}px);margin-top:${J}px;`),V&&n(5,U+=`background-color:${V};`),ze&&n(5,U+=`color:${ze};`),n(4,X=[u.event,...f([],ge),...Xt(d,ge,o)].join(" "))}e.$$.dirty[0]&4|e.$$.dirty[1]&481&&n(6,[qe,be]=Vt(D,c,a,u,s,o),be),e.$$.dirty[0]&2|e.$$.dirty[1]&16&&n(7,De=Pe(r,Fe))},[ge,Fe,u,Ce,X,U,be,De,E,C,T,b,m,L,M,A,S,H,z,K,$,me,ce,ye,W,te,Ae,Ee,ke,Pe,Ue,D,k,st,J,r,o,s,a,c,d,f,_,p,g,v,w,$e]}var Vn=class extends ae{constructor(t){super(),_e(this,t,gs,ms,fe,{chunk:31,longChunks:32,reposition:33},null,[-1,-1])}get reposition(){return this.$$.ctx[33]}};function Vo(e,t,n){let r=e.slice();return r[21]=t[n],r[22]=t,r[23]=n,r}function Xo(e){let t,n,r,o;return n=new Vn({props:{chunk:e[2][0]}}),{c(){t=N("div"),x(n.$$.fragment),y(t,"class",r=e[8].events+" "+e[8].preview)},m(l,i){G(l,t,i),Q(n,t,null),o=!0},p(l,i){let s={};i&4&&(s.chunk=l[2][0]),n.$set(s),(!o||i&256&&r!==(r=l[8].events+" "+l[8].preview))&&y(t,"class",r)},i(l){o||(F(n.$$.fragment,l),o=!0)},o(l){P(n.$$.fragment,l),o=!1},d(l){l&&q(t),Z(n)}}}function Ko(e,t){let n,r,o=t[23],l,i=()=>t[19](r,o),s=()=>t[19](null,o),u={chunk:t[21],longChunks:t[1]};return r=new Vn({props:u}),i(),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(a,c){G(a,n,c),Q(r,a,c),l=!0},p(a,c){t=a,o!==t[23]&&(s(),o=t[23],i());let d={};c&16&&(d.chunk=t[21]),c&2&&(d.longChunks=t[1]),r.$set(d)},i(a){l||(F(r.$$.fragment,a),l=!0)},o(a){P(r.$$.fragment,a),l=!1},d(a){a&&q(n),s(),Z(r,a)}}}function ys(e){let t,n=e[2][0]&&Oe(e[2][0].date,e[0]),r,o,l=[],i=new Map,s,u,a,c,d,f=n&&Xo(e),_=ee(e[4]),p=g=>g[21].event;for(let g=0;g<_.length;g+=1){let v=Vo(e,_,g),w=p(v);i.set(w,l[g]=Ko(w,v))}return{c(){t=N("div"),f&&f.c(),r=le(),o=N("div");for(let g=0;g<l.length;g+=1)l[g].c();y(o,"class",s=e[8].events),y(t,"class",u=e[8].day+" "+e[8].weekdays?.[e[0].getUTCDay()]+(e[5]?" "+e[8].today:"")+(e[6]?" "+e[8].highlight:"")),y(t,"role","cell")},m(g,v){G(g,t,v),f&&f.m(t,null),Y(t,r),Y(t,o);for(let w=0;w<l.length;w+=1)l[w]&&l[w].m(o,null);e[20](t),a=!0,c||(d=j(t,"pointerdown",function(){R(e[9].action?.select)&&e[9].action?.select.apply(this,arguments)}),c=!0)},p(g,[v]){e=g,v&5&&(n=e[2][0]&&Oe(e[2][0].date,e[0])),n?f?(f.p(e,v),v&5&&F(f,1)):(f=Xo(e),f.c(),F(f,1),f.m(t,r)):f&&(se(),P(f,1,1,()=>{f=null}),ue()),v&146&&(_=ee(e[4]),se(),l=mt(l,v,p,1,e,_,i,o,pt,Ko,null,Vo),ue()),(!a||v&256&&s!==(s=e[8].events))&&y(o,"class",s),(!a||v&353&&u!==(u=e[8].day+" "+e[8].weekdays?.[e[0].getUTCDay()]+(e[5]?" "+e[8].today:"")+(e[6]?" "+e[8].highlight:"")))&&y(t,"class",u)},i(g){if(!a){F(f);for(let v=0;v<_.length;v+=1)F(l[v]);a=!0}},o(g){P(f);for(let v=0;v<l.length;v+=1)P(l[v]);a=!1},d(g){g&&q(t),f&&f.d();for(let v=0;v<l.length;v+=1)l[v].d();e[20](null),c=!1,d()}}}function bs(e,t,n){let r,o,l,i,{date:s}=t,{chunks:u}=t,{longChunks:a}=t,{iChunks:c=[]}=t,{resource:d=void 0}=t,{highlightedDates:f,theme:_,_interaction:p,_today:g}=he("state");h(e,f,m=>n(17,r=m)),h(e,_,m=>n(8,l=m)),h(e,p,m=>n(9,i=m)),h(e,g,m=>n(18,o=m));let v,w,E,C,T=[];function D(){cn(T,w)}function k(m,L){Se[m?"unshift":"push"](()=>{T[L]=m,n(7,T)})}function b(m){Se[m?"unshift":"push"](()=>{v=m,n(3,v)})}return e.$$set=m=>{"date"in m&&n(0,s=m.date),"chunks"in m&&n(14,u=m.chunks),"longChunks"in m&&n(1,a=m.longChunks),"iChunks"in m&&n(2,c=m.iChunks),"resource"in m&&n(15,d=m.resource)},e.$$.update=()=>{if(e.$$.dirty&16401){n(4,w=[]);for(let m of u)Oe(m.date,s)&&w.push(m)}e.$$.dirty&262145&&n(5,E=Oe(s,o)),e.$$.dirty&131073&&n(6,C=r.some(m=>Oe(m,s))),e.$$.dirty&32777&&v&&jt(v,()=>({allDay:!0,date:s,resource:d,dayEl:v}))},[s,a,c,v,w,E,C,T,l,i,f,_,p,g,u,d,D,r,o,k,b]}var Tr=class extends ae{constructor(t){super(),_e(this,t,bs,ys,fe,{date:0,chunks:14,longChunks:1,iChunks:2,resource:15,reposition:16})}get reposition(){return this.$$.ctx[16]}};function Jo(e,t,n){let r=e.slice();return r[18]=t[n],r[19]=t,r[20]=n,r}function Zo(e){let t,n=e[20],r,o=()=>e[15](t,n),l=()=>e[15](null,n),i={date:e[18],chunks:e[2],longChunks:e[3],iChunks:e[4],resource:e[1]};return t=new Tr({props:i}),o(),{c(){x(t.$$.fragment)},m(s,u){Q(t,s,u),r=!0},p(s,u){n!==s[20]&&(l(),n=s[20],o());let a={};u&1&&(a.date=s[18]),u&4&&(a.chunks=s[2]),u&8&&(a.longChunks=s[3]),u&16&&(a.iChunks=s[4]),u&2&&(a.resource=s[1]),t.$set(a)},i(s){r||(F(t.$$.fragment,s),r=!0)},o(s){P(t.$$.fragment,s),r=!1},d(s){l(),Z(t,s)}}}function vs(e){let t,n,r,o,l=ee(e[0]),i=[];for(let u=0;u<l.length;u+=1)i[u]=Zo(Jo(e,l,u));let s=u=>P(i[u],1,1,()=>{i[u]=null});return{c(){for(let u=0;u<i.length;u+=1)i[u].c();t=we()},m(u,a){for(let c=0;c<i.length;c+=1)i[c]&&i[c].m(u,a);G(u,t,a),n=!0,r||(o=j(window,"resize",e[9]),r=!0)},p(u,[a]){if(a&63){l=ee(u[0]);let c;for(c=0;c<l.length;c+=1){let d=Jo(u,l,c);i[c]?(i[c].p(d,a),F(i[c],1)):(i[c]=Zo(d),i[c].c(),F(i[c],1),i[c].m(t.parentNode,t))}for(se(),c=l.length;c<i.length;c+=1)s(c);ue()}},i(u){if(!n){for(let a=0;a<l.length;a+=1)F(i[a]);n=!0}},o(u){i=i.filter(Boolean);for(let a=0;a<i.length;a+=1)P(i[a]);n=!1},d(u){u&&q(t),Ve(i,u),r=!1,o()}}}function ws(e,t,n){let r,o,l,{dates:i}=t,{resource:s=void 0}=t,{_events:u,_iEvents:a,_queue2:c,hiddenDays:d}=he("state");h(e,u,D=>n(14,l=D)),h(e,a,D=>n(13,o=D)),h(e,d,D=>n(12,r=D));let f,_,p=[],g,v,w=[],E={};function C(){sn(()=>cn(w,i),E,c)}function T(D,k){Se[D?"unshift":"push"](()=>{w[k]=D,n(5,w)})}return e.$$set=D=>{"dates"in D&&n(0,i=D.dates),"resource"in D&&n(1,s=D.resource)},e.$$.update=()=>{if(e.$$.dirty&1&&(n(10,g=i[0]),n(11,v=Je(oe(i[i.length-1])))),e.$$.dirty&23558){n(2,f=[]);for(let D of l)if(D.allDay&&D.display!=="background"&&dt(D,g,v,s)){let k=at(D,g,v);f.push(k)}n(3,_=an(f,r)),C()}e.$$.dirty&15362&&n(4,p=o.map(D=>{let k;return D&&D.allDay&&dt(D,g,v,s)?(k=at(D,g,v),an([k],r)):k=null,k}))},[i,s,f,_,p,w,u,a,d,C,g,v,r,o,l,T]}var Sr=class extends ae{constructor(t){super(),_e(this,t,ws,vs,fe,{dates:0,resource:1})}};function Qo(e,t,n){let r=e.slice();return r[10]=t[n],r}function xo(e,t,n){let r=e.slice();return r[10]=t[n],r}function $o(e){let t,n,r,o,l,i,s,u,a;return{c(){t=N("div"),n=N("time"),i=le(),y(n,"datetime",r=Ie(e[10],10)),y(n,"aria-label",o=e[2].format(e[10])),y(t,"class",s=e[0].day+" "+e[0].weekdays?.[e[10].getUTCDay()]),y(t,"role","columnheader")},m(c,d){G(c,t,d),Y(t,n),Y(t,i),u||(a=He(l=We.call(null,n,e[3].format(e[10]))),u=!0)},p(c,d){e=c,d&2&&r!==(r=Ie(e[10],10))&&y(n,"datetime",r),d&6&&o!==(o=e[2].format(e[10]))&&y(n,"aria-label",o),l&&R(l.update)&&d&10&&l.update.call(null,e[3].format(e[10])),d&3&&s!==(s=e[0].day+" "+e[0].weekdays?.[e[10].getUTCDay()])&&y(t,"class",s)},d(c){c&&q(t),u=!1,a()}}}function ks(e){let t,n=ee(e[1]),r=[];for(let o=0;o<n.length;o+=1)r[o]=$o(xo(e,n,o));return{c(){for(let o=0;o<r.length;o+=1)r[o].c();t=we()},m(o,l){for(let i=0;i<r.length;i+=1)r[i]&&r[i].m(o,l);G(o,t,l)},p(o,l){if(l&15){n=ee(o[1]);let i;for(i=0;i<n.length;i+=1){let s=xo(o,n,i);r[i]?r[i].p(s,l):(r[i]=$o(s),r[i].c(),r[i].m(t.parentNode,t))}for(;i<r.length;i+=1)r[i].d(1);r.length=n.length}},d(o){o&&q(t),Ve(r,o)}}}function ei(e){let t,n,r,o,l,i,s,u,a;return r=new Cn({props:{$$slots:{default:[Cs]},$$scope:{ctx:e}}}),{c(){t=N("div"),n=N("div"),x(r.$$.fragment),o=le(),l=N("div"),y(l,"class",i=e[0].hiddenScroll),y(n,"class",s=e[0].content),y(t,"class",u=e[0].allDay)},m(c,d){G(c,t,d),Y(t,n),Q(r,n,null),Y(n,o),Y(n,l),a=!0},p(c,d){let f={};d&32770&&(f.$$scope={dirty:d,ctx:c}),r.$set(f),(!a||d&1&&i!==(i=c[0].hiddenScroll))&&y(l,"class",i),(!a||d&1&&s!==(s=c[0].content))&&y(n,"class",s),(!a||d&1&&u!==(u=c[0].allDay))&&y(t,"class",u)},i(c){a||(F(r.$$.fragment,c),a=!0)},o(c){P(r.$$.fragment,c),a=!1},d(c){c&&q(t),Z(r)}}}function Cs(e){let t,n;return t=new Sr({props:{dates:e[1]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o&2&&(l.dates=r[1]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function ti(e){let t,n;return t=new ps({props:{date:e[10]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o&2&&(l.date=r[10]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Es(e){let t,n,r=ee(e[1]),o=[];for(let i=0;i<r.length;i+=1)o[i]=ti(Qo(e,r,i));let l=i=>P(o[i],1,1,()=>{o[i]=null});return{c(){for(let i=0;i<o.length;i+=1)o[i].c();t=we()},m(i,s){for(let u=0;u<o.length;u+=1)o[u]&&o[u].m(i,s);G(i,t,s),n=!0},p(i,s){if(s&2){r=ee(i[1]);let u;for(u=0;u<r.length;u+=1){let a=Qo(i,r,u);o[u]?(o[u].p(a,s),F(o[u],1)):(o[u]=ti(a),o[u].c(),F(o[u],1),o[u].m(t.parentNode,t))}for(se(),u=r.length;u<o.length;u+=1)l(u);ue()}},i(i){if(!n){for(let s=0;s<r.length;s+=1)F(o[s]);n=!0}},o(i){o=o.filter(Boolean);for(let s=0;s<o.length;s+=1)P(o[s]);n=!1},d(i){i&&q(t),Ve(o,i)}}}function Ds(e){let t,n,r,o,l,i,s,u,a,c;n=new Cn({props:{$$slots:{default:[ks]},$$scope:{ctx:e}}});let d=e[4]&&ei(e);return a=new Er({props:{$$slots:{default:[Es]},$$scope:{ctx:e}}}),{c(){t=N("div"),x(n.$$.fragment),r=le(),o=N("div"),s=le(),d&&d.c(),u=le(),x(a.$$.fragment),y(o,"class",l=e[0].hiddenScroll),y(t,"class",i=e[0].header)},m(f,_){G(f,t,_),Q(n,t,null),Y(t,r),Y(t,o),G(f,s,_),d&&d.m(f,_),G(f,u,_),Q(a,f,_),c=!0},p(f,[_]){let p={};_&32783&&(p.$$scope={dirty:_,ctx:f}),n.$set(p),(!c||_&1&&l!==(l=f[0].hiddenScroll))&&y(o,"class",l),(!c||_&1&&i!==(i=f[0].header))&&y(t,"class",i),f[4]?d?(d.p(f,_),_&16&&F(d,1)):(d=ei(f),d.c(),F(d,1),d.m(u.parentNode,u)):d&&(se(),P(d,1,1,()=>{d=null}),ue());let g={};_&32770&&(g.$$scope={dirty:_,ctx:f}),a.$set(g)},i(f){c||(F(n.$$.fragment,f),F(d),F(a.$$.fragment,f),c=!0)},o(f){P(n.$$.fragment,f),P(d),P(a.$$.fragment,f),c=!1},d(f){f&&(q(t),q(s),q(u)),Z(n),d&&d.d(f),Z(a,f)}}}function Ts(e,t,n){let r,o,l,i,s,{_viewDates:u,_intlDayHeader:a,_intlDayHeaderAL:c,allDaySlot:d,theme:f}=he("state");return h(e,u,_=>n(1,o=_)),h(e,a,_=>n(3,i=_)),h(e,c,_=>n(2,l=_)),h(e,d,_=>n(4,s=_)),h(e,f,_=>n(0,r=_)),[r,o,l,i,s,u,a,c,d,f]}var Xn=class extends ae{constructor(t){super(),_e(this,t,Ts,Ds,fe,{})}},ni={createOptions(e){e.buttonText.timeGridDay="day",e.buttonText.timeGridWeek="week",e.view="timeGridWeek",e.views.timeGridDay={buttonText:Gn,component:Xn,dayHeaderFormat:{weekday:"long"},duration:{days:1},theme:ht("ec-time-grid ec-day-view"),titleFormat:{year:"numeric",month:"long",day:"numeric"}},e.views.timeGridWeek={buttonText:Wn,component:Xn,duration:{weeks:1},theme:ht("ec-time-grid ec-week-view")}},createStores(e){e._slotTimeLimits=$l(e),e._times=xl(e)}};function Ss(e){let t,n,r,o,l,i=e[5].default,s=Tt(i,e,e[4],null);return{c(){t=N("div"),n=N("div"),s&&s.c(),y(n,"class",r=e[0].content),y(t,"class",o=e[0].body)},m(u,a){G(u,t,a),Y(t,n),s&&s.m(n,null),e[6](t),l=!0},p(u,[a]){s&&s.p&&(!l||a&16)&&Mt(s,i,u,u[4],l?St(i,u[4],a,null):Ft(u[4]),null),(!l||a&1&&r!==(r=u[0].content))&&y(n,"class",r),(!l||a&1&&o!==(o=u[0].body))&&y(t,"class",o)},i(u){l||(F(s,u),l=!0)},o(u){P(s,u),l=!1},d(u){u&&q(t),s&&s.d(u),e[6](null)}}}function Ms(e,t,n){let r,o,{$$slots:l={},$$scope:i}=t,{_bodyEl:s,theme:u}=he("state");h(e,s,c=>n(1,o=c)),h(e,u,c=>n(0,r=c));function a(c){Se[c?"unshift":"push"](()=>{o=c,s.set(o)})}return e.$$set=c=>{"$$scope"in c&&n(4,i=c.$$scope)},[r,o,s,u,i,l,a]}var Mr=class extends ae{constructor(t){super(),_e(this,t,Ms,Ss,fe,{})}};function Fs(e){let t,n,r,o,l,i,s,u,a,c,d;return{c(){t=N("article"),n=N("div"),o=le(),l=N("div"),y(n,"class",r=e[0].eventTag),y(n,"style",e[3]),y(l,"class",i=e[0].eventBody),y(t,"class",e[2]),y(t,"role",u=e[5]?"button":void 0),y(t,"tabindex",a=e[5]?0:void 0)},m(f,_){G(f,t,_),Y(t,n),Y(t,o),Y(t,l),e[40](t),c||(d=[He(s=We.call(null,l,e[4])),j(t,"click",function(){R(e[5])&&e[5].apply(this,arguments)}),j(t,"keydown",function(){R(e[5]&&nt(e[5]))&&(e[5]&&nt(e[5])).apply(this,arguments)}),j(t,"mouseenter",function(){R(e[26](e[6]))&&e[26](e[6]).apply(this,arguments)}),j(t,"mouseleave",function(){R(e[26](e[7]))&&e[26](e[7]).apply(this,arguments)}),j(t,"pointerdown",function(){R(e[8].action?.noAction)&&e[8].action?.noAction.apply(this,arguments)})],c=!0)},p(f,_){e=f,_[0]&1&&r!==(r=e[0].eventTag)&&y(n,"class",r),_[0]&8&&y(n,"style",e[3]),_[0]&1&&i!==(i=e[0].eventBody)&&y(l,"class",i),s&&R(s.update)&&_[0]&16&&s.update.call(null,e[4]),_[0]&4&&y(t,"class",e[2]),_[0]&32&&u!==(u=e[5]?"button":void 0)&&y(t,"role",u),_[0]&32&&a!==(a=e[5]?0:void 0)&&y(t,"tabindex",a)},i:re,o:re,d(f){f&&q(t),e[40](null),c=!1,pe(d)}}}function Ls(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,p,g,v,w,E,C,{chunk:T}=t,{displayEventEnd:D,eventAllUpdated:k,eventBackgroundColor:b,eventTextColor:m,eventColor:L,eventContent:M,eventClassNames:A,eventClick:S,eventDidMount:H,eventMouseEnter:z,eventMouseLeave:K,theme:$,_view:me,_intlEventTime:ce,_resBgColor:ye,_resTxtColor:W,_interaction:te,_tasks:Ae}=he("state");h(e,D,J=>n(33,c=J)),h(e,k,J=>n(42,l=J)),h(e,b,J=>n(38,g=J)),h(e,m,J=>n(35,f=J)),h(e,L,J=>n(37,p=J)),h(e,M,J=>n(32,a=J)),h(e,A,J=>n(34,d=J)),h(e,S,J=>n(29,r=J)),h(e,H,J=>n(43,i=J)),h(e,z,J=>n(6,w=J)),h(e,K,J=>n(7,E=J)),h(e,$,J=>n(0,u=J)),h(e,me,J=>n(30,o=J)),h(e,ce,J=>n(31,s=J)),h(e,ye,J=>n(39,v=J)),h(e,W,J=>n(36,_=J)),h(e,te,J=>n(8,C=J));let Ee,ke,je,Ce,ge,X,U;Pt(()=>{R(i)&&i({event:Re(ke),timeText:X,el:Ee,view:ve(o)})}),ct(()=>{R(l)&&Ut(()=>l({view:ve(o)}),"eau",Ae)});function be(J){return R(J)?Fe=>J({event:Re(ke),el:Ee,jsEvent:Fe,view:ve(o)}):void 0}function qe(J){Se[J?"unshift":"push"](()=>{Ee=J,n(1,Ee)})}return e.$$set=J=>{"chunk"in J&&n(27,T=J.chunk)},e.$$.update=()=>{if(e.$$.dirty[0]&134217728&&n(28,ke=T.event),e.$$.dirty[0]&1342177289|e.$$.dirty[1]&504){n(3,Ce="");let J=ke.backgroundColor||v(ke)||g||p;J&&n(3,Ce=`background-color:${J};`);let Fe=ke.textColor||_(ke)||f;Fe&&n(3,Ce+=`color:${Fe};`),n(2,je=[u.event,...Xt(d,ke,o)].join(" "))}e.$$.dirty[0]&1207959553|e.$$.dirty[1]&7&&n(4,[X,ge]=Vt(T,c,a,u,s,o),ge),e.$$.dirty[0]&536870912&&n(5,U=be(r))},[u,Ee,je,Ce,ge,U,w,E,C,D,k,b,m,L,M,A,S,H,z,K,$,me,ce,ye,W,te,be,T,ke,r,o,s,a,c,d,f,_,p,g,v,qe]}var Fr=class extends ae{constructor(t){super(),_e(this,t,Ls,Fs,fe,{chunk:27},null,[-1,-1])}};function ri(e,t,n){let r=e.slice();return r[21]=t[n],r}function oi(e){let t,n,r,o,l,i,s,u,a,c,d=[],f=new Map,_,p,g,v,w=ee(e[2]),E=C=>C[21].event;for(let C=0;C<w.length;C+=1){let T=ri(e,w,C),D=E(T);f.set(D,d[C]=ii(D,T))}return{c(){t=N("div"),n=N("h4"),r=N("time"),l=le(),i=N("time"),c=le();for(let C=0;C<d.length;C+=1)d[C].c();y(r,"datetime",e[5]),y(i,"class",s=e[6].daySide),y(i,"datetime",e[5]),y(n,"class",a=e[6].dayHead),y(t,"class",_=e[6].day+" "+e[6].weekdays?.[e[0].getUTCDay()]+(e[3]?" "+e[6].today:"")+(e[4]?" "+e[6].highlight:"")),y(t,"role","listitem")},m(C,T){G(C,t,T),Y(t,n),Y(n,r),Y(n,l),Y(n,i),Y(t,c);for(let D=0;D<d.length;D+=1)d[D]&&d[D].m(t,null);e[20](t),p=!0,g||(v=[He(o=We.call(null,r,e[8].format(e[0]))),He(u=We.call(null,i,e[9].format(e[0]))),j(t,"pointerdown",function(){R(e[7].action?.select)&&e[7].action?.select.apply(this,arguments)})],g=!0)},p(C,T){e=C,(!p||T&32)&&y(r,"datetime",e[5]),o&&R(o.update)&&T&257&&o.update.call(null,e[8].format(e[0])),(!p||T&64&&s!==(s=e[6].daySide))&&y(i,"class",s),(!p||T&32)&&y(i,"datetime",e[5]),u&&R(u.update)&&T&513&&u.update.call(null,e[9].format(e[0])),(!p||T&64&&a!==(a=e[6].dayHead))&&y(n,"class",a),T&4&&(w=ee(e[2]),se(),d=mt(d,T,E,1,e,w,f,t,pt,ii,null,ri),ue()),(!p||T&89&&_!==(_=e[6].day+" "+e[6].weekdays?.[e[0].getUTCDay()]+(e[3]?" "+e[6].today:"")+(e[4]?" "+e[6].highlight:"")))&&y(t,"class",_)},i(C){if(!p){for(let T=0;T<w.length;T+=1)F(d[T]);p=!0}},o(C){for(let T=0;T<d.length;T+=1)P(d[T]);p=!1},d(C){C&&q(t);for(let T=0;T<d.length;T+=1)d[T].d();e[20](null),g=!1,pe(v)}}}function ii(e,t){let n,r,o;return r=new Fr({props:{chunk:t[21]}}),{key:e,first:null,c(){n=we(),x(r.$$.fragment),this.first=n},m(l,i){G(l,n,i),Q(r,l,i),o=!0},p(l,i){t=l;let s={};i&4&&(s.chunk=t[21]),r.$set(s)},i(l){o||(F(r.$$.fragment,l),o=!0)},o(l){P(r.$$.fragment,l),o=!1},d(l){l&&q(n),Z(r,l)}}}function As(e){let t,n,r=e[2].length&&oi(e);return{c(){r&&r.c(),t=we()},m(o,l){r&&r.m(o,l),G(o,t,l),n=!0},p(o,[l]){o[2].length?r?(r.p(o,l),l&4&&F(r,1)):(r=oi(o),r.c(),F(r,1),r.m(t.parentNode,t)):r&&(se(),P(r,1,1,()=>{r=null}),ue())},i(o){n||(F(r),n=!0)},o(o){P(r),n=!1},d(o){o&&q(t),r&&r.d(o)}}}function Os(e,t,n){let r,o,l,i,s,u,a,{date:c}=t,{_events:d,_interaction:f,_intlListDay:_,_intlListDaySide:p,_today:g,highlightedDates:v,theme:w}=he("state");h(e,d,m=>n(19,l=m)),h(e,f,m=>n(7,s=m)),h(e,_,m=>n(8,u=m)),h(e,p,m=>n(9,a=m)),h(e,g,m=>n(18,o=m)),h(e,v,m=>n(17,r=m)),h(e,w,m=>n(6,i=m));let E,C,T,D,k;function b(m){Se[m?"unshift":"push"](()=>{E=m,n(1,E)})}return e.$$set=m=>{"date"in m&&n(0,c=m.date)},e.$$.update=()=>{if(e.$$.dirty&524293){n(2,C=[]);let m=c,L=Je(oe(c));for(let M of l)if(!Ze(M.display)&&dt(M,m,L)){let A=at(M,m,L);C.push(A)}kn(C)}e.$$.dirty&262145&&n(3,T=Oe(c,o)),e.$$.dirty&131073&&n(4,D=r.some(m=>Oe(m,c))),e.$$.dirty&1&&n(5,k=Ie(c,10)),e.$$.dirty&3&&E&&jt(E,()=>({allDay:!0,date:c,resource:void 0,dayEl:E}))},[c,E,C,T,D,k,i,s,u,a,d,f,_,p,g,v,w,r,o,l,b]}var Lr=class extends ae{constructor(t){super(),_e(this,t,Os,As,fe,{date:0})}};function li(e,t,n){let r=e.slice();return r[15]=t[n],r}function Ps(e){let t,n,r=ee(e[1]),o=[];for(let i=0;i<r.length;i+=1)o[i]=si(li(e,r,i));let l=i=>P(o[i],1,1,()=>{o[i]=null});return{c(){for(let i=0;i<o.length;i+=1)o[i].c();t=we()},m(i,s){for(let u=0;u<o.length;u+=1)o[u]&&o[u].m(i,s);G(i,t,s),n=!0},p(i,s){if(s&2){r=ee(i[1]);let u;for(u=0;u<r.length;u+=1){let a=li(i,r,u);o[u]?(o[u].p(a,s),F(o[u],1)):(o[u]=si(a),o[u].c(),F(o[u],1),o[u].m(t.parentNode,t))}for(se(),u=r.length;u<o.length;u+=1)l(u);ue()}},i(i){if(!n){for(let s=0;s<r.length;s+=1)F(o[s]);n=!0}},o(i){o=o.filter(Boolean);for(let s=0;s<o.length;s+=1)P(o[s]);n=!1},d(i){i&&q(t),Ve(o,i)}}}function Rs(e){let t,n,r,o,l;return{c(){t=N("div"),y(t,"class",n=e[3].noEvents)},m(i,s){G(i,t,s),o||(l=[He(r=We.call(null,t,e[0])),j(t,"click",e[10])],o=!0)},p(i,s){s&8&&n!==(n=i[3].noEvents)&&y(t,"class",n),r&&R(r.update)&&s&1&&r.update.call(null,i[0])},i:re,o:re,d(i){i&&q(t),o=!1,pe(l)}}}function si(e){let t,n;return t=new Lr({props:{date:e[15]}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,o){let l={};o&2&&(l.date=r[15]),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Us(e){let t,n,r,o,l=[Rs,Ps],i=[];function s(u,a){return u[2]?0:1}return t=s(e),n=i[t]=l[t](e),{c(){n.c(),r=we()},m(u,a){i[t].m(u,a),G(u,r,a),o=!0},p(u,a){let c=t;t=s(u),t===c?i[t].p(u,a):(se(),P(i[c],1,1,()=>{i[c]=null}),ue(),n=i[t],n?n.p(u,a):(n=i[t]=l[t](u),n.c()),F(n,1),n.m(r.parentNode,r))},i(u){o||(F(n),o=!0)},o(u){P(n),o=!1},d(u){u&&q(r),i[t].d(u)}}}function Hs(e){let t,n;return t=new Mr({props:{$$slots:{default:[Us]},$$scope:{ctx:e}}}),{c(){x(t.$$.fragment)},m(r,o){Q(t,r,o),n=!0},p(r,[o]){let l={};o&262159&&(l.$$scope={dirty:o,ctx:r}),t.$set(l)},i(r){n||(F(t.$$.fragment,r),n=!0)},o(r){P(t.$$.fragment,r),n=!1},d(r){Z(t,r)}}}function Is(e,t,n){let r,o,l,i,s,u,{_events:a,_view:c,_viewDates:d,noEventsClick:f,noEventsContent:_,theme:p}=he("state");h(e,a,E=>n(12,i=E)),h(e,c,E=>n(13,r=E)),h(e,d,E=>n(1,s=E)),h(e,f,E=>n(14,o=E)),h(e,_,E=>n(11,l=E)),h(e,p,E=>n(3,u=E));let g,v;function w(E){R(o)&&o({jsEvent:E,view:ve(r)})}return e.$$.update=()=>{if(e.$$.dirty&4098&&(n(2,g=!0),s.length)){let E=s[0],C=Je(oe(s[s.length-1]));for(let T of i)if(!Ze(T.display)&&T.start<C&&T.end>E){n(2,g=!1);break}}e.$$.dirty&2049&&(n(0,v=R(l)?l():l),typeof v=="string"&&n(0,v={html:v}))},[v,s,g,u,a,c,d,f,_,p,w,l,i]}var dn=class extends ae{constructor(t){super(),_e(this,t,Is,Hs,fe,{})}},ui={createOptions(e){e.buttonText.listDay="list",e.buttonText.listWeek="list",e.buttonText.listMonth="list",e.buttonText.listYear="list",e.listDayFormat={weekday:"long"},e.listDaySideFormat={year:"numeric",month:"long",day:"numeric"},e.noEventsClick=void 0,e.noEventsContent="No events",e.theme.daySide="ec-day-side",e.theme.eventTag="ec-event-tag",e.theme.noEvents="ec-no-events",e.view="listWeek",e.views.listDay={buttonText:Gn,component:dn,duration:{days:1},theme:ht("ec-list ec-day-view")},e.views.listWeek={buttonText:Wn,component:dn,duration:{weeks:1},theme:ht("ec-list ec-week-view")},e.views.listMonth={buttonText:Yn,component:dn,duration:{months:1},theme:ht("ec-list ec-month-view")},e.views.listYear={buttonText:yo,component:dn,duration:{years:1},theme:ht("ec-list ec-year-view")}},createStores(e){e._intlListDay=gt(e.locale,e.listDayFormat),e._intlListDaySide=gt(e.locale,e.listDaySideFormat)}};var Ar=!1;function Ns(e){Ar||(Ar=!0,window.requestAnimationFrame(()=>{e(),Ar=!1}))}function ai(e,t,n){return it(t,vt(n,e))}var{window:Ht}=yn;function Bs(e){let t,n;return{c:re,m(r,o){t||(n=[j(Ht,"pointermove",e[31]),j(Ht,"pointerup",e[32]),j(Ht,"pointercancel",e[32]),j(Ht,"scroll",e[0]),j(Ht,"selectstart",Qn(e[33])),j(Ht,"contextmenu",function(){R(Qn(e[41]))&&Qn(e[41]).apply(this,arguments)}),j(Ht,"touchstart",e[34]),j(Ht,"touchmove",e[40],{passive:!1})],t=!0)},p(r,o){e=r},i:re,o:re,d(r){t=!1,pe(n)}}}var ci=1,fi=2,di=3,Or=4,Jn=5;function hi(e){return e.isPrimary&&(e.pointerType!=="mouse"||e.buttons&1)}function Qn(e){return t=>{e()&&t.preventDefault()}}function qs(e,t,n){let r,o,l,i,s,u,a,c,d,f,_,p,g,v,w,E,C,T,D,k,b,m,L,M,A,S,H,z,K,{_iEvents:$,_iClass:me,_events:ce,_view:ye,_dayGrid:W,_draggable:te,dateClick:Ae,dragScroll:Ee,datesAboveResources:ke,eventDragMinDistance:je,eventDragStart:Ce,eventDragStop:ge,eventDrop:X,eventLongPressDelay:U,eventResizeStart:be,eventResizeStop:qe,eventResize:J,longPressDelay:Fe,selectable:De,select:Pe,selectBackgroundColor:Ue,selectLongPressDelay:st,selectMinDistance:$e,slotDuration:V,slotHeight:ze,unselect:Qe,unselectAuto:wt,unselectCancel:It,view:Kt}=he("state");h(e,$,O=>n(69,i=O)),h(e,me,O=>n(72,a=O)),h(e,ce,O=>n(68,l=O)),h(e,ye,O=>n(66,r=O)),h(e,W,O=>n(71,u=O)),h(e,te,O=>n(94,K=O)),h(e,Ae,O=>n(73,c=O)),h(e,Ee,O=>n(82,C=O)),h(e,ke,O=>n(90,A=O)),h(e,je,O=>n(85,k=O)),h(e,Ce,O=>n(83,T=O)),h(e,ge,O=>n(76,_=O)),h(e,X,O=>n(74,d=O)),h(e,U,O=>n(88,L=O)),h(e,be,O=>n(84,D=O)),h(e,qe,O=>n(77,p=O)),h(e,J,O=>n(75,f=O)),h(e,Fe,O=>n(87,m=O)),h(e,De,O=>n(93,z=O)),h(e,Pe,O=>n(78,g=O)),h(e,Ue,O=>n(70,s=O)),h(e,st,O=>n(89,M=O)),h(e,$e,O=>n(86,b=O)),h(e,V,O=>n(91,S=O)),h(e,ze,O=>n(81,E=O)),h(e,Qe,O=>n(67,o=O)),h(e,wt,O=>n(80,w=O)),h(e,It,O=>n(79,v=O)),h(e,Kt,O=>n(92,H=O));let I,xe,ie,Nt,B,Ne,Te,ut,rt,hn,kt,Be,Jt,Ct,xn,En,Zt,Et,$n,Dt,Dn,Tn,er,Qt,_n;function wi(O,ne,Ge,ot){I||(I=hi(ne)?Ge?fi:K(O)?ci:Jn:Jn,$t()&&(ie=O,Nr(ne),ot&&(B=ot),$n=Ge?Et?"resizingX":"resizingY":"dragging",Ge&&(Dt=oe(ie.start),Et?(Dt.setUTCHours(ie.end.getUTCHours(),ie.end.getUTCMinutes(),ie.end.getUTCSeconds(),0),Dt<ie.start&&Je(Dt)):Me(Dt,S)),pn(ne)))}function ki(O){I||(I=hi(O)?z&&!Un(H)?di:Or:Jn,$t()&&(Nr(O),$n="selecting",Dn=Et?tt({day:1}):S,ie={allDay:Et,start:B,end:Me(oe(B),Dn),resourceIds:Te?[Te.id]:[]},pn(O)))}function Ci(){I||(I=Jn)}function Nr(O){window.getSelection().removeAllRanges(),rt=kt=O.clientX,hn=Be=O.clientY;let ne=un(kt,Be);({allDay:Et,date:B,resource:Te}=wn(ne)(Be)),Jt=Wt(ne,Te?4:3),xn=Wt(ne,Te&&(Ai()||A)?2:1),Br(),O.pointerType!=="mouse"&&n(1,Qt=setTimeout(()=>{I&&(xe=!0,pn(O))},(xt()?M:L)??m))}function pn(O){if(xe||O&&O.pointerType==="mouse"&&Li()>=(xt()?b:k)){xe=!0,Sn(O),de(me,a=$n,a),i[0]||(xt()?Fi():Mi(O,mn()?D:T));let ne=Si();if(ne){let Ge;({allDay:Ge,date:Ne,resource:ut}=wn(ne)(Be)),Ge===Et&&(Zt=tt((Ne-B)/1e3),de($,i[0].end=Me(oe(ie.end),Zt),i),mn()?i[0].end<Dt&&de($,i[0].end=Dt,i):xt()?i[0].end<ie.end?(de($,i[0].start=_r(i[0].end,Dn),i),de($,i[0].end=ie.end,i)):de($,i[0].start=ie.start,i):(de($,i[0].start=Me(oe(ie.start),Zt),i),Te&&(de($,i[0].resourceIds=ie.resourceIds.filter(ot=>ot!==Te.id),i),i[0].resourceIds.push(ut.id))))}}if(C){let ne=E*2;Ns(()=>{Jt&&(Be<ne&&window.scrollBy(0,it(-10,(Be-ne)/3)),Be<Ct.top+ne&&(Jt.scrollTop+=it(-10,(Be-Ct.top-ne)/3)),Be>window.innerHeight-ne&&window.scrollBy(0,vt(10,(Be-window.innerHeight+ne)/3)),Be>Ct.bottom-ne&&(Jt.scrollTop+=vt(10,(Be-Ct.bottom+ne)/3)))})}}function Ei(){$t()&&(Br(),pn())}function Di(O){$t()&&O.isPrimary&&(kt=O.clientX,Be=O.clientY,pn(O))}function Ti(O){if(Tn&&w&&!(v&&O.target.closest(v))&&Sn(O),I&&O.isPrimary){if(xe)if(xt()){if(Tn=!0,R(g)){let{start:ne,end:Ge}=Re(i[0]);g({start:ne,end:Ge,startStr:Ie(i[0].start),endStr:Ie(i[0].end),allDay:Et,jsEvent:O,view:ve(r),resource:Te})}}else{ie.display=Nt;let ne=mn()?p:_;R(ne)&&ne({event:Re(ie),jsEvent:O,view:ve(r)});let Ge=mr(ie);if(zr(ie,i[0]),qr(),ne=mn()?f:d,R(ne)){let ot=ie,gn;mn()?gn={endDelta:Zt}:gn={delta:Zt,oldResource:Te!==ut?Te:void 0,newResource:Te!==ut?ut:void 0},ne(bt(gn,{event:Re(ie),oldEvent:Re(Ge),jsEvent:O,view:ve(r),revert(){zr(ot,Ge)}}))}}else if((Oi()||xt())&&R(c)&&!er){kt=O.clientX,Be=O.clientY;let ne=un(kt,Be);if(ne){let{allDay:Ge,date:ot,resource:gn}=wn(ne)(Be);c({allDay:Ge,date:Ke(ot),dateStr:Ie(ot),dayEl:ne,jsEvent:O,view:ve(r),resource:gn})}}xe=!1,I=rt=hn=kt=Be=ie=Nt=B=Ne=Te=ut=Zt=Et=de(me,a=Dt=Dn=void 0,a),Jt=xn=Ct=En=void 0,Qt&&(clearTimeout(Qt),n(1,Qt=void 0))}er=!1}function Si(){return un(ai(kt,_n[0],_n[1]),ai(Be,_n[2],_n[3]))}function Br(){Ct=lt(Jt),En=lt(xn),_n=[it(0,En.left+(u?0:8)),vt(document.documentElement.clientWidth,En.right)-2,it(0,Ct.top),vt(document.documentElement.clientHeight,Ct.bottom)-2]}function Mi(O,ne){R(ne)&&ne({event:Re(ie),jsEvent:O,view:ve(r)}),Nt=ie.display,ie.display="preview",de($,i[0]=mr(ie),i),ie.display="ghost",ce.set(l)}function Fi(){de($,i[0]={id:"{select}",allDay:ie.allDay,start:ie.start,title:"",display:"preview",extendedProps:{},backgroundColor:s,resourceIds:ie.resourceIds},i)}function qr(){de($,i[0]=null,i)}function zr(O,ne){O.start=ne.start,O.end=ne.end,O.resourceIds=ne.resourceIds,ce.set(l)}function Li(){return Math.sqrt(Math.pow(kt-rt,2)+Math.pow(Be-hn,2))}function Ai(){return I===ci}function mn(){return I===fi}function Oi(){return I===Or}function xt(){return I===di}function $t(){return I&&I<Or}function Sn(O){Tn&&(Tn=!1,qr(),R(o)&&o({jsEvent:O,view:ve(r)}))}function Pi(){er=!0}ye.subscribe(Sn);function Ri(O){if($t()){let ne=O.target,Ge=[],ot=()=>pe(Ge);Ge.push(j(ne,"touchmove",Qn(()=>xe))),Ge.push(j(ne,"touchend",ot)),Ge.push(j(ne,"touchcancel",ot))}}function Ui(O){nn.call(this,e,O)}return[Ei,Qt,$,me,ce,ye,W,te,Ae,Ee,ke,je,Ce,ge,X,U,be,qe,J,Fe,De,Pe,Ue,st,$e,V,ze,Qe,wt,It,Kt,Di,Ti,$t,Ri,wi,ki,Ci,Sn,Pi,Ui,()=>Qt]}var Pr=class extends ae{constructor(t){super(),_e(this,t,qs,Bs,fe,{drag:35,select:36,noAction:37,handleScroll:0,unselect:38,noClick:39},null,[-1,-1,-1,-1])}get drag(){return this.$$.ctx[35]}get select(){return this.$$.ctx[36]}get noAction(){return this.$$.ctx[37]}get handleScroll(){return this.$$.ctx[0]}get unselect(){return this.$$.ctx[38]}get noClick(){return this.$$.ctx[39]}};function zs(e){let t,n;return{c:re,m(r,o){t||(n=[j(window,"pointermove",e[5]),j(window,"scroll",e[0])],t=!0)},p:re,i:re,o:re,d(r){t=!1,pe(n)}}}function Zn(e){return e.isPrimary&&e.pointerType==="mouse"}function Gs(e,t,n){let r,o,l,i,{_iEvents:s,_events:u,_viewDates:a,_slotTimeLimits:c,slotDuration:d,slotHeight:f,hiddenDays:_,_view:p,datesAboveResources:g,theme:v}=he("state");h(e,s,K=>n(9,r=K)),h(e,c,K=>n(18,i=K)),h(e,d,K=>n(16,o=K)),h(e,f,K=>n(17,l=K));let w,E,C,T,D,k;function b(K,$,me,ce){Zn(me)&&(E=K,C=$,T=lt(C),w=me.clientY,D=ce)}function m(K,$){Zn($)&&(E=K,C=null,w=D=void 0)}function L(K){Zn(K)&&z()}function M(){if(E){if(C){let K=w-T.top;k=Me(Me(oe(E),i.min),o,qn(K/l))}else k=E;r[1]||H(),de(s,r[1].start=k,r),de(s,r[1].end=Me(oe(k),o),r),de(s,r[1].resourceIds=D?[D.id]:[],r)}}function A(){C&&(T=lt(C),M())}function S(K){Zn(K)&&(w=K.clientY,M())}function H(){de(s,r[1]={id:"{pointer}",title:"",display:"pointer",extendedProps:{},backgroundColor:"transparent"},r)}function z(){E=C=de(s,r[1]=null,r)}return e.$$.update=()=>{e.$$.dirty&512&&r[0]&&z()},[A,s,c,d,f,S,b,m,L,r]}var Rr=class extends ae{constructor(t){super(),_e(this,t,Gs,zs,fe,{enterTimeGrid:6,enterDayGrid:7,leave:8,handleScroll:0})}get enterTimeGrid(){return this.$$.ctx[6]}get enterDayGrid(){return this.$$.ctx[7]}get leave(){return this.$$.ctx[8]}get handleScroll(){return this.$$.ctx[0]}};function _i(e){let t,n,r,o;return{c(){t=N("div"),y(t,"class",n=e[1].resizer)},m(l,i){G(l,t,i),r||(o=j(t,"pointerdown",e[8]),r=!0)},p(l,i){i&2&&n!==(n=l[1].resizer)&&y(t,"class",n)},d(l){l&&q(t),r=!1,o()}}}function Ws(e){let t,n=e[0]&&_i(e);return{c(){n&&n.c(),t=we()},m(r,o){n&&n.m(r,o),G(r,t,o)},p(r,[o]){r[0]?n?n.p(r,o):(n=_i(r),n.c(),n.m(t.parentNode,t)):n&&(n.d(1),n=null)},i:re,o:re,d(r){r&&q(t),n&&n.d(r)}}}function Ys(e,t,n){let r,o,l,{event:i}=t,{theme:s,eventDurationEditable:u,editable:a}=he("state");h(e,s,f=>n(1,l=f)),h(e,u,f=>n(7,o=f)),h(e,a,f=>n(6,r=f));let c;function d(f){nn.call(this,e,f)}return e.$$set=f=>{"event"in f&&n(5,i=f.event)},e.$$.update=()=>{e.$$.dirty&224&&n(0,c=!Ze(i.display)&&!Ye(i.display)&&((i.durationEditable??o)||(i.editable??r)))},[c,l,s,u,a,i,r,o,d]}var Ur=class extends ae{constructor(t){super(),_e(this,t,Ys,Ws,fe,{event:5})}};function pi(e){let t,n,r={};return t=new Rr({props:r}),e[16](t),{c(){x(t.$$.fragment)},m(o,l){Q(t,o,l),n=!0},p(o,l){let i={};t.$set(i)},i(o){n||(F(t.$$.fragment,o),n=!0)},o(o){P(t.$$.fragment,o),n=!1},d(o){e[16](null),Z(t,o)}}}function js(e){let t,n,r,o,l={};t=new Pr({props:l}),e[15](t);let i=e[1]&&pi(e);return{c(){x(t.$$.fragment),n=le(),i&&i.c(),r=we()},m(s,u){Q(t,s,u),G(s,n,u),i&&i.m(s,u),G(s,r,u),o=!0},p(s,[u]){let a={};t.$set(a),s[1]?i?(i.p(s,u),u&2&&F(i,1)):(i=pi(s),i.c(),F(i,1),i.m(r.parentNode,r)):i&&(se(),P(i,1,1,()=>{i=null}),ue())},i(s){o||(F(t.$$.fragment,s),F(i),o=!0)},o(s){P(t.$$.fragment,s),P(i),o=!1},d(s){s&&(q(n),q(r)),e[15](null),Z(t,s),i&&i.d(s)}}}function Vs(e,t,n){let r,o,l,i,s,u,a,c,{theme:d,editable:f,eventStartEditable:_,eventDurationEditable:p,pointer:g,_bodyEl:v,_interaction:w,_iClasses:E,_draggable:C}=he("state");h(e,d,b=>n(11,l=b)),h(e,f,b=>n(13,u=b)),h(e,_,b=>n(14,a=b)),h(e,g,b=>n(1,c=b)),h(e,v,b=>n(10,o=b)),h(e,w,b=>n(0,r=b)),h(e,E,b=>n(17,s=b)),h(e,C,b=>n(12,i=b)),de(w,r.resizer=Ur,r);function T(){for(let b of Object.values(r))b?.handleScroll?.()}function D(b){Se[b?"unshift":"push"](()=>{r.action=b,w.set(r)})}function k(b){Se[b?"unshift":"push"](()=>{r.pointer=b,w.set(r)})}return e.$$.update=()=>{e.$$.dirty&24576&&de(C,i=b=>(b.startEditable??a)||(b.editable??u),i),e.$$.dirty&6144&&de(E,s=(b,m)=>{let{display:L}=m;return Ye(L)?[l[L]]:!Ze(L)&&i(m)?[l.draggable]:[]},s),e.$$.dirty&1024&&o&&j(o,"scroll",T)},[r,c,d,f,_,g,v,w,E,C,o,l,i,u,a,D,k]}var Hr=class extends ae{constructor(t){super(),_e(this,t,Vs,js,fe,{})}},mi={createOptions(e){e.dateClick=void 0,e.dragScroll=!0,e.editable=!1,e.eventDragMinDistance=5,e.eventDragStart=void 0,e.eventDragStop=void 0,e.eventDrop=void 0,e.eventDurationEditable=!0,e.eventLongPressDelay=void 0,e.eventResizeStart=void 0,e.eventResizeStop=void 0,e.eventResize=void 0,e.eventStartEditable=!0,e.longPressDelay=1e3,e.pointer=!1,e.select=void 0,e.selectBackgroundColor=void 0,e.selectLongPressDelay=void 0,e.selectMinDistance=5,e.unselect=void 0,e.unselectAuto=!0,e.unselectCancel="",e.theme.draggable="ec-draggable",e.theme.ghost="ec-ghost",e.theme.preview="ec-preview",e.theme.pointer="ec-pointer",e.theme.resizer="ec-resizer",e.theme.dragging="ec-dragging",e.theme.resizingY="ec-resizing-y",e.theme.resizingX="ec-resizing-x",e.theme.selecting="ec-selecting"},createStores(e){e._draggable=Le(re),e._auxiliary.update(t=>[...t,Hr])}};import xs from"@typo3/core/document-service.js";import gi from"@typo3/core/ajax/ajax-request.js";import Xs from"@typo3/backend/viewport.js";var Ks="tx_ximatypo3calendar_domain_model_event",Js="09:00",Zs="09:30",Ir="xima_calendar_pending_event";function yi(e,t){let n=!1,r=()=>Number(e.dataset.appointmentPid)>0&&e.dataset.createAllowed==="1"&&!!e.dataset.createEventUrl,o=g=>{let v=g.match(/^(\d{1,2}):(\d{2})$/);return v?Number(v[1])<24&&Number(v[2])<60:!1},l=e.dataset.newEventDefaultStartTime||"",i=e.dataset.newEventDefaultEndTime||"",s=o(l)?l:Js,u=o(i)?i:Zs,a=e.dataset.newEventDefaultAllDay==="1",c=(g,v)=>{let w=v.match(/^(\d{1,2}):(\d{2})$/);w&&g.setHours(Number(w[1]),Number(w[2]),0,0)},d=g=>{let v=new URLSearchParams;v.set(`edit[${Ks}][${g}]`,"edit"),v.set("module",t.TYPO3.ModuleMenu.App.getCurrentModule()),v.set("returnUrl",document.location.pathname+document.location.search);let w=t.TYPO3.settings.FormEngine.moduleUrl;Xs.ContentContainer.setUrl(`${w}&${v.toString()}`)},f=async g=>{if(!r())return;let v=new Date(g.start),w=new Date(g.end),E=g.allDay,C=E&&a;E&&(C?(v.setHours(0,0,0,0),w=new Date(w),w.setHours(0,0,0,0)):(c(v,s),w=new Date(w),w.setDate(w.getDate()-1),c(w,u),w<=v&&w.setDate(w.getDate()+1)));let D=await(await new gi(e.dataset.createEventUrl).post({start:Math.floor(v.getTime()/1e3),end:Math.floor(w.getTime()/1e3),allDay:C?1:0})).resolve();D.success&&D.eventUid&&(sessionStorage.setItem(Ir,String(D.eventUid)),d(D.eventUid))};return{select:g=>{if(n){n=!1;return}f(g)},dateClick:g=>{let v=new Date(g.date),w=new Date(v.getTime()+(g.allDay?864e5:18e5));f({start:v,end:w,allDay:g.allDay})},cleanupPendingEvent:async()=>{let g=sessionStorage.getItem(Ir),v=e.dataset.cleanupEventUrl;if(!(!g||!v))try{let w=new URL(v,document.location.origin);w.searchParams.set("eventUid",g),(await(await new gi(w).get()).resolve()).success&&sessionStorage.removeItem(Ir)}catch{}},cancelSelection:()=>{n=!0}}}import Qs from"@typo3/backend/viewport.js";function bi(e,t){let r=e.closest(".xima-calendar-content")?.querySelector(".xima-calendar-event-detail"),o=r?.querySelector(".xima-calendar-event-detail__title"),l=null,i=null,s=()=>{l?.remove(),l=null,i=null},u=a=>{let c=a.event.extendedProps.eventUid;if(typeof c!="number"&&typeof c!="string")return;let d="tx_ximatypo3calendar_domain_model_event",f=document.location.pathname+document.location.search;Qs.ContentContainer.setUrl(t.TYPO3.settings.FormEngine.moduleUrl+"&edit["+d+"]["+c+"]=edit&module="+encodeURIComponent(t.TYPO3.ModuleMenu.App.getCurrentModule())+"&returnUrl="+f)};return{datesSet:s,eventClick:a=>{let c=a.event.id??null;if(l&&i===c){s();return}if(s(),a.view?.type?.startsWith("list")){l=document.createElement("div"),l.className="xima-calendar-inline-event-detail",l.textContent=a.event.title??"",a.el.insertAdjacentElement("afterend",l),i=c;return}if(o&&r?.offsetParent!==null&&window.innerHeight>=930){o.textContent=a.event.title??"";return}u(a)}}}function vi(e,t,n,r){let o=()=>{let C=(new Date().getDay()-r.firstDay+7)%7;e.querySelectorAll(".ec-header .ec-days .ec-day").forEach((D,k)=>{D.classList.toggle("active",k===C)})},l=()=>{document.querySelectorAll(".xima-calendar-selection-overlay").forEach(E=>E.remove())},i=()=>{e.classList.add("xima-calendar-selection-cancelled"),e.querySelectorAll(".ec-event.ec-preview, .ec-events.ec-preview").forEach(E=>{E.remove()}),l()},s=()=>{e.classList.remove("xima-calendar-selection-cancelled")},u=(E,C,T,D)=>{let k=document.createElement("div");k.className="xima-calendar-selection-overlay",k.style.left=`${E}px`,k.style.top=`${C}px`,k.style.width=`${T-E}px`,k.style.height=`${D-C}px`,document.body.appendChild(k)},a=()=>{l();let E=e.querySelector(".ec.ec-selecting");if(!E)return;if(E.classList.contains("ec-time-grid")){let b=Array.from(E.querySelectorAll(".ec-body .ec-event.ec-preview"));if(b.length===0)return;let m=b.map(A=>A.getBoundingClientRect()),L=Array.from(E.querySelectorAll(".ec-body .ec-day")).filter(A=>{let S=A.getBoundingClientRect();return m.some(H=>S.right>H.left&&S.left<H.right)});if(L.length===0)return;let M=E.querySelector(".ec-body")?.getBoundingClientRect();if(!M)return;b.forEach((A,S)=>{let H=m[S],z=L.find(W=>{let te=W.getBoundingClientRect();return te.right>H.left&&te.left<H.right});if(!z)return;let K=z.getBoundingClientRect(),$=Math.max(K.left,M.left),me=Math.min(K.right,M.right),ce=Math.max(H.top,M.top),ye=Math.min(H.bottom,M.bottom);me<=$||ye<=ce||u($,ce,me,ye)});return}if(!E.classList.contains("ec-day-grid"))return;let C=Array.from(E.querySelectorAll(".ec-events.ec-preview > .ec-event"));if(C.length===0)return;let T=C.map(b=>b.getBoundingClientRect()),D=Array.from(E.querySelectorAll(".ec-body .ec-day")).filter(b=>{let m=b.getBoundingClientRect();return T.some(L=>m.right>L.left&&m.left<L.right&&m.bottom>L.top&&m.top<L.bottom)}),k=new Map;D.forEach(b=>{let m=b.getBoundingClientRect(),L=Math.round(m.top),M=k.get(L)??[];M.push(m),k.set(L,M)}),k.forEach(b=>{u(Math.min(...b.map(m=>m.left)),Math.min(...b.map(m=>m.top)),Math.max(...b.map(m=>m.right)),Math.max(...b.map(m=>m.bottom)))})},c,d=()=>{c===void 0&&(c=requestAnimationFrame(()=>{c=void 0,a()}))},f=!1,_=E=>{if(!r.enableDragNewEvent||E.buttons===0){f=!1;return}let C=e.querySelector(".ec.ec-selecting"),T=C?.querySelector(".ec-body");if(!C||!T){f=!1;return}let D=T.getBoundingClientRect(),k=Array.from(C.querySelectorAll(".ec-body .ec-day")).map(A=>A.getBoundingClientRect());if(k.length===0){f=!1;return}let b=!1,m=!1;if(C.classList.contains("ec-time-grid")){let A=E.clientY>=D.top&&E.clientY<=D.bottom;b=E.clientX>=D.right&&A,m=E.clientX<=D.left&&A}else{let A=new Map;k.forEach(te=>{let Ae=Math.round(te.top),Ee=A.get(Ae)??[];Ee.push(te),A.set(Ae,Ee)});let S=Array.from(A.entries()).sort(([te],[Ae])=>te-Ae),H=S[0][1],z=S[S.length-1][1],K=Math.min(...H.map(te=>te.top)),$=Math.max(...H.map(te=>te.bottom)),me=Math.min(...z.map(te=>te.top)),ce=Math.max(...z.map(te=>te.bottom)),ye=E.clientY>=K&&E.clientY<=$,W=E.clientY>=me&&E.clientY<=ce;b=E.clientX>=D.right&&W,m=E.clientX<=D.left&&ye}if(!b&&!m){f=!1;return}if(f)return;let L=t.getView().currentStart;if(!L)return;let M=new Date(L);C.classList.contains("ec-time-grid")?M.setDate(M.getDate()+(b?7:-7)):M.setMonth(M.getMonth()+(b?1:-1)),f=!0,t.setOption("date",M),d()},p=new MutationObserver(()=>{o(),d()}),g=()=>{window.setTimeout(()=>{l(),s()},0)},v=()=>{l(),s()},w=E=>{E.key!=="Escape"||!e.querySelector(".ec.ec-selecting")||(n.cancelSelection(),i(),t.unselect(),window.dispatchEvent(new PointerEvent("pointercancel",{isPrimary:!0})),E.preventDefault(),E.stopPropagation())};return p.observe(e,{childList:!0,subtree:!0}),requestAnimationFrame(o),e.addEventListener("pointermove",d),document.addEventListener("pointermove",_),e.addEventListener("pointerup",g),e.addEventListener("pointercancel",v),document.addEventListener("keydown",w,!0),{destroy:()=>{p.disconnect(),l(),e.removeEventListener("pointermove",d),document.removeEventListener("pointermove",_),e.removeEventListener("pointerup",g),e.removeEventListener("pointercancel",v),document.removeEventListener("keydown",w,!0)}}}xs.ready().then(()=>{let e=document.getElementById("xima-calendar-mount");if(!e)return;let t=e.dataset.ajaxUrl??"",n=e.dataset.enableDragNewEvent==="1",r=e.dataset.enableClickNewEvent==="1",o={firstDay:0},l=window.top,i=bi(e,l),s=yi(e,l),u=new Nn({target:e,props:{plugins:[Po,ni,ui,mi],options:{...o,height:"100%",selectable:n,scrollTime:"08:00:00",dayMaxEvents:!0,moreLinkContent:({num:c})=>`+${c} weitere`,view:"dayGridMonth",theme:c=>({...c,button:"btn btn-default",buttonGroup:"btn-group",active:"active"}),buttonText:c=>({...c,dayGridMonth:"Month",timeGridWeek:"Week",listMonth:"List",today:"Today"}),headerToolbar:{start:"prev next today",center:"title",end:"dayGridMonth,timeGridWeek,listMonth"},datesSet:i.datesSet,select:n?s.select:void 0,dateClick:r?s.dateClick:void 0,eventSources:[{url:t}],eventClick:i.eventClick}}});vi(e,u,s,{firstDay:o.firstDay,enableDragNewEvent:n});let a=()=>{s.cleanupPendingEvent().then(()=>u.refetchEvents())};a(),window.addEventListener("pageshow",a),document.querySelectorAll(".xima-cal-filter__checkbox").forEach(c=>{c.addEventListener("change",()=>u.refetchEvents())})});
+// node_modules/svelte/src/runtime/internal/utils.js
+function noop() {
+}
+var identity = (x) => x;
+function assign(tar, src) {
+  for (const k in src) tar[k] = src[k];
+  return (
+    /** @type {T & S} */
+    tar
+  );
+}
+function run(fn) {
+  return fn();
+}
+function blank_object() {
+  return /* @__PURE__ */ Object.create(null);
+}
+function run_all(fns) {
+  fns.forEach(run);
+}
+function is_function(thing) {
+  return typeof thing === "function";
+}
+function safe_not_equal(a, b) {
+  return a != a ? b == b : a !== b || a && typeof a === "object" || typeof a === "function";
+}
+function is_empty(obj) {
+  return Object.keys(obj).length === 0;
+}
+function subscribe(store, ...callbacks) {
+  if (store == null) {
+    for (const callback of callbacks) {
+      callback(void 0);
+    }
+    return noop;
+  }
+  const unsub = store.subscribe(...callbacks);
+  return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+}
+function get_store_value(store) {
+  let value;
+  subscribe(store, (_) => value = _)();
+  return value;
+}
+function component_subscribe(component, store, callback) {
+  component.$$.on_destroy.push(subscribe(store, callback));
+}
+function create_slot(definition, ctx, $$scope, fn) {
+  if (definition) {
+    const slot_ctx = get_slot_context(definition, ctx, $$scope, fn);
+    return definition[0](slot_ctx);
+  }
+}
+function get_slot_context(definition, ctx, $$scope, fn) {
+  return definition[1] && fn ? assign($$scope.ctx.slice(), definition[1](fn(ctx))) : $$scope.ctx;
+}
+function get_slot_changes(definition, $$scope, dirty, fn) {
+  if (definition[2] && fn) {
+    const lets = definition[2](fn(dirty));
+    if ($$scope.dirty === void 0) {
+      return lets;
+    }
+    if (typeof lets === "object") {
+      const merged = [];
+      const len = Math.max($$scope.dirty.length, lets.length);
+      for (let i = 0; i < len; i += 1) {
+        merged[i] = $$scope.dirty[i] | lets[i];
+      }
+      return merged;
+    }
+    return $$scope.dirty | lets;
+  }
+  return $$scope.dirty;
+}
+function update_slot_base(slot, slot_definition, ctx, $$scope, slot_changes, get_slot_context_fn) {
+  if (slot_changes) {
+    const slot_context = get_slot_context(slot_definition, ctx, $$scope, get_slot_context_fn);
+    slot.p(slot_context, slot_changes);
+  }
+}
+function get_all_dirty_from_scope($$scope) {
+  if ($$scope.ctx.length > 32) {
+    const dirty = [];
+    const length = $$scope.ctx.length / 32;
+    for (let i = 0; i < length; i++) {
+      dirty[i] = -1;
+    }
+    return dirty;
+  }
+  return -1;
+}
+function set_store_value(store, ret, value) {
+  store.set(value);
+  return ret;
+}
+function action_destroyer(action_result) {
+  return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
+}
+
+// node_modules/svelte/src/runtime/internal/globals.js
+var globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
+  // @ts-ignore Node typings have this
+  global
+);
+
+// node_modules/svelte/src/runtime/internal/ResizeObserverSingleton.js
+var ResizeObserverSingleton = class _ResizeObserverSingleton {
+  /**
+   * @private
+   * @readonly
+   * @type {WeakMap<Element, import('./private.js').Listener>}
+   */
+  _listeners = "WeakMap" in globals ? /* @__PURE__ */ new WeakMap() : void 0;
+  /**
+   * @private
+   * @type {ResizeObserver}
+   */
+  _observer = void 0;
+  /** @type {ResizeObserverOptions} */
+  options;
+  /** @param {ResizeObserverOptions} options */
+  constructor(options) {
+    this.options = options;
+  }
+  /**
+   * @param {Element} element
+   * @param {import('./private.js').Listener} listener
+   * @returns {() => void}
+   */
+  observe(element2, listener) {
+    this._listeners.set(element2, listener);
+    this._getObserver().observe(element2, this.options);
+    return () => {
+      this._listeners.delete(element2);
+      this._observer.unobserve(element2);
+    };
+  }
+  /**
+   * @private
+   */
+  _getObserver() {
+    return this._observer ?? (this._observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        _ResizeObserverSingleton.entries.set(entry.target, entry);
+        this._listeners.get(entry.target)?.(entry);
+      }
+    }));
+  }
+};
+ResizeObserverSingleton.entries = "WeakMap" in globals ? /* @__PURE__ */ new WeakMap() : void 0;
+
+// node_modules/svelte/src/runtime/internal/dom.js
+var is_hydrating = false;
+function start_hydrating() {
+  is_hydrating = true;
+}
+function end_hydrating() {
+  is_hydrating = false;
+}
+function append(target, node) {
+  target.appendChild(node);
+}
+function insert(target, node, anchor) {
+  target.insertBefore(node, anchor || null);
+}
+function detach(node) {
+  if (node.parentNode) {
+    node.parentNode.removeChild(node);
+  }
+}
+function destroy_each(iterations, detaching) {
+  for (let i = 0; i < iterations.length; i += 1) {
+    if (iterations[i]) iterations[i].d(detaching);
+  }
+}
+function element(name) {
+  return document.createElement(name);
+}
+function text(data) {
+  return document.createTextNode(data);
+}
+function space() {
+  return text(" ");
+}
+function empty() {
+  return text("");
+}
+function listen(node, event, handler, options) {
+  node.addEventListener(event, handler, options);
+  return () => node.removeEventListener(event, handler, options);
+}
+function stop_propagation(fn) {
+  return function(event) {
+    event.stopPropagation();
+    return fn.call(this, event);
+  };
+}
+function attr(node, attribute, value) {
+  if (value == null) node.removeAttribute(attribute);
+  else if (node.getAttribute(attribute) !== value) node.setAttribute(attribute, value);
+}
+function children(element2) {
+  return Array.from(element2.childNodes);
+}
+function set_data(text2, data) {
+  data = "" + data;
+  if (text2.data === data) return;
+  text2.data = /** @type {string} */
+  data;
+}
+function set_style(node, key, value, important) {
+  if (value == null) {
+    node.style.removeProperty(key);
+  } else {
+    node.style.setProperty(key, value, important ? "important" : "");
+  }
+}
+function get_custom_elements_slots(element2) {
+  const result = {};
+  element2.childNodes.forEach(
+    /** @param {Element} node */
+    (node) => {
+      result[node.slot || "default"] = true;
+    }
+  );
+  return result;
+}
+function construct_svelte_component(component, props) {
+  return new component(props);
+}
+
+// node_modules/svelte/src/runtime/internal/lifecycle.js
+var current_component;
+function set_current_component(component) {
+  current_component = component;
+}
+function get_current_component() {
+  if (!current_component) throw new Error("Function called outside component initialization");
+  return current_component;
+}
+function beforeUpdate(fn) {
+  get_current_component().$$.before_update.push(fn);
+}
+function onMount(fn) {
+  get_current_component().$$.on_mount.push(fn);
+}
+function afterUpdate(fn) {
+  get_current_component().$$.after_update.push(fn);
+}
+function setContext(key, context) {
+  get_current_component().$$.context.set(key, context);
+  return context;
+}
+function getContext(key) {
+  return get_current_component().$$.context.get(key);
+}
+function bubble(component, event) {
+  const callbacks = component.$$.callbacks[event.type];
+  if (callbacks) {
+    callbacks.slice().forEach((fn) => fn.call(this, event));
+  }
+}
+
+// node_modules/svelte/src/runtime/internal/scheduler.js
+var dirty_components = [];
+var binding_callbacks = [];
+var render_callbacks = [];
+var flush_callbacks = [];
+var resolved_promise = /* @__PURE__ */ Promise.resolve();
+var update_scheduled = false;
+function schedule_update() {
+  if (!update_scheduled) {
+    update_scheduled = true;
+    resolved_promise.then(flush);
+  }
+}
+function tick() {
+  schedule_update();
+  return resolved_promise;
+}
+function add_render_callback(fn) {
+  render_callbacks.push(fn);
+}
+var seen_callbacks = /* @__PURE__ */ new Set();
+var flushidx = 0;
+function flush() {
+  if (flushidx !== 0) {
+    return;
+  }
+  const saved_component = current_component;
+  do {
+    try {
+      while (flushidx < dirty_components.length) {
+        const component = dirty_components[flushidx];
+        flushidx++;
+        set_current_component(component);
+        update(component.$$);
+      }
+    } catch (e) {
+      dirty_components.length = 0;
+      flushidx = 0;
+      throw e;
+    }
+    set_current_component(null);
+    dirty_components.length = 0;
+    flushidx = 0;
+    while (binding_callbacks.length) binding_callbacks.pop()();
+    for (let i = 0; i < render_callbacks.length; i += 1) {
+      const callback = render_callbacks[i];
+      if (!seen_callbacks.has(callback)) {
+        seen_callbacks.add(callback);
+        callback();
+      }
+    }
+    render_callbacks.length = 0;
+  } while (dirty_components.length);
+  while (flush_callbacks.length) {
+    flush_callbacks.pop()();
+  }
+  update_scheduled = false;
+  seen_callbacks.clear();
+  set_current_component(saved_component);
+}
+function update($$) {
+  if ($$.fragment !== null) {
+    $$.update();
+    run_all($$.before_update);
+    const dirty = $$.dirty;
+    $$.dirty = [-1];
+    $$.fragment && $$.fragment.p($$.ctx, dirty);
+    $$.after_update.forEach(add_render_callback);
+  }
+}
+function flush_render_callbacks(fns) {
+  const filtered = [];
+  const targets = [];
+  render_callbacks.forEach((c) => fns.indexOf(c) === -1 ? filtered.push(c) : targets.push(c));
+  targets.forEach((c) => c());
+  render_callbacks = filtered;
+}
+
+// node_modules/svelte/src/runtime/internal/transitions.js
+var outroing = /* @__PURE__ */ new Set();
+var outros;
+function group_outros() {
+  outros = {
+    r: 0,
+    c: [],
+    p: outros
+    // parent group
+  };
+}
+function check_outros() {
+  if (!outros.r) {
+    run_all(outros.c);
+  }
+  outros = outros.p;
+}
+function transition_in(block, local) {
+  if (block && block.i) {
+    outroing.delete(block);
+    block.i(local);
+  }
+}
+function transition_out(block, local, detach2, callback) {
+  if (block && block.o) {
+    if (outroing.has(block)) return;
+    outroing.add(block);
+    outros.c.push(() => {
+      outroing.delete(block);
+      if (callback) {
+        if (detach2) block.d(1);
+        callback();
+      }
+    });
+    block.o(local);
+  } else if (callback) {
+    callback();
+  }
+}
+
+// node_modules/svelte/src/runtime/internal/each.js
+function ensure_array_like(array_like_or_iterator) {
+  return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
+}
+function outro_and_destroy_block(block, lookup) {
+  transition_out(block, 1, 1, () => {
+    lookup.delete(block.key);
+  });
+}
+function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block5, next, get_context) {
+  let o = old_blocks.length;
+  let n = list.length;
+  let i = o;
+  const old_indexes = {};
+  while (i--) old_indexes[old_blocks[i].key] = i;
+  const new_blocks = [];
+  const new_lookup = /* @__PURE__ */ new Map();
+  const deltas = /* @__PURE__ */ new Map();
+  const updates = [];
+  i = n;
+  while (i--) {
+    const child_ctx = get_context(ctx, list, i);
+    const key = get_key(child_ctx);
+    let block = lookup.get(key);
+    if (!block) {
+      block = create_each_block5(key, child_ctx);
+      block.c();
+    } else if (dynamic) {
+      updates.push(() => block.p(child_ctx, dirty));
+    }
+    new_lookup.set(key, new_blocks[i] = block);
+    if (key in old_indexes) deltas.set(key, Math.abs(i - old_indexes[key]));
+  }
+  const will_move = /* @__PURE__ */ new Set();
+  const did_move = /* @__PURE__ */ new Set();
+  function insert2(block) {
+    transition_in(block, 1);
+    block.m(node, next);
+    lookup.set(block.key, block);
+    next = block.first;
+    n--;
+  }
+  while (o && n) {
+    const new_block = new_blocks[n - 1];
+    const old_block = old_blocks[o - 1];
+    const new_key = new_block.key;
+    const old_key = old_block.key;
+    if (new_block === old_block) {
+      next = new_block.first;
+      o--;
+      n--;
+    } else if (!new_lookup.has(old_key)) {
+      destroy(old_block, lookup);
+      o--;
+    } else if (!lookup.has(new_key) || will_move.has(new_key)) {
+      insert2(new_block);
+    } else if (did_move.has(old_key)) {
+      o--;
+    } else if (deltas.get(new_key) > deltas.get(old_key)) {
+      did_move.add(new_key);
+      insert2(new_block);
+    } else {
+      will_move.add(old_key);
+      o--;
+    }
+  }
+  while (o--) {
+    const old_block = old_blocks[o];
+    if (!new_lookup.has(old_block.key)) destroy(old_block, lookup);
+  }
+  while (n) insert2(new_blocks[n - 1]);
+  run_all(updates);
+  return new_blocks;
+}
+
+// node_modules/svelte/src/shared/boolean_attributes.js
+var _boolean_attributes = (
+  /** @type {const} */
+  [
+    "allowfullscreen",
+    "allowpaymentrequest",
+    "async",
+    "autofocus",
+    "autoplay",
+    "checked",
+    "controls",
+    "default",
+    "defer",
+    "disabled",
+    "formnovalidate",
+    "hidden",
+    "inert",
+    "ismap",
+    "loop",
+    "multiple",
+    "muted",
+    "nomodule",
+    "novalidate",
+    "open",
+    "playsinline",
+    "readonly",
+    "required",
+    "reversed",
+    "selected"
+  ]
+);
+var boolean_attributes = /* @__PURE__ */ new Set([..._boolean_attributes]);
+
+// node_modules/svelte/src/runtime/internal/Component.js
+function create_component(block) {
+  block && block.c();
+}
+function mount_component(component, target, anchor) {
+  const { fragment, after_update } = component.$$;
+  fragment && fragment.m(target, anchor);
+  add_render_callback(() => {
+    const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
+    if (component.$$.on_destroy) {
+      component.$$.on_destroy.push(...new_on_destroy);
+    } else {
+      run_all(new_on_destroy);
+    }
+    component.$$.on_mount = [];
+  });
+  after_update.forEach(add_render_callback);
+}
+function destroy_component(component, detaching) {
+  const $$ = component.$$;
+  if ($$.fragment !== null) {
+    flush_render_callbacks($$.after_update);
+    run_all($$.on_destroy);
+    $$.fragment && $$.fragment.d(detaching);
+    $$.on_destroy = $$.fragment = null;
+    $$.ctx = [];
+  }
+}
+function make_dirty(component, i) {
+  if (component.$$.dirty[0] === -1) {
+    dirty_components.push(component);
+    schedule_update();
+    component.$$.dirty.fill(0);
+  }
+  component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
+}
+function init(component, options, instance6, create_fragment6, not_equal, props, append_styles = null, dirty = [-1]) {
+  const parent_component = current_component;
+  set_current_component(component);
+  const $$ = component.$$ = {
+    fragment: null,
+    ctx: [],
+    // state
+    props,
+    update: noop,
+    not_equal,
+    bound: blank_object(),
+    // lifecycle
+    on_mount: [],
+    on_destroy: [],
+    on_disconnect: [],
+    before_update: [],
+    after_update: [],
+    context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
+    // everything else
+    callbacks: blank_object(),
+    dirty,
+    skip_bound: false,
+    root: options.target || parent_component.$$.root
+  };
+  append_styles && append_styles($$.root);
+  let ready = false;
+  $$.ctx = instance6 ? instance6(component, options.props || {}, (i, ret, ...rest) => {
+    const value = rest.length ? rest[0] : ret;
+    if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
+      if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
+      if (ready) make_dirty(component, i);
+    }
+    return ret;
+  }) : [];
+  $$.update();
+  ready = true;
+  run_all($$.before_update);
+  $$.fragment = create_fragment6 ? create_fragment6($$.ctx) : false;
+  if (options.target) {
+    if (options.hydrate) {
+      start_hydrating();
+      const nodes = children(options.target);
+      $$.fragment && $$.fragment.l(nodes);
+      nodes.forEach(detach);
+    } else {
+      $$.fragment && $$.fragment.c();
+    }
+    if (options.intro) transition_in(component.$$.fragment);
+    mount_component(component, options.target, options.anchor);
+    end_hydrating();
+    flush();
+  }
+  set_current_component(parent_component);
+}
+var SvelteElement;
+if (typeof HTMLElement === "function") {
+  SvelteElement = class extends HTMLElement {
+    /** The Svelte component constructor */
+    $$ctor;
+    /** Slots */
+    $$s;
+    /** The Svelte component instance */
+    $$c;
+    /** Whether or not the custom element is connected */
+    $$cn = false;
+    /** Component props data */
+    $$d = {};
+    /** `true` if currently in the process of reflecting component props back to attributes */
+    $$r = false;
+    /** @type {Record<string, CustomElementPropDefinition>} Props definition (name, reflected, type etc) */
+    $$p_d = {};
+    /** @type {Record<string, Function[]>} Event listeners */
+    $$l = {};
+    /** @type {Map<Function, Function>} Event listener unsubscribe functions */
+    $$l_u = /* @__PURE__ */ new Map();
+    constructor($$componentCtor, $$slots, use_shadow_dom) {
+      super();
+      this.$$ctor = $$componentCtor;
+      this.$$s = $$slots;
+      if (use_shadow_dom) {
+        this.attachShadow({ mode: "open" });
+      }
+    }
+    addEventListener(type, listener, options) {
+      this.$$l[type] = this.$$l[type] || [];
+      this.$$l[type].push(listener);
+      if (this.$$c) {
+        const unsub = this.$$c.$on(type, listener);
+        this.$$l_u.set(listener, unsub);
+      }
+      super.addEventListener(type, listener, options);
+    }
+    removeEventListener(type, listener, options) {
+      super.removeEventListener(type, listener, options);
+      if (this.$$c) {
+        const unsub = this.$$l_u.get(listener);
+        if (unsub) {
+          unsub();
+          this.$$l_u.delete(listener);
+        }
+      }
+      if (this.$$l[type]) {
+        const idx = this.$$l[type].indexOf(listener);
+        if (idx >= 0) {
+          this.$$l[type].splice(idx, 1);
+        }
+      }
+    }
+    async connectedCallback() {
+      this.$$cn = true;
+      if (!this.$$c) {
+        let create_slot2 = function(name) {
+          return () => {
+            let node;
+            const obj = {
+              c: function create() {
+                node = element("slot");
+                if (name !== "default") {
+                  attr(node, "name", name);
+                }
+              },
+              /**
+               * @param {HTMLElement} target
+               * @param {HTMLElement} [anchor]
+               */
+              m: function mount(target, anchor) {
+                insert(target, node, anchor);
+              },
+              d: function destroy(detaching) {
+                if (detaching) {
+                  detach(node);
+                }
+              }
+            };
+            return obj;
+          };
+        };
+        await Promise.resolve();
+        if (!this.$$cn || this.$$c) {
+          return;
+        }
+        const $$slots = {};
+        const existing_slots = get_custom_elements_slots(this);
+        for (const name of this.$$s) {
+          if (name in existing_slots) {
+            $$slots[name] = [create_slot2(name)];
+          }
+        }
+        for (const attribute of this.attributes) {
+          const name = this.$$g_p(attribute.name);
+          if (!(name in this.$$d)) {
+            this.$$d[name] = get_custom_element_value(name, attribute.value, this.$$p_d, "toProp");
+          }
+        }
+        for (const key in this.$$p_d) {
+          if (!(key in this.$$d) && this[key] !== void 0) {
+            this.$$d[key] = this[key];
+            delete this[key];
+          }
+        }
+        this.$$c = new this.$$ctor({
+          target: this.shadowRoot || this,
+          props: {
+            ...this.$$d,
+            $$slots,
+            $$scope: {
+              ctx: []
+            }
+          }
+        });
+        const reflect_attributes = () => {
+          this.$$r = true;
+          for (const key in this.$$p_d) {
+            this.$$d[key] = this.$$c.$$.ctx[this.$$c.$$.props[key]];
+            if (this.$$p_d[key].reflect) {
+              const attribute_value = get_custom_element_value(
+                key,
+                this.$$d[key],
+                this.$$p_d,
+                "toAttribute"
+              );
+              if (attribute_value == null) {
+                this.removeAttribute(this.$$p_d[key].attribute || key);
+              } else {
+                this.setAttribute(this.$$p_d[key].attribute || key, attribute_value);
+              }
+            }
+          }
+          this.$$r = false;
+        };
+        this.$$c.$$.after_update.push(reflect_attributes);
+        reflect_attributes();
+        for (const type in this.$$l) {
+          for (const listener of this.$$l[type]) {
+            const unsub = this.$$c.$on(type, listener);
+            this.$$l_u.set(listener, unsub);
+          }
+        }
+        this.$$l = {};
+      }
+    }
+    // We don't need this when working within Svelte code, but for compatibility of people using this outside of Svelte
+    // and setting attributes through setAttribute etc, this is helpful
+    attributeChangedCallback(attr2, _oldValue, newValue) {
+      if (this.$$r) return;
+      attr2 = this.$$g_p(attr2);
+      this.$$d[attr2] = get_custom_element_value(attr2, newValue, this.$$p_d, "toProp");
+      this.$$c?.$set({ [attr2]: this.$$d[attr2] });
+    }
+    disconnectedCallback() {
+      this.$$cn = false;
+      Promise.resolve().then(() => {
+        if (!this.$$cn && this.$$c) {
+          this.$$c.$destroy();
+          this.$$c = void 0;
+        }
+      });
+    }
+    $$g_p(attribute_name) {
+      return Object.keys(this.$$p_d).find(
+        (key) => this.$$p_d[key].attribute === attribute_name || !this.$$p_d[key].attribute && key.toLowerCase() === attribute_name
+      ) || attribute_name;
+    }
+  };
+}
+function get_custom_element_value(prop, value, props_definition, transform) {
+  const type = props_definition[prop]?.type;
+  value = type === "Boolean" && typeof value !== "boolean" ? value != null : value;
+  if (!transform || !props_definition[prop]) {
+    return value;
+  } else if (transform === "toAttribute") {
+    switch (type) {
+      case "Object":
+      case "Array":
+        return value == null ? null : JSON.stringify(value);
+      case "Boolean":
+        return value ? "" : null;
+      case "Number":
+        return value == null ? null : value;
+      default:
+        return value;
+    }
+  } else {
+    switch (type) {
+      case "Object":
+      case "Array":
+        return value && JSON.parse(value);
+      case "Boolean":
+        return value;
+      // conversion already handled above
+      case "Number":
+        return value != null ? +value : value;
+      default:
+        return value;
+    }
+  }
+}
+var SvelteComponent = class {
+  /**
+   * ### PRIVATE API
+   *
+   * Do not use, may change at any time
+   *
+   * @type {any}
+   */
+  $$ = void 0;
+  /**
+   * ### PRIVATE API
+   *
+   * Do not use, may change at any time
+   *
+   * @type {any}
+   */
+  $$set = void 0;
+  /** @returns {void} */
+  $destroy() {
+    destroy_component(this, 1);
+    this.$destroy = noop;
+  }
+  /**
+   * @template {Extract<keyof Events, string>} K
+   * @param {K} type
+   * @param {((e: Events[K]) => void) | null | undefined} callback
+   * @returns {() => void}
+   */
+  $on(type, callback) {
+    if (!is_function(callback)) {
+      return noop;
+    }
+    const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
+    callbacks.push(callback);
+    return () => {
+      const index5 = callbacks.indexOf(callback);
+      if (index5 !== -1) callbacks.splice(index5, 1);
+    };
+  }
+  /**
+   * @param {Partial<Props>} props
+   * @returns {void}
+   */
+  $set(props) {
+    if (this.$$set && !is_empty(props)) {
+      this.$$.skip_bound = true;
+      this.$$set(props);
+      this.$$.skip_bound = false;
+    }
+  }
+};
+
+// node_modules/svelte/src/runtime/store/index.js
+var subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set, update2) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update: update2, subscribe: subscribe2 };
+}
+function derived(stores, fn, initial_value) {
+  const single = !Array.isArray(stores);
+  const stores_array = single ? [stores] : stores;
+  if (!stores_array.every(Boolean)) {
+    throw new Error("derived() expects stores as input, got a falsy value");
+  }
+  const auto = fn.length < 2;
+  return readable(initial_value, (set, update2) => {
+    let started = false;
+    const values = [];
+    let pending = 0;
+    let cleanup = noop;
+    const sync = () => {
+      if (pending) {
+        return;
+      }
+      cleanup();
+      const result = fn(single ? values[0] : values, set, update2);
+      if (auto) {
+        set(result);
+      } else {
+        cleanup = is_function(result) ? result : noop;
+      }
+    };
+    const unsubscribers = stores_array.map(
+      (store, i) => subscribe(
+        store,
+        (value) => {
+          values[i] = value;
+          pending &= ~(1 << i);
+          if (started) {
+            sync();
+          }
+        },
+        () => {
+          pending |= 1 << i;
+        }
+      )
+    );
+    started = true;
+    sync();
+    return function stop() {
+      run_all(unsubscribers);
+      cleanup();
+      started = false;
+    };
+  });
+}
+
+// node_modules/@event-calendar/core/index.js
+function keyEnter(fn) {
+  return function(e) {
+    return e.key === "Enter" || e.key === " " && !e.preventDefault() ? fn.call(this, e) : void 0;
+  };
+}
+function setContent(node, content) {
+  let actions = {
+    update(content2) {
+      if (typeof content2 == "string") {
+        node.innerText = content2;
+      } else if (content2?.domNodes) {
+        node.replaceChildren(...content2.domNodes);
+      } else if (content2?.html) {
+        node.innerHTML = content2.html;
+      }
+    }
+  };
+  actions.update(content);
+  return actions;
+}
+function outsideEvent(node, type) {
+  const handlePointerDown = (jsEvent) => {
+    if (node && !node.contains(jsEvent.target)) {
+      node.dispatchEvent(
+        new CustomEvent(type + "outside", { detail: { jsEvent } })
+      );
+    }
+  };
+  document.addEventListener(type, handlePointerDown, true);
+  return {
+    destroy() {
+      document.removeEventListener(type, handlePointerDown, true);
+    }
+  };
+}
+var DAY_IN_SECONDS = 86400;
+function createDate(input = void 0) {
+  if (input !== void 0) {
+    return input instanceof Date ? _fromLocalDate(input) : _fromISOString(input);
+  }
+  return _fromLocalDate(/* @__PURE__ */ new Date());
+}
+function createDuration(input) {
+  if (typeof input === "number") {
+    input = { seconds: input };
+  } else if (typeof input === "string") {
+    let seconds = 0, exp = 2;
+    for (let part of input.split(":", 3)) {
+      seconds += parseInt(part, 10) * Math.pow(60, exp--);
+    }
+    input = { seconds };
+  } else if (input instanceof Date) {
+    input = { hours: input.getUTCHours(), minutes: input.getUTCMinutes(), seconds: input.getUTCSeconds() };
+  }
+  let weeks = input.weeks || input.week || 0;
+  return {
+    years: input.years || input.year || 0,
+    months: input.months || input.month || 0,
+    days: weeks * 7 + (input.days || input.day || 0),
+    seconds: (input.hours || input.hour || 0) * 60 * 60 + (input.minutes || input.minute || 0) * 60 + (input.seconds || input.second || 0),
+    inWeeks: !!weeks
+  };
+}
+function cloneDate(date) {
+  return new Date(date.getTime());
+}
+function addDuration(date, duration, x = 1) {
+  date.setUTCFullYear(date.getUTCFullYear() + x * duration.years);
+  let month = date.getUTCMonth() + x * duration.months;
+  date.setUTCMonth(month);
+  month %= 12;
+  if (month < 0) {
+    month += 12;
+  }
+  while (date.getUTCMonth() !== month) {
+    subtractDay(date);
+  }
+  date.setUTCDate(date.getUTCDate() + x * duration.days);
+  date.setUTCSeconds(date.getUTCSeconds() + x * duration.seconds);
+  return date;
+}
+function subtractDuration(date, duration, x = 1) {
+  return addDuration(date, duration, -x);
+}
+function addDay(date, x = 1) {
+  date.setUTCDate(date.getUTCDate() + x);
+  return date;
+}
+function subtractDay(date, x = 1) {
+  return addDay(date, -x);
+}
+function setMidnight(date) {
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+function toLocalDate(date) {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+}
+function toISOString(date, len = 19) {
+  return date.toISOString().substring(0, len);
+}
+function datesEqual(date1, ...dates2) {
+  return dates2.every((date2) => date1.getTime() === date2.getTime());
+}
+function nextClosestDay(date, day) {
+  let diff2 = day - date.getUTCDay();
+  date.setUTCDate(date.getUTCDate() + (diff2 >= 0 ? diff2 : diff2 + 7));
+  return date;
+}
+function prevClosestDay(date, day) {
+  let diff2 = day - date.getUTCDay();
+  date.setUTCDate(date.getUTCDate() + (diff2 <= 0 ? diff2 : diff2 - 7));
+  return date;
+}
+function noTimePart(date) {
+  return typeof date === "string" && date.length <= 10;
+}
+function copyTime(toDate, fromDate) {
+  toDate.setUTCHours(fromDate.getUTCHours(), fromDate.getUTCMinutes(), fromDate.getUTCSeconds(), 0);
+  return toDate;
+}
+function _fromLocalDate(date) {
+  return new Date(Date.UTC(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds()
+  ));
+}
+function _fromISOString(str) {
+  const parts = str.match(/\d+/g);
+  return new Date(Date.UTC(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2]),
+    Number(parts[3] || 0),
+    Number(parts[4] || 0),
+    Number(parts[5] || 0)
+  ));
+}
+function debounce(fn, handle, queueStore) {
+  queueStore.update((queue) => queue.set(handle, fn));
+}
+function flushDebounce(queue) {
+  run_all(queue);
+  queue.clear();
+}
+function task(fn, handle, tasks) {
+  handle ??= fn;
+  if (!tasks.has(handle)) {
+    tasks.set(handle, setTimeout(() => {
+      tasks.delete(handle);
+      fn();
+    }));
+  }
+}
+function assign2(...args) {
+  return Object.assign(...args);
+}
+function keys(object) {
+  return Object.keys(object);
+}
+function floor(value) {
+  return Math.floor(value);
+}
+function min(...args) {
+  return Math.min(...args);
+}
+function max(...args) {
+  return Math.max(...args);
+}
+function symbol() {
+  return Symbol("ec");
+}
+function createElement(tag, className, content, attrs = []) {
+  let el = document.createElement(tag);
+  el.className = className;
+  if (typeof content == "string") {
+    el.innerText = content;
+  } else if (content.domNodes) {
+    el.replaceChildren(...content.domNodes);
+  } else if (content.html) {
+    el.innerHTML = content.html;
+  }
+  for (let attr2 of attrs) {
+    el.setAttribute(...attr2);
+  }
+  return el;
+}
+function hasYScroll(el) {
+  return el.scrollHeight > el.clientHeight;
+}
+function rect(el) {
+  return el.getBoundingClientRect();
+}
+function ancestor(el, up) {
+  while (up--) {
+    el = el.parentElement;
+  }
+  return el;
+}
+function height(el) {
+  return rect(el).height;
+}
+var payloadProp = symbol();
+function setPayload(el, payload) {
+  el[payloadProp] = payload;
+}
+function hasPayload(el) {
+  return !!el?.[payloadProp];
+}
+function getPayload(el) {
+  return el[payloadProp];
+}
+function getElementWithPayload(x, y, root = document) {
+  for (let el of root.elementsFromPoint(x, y)) {
+    if (hasPayload(el)) {
+      return el;
+    }
+    if (el.shadowRoot) {
+      let shadowEl = getElementWithPayload(x, y, el.shadowRoot);
+      if (shadowEl) {
+        return shadowEl;
+      }
+    }
+  }
+  return null;
+}
+function createView(view2, _viewTitle, _currentRange, _activeRange) {
+  return {
+    type: view2,
+    title: _viewTitle,
+    currentStart: _currentRange.start,
+    currentEnd: _currentRange.end,
+    activeStart: _activeRange.start,
+    activeEnd: _activeRange.end,
+    calendar: void 0
+  };
+}
+function toViewWithLocalDates(view2) {
+  view2 = assign2({}, view2);
+  view2.currentStart = toLocalDate(view2.currentStart);
+  view2.currentEnd = toLocalDate(view2.currentEnd);
+  view2.activeStart = toLocalDate(view2.activeStart);
+  view2.activeEnd = toLocalDate(view2.activeEnd);
+  return view2;
+}
+function listView(view2) {
+  return view2.startsWith("list");
+}
+var eventId = 1;
+function createEvents(input) {
+  return input.map((event) => ({
+    id: "id" in event ? String(event.id) : `{generated-${eventId++}}`,
+    resourceIds: Array.isArray(event.resourceIds) ? event.resourceIds.map(String) : "resourceId" in event ? [String(event.resourceId)] : [],
+    allDay: event.allDay ?? (noTimePart(event.start) && noTimePart(event.end)),
+    start: createDate(event.start),
+    end: createDate(event.end),
+    title: event.title || "",
+    titleHTML: event.titleHTML || "",
+    editable: event.editable,
+    startEditable: event.startEditable,
+    durationEditable: event.durationEditable,
+    display: event.display || "auto",
+    extendedProps: event.extendedProps || {},
+    backgroundColor: event.backgroundColor || event.color,
+    textColor: event.textColor
+  }));
+}
+function createEventSources(input) {
+  return input.map((source) => ({
+    events: source.events,
+    url: source.url && source.url.trimEnd("&") || "",
+    method: source.method && source.method.toUpperCase() || "GET",
+    extraParams: source.extraParams || {}
+  }));
+}
+function createEventChunk(event, start, end) {
+  return {
+    start: event.start > start ? event.start : start,
+    end: event.end < end ? event.end : end,
+    event
+  };
+}
+function sortEventChunks(chunks) {
+  chunks.sort((a, b) => a.start - b.start || b.event.allDay - a.event.allDay);
+}
+function createEventContent(chunk, displayEventEnd, eventContent, theme, _intlEventTime, _view) {
+  let timeText = _intlEventTime.formatRange(
+    chunk.start,
+    displayEventEnd && chunk.event.display !== "pointer" ? copyTime(cloneDate(chunk.start), chunk.end) : chunk.start
+  );
+  let content;
+  if (eventContent) {
+    content = is_function(eventContent) ? eventContent({
+      event: toEventWithLocalDates(chunk.event),
+      timeText,
+      view: toViewWithLocalDates(_view)
+    }) : eventContent;
+  } else {
+    let domNodes;
+    switch (chunk.event.display) {
+      case "background":
+        domNodes = [];
+        break;
+      case "pointer":
+        domNodes = [createTimeElement(timeText, chunk, theme)];
+        break;
+      default:
+        domNodes = [
+          ...chunk.event.allDay ? [] : [createTimeElement(timeText, chunk, theme)],
+          createElement("h4", theme.eventTitle, chunk.event.title)
+        ];
+    }
+    content = { domNodes };
+  }
+  return [timeText, content];
+}
+function createTimeElement(timeText, chunk, theme) {
+  return createElement(
+    "time",
+    theme.eventTime,
+    timeText,
+    [["datetime", toISOString(chunk.start)]]
+  );
+}
+function createEventClasses(eventClassNames, event, _view) {
+  if (eventClassNames) {
+    if (is_function(eventClassNames)) {
+      eventClassNames = eventClassNames({
+        event: toEventWithLocalDates(event),
+        view: toViewWithLocalDates(_view)
+      });
+    }
+    return Array.isArray(eventClassNames) ? eventClassNames : [eventClassNames];
+  }
+  return [];
+}
+function toEventWithLocalDates(event) {
+  return _cloneEvent(event, toLocalDate);
+}
+function cloneEvent(event) {
+  return _cloneEvent(event, cloneDate);
+}
+function _cloneEvent(event, dateFn) {
+  event = assign2({}, event);
+  event.start = dateFn(event.start);
+  event.end = dateFn(event.end);
+  return event;
+}
+function prepareEventChunks(chunks, hiddenDays) {
+  let longChunks = {};
+  if (chunks.length) {
+    sortEventChunks(chunks);
+    let prevChunk;
+    for (let chunk of chunks) {
+      let dates = [];
+      let date = setMidnight(cloneDate(chunk.start));
+      while (chunk.end > date) {
+        if (!hiddenDays.includes(date.getUTCDay())) {
+          dates.push(cloneDate(date));
+          if (dates.length > 1) {
+            let key = date.getTime();
+            if (longChunks[key]) {
+              longChunks[key].chunks.push(chunk);
+            } else {
+              longChunks[key] = {
+                sorted: false,
+                chunks: [chunk]
+              };
+            }
+          }
+        }
+        addDay(date);
+      }
+      if (dates.length) {
+        chunk.date = dates[0];
+        chunk.days = dates.length;
+        chunk.dates = dates;
+        if (chunk.start < dates[0]) {
+          chunk.start = dates[0];
+        }
+        if (setMidnight(cloneDate(chunk.end)) > dates[dates.length - 1]) {
+          chunk.end = dates[dates.length - 1];
+        }
+      } else {
+        chunk.date = setMidnight(cloneDate(chunk.start));
+        chunk.days = 1;
+        chunk.dates = [chunk.date];
+      }
+      if (prevChunk && datesEqual(prevChunk.date, chunk.date)) {
+        chunk.prev = prevChunk;
+      }
+      prevChunk = chunk;
+    }
+  }
+  return longChunks;
+}
+function repositionEvent(chunk, longChunks, height2) {
+  chunk.top = 0;
+  if (chunk.prev) {
+    chunk.top = chunk.prev.bottom + 1;
+  }
+  chunk.bottom = chunk.top + height2;
+  let margin = 1;
+  let key = chunk.date.getTime();
+  if (longChunks[key]?.sorted || longChunks[key]?.chunks.every((chunk2) => "top" in chunk2)) {
+    if (!longChunks[key].sorted) {
+      longChunks[key].chunks.sort((a, b) => a.top - b.top);
+      longChunks[key].sorted = true;
+    }
+    for (let longChunk of longChunks[key].chunks) {
+      if (chunk.top < longChunk.bottom && chunk.bottom > longChunk.top) {
+        let offset = longChunk.bottom - chunk.top + 1;
+        margin += offset;
+        chunk.top += offset;
+        chunk.bottom += offset;
+      }
+    }
+  }
+  return margin;
+}
+function runReposition(refs, data) {
+  refs.length = data.length;
+  for (let ref of refs) {
+    ref?.reposition?.();
+  }
+}
+function eventIntersects(event, start, end, resource, timeMode) {
+  return (event.start < end && event.end > start || !timeMode && datesEqual(event.start, event.end, start)) && (resource === void 0 || event.resourceIds.includes(resource.id));
+}
+function helperEvent(display) {
+  return previewEvent(display) || ghostEvent(display) || pointerEvent(display);
+}
+function bgEvent(display) {
+  return display === "background";
+}
+function previewEvent(display) {
+  return display === "preview";
+}
+function ghostEvent(display) {
+  return display === "ghost";
+}
+function pointerEvent(display) {
+  return display === "pointer";
+}
+function btnTextDay(text2) {
+  return btnText(text2, "day");
+}
+function btnTextWeek(text2) {
+  return btnText(text2, "week");
+}
+function btnTextMonth(text2) {
+  return btnText(text2, "month");
+}
+function btnTextYear(text2) {
+  return btnText(text2, "year");
+}
+function btnText(text2, period) {
+  return {
+    ...text2,
+    next: "Next " + period,
+    prev: "Previous " + period
+  };
+}
+function themeView(view2) {
+  return (theme) => ({ ...theme, view: view2 });
+}
+function intl(locale, format) {
+  return derived([locale, format], ([$locale, $format]) => {
+    let intl2 = is_function($format) ? { format: $format } : new Intl.DateTimeFormat($locale, $format);
+    return {
+      format: (date) => intl2.format(toLocalDate(date))
+    };
+  });
+}
+function intlRange(locale, format) {
+  return derived([locale, format], ([$locale, $format]) => {
+    let formatRange;
+    if (is_function($format)) {
+      formatRange = $format;
+    } else {
+      let intl2 = new Intl.DateTimeFormat($locale, $format);
+      formatRange = (start, end) => {
+        if (start <= end) {
+          return intl2.formatRange(start, end);
+        } else {
+          let parts = intl2.formatRangeToParts(end, start);
+          let result = "";
+          let sources = ["startRange", "endRange"];
+          let processed = [false, false];
+          for (let part of parts) {
+            let i = sources.indexOf(part.source);
+            if (i >= 0) {
+              if (!processed[i]) {
+                result += _getParts(sources[1 - i], parts);
+                processed[i] = true;
+              }
+            } else {
+              result += part.value;
+            }
+          }
+          return result;
+        }
+      };
+    }
+    return {
+      formatRange: (start, end) => formatRange(toLocalDate(start), toLocalDate(end))
+    };
+  });
+}
+function _getParts(source, parts) {
+  let result = "";
+  for (let part of parts) {
+    if (part.source == source) {
+      result += part.value;
+    }
+  }
+  return result;
+}
+function createOptions(plugins) {
+  let options = {
+    allDayContent: void 0,
+    allDaySlot: true,
+    buttonText: {
+      today: "today"
+    },
+    customButtons: {},
+    date: /* @__PURE__ */ new Date(),
+    datesSet: void 0,
+    dayHeaderFormat: {
+      weekday: "short",
+      month: "numeric",
+      day: "numeric"
+    },
+    dayHeaderAriaLabelFormat: {
+      dateStyle: "long"
+    },
+    displayEventEnd: true,
+    duration: { weeks: 1 },
+    events: [],
+    eventAllUpdated: void 0,
+    eventBackgroundColor: void 0,
+    eventTextColor: void 0,
+    eventClassNames: void 0,
+    eventClick: void 0,
+    eventColor: void 0,
+    eventContent: void 0,
+    eventDidMount: void 0,
+    eventMouseEnter: void 0,
+    eventMouseLeave: void 0,
+    eventSources: [],
+    eventTimeFormat: {
+      hour: "numeric",
+      minute: "2-digit"
+    },
+    firstDay: 0,
+    flexibleSlotTimeLimits: false,
+    // ec option
+    headerToolbar: {
+      start: "title",
+      center: "",
+      end: "today prev,next"
+    },
+    height: void 0,
+    hiddenDays: [],
+    highlightedDates: [],
+    // ec option
+    lazyFetching: true,
+    loading: void 0,
+    locale: void 0,
+    nowIndicator: false,
+    selectable: false,
+    scrollTime: "06:00:00",
+    slotDuration: "00:30:00",
+    slotEventOverlap: true,
+    slotHeight: 24,
+    // ec option
+    slotLabelFormat: {
+      hour: "numeric",
+      minute: "2-digit"
+    },
+    slotMaxTime: "24:00:00",
+    slotMinTime: "00:00:00",
+    theme: {
+      allDay: "ec-all-day",
+      active: "ec-active",
+      bgEvent: "ec-bg-event",
+      bgEvents: "ec-bg-events",
+      body: "ec-body",
+      button: "ec-button",
+      buttonGroup: "ec-button-group",
+      calendar: "ec",
+      compact: "ec-compact",
+      content: "ec-content",
+      day: "ec-day",
+      dayHead: "ec-day-head",
+      days: "ec-days",
+      event: "ec-event",
+      eventBody: "ec-event-body",
+      eventTime: "ec-event-time",
+      eventTitle: "ec-event-title",
+      events: "ec-events",
+      extra: "ec-extra",
+      handle: "ec-handle",
+      header: "ec-header",
+      hiddenScroll: "ec-hidden-scroll",
+      highlight: "ec-highlight",
+      icon: "ec-icon",
+      line: "ec-line",
+      lines: "ec-lines",
+      nowIndicator: "ec-now-indicator",
+      otherMonth: "ec-other-month",
+      sidebar: "ec-sidebar",
+      sidebarTitle: "ec-sidebar-title",
+      today: "ec-today",
+      time: "ec-time",
+      title: "ec-title",
+      toolbar: "ec-toolbar",
+      view: "",
+      weekdays: ["ec-sun", "ec-mon", "ec-tue", "ec-wed", "ec-thu", "ec-fri", "ec-sat"],
+      withScroll: "ec-with-scroll"
+    },
+    titleFormat: {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    },
+    view: void 0,
+    viewDidMount: void 0,
+    views: {}
+  };
+  for (let plugin of plugins) {
+    plugin.createOptions?.(options);
+  }
+  return options;
+}
+function createParsers(plugins) {
+  let parsers = {
+    date: (date) => setMidnight(createDate(date)),
+    duration: createDuration,
+    events: createEvents,
+    eventSources: createEventSources,
+    hiddenDays: (days2) => [...new Set(days2)],
+    highlightedDates: (dates) => dates.map(createDate),
+    scrollTime: createDuration,
+    slotDuration: createDuration,
+    slotMaxTime: createDuration,
+    slotMinTime: createDuration
+  };
+  for (let plugin of plugins) {
+    plugin.createParsers?.(parsers);
+  }
+  return parsers;
+}
+function diff(options, prevOptions) {
+  let diff2 = [];
+  for (let key of keys(options)) {
+    if (options[key] !== prevOptions[key]) {
+      diff2.push([key, options[key]]);
+    }
+  }
+  assign2(prevOptions, options);
+  return diff2;
+}
+function dayGrid(state) {
+  return derived(state.view, ($view) => $view?.startsWith("dayGrid"));
+}
+function activeRange(state) {
+  return derived(
+    [state._currentRange, state.firstDay, state.slotMaxTime, state._dayGrid],
+    ([$_currentRange, $firstDay, $slotMaxTime, $_dayGrid]) => {
+      let start = cloneDate($_currentRange.start);
+      let end = cloneDate($_currentRange.end);
+      if ($_dayGrid) {
+        prevClosestDay(start, $firstDay);
+        nextClosestDay(end, $firstDay);
+      } else if ($slotMaxTime.days || $slotMaxTime.seconds > DAY_IN_SECONDS) {
+        addDuration(subtractDay(end), $slotMaxTime);
+        let start2 = subtractDay(cloneDate(end));
+        if (start2 < start) {
+          start = start2;
+        }
+      }
+      return { start, end };
+    }
+  );
+}
+function currentRange(state) {
+  return derived(
+    [state.date, state.duration, state.firstDay, state._dayGrid],
+    ([$date, $duration, $firstDay, $_dayGrid]) => {
+      let start = cloneDate($date), end;
+      if ($_dayGrid) {
+        start.setUTCDate(1);
+      } else if ($duration.inWeeks) {
+        prevClosestDay(start, $firstDay);
+      }
+      end = addDuration(cloneDate(start), $duration);
+      return { start, end };
+    }
+  );
+}
+function viewDates(state) {
+  return derived([state._activeRange, state.hiddenDays], ([$_activeRange, $hiddenDays]) => {
+    let dates = [];
+    let date = setMidnight(cloneDate($_activeRange.start));
+    let end = setMidnight(cloneDate($_activeRange.end));
+    while (date < end) {
+      if (!$hiddenDays.includes(date.getUTCDay())) {
+        dates.push(cloneDate(date));
+      }
+      addDay(date);
+    }
+    if (!dates.length && $hiddenDays.length && $hiddenDays.length < 7) {
+      state.date.update((date2) => {
+        while ($hiddenDays.includes(date2.getUTCDay())) {
+          addDay(date2);
+        }
+        return date2;
+      });
+      dates = get_store_value(state._viewDates);
+    }
+    return dates;
+  });
+}
+function viewTitle(state) {
+  return derived(
+    [state.date, state._activeRange, state._intlTitle, state._dayGrid],
+    ([$date, $_activeRange, $_intlTitle, $_dayGrid]) => {
+      return $_dayGrid ? $_intlTitle.formatRange($date, $date) : $_intlTitle.formatRange($_activeRange.start, subtractDay(cloneDate($_activeRange.end)));
+    }
+  );
+}
+function view(state) {
+  return derived([state.view, state._viewTitle, state._currentRange, state._activeRange], (args) => createView(...args));
+}
+function events(state) {
+  let _events = writable([]);
+  let abortController;
+  let fetching = 0;
+  let debounceHandle = {};
+  derived(
+    [state.events, state.eventSources, state._activeRange, state._fetchedRange, state.lazyFetching, state.loading],
+    (values, set) => debounce(() => {
+      let [$events, $eventSources, $_activeRange, $_fetchedRange, $lazyFetching, $loading] = values;
+      if (!$eventSources.length) {
+        set($events);
+        return;
+      }
+      if (!$_fetchedRange.start || $_fetchedRange.start > $_activeRange.start || $_fetchedRange.end < $_activeRange.end || !$lazyFetching) {
+        if (abortController) {
+          abortController.abort();
+        }
+        abortController = new AbortController();
+        if (is_function($loading) && !fetching) {
+          $loading(true);
+        }
+        let stopLoading = () => {
+          if (--fetching === 0 && is_function($loading)) {
+            $loading(false);
+          }
+        };
+        let events2 = [];
+        let failure = (e) => stopLoading();
+        let success = (data) => {
+          events2 = events2.concat(createEvents(data));
+          set(events2);
+          stopLoading();
+        };
+        let startStr = toISOString($_activeRange.start);
+        let endStr = toISOString($_activeRange.end);
+        for (let source of $eventSources) {
+          if (is_function(source.events)) {
+            let result = source.events({
+              start: toLocalDate($_activeRange.start),
+              end: toLocalDate($_activeRange.end),
+              startStr,
+              endStr
+            }, success, failure);
+            if (result !== void 0) {
+              Promise.resolve(result).then(success, failure);
+            }
+          } else {
+            let params = is_function(source.extraParams) ? source.extraParams() : assign2({}, source.extraParams);
+            params.start = startStr;
+            params.end = endStr;
+            params = new URLSearchParams(params);
+            let url = source.url, headers = {}, body;
+            if (["GET", "HEAD"].includes(source.method)) {
+              url += (url.includes("?") ? "&" : "?") + params;
+            } else {
+              headers["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8";
+              body = String(params);
+            }
+            fetch(url, { method: source.method, headers, body, signal: abortController.signal, credentials: "same-origin" }).then((response) => response.json()).then(success).catch(failure);
+          }
+          ++fetching;
+        }
+        $_fetchedRange.start = $_activeRange.start;
+        $_fetchedRange.end = $_activeRange.end;
+      }
+    }, debounceHandle, state._queue),
+    []
+  ).subscribe(_events.set);
+  return _events;
+}
+function now2() {
+  return readable(createDate(), (set) => {
+    let interval = setInterval(() => {
+      set(createDate());
+    }, 1e3);
+    return () => clearInterval(interval);
+  });
+}
+function today(state) {
+  return derived(state._now, ($_now) => setMidnight(cloneDate($_now)));
+}
+var State = class {
+  constructor(plugins, input) {
+    plugins = plugins || [];
+    let options = createOptions(plugins);
+    let parsers = createParsers(plugins);
+    options = parseOpts(options, parsers);
+    input = parseOpts(input, parsers);
+    for (let [option, value] of Object.entries(options)) {
+      this[option] = writable(value);
+    }
+    this._queue = writable(/* @__PURE__ */ new Map());
+    this._queue2 = writable(/* @__PURE__ */ new Map());
+    this._tasks = /* @__PURE__ */ new Map();
+    this._auxiliary = writable([]);
+    this._dayGrid = dayGrid(this);
+    this._currentRange = currentRange(this);
+    this._activeRange = activeRange(this);
+    this._fetchedRange = writable({ start: void 0, end: void 0 });
+    this._events = events(this);
+    this._now = now2();
+    this._today = today(this);
+    this._intlEventTime = intlRange(this.locale, this.eventTimeFormat);
+    this._intlSlotLabel = intl(this.locale, this.slotLabelFormat);
+    this._intlDayHeader = intl(this.locale, this.dayHeaderFormat);
+    this._intlDayHeaderAL = intl(this.locale, this.dayHeaderAriaLabelFormat);
+    this._intlTitle = intlRange(this.locale, this.titleFormat);
+    this._bodyEl = writable(void 0);
+    this._scrollable = writable(false);
+    this._viewTitle = viewTitle(this);
+    this._viewDates = viewDates(this);
+    this._view = view(this);
+    this._viewComponent = writable(void 0);
+    this._resBgColor = writable(noop);
+    this._resTxtColor = writable(noop);
+    this._interaction = writable({});
+    this._iEvents = writable([null, null]);
+    this._iClasses = writable(identity);
+    this._iClass = writable(void 0);
+    this._set = (key, value) => {
+      if (validKey(key, this)) {
+        if (parsers[key]) {
+          value = parsers[key](value);
+        }
+        this[key].set(value);
+      }
+    };
+    this._get = (key) => validKey(key, this) ? get_store_value(this[key]) : void 0;
+    for (let plugin of plugins) {
+      plugin.createStores?.(this);
+    }
+    if (input.view) {
+      this.view.set(input.view);
+    }
+    let views = /* @__PURE__ */ new Set([...keys(options.views), ...keys(input.views ?? {})]);
+    for (let view2 of views) {
+      let defOpts = mergeOpts(options, options.views[view2] ?? {});
+      let opts = mergeOpts(defOpts, input, input.views?.[view2] ?? {});
+      let component = opts.component;
+      filterOpts(opts, this);
+      for (let key of keys(opts)) {
+        let { set, _set = set, ...rest } = this[key];
+        this[key] = {
+          // Set value in all views
+          set: ["buttonText", "theme"].includes(key) ? (value) => {
+            if (is_function(value)) {
+              let result = value(defOpts[key]);
+              opts[key] = result;
+              set(set === _set ? result : value);
+            } else {
+              opts[key] = value;
+              set(value);
+            }
+          } : (value) => {
+            opts[key] = value;
+            set(value);
+          },
+          _set,
+          ...rest
+        };
+      }
+      this.view.subscribe((newView) => {
+        if (newView === view2) {
+          this._viewComponent.set(component);
+          if (is_function(opts.viewDidMount)) {
+            tick().then(() => opts.viewDidMount(get_store_value(this._view)));
+          }
+          for (let key of keys(opts)) {
+            this[key]._set(opts[key]);
+          }
+        }
+      });
+    }
+  }
+};
+function parseOpts(opts, parsers) {
+  let result = { ...opts };
+  for (let key of keys(parsers)) {
+    if (key in result) {
+      result[key] = parsers[key](result[key]);
+    }
+  }
+  if (opts.views) {
+    result.views = {};
+    for (let view2 of keys(opts.views)) {
+      result.views[view2] = parseOpts(opts.views[view2], parsers);
+    }
+  }
+  return result;
+}
+function mergeOpts(...args) {
+  let result = {};
+  for (let opts of args) {
+    let override = {};
+    for (let key of ["buttonText", "theme"]) {
+      if (is_function(opts[key])) {
+        override[key] = opts[key](result[key]);
+      }
+    }
+    result = {
+      ...result,
+      ...opts,
+      ...override
+    };
+  }
+  return result;
+}
+function filterOpts(opts, state) {
+  keys(opts).filter((key) => !validKey(key, state) || key == "view").forEach((key) => delete opts[key]);
+}
+function validKey(key, state) {
+  return state.hasOwnProperty(key) && key[0] !== "_";
+}
+function get_each_context$2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[25] = list[i];
+  return child_ctx;
+}
+function create_if_block_5(ctx) {
+  let button_1;
+  let t_value = (
+    /*$buttonText*/
+    ctx[5][
+      /*button*/
+      ctx[25]
+    ] + ""
+  );
+  let t;
+  let button_1_class_value;
+  let mounted;
+  let dispose;
+  function click_handler_1() {
+    return (
+      /*click_handler_1*/
+      ctx[22](
+        /*button*/
+        ctx[25]
+      )
+    );
+  }
+  return {
+    c() {
+      button_1 = element("button");
+      t = text(t_value);
+      attr(button_1, "class", button_1_class_value = /*$theme*/
+      ctx[3].button + /*$view*/
+      (ctx[7] === /*button*/
+      ctx[25] ? " " + /*$theme*/
+      ctx[3].active : "") + " ec-" + /*button*/
+      ctx[25]);
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, t);
+      if (!mounted) {
+        dispose = listen(button_1, "click", click_handler_1);
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$buttonText, buttons*/
+      33 && t_value !== (t_value = /*$buttonText*/
+      ctx[5][
+        /*button*/
+        ctx[25]
+      ] + "")) set_data(t, t_value);
+      if (dirty & /*$theme, $view, buttons*/
+      137 && button_1_class_value !== (button_1_class_value = /*$theme*/
+      ctx[3].button + /*$view*/
+      (ctx[7] === /*button*/
+      ctx[25] ? " " + /*$theme*/
+      ctx[3].active : "") + " ec-" + /*button*/
+      ctx[25])) {
+        attr(button_1, "class", button_1_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_4(ctx) {
+  let button_1;
+  let t_value = (
+    /*$customButtons*/
+    ctx[6][
+      /*button*/
+      ctx[25]
+    ].text + ""
+  );
+  let t;
+  let button_1_class_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      button_1 = element("button");
+      t = text(t_value);
+      attr(button_1, "class", button_1_class_value = /*$theme*/
+      ctx[3].button + " ec-" + /*button*/
+      ctx[25]);
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, t);
+      if (!mounted) {
+        dispose = listen(button_1, "click", function() {
+          if (is_function(
+            /*$customButtons*/
+            ctx[6][
+              /*button*/
+              ctx[25]
+            ].click
+          )) ctx[6][
+            /*button*/
+            ctx[25]
+          ].click.apply(this, arguments);
+        });
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$customButtons, buttons*/
+      65 && t_value !== (t_value = /*$customButtons*/
+      ctx[6][
+        /*button*/
+        ctx[25]
+      ].text + "")) set_data(t, t_value);
+      if (dirty & /*$theme, buttons*/
+      9 && button_1_class_value !== (button_1_class_value = /*$theme*/
+      ctx[3].button + " ec-" + /*button*/
+      ctx[25])) {
+        attr(button_1, "class", button_1_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_3(ctx) {
+  let button_1;
+  let t_value = (
+    /*$buttonText*/
+    ctx[5][
+      /*button*/
+      ctx[25]
+    ] + ""
+  );
+  let t;
+  let button_1_class_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      button_1 = element("button");
+      t = text(t_value);
+      attr(button_1, "class", button_1_class_value = /*$theme*/
+      ctx[3].button + " ec-" + /*button*/
+      ctx[25]);
+      button_1.disabled = /*isToday*/
+      ctx[1];
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, t);
+      if (!mounted) {
+        dispose = listen(
+          button_1,
+          "click",
+          /*click_handler*/
+          ctx[21]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$buttonText, buttons*/
+      33 && t_value !== (t_value = /*$buttonText*/
+      ctx2[5][
+        /*button*/
+        ctx2[25]
+      ] + "")) set_data(t, t_value);
+      if (dirty & /*$theme, buttons*/
+      9 && button_1_class_value !== (button_1_class_value = /*$theme*/
+      ctx2[3].button + " ec-" + /*button*/
+      ctx2[25])) {
+        attr(button_1, "class", button_1_class_value);
+      }
+      if (dirty & /*isToday*/
+      2) {
+        button_1.disabled = /*isToday*/
+        ctx2[1];
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_2(ctx) {
+  let button_1;
+  let i;
+  let i_class_value;
+  let button_1_class_value;
+  let button_1_aria_label_value;
+  let button_1_title_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      button_1 = element("button");
+      i = element("i");
+      attr(i, "class", i_class_value = /*$theme*/
+      ctx[3].icon + " ec-" + /*button*/
+      ctx[25]);
+      attr(button_1, "class", button_1_class_value = /*$theme*/
+      ctx[3].button + " ec-" + /*button*/
+      ctx[25]);
+      attr(button_1, "aria-label", button_1_aria_label_value = /*$buttonText*/
+      ctx[5].next);
+      attr(button_1, "title", button_1_title_value = /*$buttonText*/
+      ctx[5].next);
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, i);
+      if (!mounted) {
+        dispose = listen(
+          button_1,
+          "click",
+          /*next*/
+          ctx[19]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme, buttons*/
+      9 && i_class_value !== (i_class_value = /*$theme*/
+      ctx2[3].icon + " ec-" + /*button*/
+      ctx2[25])) {
+        attr(i, "class", i_class_value);
+      }
+      if (dirty & /*$theme, buttons*/
+      9 && button_1_class_value !== (button_1_class_value = /*$theme*/
+      ctx2[3].button + " ec-" + /*button*/
+      ctx2[25])) {
+        attr(button_1, "class", button_1_class_value);
+      }
+      if (dirty & /*$buttonText*/
+      32 && button_1_aria_label_value !== (button_1_aria_label_value = /*$buttonText*/
+      ctx2[5].next)) {
+        attr(button_1, "aria-label", button_1_aria_label_value);
+      }
+      if (dirty & /*$buttonText*/
+      32 && button_1_title_value !== (button_1_title_value = /*$buttonText*/
+      ctx2[5].next)) {
+        attr(button_1, "title", button_1_title_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_1(ctx) {
+  let button_1;
+  let i;
+  let i_class_value;
+  let button_1_class_value;
+  let button_1_aria_label_value;
+  let button_1_title_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      button_1 = element("button");
+      i = element("i");
+      attr(i, "class", i_class_value = /*$theme*/
+      ctx[3].icon + " ec-" + /*button*/
+      ctx[25]);
+      attr(button_1, "class", button_1_class_value = /*$theme*/
+      ctx[3].button + " ec-" + /*button*/
+      ctx[25]);
+      attr(button_1, "aria-label", button_1_aria_label_value = /*$buttonText*/
+      ctx[5].prev);
+      attr(button_1, "title", button_1_title_value = /*$buttonText*/
+      ctx[5].prev);
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, i);
+      if (!mounted) {
+        dispose = listen(
+          button_1,
+          "click",
+          /*prev*/
+          ctx[18]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme, buttons*/
+      9 && i_class_value !== (i_class_value = /*$theme*/
+      ctx2[3].icon + " ec-" + /*button*/
+      ctx2[25])) {
+        attr(i, "class", i_class_value);
+      }
+      if (dirty & /*$theme, buttons*/
+      9 && button_1_class_value !== (button_1_class_value = /*$theme*/
+      ctx2[3].button + " ec-" + /*button*/
+      ctx2[25])) {
+        attr(button_1, "class", button_1_class_value);
+      }
+      if (dirty & /*$buttonText*/
+      32 && button_1_aria_label_value !== (button_1_aria_label_value = /*$buttonText*/
+      ctx2[5].prev)) {
+        attr(button_1, "aria-label", button_1_aria_label_value);
+      }
+      if (dirty & /*$buttonText*/
+      32 && button_1_title_value !== (button_1_title_value = /*$buttonText*/
+      ctx2[5].prev)) {
+        attr(button_1, "title", button_1_title_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block$1(ctx) {
+  let h2;
+  let h2_class_value;
+  let setContent_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      h2 = element("h2");
+      attr(h2, "class", h2_class_value = /*$theme*/
+      ctx[3].title);
+    },
+    m(target, anchor) {
+      insert(target, h2, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(setContent_action = setContent.call(
+          null,
+          h2,
+          /*$_viewTitle*/
+          ctx[4]
+        ));
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme*/
+      8 && h2_class_value !== (h2_class_value = /*$theme*/
+      ctx2[3].title)) {
+        attr(h2, "class", h2_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_viewTitle*/
+      16) setContent_action.update.call(
+        null,
+        /*$_viewTitle*/
+        ctx2[4]
+      );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(h2);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_each_block$2(ctx) {
+  let if_block_anchor;
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*button*/
+      ctx2[25] == "title"
+    ) return create_if_block$1;
+    if (
+      /*button*/
+      ctx2[25] == "prev"
+    ) return create_if_block_1;
+    if (
+      /*button*/
+      ctx2[25] == "next"
+    ) return create_if_block_2;
+    if (
+      /*button*/
+      ctx2[25] == "today"
+    ) return create_if_block_3;
+    if (
+      /*$customButtons*/
+      ctx2[6][
+        /*button*/
+        ctx2[25]
+      ]
+    ) return create_if_block_4;
+    if (
+      /*button*/
+      ctx2[25] != ""
+    ) return create_if_block_5;
+  }
+  let current_block_type = select_block_type(ctx);
+  let if_block = current_block_type && current_block_type(ctx);
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block) {
+        if_block.p(ctx2, dirty);
+      } else {
+        if (if_block) if_block.d(1);
+        if_block = current_block_type && current_block_type(ctx2);
+        if (if_block) {
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) {
+        if_block.d(detaching);
+      }
+    }
+  };
+}
+function create_fragment$3(ctx) {
+  let each_1_anchor;
+  let each_value = ensure_array_like(
+    /*buttons*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+  }
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$theme, $_viewTitle, buttons, $buttonText, prev, next, isToday, $date, today, $customButtons, $view*/
+      917759) {
+        each_value = ensure_array_like(
+          /*buttons*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$2(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block$2(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance$3($$self, $$props, $$invalidate) {
+  let $duration;
+  let $date;
+  let $hiddenDays;
+  let $_currentRange;
+  let $theme;
+  let $_viewTitle;
+  let $buttonText;
+  let $customButtons;
+  let $view;
+  let { buttons } = $$props;
+  let { _currentRange, _viewTitle, buttonText, customButtons, date, duration, hiddenDays, theme, view: view2 } = getContext("state");
+  component_subscribe($$self, _currentRange, (value) => $$invalidate(20, $_currentRange = value));
+  component_subscribe($$self, _viewTitle, (value) => $$invalidate(4, $_viewTitle = value));
+  component_subscribe($$self, buttonText, (value) => $$invalidate(5, $buttonText = value));
+  component_subscribe($$self, customButtons, (value) => $$invalidate(6, $customButtons = value));
+  component_subscribe($$self, date, (value) => $$invalidate(2, $date = value));
+  component_subscribe($$self, duration, (value) => $$invalidate(23, $duration = value));
+  component_subscribe($$self, hiddenDays, (value) => $$invalidate(24, $hiddenDays = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(3, $theme = value));
+  component_subscribe($$self, view2, (value) => $$invalidate(7, $view = value));
+  let today2 = setMidnight(createDate()), isToday;
+  function prev() {
+    let d = subtractDuration($date, $duration);
+    if ($hiddenDays.length && $hiddenDays.length < 7) {
+      while ($hiddenDays.includes(d.getUTCDay())) {
+        subtractDay(d);
+      }
+    }
+    set_store_value(date, $date = d, $date);
+  }
+  function next() {
+    set_store_value(date, $date = addDuration($date, $duration), $date);
+  }
+  const click_handler = () => set_store_value(date, $date = cloneDate(today2), $date);
+  const click_handler_1 = (button) => set_store_value(view2, $view = button, $view);
+  $$self.$$set = ($$props2) => {
+    if ("buttons" in $$props2) $$invalidate(0, buttons = $$props2.buttons);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_currentRange*/
+    1048576) {
+      $$invalidate(1, isToday = today2 >= $_currentRange.start && today2 < $_currentRange.end || null);
+    }
+  };
+  return [
+    buttons,
+    isToday,
+    $date,
+    $theme,
+    $_viewTitle,
+    $buttonText,
+    $customButtons,
+    $view,
+    _currentRange,
+    _viewTitle,
+    buttonText,
+    customButtons,
+    date,
+    duration,
+    hiddenDays,
+    theme,
+    view2,
+    today2,
+    prev,
+    next,
+    $_currentRange,
+    click_handler,
+    click_handler_1
+  ];
+}
+var Buttons = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$3, create_fragment$3, safe_not_equal, { buttons: 0 });
+  }
+};
+function get_each_context$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[5] = list[i];
+  return child_ctx;
+}
+function get_each_context_1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[8] = list[i];
+  return child_ctx;
+}
+function create_else_block(ctx) {
+  let buttons_1;
+  let current;
+  buttons_1 = new Buttons({ props: { buttons: (
+    /*buttons*/
+    ctx[8]
+  ) } });
+  return {
+    c() {
+      create_component(buttons_1.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(buttons_1, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const buttons_1_changes = {};
+      if (dirty & /*sections*/
+      1) buttons_1_changes.buttons = /*buttons*/
+      ctx2[8];
+      buttons_1.$set(buttons_1_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(buttons_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(buttons_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(buttons_1, detaching);
+    }
+  };
+}
+function create_if_block(ctx) {
+  let div;
+  let buttons_1;
+  let div_class_value;
+  let current;
+  buttons_1 = new Buttons({ props: { buttons: (
+    /*buttons*/
+    ctx[8]
+  ) } });
+  return {
+    c() {
+      div = element("div");
+      create_component(buttons_1.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[1].buttonGroup);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(buttons_1, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const buttons_1_changes = {};
+      if (dirty & /*sections*/
+      1) buttons_1_changes.buttons = /*buttons*/
+      ctx2[8];
+      buttons_1.$set(buttons_1_changes);
+      if (!current || dirty & /*$theme*/
+      2 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[1].buttonGroup)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(buttons_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(buttons_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(buttons_1);
+    }
+  };
+}
+function create_each_block_1(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block, create_else_block];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*buttons*/
+      ctx2[8].length > 1
+    ) return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_each_block$1(ctx) {
+  let div;
+  let t;
+  let current;
+  let each_value_1 = ensure_array_like(
+    /*sections*/
+    ctx[0][
+      /*key*/
+      ctx[5]
+    ]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t = space();
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      append(div, t);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme, sections, Object*/
+      3) {
+        each_value_1 = ensure_array_like(
+          /*sections*/
+          ctx2[0][
+            /*key*/
+            ctx2[5]
+          ]
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block_1(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(div, t);
+          }
+        }
+        group_outros();
+        for (i = each_value_1.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_fragment$2(ctx) {
+  let nav;
+  let nav_class_value;
+  let current;
+  let each_value = ensure_array_like(Object.keys(
+    /*sections*/
+    ctx[0]
+  ));
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      nav = element("nav");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(nav, "class", nav_class_value = /*$theme*/
+      ctx[1].toolbar);
+    },
+    m(target, anchor) {
+      insert(target, nav, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(nav, null);
+        }
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*sections, Object, $theme*/
+      3) {
+        each_value = ensure_array_like(Object.keys(
+          /*sections*/
+          ctx2[0]
+        ));
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(nav, null);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+      if (!current || dirty & /*$theme*/
+      2 && nav_class_value !== (nav_class_value = /*$theme*/
+      ctx2[1].toolbar)) {
+        attr(nav, "class", nav_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(nav);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance$2($$self, $$props, $$invalidate) {
+  let $headerToolbar;
+  let $theme;
+  let { headerToolbar, theme } = getContext("state");
+  component_subscribe($$self, headerToolbar, (value) => $$invalidate(4, $headerToolbar = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(1, $theme = value));
+  let sections = { start: [], center: [], end: [] };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*sections, $headerToolbar*/
+    17) {
+      {
+        for (let key of Object.keys(sections)) {
+          $$invalidate(0, sections[key] = $headerToolbar[key].split(" ").map((group) => group.split(",")), sections);
+        }
+      }
+    }
+  };
+  return [sections, $theme, headerToolbar, theme, $headerToolbar];
+}
+var Toolbar = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$2, create_fragment$2, safe_not_equal, {});
+  }
+};
+function get_each_context(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[11] = list[i];
+  return child_ctx;
+}
+function create_each_block(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  var switch_value = (
+    /*component*/
+    ctx[11]
+  );
+  function switch_props(ctx2, dirty) {
+    return {};
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props());
+  }
+  return {
+    c() {
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance) mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$_auxiliary*/
+      1 && switch_value !== (switch_value = /*component*/
+      ctx2[11])) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props());
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance) destroy_component(switch_instance, detaching);
+    }
+  };
+}
+function create_fragment$1(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*$_auxiliary*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$_auxiliary*/
+      1) {
+        each_value = ensure_array_like(
+          /*$_auxiliary*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance$1($$self, $$props, $$invalidate) {
+  let $_view;
+  let $datesSet;
+  let $_activeRange;
+  let $_auxiliary;
+  let { datesSet, _auxiliary, _activeRange, _queue, _view } = getContext("state");
+  component_subscribe($$self, datesSet, (value) => $$invalidate(7, $datesSet = value));
+  component_subscribe($$self, _auxiliary, (value) => $$invalidate(0, $_auxiliary = value));
+  component_subscribe($$self, _activeRange, (value) => $$invalidate(5, $_activeRange = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(6, $_view = value));
+  let debounceHandle = {};
+  function runDatesSet(_activeRange2) {
+    if (is_function($datesSet)) {
+      debounce(
+        () => $datesSet({
+          start: toLocalDate(_activeRange2.start),
+          end: toLocalDate(_activeRange2.end),
+          startStr: toISOString(_activeRange2.start),
+          endStr: toISOString(_activeRange2.end),
+          view: toViewWithLocalDates($_view)
+        }),
+        debounceHandle,
+        _queue
+      );
+    }
+  }
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_activeRange*/
+    32) {
+      runDatesSet($_activeRange);
+    }
+  };
+  return [$_auxiliary, datesSet, _auxiliary, _activeRange, _view, $_activeRange];
+}
+var Auxiliary = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$1, create_fragment$1, safe_not_equal, {});
+  }
+};
+function create_fragment(ctx) {
+  let div;
+  let toolbar;
+  let t0;
+  let switch_instance;
+  let div_class_value;
+  let div_role_value;
+  let t1;
+  let auxiliary;
+  let current;
+  let mounted;
+  let dispose;
+  toolbar = new Toolbar({});
+  var switch_value = (
+    /*$_viewComponent*/
+    ctx[5]
+  );
+  function switch_props(ctx2, dirty) {
+    return {};
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props());
+  }
+  auxiliary = new Auxiliary({});
+  return {
+    c() {
+      div = element("div");
+      create_component(toolbar.$$.fragment);
+      t0 = space();
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      t1 = space();
+      create_component(auxiliary.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[1].calendar + " " + /*$theme*/
+      ctx[1].view + /*$_scrollable*/
+      (ctx[0] ? " " + /*$theme*/
+      ctx[1].withScroll : "") + /*$_iClass*/
+      (ctx[2] ? " " + /*$theme*/
+      ctx[1][
+        /*$_iClass*/
+        ctx[2]
+      ] : ""));
+      attr(div, "role", div_role_value = listView(
+        /*$view*/
+        ctx[4]
+      ) ? "list" : "table");
+      set_style(
+        div,
+        "height",
+        /*$height*/
+        ctx[3]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(toolbar, div, null);
+      append(div, t0);
+      if (switch_instance) mount_component(switch_instance, div, null);
+      insert(target, t1, anchor);
+      mount_component(auxiliary, target, anchor);
+      current = true;
+      if (!mounted) {
+        dispose = listen(
+          window,
+          "resize",
+          /*recheckScrollable*/
+          ctx[17]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*$_viewComponent*/
+      32 && switch_value !== (switch_value = /*$_viewComponent*/
+      ctx2[5])) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props());
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, div, null);
+        } else {
+          switch_instance = null;
+        }
+      }
+      if (!current || dirty[0] & /*$theme, $_scrollable, $_iClass*/
+      7 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[1].calendar + " " + /*$theme*/
+      ctx2[1].view + /*$_scrollable*/
+      (ctx2[0] ? " " + /*$theme*/
+      ctx2[1].withScroll : "") + /*$_iClass*/
+      (ctx2[2] ? " " + /*$theme*/
+      ctx2[1][
+        /*$_iClass*/
+        ctx2[2]
+      ] : ""))) {
+        attr(div, "class", div_class_value);
+      }
+      if (!current || dirty[0] & /*$view*/
+      16 && div_role_value !== (div_role_value = listView(
+        /*$view*/
+        ctx2[4]
+      ) ? "list" : "table")) {
+        attr(div, "role", div_role_value);
+      }
+      if (dirty[0] & /*$height*/
+      8) {
+        set_style(
+          div,
+          "height",
+          /*$height*/
+          ctx2[3]
+        );
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(toolbar.$$.fragment, local);
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      transition_in(auxiliary.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(toolbar.$$.fragment, local);
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      transition_out(auxiliary.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+        detach(t1);
+      }
+      destroy_component(toolbar);
+      if (switch_instance) destroy_component(switch_instance);
+      destroy_component(auxiliary, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance($$self, $$props, $$invalidate) {
+  let $_bodyEl;
+  let $_scrollable;
+  let $_queue2;
+  let $_queue;
+  let $_interaction;
+  let $_events;
+  let $theme;
+  let $_iClass;
+  let $height;
+  let $view;
+  let $_viewComponent;
+  let { plugins = [] } = $$props;
+  let { options = {} } = $$props;
+  let component = get_current_component();
+  let state = new State(plugins, options);
+  setContext("state", state);
+  let { _viewComponent, _bodyEl, _interaction, _iClass, _events, _queue, _queue2, _tasks, _scrollable, height: height2, theme, view: view2 } = state;
+  component_subscribe($$self, _viewComponent, (value) => $$invalidate(5, $_viewComponent = value));
+  component_subscribe($$self, _bodyEl, (value) => $$invalidate(32, $_bodyEl = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(35, $_interaction = value));
+  component_subscribe($$self, _iClass, (value) => $$invalidate(2, $_iClass = value));
+  component_subscribe($$self, _events, (value) => $$invalidate(36, $_events = value));
+  component_subscribe($$self, _queue, (value) => $$invalidate(34, $_queue = value));
+  component_subscribe($$self, _queue2, (value) => $$invalidate(33, $_queue2 = value));
+  component_subscribe($$self, _scrollable, (value) => $$invalidate(0, $_scrollable = value));
+  component_subscribe($$self, height2, (value) => $$invalidate(3, $height = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(1, $theme = value));
+  component_subscribe($$self, view2, (value) => $$invalidate(4, $view = value));
+  let prevOptions = { ...options };
+  function setOption(name, value) {
+    state._set(name, value);
+    return this;
+  }
+  function getOption(name) {
+    let value = state._get(name);
+    return value instanceof Date ? toLocalDate(value) : value;
+  }
+  function refetchEvents() {
+    state._fetchedRange.set({ start: void 0, end: void 0 });
+    return this;
+  }
+  function getEvents() {
+    return $_events.map(toEventWithLocalDates);
+  }
+  function getEventById(id) {
+    for (let event of $_events) {
+      if (event.id == id) {
+        return toEventWithLocalDates(event);
+      }
+    }
+    return null;
+  }
+  function addEvent(event) {
+    $_events.push(createEvents([event])[0]);
+    _events.set($_events);
+    return this;
+  }
+  function updateEvent(event) {
+    for (let e of $_events) {
+      if (e.id == event.id) {
+        assign2(e, createEvents([event])[0]);
+        _events.set($_events);
+        break;
+      }
+    }
+    return this;
+  }
+  function removeEventById(id) {
+    let idx = $_events.findIndex((event) => event.id == id);
+    if (idx >= 0) {
+      $_events.splice(idx, 1);
+      _events.set($_events);
+    }
+    return this;
+  }
+  function getView() {
+    return toViewWithLocalDates(get_store_value(state._view));
+  }
+  function unselect() {
+    if ($_interaction.action) {
+      $_interaction.action.unselect();
+    }
+    return this;
+  }
+  function dateFromPoint(x, y) {
+    let dayEl = getElementWithPayload(x, y);
+    return dayEl ? getPayload(dayEl)(y) : null;
+  }
+  function destroy() {
+    destroy_component(component, true);
+  }
+  beforeUpdate(() => {
+    flushDebounce($_queue);
+  });
+  afterUpdate(() => {
+    flushDebounce($_queue2);
+    task(recheckScrollable, null, _tasks);
+  });
+  function recheckScrollable() {
+    if ($_bodyEl) {
+      set_store_value(_scrollable, $_scrollable = hasYScroll($_bodyEl), $_scrollable);
+    }
+  }
+  $$self.$$set = ($$props2) => {
+    if ("plugins" in $$props2) $$invalidate(18, plugins = $$props2.plugins);
+    if ("options" in $$props2) $$invalidate(19, options = $$props2.options);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*options*/
+    524288) {
+      for (let [name, value] of diff(options, prevOptions)) {
+        setOption(name, value);
+      }
+    }
+  };
+  return [
+    $_scrollable,
+    $theme,
+    $_iClass,
+    $height,
+    $view,
+    $_viewComponent,
+    _viewComponent,
+    _bodyEl,
+    _interaction,
+    _iClass,
+    _events,
+    _queue,
+    _queue2,
+    _scrollable,
+    height2,
+    theme,
+    view2,
+    recheckScrollable,
+    plugins,
+    options,
+    setOption,
+    getOption,
+    refetchEvents,
+    getEvents,
+    getEventById,
+    addEvent,
+    updateEvent,
+    removeEventById,
+    getView,
+    unselect,
+    dateFromPoint,
+    destroy
+  ];
+}
+var Calendar = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance,
+      create_fragment,
+      safe_not_equal,
+      {
+        plugins: 18,
+        options: 19,
+        setOption: 20,
+        getOption: 21,
+        refetchEvents: 22,
+        getEvents: 23,
+        getEventById: 24,
+        addEvent: 25,
+        updateEvent: 26,
+        removeEventById: 27,
+        getView: 28,
+        unselect: 29,
+        dateFromPoint: 30,
+        destroy: 31
+      },
+      null,
+      [-1, -1]
+    );
+  }
+  get setOption() {
+    return this.$$.ctx[20];
+  }
+  get getOption() {
+    return this.$$.ctx[21];
+  }
+  get refetchEvents() {
+    return this.$$.ctx[22];
+  }
+  get getEvents() {
+    return this.$$.ctx[23];
+  }
+  get getEventById() {
+    return this.$$.ctx[24];
+  }
+  get addEvent() {
+    return this.$$.ctx[25];
+  }
+  get updateEvent() {
+    return this.$$.ctx[26];
+  }
+  get removeEventById() {
+    return this.$$.ctx[27];
+  }
+  get getView() {
+    return this.$$.ctx[28];
+  }
+  get unselect() {
+    return this.$$.ctx[29];
+  }
+  get dateFromPoint() {
+    return this.$$.ctx[30];
+  }
+  get destroy() {
+    return this.$$.ctx[31];
+  }
+};
+
+// node_modules/@event-calendar/day-grid/index.js
+function days(state) {
+  return derived([state.date, state.firstDay, state.hiddenDays], ([$date, $firstDay, $hiddenDays]) => {
+    let days2 = [];
+    let day = cloneDate($date);
+    let max2 = 7;
+    while (day.getUTCDay() !== $firstDay && max2) {
+      subtractDay(day);
+      --max2;
+    }
+    for (let i = 0; i < 7; ++i) {
+      if (!$hiddenDays.includes(day.getUTCDay())) {
+        days2.push(cloneDate(day));
+      }
+      addDay(day);
+    }
+    return days2;
+  });
+}
+function get_each_context$4(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[8] = list[i];
+  return child_ctx;
+}
+function create_each_block$4(ctx) {
+  let div;
+  let span;
+  let span_aria_label_value;
+  let setContent_action;
+  let t;
+  let div_class_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t = space();
+      attr(span, "aria-label", span_aria_label_value = /*$_intlDayHeaderAL*/
+      ctx[2].format(
+        /*day*/
+        ctx[8]
+      ));
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[0].day + " " + /*$theme*/
+      ctx[0].weekdays?.[
+        /*day*/
+        ctx[8].getUTCDay()
+      ]);
+      attr(div, "role", "columnheader");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(div, t);
+      if (!mounted) {
+        dispose = action_destroyer(setContent_action = setContent.call(
+          null,
+          span,
+          /*$_intlDayHeader*/
+          ctx[3].format(
+            /*day*/
+            ctx[8]
+          )
+        ));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$_intlDayHeaderAL, $_days*/
+      6 && span_aria_label_value !== (span_aria_label_value = /*$_intlDayHeaderAL*/
+      ctx[2].format(
+        /*day*/
+        ctx[8]
+      ))) {
+        attr(span, "aria-label", span_aria_label_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_intlDayHeader, $_days*/
+      10) setContent_action.update.call(
+        null,
+        /*$_intlDayHeader*/
+        ctx[3].format(
+          /*day*/
+          ctx[8]
+        )
+      );
+      if (dirty & /*$theme, $_days*/
+      3 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[0].day + " " + /*$theme*/
+      ctx[0].weekdays?.[
+        /*day*/
+        ctx[8].getUTCDay()
+      ])) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment$6(ctx) {
+  let div2;
+  let div0;
+  let div0_class_value;
+  let t;
+  let div1;
+  let div1_class_value;
+  let div2_class_value;
+  let each_value = ensure_array_like(
+    /*$_days*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
+  }
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t = space();
+      div1 = element("div");
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].days);
+      attr(div0, "role", "row");
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].hiddenScroll);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[0].header);
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+      append(div2, t);
+      append(div2, div1);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$theme, $_days, $_intlDayHeaderAL, $_intlDayHeader*/
+      15) {
+        each_value = ensure_array_like(
+          /*$_days*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$4(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block$4(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div0, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (dirty & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[0].days)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (dirty & /*$theme*/
+      1 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[0].hiddenScroll)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (dirty & /*$theme*/
+      1 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx2[0].header)) {
+        attr(div2, "class", div2_class_value);
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function instance$6($$self, $$props, $$invalidate) {
+  let $theme;
+  let $_days;
+  let $_intlDayHeaderAL;
+  let $_intlDayHeader;
+  let { theme, _intlDayHeader, _intlDayHeaderAL, _days } = getContext("state");
+  component_subscribe($$self, theme, (value) => $$invalidate(0, $theme = value));
+  component_subscribe($$self, _intlDayHeader, (value) => $$invalidate(3, $_intlDayHeader = value));
+  component_subscribe($$self, _intlDayHeaderAL, (value) => $$invalidate(2, $_intlDayHeaderAL = value));
+  component_subscribe($$self, _days, (value) => $$invalidate(1, $_days = value));
+  return [
+    $theme,
+    $_days,
+    $_intlDayHeaderAL,
+    $_intlDayHeader,
+    theme,
+    _intlDayHeader,
+    _intlDayHeaderAL,
+    _days
+  ];
+}
+var Header = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
+  }
+};
+function create_fragment$5(ctx) {
+  let div1;
+  let div0;
+  let div0_class_value;
+  let div1_class_value;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[7].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[6],
+    null
+  );
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      if (default_slot) default_slot.c();
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].content);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].body + /*$dayMaxEvents*/
+      (ctx[1] === true ? " " + /*$theme*/
+      ctx[0].uniform : ""));
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      if (default_slot) {
+        default_slot.m(div0, null);
+      }
+      ctx[8](div1);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        64)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[6],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[6]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[6],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[0].content)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme, $dayMaxEvents*/
+      3 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[0].body + /*$dayMaxEvents*/
+      (ctx2[1] === true ? " " + /*$theme*/
+      ctx2[0].uniform : ""))) {
+        attr(div1, "class", div1_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (default_slot) default_slot.d(detaching);
+      ctx[8](null);
+    }
+  };
+}
+function instance$5($$self, $$props, $$invalidate) {
+  let $theme;
+  let $dayMaxEvents;
+  let $_bodyEl;
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { dayMaxEvents, _bodyEl, theme } = getContext("state");
+  component_subscribe($$self, dayMaxEvents, (value) => $$invalidate(1, $dayMaxEvents = value));
+  component_subscribe($$self, _bodyEl, (value) => $$invalidate(2, $_bodyEl = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(0, $theme = value));
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      $_bodyEl = $$value;
+      _bodyEl.set($_bodyEl);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("$$scope" in $$props2) $$invalidate(6, $$scope = $$props2.$$scope);
+  };
+  return [
+    $theme,
+    $dayMaxEvents,
+    $_bodyEl,
+    dayMaxEvents,
+    _bodyEl,
+    theme,
+    $$scope,
+    slots,
+    div1_binding
+  ];
+}
+var Body = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$5, create_fragment$5, safe_not_equal, {});
+  }
+};
+function create_fragment$4(ctx) {
+  let article;
+  let div;
+  let div_class_value;
+  let setContent_action;
+  let t;
+  let switch_instance;
+  let article_role_value;
+  let article_tabindex_value;
+  let current;
+  let mounted;
+  let dispose;
+  var switch_value = (
+    /*$_interaction*/
+    ctx[8].resizer
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { event: (
+      /*event*/
+      ctx2[0]
+    ) } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+    switch_instance.$on("pointerdown", function() {
+      if (is_function(
+        /*createDragHandler*/
+        ctx[33](
+          /*$_interaction*/
+          ctx[8],
+          true
+        )
+      )) ctx[33](
+        /*$_interaction*/
+        ctx[8],
+        true
+      ).apply(this, arguments);
+    });
+  }
+  return {
+    c() {
+      article = element("article");
+      div = element("div");
+      t = space();
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[2].eventBody);
+      attr(
+        article,
+        "class",
+        /*classes*/
+        ctx[4]
+      );
+      attr(
+        article,
+        "style",
+        /*style*/
+        ctx[5]
+      );
+      attr(article, "role", article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0);
+      attr(article, "tabindex", article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0);
+    },
+    m(target, anchor) {
+      insert(target, article, anchor);
+      append(article, div);
+      append(article, t);
+      if (switch_instance) mount_component(switch_instance, article, null);
+      ctx[52](article);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            div,
+            /*content*/
+            ctx[6]
+          )),
+          listen(article, "click", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7] || void 0
+            )) /*onclick*/
+            (ctx[7] || void 0).apply(this, arguments);
+          }),
+          listen(article, "keydown", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7] && keyEnter(
+                /*onclick*/
+                ctx[7]
+              )
+            )) /*onclick*/
+            (ctx[7] && keyEnter(
+              /*onclick*/
+              ctx[7]
+            )).apply(this, arguments);
+          }),
+          listen(article, "mouseenter", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[32](
+                /*$eventMouseEnter*/
+                ctx[9],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[32](
+              /*$eventMouseEnter*/
+              ctx[9],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "mouseleave", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[32](
+                /*$eventMouseLeave*/
+                ctx[10],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[32](
+              /*$eventMouseLeave*/
+              ctx[10],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "pointerdown", function() {
+            if (is_function(!helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[33](
+              /*$_interaction*/
+              ctx[8]
+            ))) (!helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[33](
+              /*$_interaction*/
+              ctx[8]
+            )).apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty[0] & /*$theme*/
+      4 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[2].eventBody)) {
+        attr(div, "class", div_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*content*/
+      64) setContent_action.update.call(
+        null,
+        /*content*/
+        ctx[6]
+      );
+      if (dirty[0] & /*$_interaction*/
+      256 && switch_value !== (switch_value = /*$_interaction*/
+      ctx[8].resizer)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+          switch_instance.$on("pointerdown", function() {
+            if (is_function(
+              /*createDragHandler*/
+              ctx[33](
+                /*$_interaction*/
+                ctx[8],
+                true
+              )
+            )) ctx[33](
+              /*$_interaction*/
+              ctx[8],
+              true
+            ).apply(this, arguments);
+          });
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, article, null);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = {};
+        if (dirty[0] & /*event*/
+        1) switch_instance_changes.event = /*event*/
+        ctx[0];
+        switch_instance.$set(switch_instance_changes);
+      }
+      if (!current || dirty[0] & /*classes*/
+      16) {
+        attr(
+          article,
+          "class",
+          /*classes*/
+          ctx[4]
+        );
+      }
+      if (!current || dirty[0] & /*style*/
+      32) {
+        attr(
+          article,
+          "style",
+          /*style*/
+          ctx[5]
+        );
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_role_value !== (article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0)) {
+        attr(article, "role", article_role_value);
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_tabindex_value !== (article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0)) {
+        attr(article, "tabindex", article_tabindex_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(article);
+      }
+      if (switch_instance) destroy_component(switch_instance);
+      ctx[52](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$4($$self, $$props, $$invalidate) {
+  let $eventClick;
+  let $_hiddenEvents;
+  let $dayMaxEvents;
+  let $_popupDate;
+  let $_interaction;
+  let $_view;
+  let $eventAllUpdated;
+  let $eventDidMount;
+  let $_intlEventTime;
+  let $theme;
+  let $eventContent;
+  let $displayEventEnd;
+  let $eventClassNames;
+  let $_iClasses;
+  let $eventTextColor;
+  let $_resTxtColor;
+  let $eventColor;
+  let $eventBackgroundColor;
+  let $_resBgColor;
+  let $eventMouseEnter;
+  let $eventMouseLeave;
+  let { chunk } = $$props;
+  let { longChunks = {} } = $$props;
+  let { inPopup = false } = $$props;
+  let { dayMaxEvents, displayEventEnd, eventAllUpdated, eventBackgroundColor, eventTextColor, eventClick, eventColor, eventContent, eventClassNames, eventDidMount, eventMouseEnter, eventMouseLeave, theme, _view, _intlEventTime, _interaction, _iClasses, _resBgColor, _resTxtColor, _hiddenEvents, _popupDate, _tasks } = getContext("state");
+  component_subscribe($$self, dayMaxEvents, (value) => $$invalidate(55, $dayMaxEvents = value));
+  component_subscribe($$self, displayEventEnd, (value) => $$invalidate(44, $displayEventEnd = value));
+  component_subscribe($$self, eventAllUpdated, (value) => $$invalidate(57, $eventAllUpdated = value));
+  component_subscribe($$self, eventBackgroundColor, (value) => $$invalidate(50, $eventBackgroundColor = value));
+  component_subscribe($$self, eventTextColor, (value) => $$invalidate(47, $eventTextColor = value));
+  component_subscribe($$self, eventClick, (value) => $$invalidate(40, $eventClick = value));
+  component_subscribe($$self, eventColor, (value) => $$invalidate(49, $eventColor = value));
+  component_subscribe($$self, eventContent, (value) => $$invalidate(43, $eventContent = value));
+  component_subscribe($$self, eventClassNames, (value) => $$invalidate(45, $eventClassNames = value));
+  component_subscribe($$self, eventDidMount, (value) => $$invalidate(58, $eventDidMount = value));
+  component_subscribe($$self, eventMouseEnter, (value) => $$invalidate(9, $eventMouseEnter = value));
+  component_subscribe($$self, eventMouseLeave, (value) => $$invalidate(10, $eventMouseLeave = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(2, $theme = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(41, $_view = value));
+  component_subscribe($$self, _intlEventTime, (value) => $$invalidate(42, $_intlEventTime = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(8, $_interaction = value));
+  component_subscribe($$self, _iClasses, (value) => $$invalidate(46, $_iClasses = value));
+  component_subscribe($$self, _resBgColor, (value) => $$invalidate(51, $_resBgColor = value));
+  component_subscribe($$self, _resTxtColor, (value) => $$invalidate(48, $_resTxtColor = value));
+  component_subscribe($$self, _hiddenEvents, (value) => $$invalidate(54, $_hiddenEvents = value));
+  component_subscribe($$self, _popupDate, (value) => $$invalidate(56, $_popupDate = value));
+  let el;
+  let event;
+  let classes;
+  let style;
+  let content;
+  let timeText;
+  let margin = 1;
+  let hidden = false;
+  let display;
+  let onclick;
+  onMount(() => {
+    if (is_function($eventDidMount)) {
+      $eventDidMount({
+        event: toEventWithLocalDates(event),
+        timeText,
+        el,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+  });
+  afterUpdate(() => {
+    if (is_function($eventAllUpdated) && !helperEvent(display)) {
+      task(() => $eventAllUpdated({ view: toViewWithLocalDates($_view) }), "eau", _tasks);
+    }
+  });
+  function createHandler(fn, display2) {
+    return !helperEvent(display2) && is_function(fn) ? (jsEvent) => fn({
+      event: toEventWithLocalDates(event),
+      el,
+      jsEvent,
+      view: toViewWithLocalDates($_view)
+    }) : void 0;
+  }
+  function createDragHandler(interaction, resize) {
+    return interaction.action ? (jsEvent) => $_interaction.action.drag(event, jsEvent, resize, inPopup ? $_popupDate : void 0) : void 0;
+  }
+  function reposition() {
+    if (!el) {
+      return;
+    }
+    $$invalidate(38, margin = repositionEvent(chunk, longChunks, height(el)));
+    if ($dayMaxEvents === true) {
+      hide();
+    } else {
+      $$invalidate(39, hidden = false);
+    }
+  }
+  function hide() {
+    let dayEl = ancestor(el, 2);
+    let h = height(dayEl) - height(dayEl.firstElementChild) - footHeight(dayEl);
+    $$invalidate(39, hidden = chunk.bottom > h);
+    let update2 = false;
+    for (let date of chunk.dates) {
+      let hiddenEvents = $_hiddenEvents[date.getTime()];
+      if (hiddenEvents) {
+        let size = hiddenEvents.size;
+        if (hidden) {
+          hiddenEvents.add(chunk.event);
+        } else {
+          hiddenEvents.delete(chunk.event);
+        }
+        if (size !== hiddenEvents.size) {
+          update2 = true;
+        }
+      }
+    }
+    if (update2) {
+      _hiddenEvents.set($_hiddenEvents);
+    }
+  }
+  function footHeight(dayEl) {
+    let h = 0;
+    for (let i = 0; i < chunk.days; ++i) {
+      h = max(h, height(dayEl.lastElementChild));
+      dayEl = dayEl.nextElementSibling;
+      if (!dayEl) {
+        break;
+      }
+    }
+    return h;
+  }
+  function article_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(3, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("chunk" in $$props2) $$invalidate(34, chunk = $$props2.chunk);
+    if ("longChunks" in $$props2) $$invalidate(35, longChunks = $$props2.longChunks);
+    if ("inPopup" in $$props2) $$invalidate(36, inPopup = $$props2.inPopup);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[1] & /*chunk*/
+    8) {
+      $$invalidate(0, event = chunk.event);
+    }
+    if ($$self.$$.dirty[0] & /*event, style, $theme*/
+    37 | $$self.$$.dirty[1] & /*$_resBgColor, $eventBackgroundColor, $eventColor, $_resTxtColor, $eventTextColor, chunk, margin, hidden, $_iClasses, $eventClassNames, $_view*/
+    2082184) {
+      {
+        $$invalidate(1, display = event.display);
+        let bgColor = event.backgroundColor || $_resBgColor(event) || $eventBackgroundColor || $eventColor;
+        let txtColor = event.textColor || $_resTxtColor(event) || $eventTextColor;
+        $$invalidate(5, style = `width:calc(${chunk.days * 100}% + ${(chunk.days - 1) * 7}px);margin-top:${margin}px;`);
+        if (bgColor) {
+          $$invalidate(5, style += `background-color:${bgColor};`);
+        }
+        if (txtColor) {
+          $$invalidate(5, style += `color:${txtColor};`);
+        }
+        if (hidden) {
+          $$invalidate(5, style += "visibility:hidden;");
+        }
+        $$invalidate(4, classes = [
+          $theme.event,
+          ...$_iClasses([], event),
+          ...createEventClasses($eventClassNames, event, $_view)
+        ].join(" "));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$theme*/
+    4 | $$self.$$.dirty[1] & /*chunk, $displayEventEnd, $eventContent, $_intlEventTime, $_view*/
+    15368) {
+      $$invalidate(6, [timeText, content] = createEventContent(chunk, $displayEventEnd, $eventContent, $theme, $_intlEventTime, $_view), content);
+    }
+    if ($$self.$$.dirty[0] & /*display*/
+    2 | $$self.$$.dirty[1] & /*$eventClick*/
+    512) {
+      $$invalidate(7, onclick = createHandler($eventClick, display));
+    }
+  };
+  return [
+    event,
+    display,
+    $theme,
+    el,
+    classes,
+    style,
+    content,
+    onclick,
+    $_interaction,
+    $eventMouseEnter,
+    $eventMouseLeave,
+    dayMaxEvents,
+    displayEventEnd,
+    eventAllUpdated,
+    eventBackgroundColor,
+    eventTextColor,
+    eventClick,
+    eventColor,
+    eventContent,
+    eventClassNames,
+    eventDidMount,
+    eventMouseEnter,
+    eventMouseLeave,
+    theme,
+    _view,
+    _intlEventTime,
+    _interaction,
+    _iClasses,
+    _resBgColor,
+    _resTxtColor,
+    _hiddenEvents,
+    _popupDate,
+    createHandler,
+    createDragHandler,
+    chunk,
+    longChunks,
+    inPopup,
+    reposition,
+    margin,
+    hidden,
+    $eventClick,
+    $_view,
+    $_intlEventTime,
+    $eventContent,
+    $displayEventEnd,
+    $eventClassNames,
+    $_iClasses,
+    $eventTextColor,
+    $_resTxtColor,
+    $eventColor,
+    $eventBackgroundColor,
+    $_resBgColor,
+    article_binding
+  ];
+}
+var Event = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance$4,
+      create_fragment$4,
+      safe_not_equal,
+      {
+        chunk: 34,
+        longChunks: 35,
+        inPopup: 36,
+        reposition: 37
+      },
+      null,
+      [-1, -1]
+    );
+  }
+  get reposition() {
+    return this.$$.ctx[37];
+  }
+};
+function get_each_context$3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[20] = list[i];
+  return child_ctx;
+}
+function create_each_block$3(key_1, ctx) {
+  let first;
+  let event;
+  let current;
+  event = new Event({
+    props: { chunk: (
+      /*chunk*/
+      ctx[20]
+    ), inPopup: true }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const event_changes = {};
+      if (dirty & /*$_popupChunks*/
+      1) event_changes.chunk = /*chunk*/
+      ctx[20];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_fragment$32(ctx) {
+  let div2;
+  let div0;
+  let time;
+  let time_datetime_value;
+  let setContent_action;
+  let t0;
+  let a;
+  let t1;
+  let a_aria_label_value;
+  let div0_class_value;
+  let t2;
+  let div1;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let div1_class_value;
+  let div2_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*$_popupChunks*/
+    ctx[0]
+  );
+  const get_key = (ctx2) => (
+    /*chunk*/
+    ctx2[20].event
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$3(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$3(key, child_ctx));
+  }
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      time = element("time");
+      t0 = space();
+      a = element("a");
+      t1 = text("\xD7");
+      t2 = space();
+      div1 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(time, "datetime", time_datetime_value = toISOString(
+        /*$_popupDate*/
+        ctx[3],
+        10
+      ));
+      attr(a, "role", "button");
+      attr(a, "tabindex", "0");
+      attr(a, "aria-label", a_aria_label_value = /*$buttonText*/
+      ctx[6].close);
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[4].dayHead);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[4].events);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[4].popup);
+      attr(
+        div2,
+        "style",
+        /*style*/
+        ctx[2]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div0, time);
+      append(div0, t0);
+      append(div0, a);
+      append(a, t1);
+      append(div2, t2);
+      append(div2, div1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div1, null);
+        }
+      }
+      ctx[16](div2);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            time,
+            /*$_intlDayPopover*/
+            ctx[5].format(
+              /*$_popupDate*/
+              ctx[3]
+            )
+          )),
+          listen(a, "click", stop_propagation(
+            /*close*/
+            ctx[13]
+          )),
+          listen(a, "keydown", keyEnter(
+            /*close*/
+            ctx[13]
+          )),
+          action_destroyer(outsideEvent.call(null, div2, "pointerdown")),
+          listen(div2, "pointerdown", stop_propagation(
+            /*pointerdown_handler*/
+            ctx[15]
+          )),
+          listen(
+            div2,
+            "pointerdownoutside",
+            /*handlePointerDownOutside*/
+            ctx[14]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (!current || dirty & /*$_popupDate*/
+      8 && time_datetime_value !== (time_datetime_value = toISOString(
+        /*$_popupDate*/
+        ctx2[3],
+        10
+      ))) {
+        attr(time, "datetime", time_datetime_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_intlDayPopover, $_popupDate*/
+      40) setContent_action.update.call(
+        null,
+        /*$_intlDayPopover*/
+        ctx2[5].format(
+          /*$_popupDate*/
+          ctx2[3]
+        )
+      );
+      if (!current || dirty & /*$buttonText*/
+      64 && a_aria_label_value !== (a_aria_label_value = /*$buttonText*/
+      ctx2[6].close)) {
+        attr(a, "aria-label", a_aria_label_value);
+      }
+      if (!current || dirty & /*$theme*/
+      16 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[4].dayHead)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (dirty & /*$_popupChunks*/
+      1) {
+        each_value = ensure_array_like(
+          /*$_popupChunks*/
+          ctx2[0]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div1, outro_and_destroy_block, create_each_block$3, null, get_each_context$3);
+        check_outros();
+      }
+      if (!current || dirty & /*$theme*/
+      16 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[4].events)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (!current || dirty & /*$theme*/
+      16 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx2[4].popup)) {
+        attr(div2, "class", div2_class_value);
+      }
+      if (!current || dirty & /*style*/
+      4) {
+        attr(
+          div2,
+          "style",
+          /*style*/
+          ctx2[2]
+        );
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      ctx[16](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$32($$self, $$props, $$invalidate) {
+  let $_interaction;
+  let $_popupDate;
+  let $_popupChunks;
+  let $theme;
+  let $_intlDayPopover;
+  let $buttonText;
+  let { buttonText, theme, _interaction, _intlDayPopover, _popupDate, _popupChunks } = getContext("state");
+  component_subscribe($$self, buttonText, (value) => $$invalidate(6, $buttonText = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(4, $theme = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(17, $_interaction = value));
+  component_subscribe($$self, _intlDayPopover, (value) => $$invalidate(5, $_intlDayPopover = value));
+  component_subscribe($$self, _popupDate, (value) => $$invalidate(3, $_popupDate = value));
+  component_subscribe($$self, _popupChunks, (value) => $$invalidate(0, $_popupChunks = value));
+  let el;
+  let style = "";
+  function position() {
+    let dayEl = ancestor(el, 1);
+    let bodyEl = ancestor(dayEl, 3);
+    let popupRect = rect(el);
+    let dayRect = rect(dayEl);
+    let bodyRect = rect(bodyEl);
+    $$invalidate(2, style = "");
+    let left;
+    if (popupRect.width >= bodyRect.width) {
+      left = bodyRect.left - dayRect.left;
+      let right = dayRect.right - bodyRect.right;
+      $$invalidate(2, style += `right:${right}px;`);
+    } else {
+      left = (dayRect.width - popupRect.width) / 2;
+      if (dayRect.left + left < bodyRect.left) {
+        left = bodyRect.left - dayRect.left;
+      } else if (dayRect.left + left + popupRect.width > bodyRect.right) {
+        left = bodyRect.right - dayRect.left - popupRect.width;
+      }
+    }
+    $$invalidate(2, style += `left:${left}px;`);
+    let top;
+    if (popupRect.height >= bodyRect.height) {
+      top = bodyRect.top - dayRect.top;
+      let bottom = dayRect.bottom - bodyRect.bottom;
+      $$invalidate(2, style += `bottom:${bottom}px;`);
+    } else {
+      top = (dayRect.height - popupRect.height) / 2;
+      if (dayRect.top + top < bodyRect.top) {
+        top = bodyRect.top - dayRect.top;
+      } else if (dayRect.top + top + popupRect.height > bodyRect.bottom) {
+        top = bodyRect.bottom - dayRect.top - popupRect.height;
+      }
+    }
+    $$invalidate(2, style += `top:${top}px;`);
+  }
+  function reposition() {
+    if (el) {
+      $$invalidate(2, style = "");
+      tick().then(() => {
+        if ($_popupChunks.length) {
+          position();
+        } else {
+          close();
+        }
+      });
+    }
+  }
+  function close(e) {
+    set_store_value(_popupDate, $_popupDate = null, $_popupDate);
+  }
+  function handlePointerDownOutside(e) {
+    close();
+    $_interaction.action?.noClick();
+  }
+  function pointerdown_handler(event) {
+    bubble.call(this, $$self, event);
+  }
+  function div2_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(1, el);
+    });
+  }
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_popupChunks*/
+    1) {
+      if ($_popupChunks) {
+        reposition();
+      }
+    }
+  };
+  return [
+    $_popupChunks,
+    el,
+    style,
+    $_popupDate,
+    $theme,
+    $_intlDayPopover,
+    $buttonText,
+    buttonText,
+    theme,
+    _interaction,
+    _intlDayPopover,
+    _popupDate,
+    _popupChunks,
+    close,
+    handlePointerDownOutside,
+    pointerdown_handler,
+    div2_binding
+  ];
+}
+var Popup = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$32, create_fragment$32, safe_not_equal, {});
+  }
+};
+function get_each_context$22(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[42] = list[i];
+  child_ctx[43] = list;
+  child_ctx[44] = i;
+  return child_ctx;
+}
+function create_if_block_32(ctx) {
+  let div;
+  let event;
+  let div_class_value;
+  let current;
+  event = new Event({ props: { chunk: (
+    /*iChunks*/
+    ctx[2][1]
+  ) } });
+  return {
+    c() {
+      div = element("div");
+      create_component(event.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[12].events);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(event, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const event_changes = {};
+      if (dirty[0] & /*iChunks*/
+      4) event_changes.chunk = /*iChunks*/
+      ctx2[2][1];
+      event.$set(event_changes);
+      if (!current || dirty[0] & /*$theme*/
+      4096 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[12].events)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(event);
+    }
+  };
+}
+function create_if_block_22(ctx) {
+  let div;
+  let event;
+  let div_class_value;
+  let current;
+  event = new Event({ props: { chunk: (
+    /*iChunks*/
+    ctx[2][0]
+  ) } });
+  return {
+    c() {
+      div = element("div");
+      create_component(event.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[12].events + " " + /*$theme*/
+      ctx[12].preview);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(event, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const event_changes = {};
+      if (dirty[0] & /*iChunks*/
+      4) event_changes.chunk = /*iChunks*/
+      ctx2[2][0];
+      event.$set(event_changes);
+      if (!current || dirty[0] & /*$theme*/
+      4096 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[12].events + " " + /*$theme*/
+      ctx2[12].preview)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(event);
+    }
+  };
+}
+function create_each_block$22(key_1, ctx) {
+  let first;
+  let event;
+  let i = (
+    /*i*/
+    ctx[44]
+  );
+  let current;
+  const assign_event = () => (
+    /*event_binding*/
+    ctx[36](event, i)
+  );
+  const unassign_event = () => (
+    /*event_binding*/
+    ctx[36](null, i)
+  );
+  let event_props = {
+    chunk: (
+      /*chunk*/
+      ctx[42]
+    ),
+    longChunks: (
+      /*longChunks*/
+      ctx[1]
+    )
+  };
+  event = new Event({ props: event_props });
+  assign_event();
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (i !== /*i*/
+      ctx[44]) {
+        unassign_event();
+        i = /*i*/
+        ctx[44];
+        assign_event();
+      }
+      const event_changes = {};
+      if (dirty[0] & /*dayChunks*/
+      16) event_changes.chunk = /*chunk*/
+      ctx[42];
+      if (dirty[0] & /*longChunks*/
+      2) event_changes.longChunks = /*longChunks*/
+      ctx[1];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      unassign_event();
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_if_block_12(ctx) {
+  let popup;
+  let current;
+  popup = new Popup({});
+  return {
+    c() {
+      create_component(popup.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(popup, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(popup.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(popup.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(popup, detaching);
+    }
+  };
+}
+function create_if_block2(ctx) {
+  let a;
+  let setContent_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      a = element("a");
+      attr(a, "role", "button");
+      attr(a, "tabindex", "0");
+      attr(a, "aria-haspopup", "true");
+    },
+    m(target, anchor) {
+      insert(target, a, anchor);
+      if (!mounted) {
+        dispose = [
+          listen(a, "click", stop_propagation(
+            /*showMore*/
+            ctx[26]
+          )),
+          listen(a, "keydown", keyEnter(
+            /*showMore*/
+            ctx[26]
+          )),
+          listen(a, "pointerdown", stop_propagation(
+            /*pointerdown_handler*/
+            ctx[35]
+          )),
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            a,
+            /*moreLink*/
+            ctx[10]
+          ))
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*moreLink*/
+      1024) setContent_action.update.call(
+        null,
+        /*moreLink*/
+        ctx2[10]
+      );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(a);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_fragment$22(ctx) {
+  let div2;
+  let time;
+  let time_class_value;
+  let time_datetime_value;
+  let setContent_action;
+  let t0;
+  let show_if_1 = (
+    /*iChunks*/
+    ctx[2][1] && datesEqual(
+      /*iChunks*/
+      ctx[2][1].date,
+      /*date*/
+      ctx[0]
+    )
+  );
+  let t1;
+  let show_if = (
+    /*iChunks*/
+    ctx[2][0] && datesEqual(
+      /*iChunks*/
+      ctx[2][0].date,
+      /*date*/
+      ctx[0]
+    )
+  );
+  let t2;
+  let div0;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let div0_class_value;
+  let t3;
+  let t4;
+  let div1;
+  let div1_class_value;
+  let div2_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let if_block0 = show_if_1 && create_if_block_32(ctx);
+  let if_block1 = show_if && create_if_block_22(ctx);
+  let each_value = ensure_array_like(
+    /*dayChunks*/
+    ctx[4]
+  );
+  const get_key = (ctx2) => (
+    /*chunk*/
+    ctx2[42].event
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$22(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$22(key, child_ctx));
+  }
+  let if_block2 = (
+    /*showPopup*/
+    ctx[6] && create_if_block_12()
+  );
+  let if_block3 = (
+    /*hiddenEvents*/
+    ctx[5].size && create_if_block2(ctx)
+  );
+  return {
+    c() {
+      div2 = element("div");
+      time = element("time");
+      t0 = space();
+      if (if_block0) if_block0.c();
+      t1 = space();
+      if (if_block1) if_block1.c();
+      t2 = space();
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t3 = space();
+      if (if_block2) if_block2.c();
+      t4 = space();
+      div1 = element("div");
+      if (if_block3) if_block3.c();
+      attr(time, "class", time_class_value = /*$theme*/
+      ctx[12].dayHead);
+      attr(time, "datetime", time_datetime_value = toISOString(
+        /*date*/
+        ctx[0],
+        10
+      ));
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[12].events);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[12].dayFoot);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[12].day + " " + /*$theme*/
+      ctx[12].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[7] ? " " + /*$theme*/
+      ctx[12].today : "") + /*otherMonth*/
+      (ctx[8] ? " " + /*$theme*/
+      ctx[12].otherMonth : "") + /*highlight*/
+      (ctx[9] ? " " + /*$theme*/
+      ctx[12].highlight : ""));
+      attr(div2, "role", "cell");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, time);
+      append(div2, t0);
+      if (if_block0) if_block0.m(div2, null);
+      append(div2, t1);
+      if (if_block1) if_block1.m(div2, null);
+      append(div2, t2);
+      append(div2, div0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+      append(div2, t3);
+      if (if_block2) if_block2.m(div2, null);
+      append(div2, t4);
+      append(div2, div1);
+      if (if_block3) if_block3.m(div1, null);
+      ctx[37](div2);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            time,
+            /*$_intlDayCell*/
+            ctx[14].format(
+              /*date*/
+              ctx[0]
+            )
+          )),
+          listen(div2, "pointerenter", function() {
+            if (is_function(
+              /*createPointerEnterHandler*/
+              ctx[25](
+                /*$_interaction*/
+                ctx[13]
+              )
+            )) ctx[25](
+              /*$_interaction*/
+              ctx[13]
+            ).apply(this, arguments);
+          }),
+          listen(div2, "pointerleave", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[13].pointer?.leave
+            )) ctx[13].pointer?.leave.apply(this, arguments);
+          }),
+          listen(div2, "pointerdown", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[13].action?.select
+            )) ctx[13].action?.select.apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty[0] & /*$theme*/
+      4096 && time_class_value !== (time_class_value = /*$theme*/
+      ctx[12].dayHead)) {
+        attr(time, "class", time_class_value);
+      }
+      if (!current || dirty[0] & /*date*/
+      1 && time_datetime_value !== (time_datetime_value = toISOString(
+        /*date*/
+        ctx[0],
+        10
+      ))) {
+        attr(time, "datetime", time_datetime_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*$_intlDayCell, date*/
+      16385) setContent_action.update.call(
+        null,
+        /*$_intlDayCell*/
+        ctx[14].format(
+          /*date*/
+          ctx[0]
+        )
+      );
+      if (dirty[0] & /*iChunks, date*/
+      5) show_if_1 = /*iChunks*/
+      ctx[2][1] && datesEqual(
+        /*iChunks*/
+        ctx[2][1].date,
+        /*date*/
+        ctx[0]
+      );
+      if (show_if_1) {
+        if (if_block0) {
+          if_block0.p(ctx, dirty);
+          if (dirty[0] & /*iChunks, date*/
+          5) {
+            transition_in(if_block0, 1);
+          }
+        } else {
+          if_block0 = create_if_block_32(ctx);
+          if_block0.c();
+          transition_in(if_block0, 1);
+          if_block0.m(div2, t1);
+        }
+      } else if (if_block0) {
+        group_outros();
+        transition_out(if_block0, 1, 1, () => {
+          if_block0 = null;
+        });
+        check_outros();
+      }
+      if (dirty[0] & /*iChunks, date*/
+      5) show_if = /*iChunks*/
+      ctx[2][0] && datesEqual(
+        /*iChunks*/
+        ctx[2][0].date,
+        /*date*/
+        ctx[0]
+      );
+      if (show_if) {
+        if (if_block1) {
+          if_block1.p(ctx, dirty);
+          if (dirty[0] & /*iChunks, date*/
+          5) {
+            transition_in(if_block1, 1);
+          }
+        } else {
+          if_block1 = create_if_block_22(ctx);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(div2, t2);
+        }
+      } else if (if_block1) {
+        group_outros();
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
+        });
+        check_outros();
+      }
+      if (dirty[0] & /*dayChunks, longChunks, refs*/
+      2066) {
+        each_value = ensure_array_like(
+          /*dayChunks*/
+          ctx[4]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block$22, null, get_each_context$22);
+        check_outros();
+      }
+      if (!current || dirty[0] & /*$theme*/
+      4096 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx[12].events)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (
+        /*showPopup*/
+        ctx[6]
+      ) {
+        if (if_block2) {
+          if (dirty[0] & /*showPopup*/
+          64) {
+            transition_in(if_block2, 1);
+          }
+        } else {
+          if_block2 = create_if_block_12();
+          if_block2.c();
+          transition_in(if_block2, 1);
+          if_block2.m(div2, t4);
+        }
+      } else if (if_block2) {
+        group_outros();
+        transition_out(if_block2, 1, 1, () => {
+          if_block2 = null;
+        });
+        check_outros();
+      }
+      if (
+        /*hiddenEvents*/
+        ctx[5].size
+      ) {
+        if (if_block3) {
+          if_block3.p(ctx, dirty);
+        } else {
+          if_block3 = create_if_block2(ctx);
+          if_block3.c();
+          if_block3.m(div1, null);
+        }
+      } else if (if_block3) {
+        if_block3.d(1);
+        if_block3 = null;
+      }
+      if (!current || dirty[0] & /*$theme*/
+      4096 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx[12].dayFoot)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (!current || dirty[0] & /*$theme, date, isToday, otherMonth, highlight*/
+      4993 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx[12].day + " " + /*$theme*/
+      ctx[12].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[7] ? " " + /*$theme*/
+      ctx[12].today : "") + /*otherMonth*/
+      (ctx[8] ? " " + /*$theme*/
+      ctx[12].otherMonth : "") + /*highlight*/
+      (ctx[9] ? " " + /*$theme*/
+      ctx[12].highlight : ""))) {
+        attr(div2, "class", div2_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block0);
+      transition_in(if_block1);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      transition_in(if_block2);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block0);
+      transition_out(if_block1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      transition_out(if_block2);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      if (if_block0) if_block0.d();
+      if (if_block1) if_block1.d();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      if (if_block2) if_block2.d();
+      if (if_block3) if_block3.d();
+      ctx[37](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$22($$self, $$props, $$invalidate) {
+  let $_popupChunks;
+  let $_popupDate;
+  let $moreLinkContent;
+  let $_hiddenEvents;
+  let $highlightedDates;
+  let $currentDate;
+  let $_today;
+  let $theme;
+  let $_interaction;
+  let $_intlDayCell;
+  let { date } = $$props;
+  let { chunks } = $$props;
+  let { longChunks } = $$props;
+  let { iChunks = [] } = $$props;
+  let { date: currentDate, dayMaxEvents, highlightedDates, moreLinkContent, theme, _hiddenEvents, _intlDayCell, _popupDate, _popupChunks, _today, _interaction, _queue } = getContext("state");
+  component_subscribe($$self, currentDate, (value) => $$invalidate(33, $currentDate = value));
+  component_subscribe($$self, highlightedDates, (value) => $$invalidate(32, $highlightedDates = value));
+  component_subscribe($$self, moreLinkContent, (value) => $$invalidate(30, $moreLinkContent = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(12, $theme = value));
+  component_subscribe($$self, _hiddenEvents, (value) => $$invalidate(31, $_hiddenEvents = value));
+  component_subscribe($$self, _intlDayCell, (value) => $$invalidate(14, $_intlDayCell = value));
+  component_subscribe($$self, _popupDate, (value) => $$invalidate(29, $_popupDate = value));
+  component_subscribe($$self, _popupChunks, (value) => $$invalidate(38, $_popupChunks = value));
+  component_subscribe($$self, _today, (value) => $$invalidate(34, $_today = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(13, $_interaction = value));
+  let el;
+  let dayChunks;
+  let isToday;
+  let otherMonth;
+  let highlight;
+  let hiddenEvents = /* @__PURE__ */ new Set();
+  let moreLink = "";
+  let showPopup;
+  let refs = [];
+  function createPointerEnterHandler(interaction) {
+    return interaction.pointer ? (jsEvent) => interaction.pointer.enterDayGrid(date, jsEvent) : void 0;
+  }
+  function showMore() {
+    set_store_value(_popupDate, $_popupDate = date, $_popupDate);
+  }
+  function setPopupChunks() {
+    let nextDay = addDay(cloneDate(date));
+    let chunks2 = dayChunks.concat(longChunks[date.getTime()]?.chunks || []);
+    set_store_value(_popupChunks, $_popupChunks = chunks2.map((chunk) => assign2({}, chunk, createEventChunk(chunk.event, date, nextDay), { days: 1, dates: [date] })).sort((a, b) => a.top - b.top), $_popupChunks);
+  }
+  function reposition() {
+    runReposition(refs, dayChunks);
+  }
+  function pointerdown_handler(event) {
+    bubble.call(this, $$self, event);
+  }
+  function event_binding($$value, i) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      refs[i] = $$value;
+      $$invalidate(11, refs);
+    });
+  }
+  function div2_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(3, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("date" in $$props2) $$invalidate(0, date = $$props2.date);
+    if ("chunks" in $$props2) $$invalidate(27, chunks = $$props2.chunks);
+    if ("longChunks" in $$props2) $$invalidate(1, longChunks = $$props2.longChunks);
+    if ("iChunks" in $$props2) $$invalidate(2, iChunks = $$props2.iChunks);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*hiddenEvents, chunks, date, dayChunks*/
+    134217777) {
+      {
+        $$invalidate(4, dayChunks = []);
+        hiddenEvents.clear();
+        $$invalidate(5, hiddenEvents), $$invalidate(27, chunks), $$invalidate(0, date), $$invalidate(4, dayChunks);
+        for (let chunk of chunks) {
+          if (datesEqual(chunk.date, date)) {
+            dayChunks.push(chunk);
+          }
+        }
+      }
+    }
+    if ($$self.$$.dirty[0] & /*date, hiddenEvents*/
+    33) {
+      set_store_value(_hiddenEvents, $_hiddenEvents[date.getTime()] = hiddenEvents, $_hiddenEvents);
+    }
+    if ($$self.$$.dirty[0] & /*date*/
+    1 | $$self.$$.dirty[1] & /*$_today*/
+    8) {
+      $$invalidate(7, isToday = datesEqual(date, $_today));
+    }
+    if ($$self.$$.dirty[0] & /*date*/
+    1 | $$self.$$.dirty[1] & /*$currentDate, $highlightedDates*/
+    6) {
+      {
+        $$invalidate(8, otherMonth = date.getUTCMonth() !== $currentDate.getUTCMonth());
+        $$invalidate(9, highlight = $highlightedDates.some((d) => datesEqual(d, date)));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*hiddenEvents, $moreLinkContent*/
+    1073741856 | $$self.$$.dirty[1] & /*$_hiddenEvents*/
+    1) {
+      if ($_hiddenEvents && hiddenEvents.size) {
+        let text2 = "+" + hiddenEvents.size + " more";
+        if ($moreLinkContent) {
+          $$invalidate(10, moreLink = is_function($moreLinkContent) ? $moreLinkContent({ num: hiddenEvents.size, text: text2 }) : $moreLinkContent);
+        } else {
+          $$invalidate(10, moreLink = text2);
+        }
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$_popupDate, date*/
+    536870913) {
+      $$invalidate(6, showPopup = $_popupDate && datesEqual(date, $_popupDate));
+    }
+    if ($$self.$$.dirty[0] & /*showPopup, longChunks, dayChunks*/
+    82) {
+      if (showPopup && longChunks && dayChunks) {
+        tick().then(setPopupChunks);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*el, date*/
+    9) {
+      if (el) {
+        setPayload(el, () => ({
+          allDay: true,
+          date,
+          resource: void 0,
+          dayEl: el
+        }));
+      }
+    }
+  };
+  return [
+    date,
+    longChunks,
+    iChunks,
+    el,
+    dayChunks,
+    hiddenEvents,
+    showPopup,
+    isToday,
+    otherMonth,
+    highlight,
+    moreLink,
+    refs,
+    $theme,
+    $_interaction,
+    $_intlDayCell,
+    currentDate,
+    highlightedDates,
+    moreLinkContent,
+    theme,
+    _hiddenEvents,
+    _intlDayCell,
+    _popupDate,
+    _popupChunks,
+    _today,
+    _interaction,
+    createPointerEnterHandler,
+    showMore,
+    chunks,
+    reposition,
+    $_popupDate,
+    $moreLinkContent,
+    $_hiddenEvents,
+    $highlightedDates,
+    $currentDate,
+    $_today,
+    pointerdown_handler,
+    event_binding,
+    div2_binding
+  ];
+}
+var Day = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance$22,
+      create_fragment$22,
+      safe_not_equal,
+      {
+        date: 0,
+        chunks: 27,
+        longChunks: 1,
+        iChunks: 2,
+        reposition: 28
+      },
+      null,
+      [-1, -1]
+    );
+  }
+  get reposition() {
+    return this.$$.ctx[28];
+  }
+};
+function get_each_context$12(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[21] = list[i];
+  child_ctx[22] = list;
+  child_ctx[23] = i;
+  return child_ctx;
+}
+function create_each_block$12(ctx) {
+  let day;
+  let i = (
+    /*i*/
+    ctx[23]
+  );
+  let current;
+  const assign_day = () => (
+    /*day_binding*/
+    ctx[18](day, i)
+  );
+  const unassign_day = () => (
+    /*day_binding*/
+    ctx[18](null, i)
+  );
+  let day_props = {
+    date: (
+      /*date*/
+      ctx[21]
+    ),
+    chunks: (
+      /*chunks*/
+      ctx[1]
+    ),
+    longChunks: (
+      /*longChunks*/
+      ctx[2]
+    ),
+    iChunks: (
+      /*iChunks*/
+      ctx[3]
+    )
+  };
+  day = new Day({ props: day_props });
+  assign_day();
+  return {
+    c() {
+      create_component(day.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(day, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (i !== /*i*/
+      ctx2[23]) {
+        unassign_day();
+        i = /*i*/
+        ctx2[23];
+        assign_day();
+      }
+      const day_changes = {};
+      if (dirty & /*dates*/
+      1) day_changes.date = /*date*/
+      ctx2[21];
+      if (dirty & /*chunks*/
+      2) day_changes.chunks = /*chunks*/
+      ctx2[1];
+      if (dirty & /*longChunks*/
+      4) day_changes.longChunks = /*longChunks*/
+      ctx2[2];
+      if (dirty & /*iChunks*/
+      8) day_changes.iChunks = /*iChunks*/
+      ctx2[3];
+      day.$set(day_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(day.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(day.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      unassign_day();
+      destroy_component(day, detaching);
+    }
+  };
+}
+function create_fragment$12(ctx) {
+  let div;
+  let div_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*dates*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$12(get_each_context$12(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[5].days);
+      attr(div, "role", "row");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      current = true;
+      if (!mounted) {
+        dispose = listen(
+          window,
+          "resize",
+          /*reposition*/
+          ctx[11]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*dates, chunks, longChunks, iChunks, refs*/
+      31) {
+        each_value = ensure_array_like(
+          /*dates*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$12(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$12(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(div, null);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+      if (!current || dirty & /*$theme*/
+      32 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[5].days)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance$12($$self, $$props, $$invalidate) {
+  let $_hiddenEvents;
+  let $hiddenDays;
+  let $_iEvents;
+  let $_events;
+  let $theme;
+  let { dates } = $$props;
+  let { _events, _iEvents, _queue2, _hiddenEvents, hiddenDays, theme } = getContext("state");
+  component_subscribe($$self, _events, (value) => $$invalidate(17, $_events = value));
+  component_subscribe($$self, _iEvents, (value) => $$invalidate(16, $_iEvents = value));
+  component_subscribe($$self, _hiddenEvents, (value) => $$invalidate(14, $_hiddenEvents = value));
+  component_subscribe($$self, hiddenDays, (value) => $$invalidate(15, $hiddenDays = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(5, $theme = value));
+  let chunks, longChunks, iChunks = [];
+  let start;
+  let end;
+  let refs = [];
+  let debounceHandle = {};
+  function reposition() {
+    debounce(() => runReposition(refs, dates), debounceHandle, _queue2);
+  }
+  function day_binding($$value, i) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      refs[i] = $$value;
+      $$invalidate(4, refs);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("dates" in $$props2) $$invalidate(0, dates = $$props2.dates);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*dates*/
+    1) {
+      {
+        $$invalidate(12, start = dates[0]);
+        $$invalidate(13, end = addDay(cloneDate(dates[dates.length - 1])));
+      }
+    }
+    if ($$self.$$.dirty & /*$_events, start, end, chunks, $hiddenDays*/
+    176130) {
+      {
+        $$invalidate(1, chunks = []);
+        for (let event of $_events) {
+          if (!bgEvent(event.display) && eventIntersects(event, start, end)) {
+            let chunk = createEventChunk(event, start, end);
+            chunks.push(chunk);
+          }
+        }
+        $$invalidate(2, longChunks = prepareEventChunks(chunks, $hiddenDays));
+        reposition();
+      }
+    }
+    if ($$self.$$.dirty & /*$_iEvents, start, end, $hiddenDays*/
+    110592) {
+      $$invalidate(3, iChunks = $_iEvents.map((event) => {
+        let chunk;
+        if (event && eventIntersects(event, start, end)) {
+          chunk = createEventChunk(event, start, end);
+          prepareEventChunks([chunk], $hiddenDays);
+        } else {
+          chunk = null;
+        }
+        return chunk;
+      }));
+    }
+    if ($$self.$$.dirty & /*$_hiddenEvents*/
+    16384) {
+      if ($_hiddenEvents) {
+        tick().then(reposition);
+      }
+    }
+  };
+  return [
+    dates,
+    chunks,
+    longChunks,
+    iChunks,
+    refs,
+    $theme,
+    _events,
+    _iEvents,
+    _hiddenEvents,
+    hiddenDays,
+    theme,
+    reposition,
+    start,
+    end,
+    $_hiddenEvents,
+    $hiddenDays,
+    $_iEvents,
+    $_events,
+    day_binding
+  ];
+}
+var Week = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$12, create_fragment$12, safe_not_equal, { dates: 0 });
+  }
+};
+function get_each_context2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[10] = list[i];
+  return child_ctx;
+}
+function create_each_block2(ctx) {
+  let week;
+  let current;
+  week = new Week({ props: { dates: (
+    /*dates*/
+    ctx[10]
+  ) } });
+  return {
+    c() {
+      create_component(week.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(week, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const week_changes = {};
+      if (dirty & /*weeks*/
+      1) week_changes.dates = /*dates*/
+      ctx2[10];
+      week.$set(week_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(week.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(week.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(week, detaching);
+    }
+  };
+}
+function create_default_slot(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*weeks*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block2(get_each_context2(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*weeks*/
+      1) {
+        each_value = ensure_array_like(
+          /*weeks*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context2(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block2(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_fragment2(ctx) {
+  let header;
+  let t;
+  let body;
+  let current;
+  header = new Header({});
+  body = new Body({
+    props: {
+      $$slots: { default: [create_default_slot] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(header.$$.fragment);
+      t = space();
+      create_component(body.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(header, target, anchor);
+      insert(target, t, anchor);
+      mount_component(body, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const body_changes = {};
+      if (dirty & /*$$scope, weeks*/
+      8193) {
+        body_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      body.$set(body_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(header.$$.fragment, local);
+      transition_in(body.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(header.$$.fragment, local);
+      transition_out(body.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t);
+      }
+      destroy_component(header, detaching);
+      destroy_component(body, detaching);
+    }
+  };
+}
+function instance2($$self, $$props, $$invalidate) {
+  let $_viewDates;
+  let $dayMaxEvents;
+  let $_hiddenEvents;
+  let $hiddenDays;
+  let { _viewDates, _hiddenEvents, dayMaxEvents, hiddenDays } = getContext("state");
+  component_subscribe($$self, _viewDates, (value) => $$invalidate(6, $_viewDates = value));
+  component_subscribe($$self, _hiddenEvents, (value) => $$invalidate(9, $_hiddenEvents = value));
+  component_subscribe($$self, dayMaxEvents, (value) => $$invalidate(7, $dayMaxEvents = value));
+  component_subscribe($$self, hiddenDays, (value) => $$invalidate(8, $hiddenDays = value));
+  let weeks;
+  let days2;
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$hiddenDays, $dayMaxEvents, $_viewDates, days, weeks*/
+    481) {
+      {
+        $$invalidate(0, weeks = []);
+        $$invalidate(5, days2 = 7 - $hiddenDays.length);
+        set_store_value(_hiddenEvents, $_hiddenEvents = {}, $_hiddenEvents);
+        for (let i = 0; i < $_viewDates.length / days2; ++i) {
+          let dates = [];
+          for (let j = 0; j < days2; ++j) {
+            dates.push($_viewDates[i * days2 + j]);
+          }
+          weeks.push(dates);
+        }
+      }
+    }
+  };
+  return [
+    weeks,
+    _viewDates,
+    _hiddenEvents,
+    dayMaxEvents,
+    hiddenDays,
+    days2,
+    $_viewDates,
+    $dayMaxEvents,
+    $hiddenDays
+  ];
+}
+var View = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance2, create_fragment2, safe_not_equal, {});
+  }
+};
+var index = {
+  createOptions(options) {
+    options.dayMaxEvents = false;
+    options.dayCellFormat = { day: "numeric" };
+    options.dayPopoverFormat = { month: "long", day: "numeric", year: "numeric" };
+    options.moreLinkContent = void 0;
+    options.buttonText.dayGridMonth = "month";
+    options.buttonText.close = "Close";
+    options.theme.uniform = "ec-uniform";
+    options.theme.dayFoot = "ec-day-foot";
+    options.theme.popup = "ec-popup";
+    options.view = "dayGridMonth";
+    options.views.dayGridMonth = {
+      buttonText: btnTextMonth,
+      component: View,
+      dayHeaderFormat: { weekday: "short" },
+      dayHeaderAriaLabelFormat: { weekday: "long" },
+      displayEventEnd: false,
+      duration: { months: 1 },
+      theme: themeView("ec-day-grid ec-month-view"),
+      titleFormat: { year: "numeric", month: "long" }
+    };
+  },
+  createStores(state) {
+    state._days = days(state);
+    state._intlDayCell = intl(state.locale, state.dayCellFormat);
+    state._intlDayPopover = intl(state.locale, state.dayPopoverFormat);
+    state._hiddenEvents = writable({});
+    state._popupDate = writable(null);
+    state._popupChunks = writable([]);
+  }
+};
+
+// node_modules/@event-calendar/time-grid/index.js
+function times(state) {
+  return derived(
+    [state._slotTimeLimits, state._intlSlotLabel, state.slotDuration],
+    ([$_slotTimeLimits, $_intlSlotLabel, $slotDuration]) => {
+      let large = $slotDuration.seconds >= 3600;
+      let times2 = [];
+      let date = setMidnight(createDate());
+      let end = cloneDate(date);
+      let i = 1;
+      addDuration(date, $_slotTimeLimits.min);
+      addDuration(end, $_slotTimeLimits.max);
+      while (date < end) {
+        times2.push([
+          toISOString(date),
+          times2.length && (i || large) ? $_intlSlotLabel.format(date) : ""
+        ]);
+        addDuration(date, $slotDuration);
+        i = 1 - i;
+      }
+      return times2;
+    }
+  );
+}
+function slotTimeLimits(state) {
+  return derived(
+    [state._events, state._viewDates, state.flexibleSlotTimeLimits, state.slotMinTime, state.slotMaxTime],
+    ([$_events, $_viewDates, $flexibleSlotTimeLimits, $slotMinTime, $slotMaxTime]) => {
+      let min$1 = createDuration($slotMinTime);
+      let max$1 = createDuration($slotMaxTime);
+      if ($flexibleSlotTimeLimits) {
+        let minMin = createDuration(min(min$1.seconds, max(0, max$1.seconds - DAY_IN_SECONDS)));
+        let maxMax = createDuration(max(max$1.seconds, minMin.seconds + DAY_IN_SECONDS));
+        let filter = is_function($flexibleSlotTimeLimits?.eventFilter) ? $flexibleSlotTimeLimits.eventFilter : (event) => !bgEvent(event.display);
+        loop: for (let date of $_viewDates) {
+          let start = addDuration(cloneDate(date), min$1);
+          let end = addDuration(cloneDate(date), max$1);
+          let minStart = addDuration(cloneDate(date), minMin);
+          let maxEnd = addDuration(cloneDate(date), maxMax);
+          for (let event of $_events) {
+            if (!event.allDay && filter(event) && event.start < maxEnd && event.end > minStart) {
+              if (event.start < start) {
+                let seconds = max((event.start - date) / 1e3, minMin.seconds);
+                if (seconds < min$1.seconds) {
+                  min$1.seconds = seconds;
+                }
+              }
+              if (event.end > end) {
+                let seconds = min((event.end - date) / 1e3, maxMax.seconds);
+                if (seconds > max$1.seconds) {
+                  max$1.seconds = seconds;
+                }
+              }
+              if (min$1.seconds === minMin.seconds && max$1.seconds === maxMax.seconds) {
+                break loop;
+              }
+            }
+          }
+        }
+      }
+      return { min: min$1, max: max$1 };
+    }
+  );
+}
+function groupEventChunks(chunks) {
+  if (!chunks.length) {
+    return;
+  }
+  sortEventChunks(chunks);
+  let group = {
+    columns: [],
+    end: chunks[0].end
+  };
+  for (let chunk of chunks) {
+    let c = 0;
+    if (chunk.start < group.end) {
+      for (; c < group.columns.length; ++c) {
+        if (group.columns[c][group.columns[c].length - 1].end <= chunk.start) {
+          break;
+        }
+      }
+      if (chunk.end > group.end) {
+        group.end = chunk.end;
+      }
+    } else {
+      group = {
+        columns: [],
+        end: chunk.end
+      };
+    }
+    if (group.columns.length < c + 1) {
+      group.columns.push([]);
+    }
+    group.columns[c].push(chunk);
+    chunk.group = group;
+    chunk.column = c;
+  }
+}
+function createAllDayContent(allDayContent) {
+  let text2 = "all-day";
+  let content;
+  if (allDayContent) {
+    content = is_function(allDayContent) ? allDayContent({ text: text2 }) : allDayContent;
+    if (typeof content === "string") {
+      content = { html: content };
+    }
+  } else {
+    content = {
+      html: text2
+    };
+  }
+  return content;
+}
+var get_lines_slot_changes = (dirty) => ({});
+var get_lines_slot_context = (ctx) => ({});
+function get_each_context$5(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[9] = list[i];
+  return child_ctx;
+}
+function create_each_block$5(ctx) {
+  let time_1;
+  let time_1_class_value;
+  let time_1_datetime_value;
+  let setContent_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      time_1 = element("time");
+      attr(time_1, "class", time_1_class_value = /*$theme*/
+      ctx[1].time);
+      attr(time_1, "datetime", time_1_datetime_value = /*time*/
+      ctx[9][0]);
+    },
+    m(target, anchor) {
+      insert(target, time_1, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(setContent_action = setContent.call(
+          null,
+          time_1,
+          /*time*/
+          ctx[9][1]
+        ));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$theme*/
+      2 && time_1_class_value !== (time_1_class_value = /*$theme*/
+      ctx[1].time)) {
+        attr(time_1, "class", time_1_class_value);
+      }
+      if (dirty & /*$_times*/
+      4 && time_1_datetime_value !== (time_1_datetime_value = /*time*/
+      ctx[9][0])) {
+        attr(time_1, "datetime", time_1_datetime_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_times*/
+      4) setContent_action.update.call(
+        null,
+        /*time*/
+        ctx[9][1]
+      );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(time_1);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment$8(ctx) {
+  let div1;
+  let div0;
+  let div0_class_value;
+  let setContent_action;
+  let t0;
+  let div1_class_value;
+  let t1;
+  let div3;
+  let div2;
+  let div2_class_value;
+  let t2;
+  let div3_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*$_times*/
+    ctx[2]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$5(get_each_context$5(ctx, each_value, i));
+  }
+  const lines_slot_template = (
+    /*#slots*/
+    ctx[8].lines
+  );
+  const lines_slot = create_slot(
+    lines_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[7],
+    get_lines_slot_context
+  );
+  const default_slot_template = (
+    /*#slots*/
+    ctx[8].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[7],
+    null
+  );
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      t0 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t1 = space();
+      div3 = element("div");
+      div2 = element("div");
+      if (lines_slot) lines_slot.c();
+      t2 = space();
+      if (default_slot) default_slot.c();
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[1].sidebarTitle);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[1].sidebar);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[1].lines);
+      attr(div3, "class", div3_class_value = /*$theme*/
+      ctx[1].days);
+      attr(div3, "role", "row");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      append(div1, t0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div1, null);
+        }
+      }
+      insert(target, t1, anchor);
+      insert(target, div3, anchor);
+      append(div3, div2);
+      if (lines_slot) {
+        lines_slot.m(div2, null);
+      }
+      append(div3, t2);
+      if (default_slot) {
+        default_slot.m(div3, null);
+      }
+      current = true;
+      if (!mounted) {
+        dispose = action_destroyer(setContent_action = setContent.call(
+          null,
+          div0,
+          /*allDayText*/
+          ctx[0]
+        ));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (!current || dirty & /*$theme*/
+      2 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[1].sidebarTitle)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*allDayText*/
+      1) setContent_action.update.call(
+        null,
+        /*allDayText*/
+        ctx2[0]
+      );
+      if (dirty & /*$theme, $_times*/
+      6) {
+        each_value = ensure_array_like(
+          /*$_times*/
+          ctx2[2]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$5(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block$5(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div1, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (!current || dirty & /*$theme*/
+      2 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[1].sidebar)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (lines_slot) {
+        if (lines_slot.p && (!current || dirty & /*$$scope*/
+        128)) {
+          update_slot_base(
+            lines_slot,
+            lines_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[7],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[7]
+            ) : get_slot_changes(
+              lines_slot_template,
+              /*$$scope*/
+              ctx2[7],
+              dirty,
+              get_lines_slot_changes
+            ),
+            get_lines_slot_context
+          );
+        }
+      }
+      if (!current || dirty & /*$theme*/
+      2 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx2[1].lines)) {
+        attr(div2, "class", div2_class_value);
+      }
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        128)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[7],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[7]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[7],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*$theme*/
+      2 && div3_class_value !== (div3_class_value = /*$theme*/
+      ctx2[1].days)) {
+        attr(div3, "class", div3_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(lines_slot, local);
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(lines_slot, local);
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+        detach(t1);
+        detach(div3);
+      }
+      destroy_each(each_blocks, detaching);
+      if (lines_slot) lines_slot.d(detaching);
+      if (default_slot) default_slot.d(detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance$8($$self, $$props, $$invalidate) {
+  let $allDayContent;
+  let $theme;
+  let $_times;
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { allDayContent, theme, _times } = getContext("state");
+  component_subscribe($$self, allDayContent, (value) => $$invalidate(6, $allDayContent = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(1, $theme = value));
+  component_subscribe($$self, _times, (value) => $$invalidate(2, $_times = value));
+  let allDayText;
+  $$self.$$set = ($$props2) => {
+    if ("$$scope" in $$props2) $$invalidate(7, $$scope = $$props2.$$scope);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$allDayContent*/
+    64) {
+      $$invalidate(0, allDayText = createAllDayContent($allDayContent));
+    }
+  };
+  return [
+    allDayText,
+    $theme,
+    $_times,
+    allDayContent,
+    theme,
+    _times,
+    $allDayContent,
+    $$scope,
+    slots
+  ];
+}
+var Section = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$8, create_fragment$8, safe_not_equal, {});
+  }
+};
+function get_each_context$42(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[23] = list[i];
+  return child_ctx;
+}
+function create_default_slot$1(ctx) {
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[16].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[18],
+    null
+  );
+  return {
+    c() {
+      if (default_slot) default_slot.c();
+    },
+    m(target, anchor) {
+      if (default_slot) {
+        default_slot.m(target, anchor);
+      }
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        262144)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[18],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[18]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[18],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (default_slot) default_slot.d(detaching);
+    }
+  };
+}
+function create_each_block$42(ctx) {
+  let div;
+  let div_class_value;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[3].line);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme*/
+      8 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[3].line)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function create_lines_slot(ctx) {
+  let each_1_anchor;
+  let each_value = ensure_array_like(
+    /*lines*/
+    ctx[2]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$42(get_each_context$42(ctx, each_value, i));
+  }
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme, lines*/
+      12) {
+        each_value = ensure_array_like(
+          /*lines*/
+          ctx2[2]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$42(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block$42(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_fragment$7(ctx) {
+  let div1;
+  let div0;
+  let section;
+  let div0_class_value;
+  let div1_class_value;
+  let current;
+  section = new Section({
+    props: {
+      $$slots: {
+        lines: [create_lines_slot],
+        default: [create_default_slot$1]
+      },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      create_component(section.$$.fragment);
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[3].content);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[3].body + /*compact*/
+      (ctx[1] ? " " + /*$theme*/
+      ctx[3].compact : ""));
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      mount_component(section, div0, null);
+      ctx[17](div1);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const section_changes = {};
+      if (dirty & /*$$scope, lines, $theme*/
+      262156) {
+        section_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      section.$set(section_changes);
+      if (!current || dirty & /*$theme*/
+      8 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[3].content)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme, compact*/
+      10 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[3].body + /*compact*/
+      (ctx2[1] ? " " + /*$theme*/
+      ctx2[3].compact : ""))) {
+        attr(div1, "class", div1_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(section.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(section.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(section);
+      ctx[17](null);
+    }
+  };
+}
+function instance$7($$self, $$props, $$invalidate) {
+  let $slotHeight;
+  let $slotDuration;
+  let $_slotTimeLimits;
+  let $scrollTime;
+  let $_viewDates;
+  let $_times;
+  let $_bodyEl;
+  let $theme;
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { _bodyEl, _viewDates, _slotTimeLimits, _times, scrollTime, slotDuration, slotHeight, theme } = getContext("state");
+  component_subscribe($$self, _bodyEl, (value) => $$invalidate(21, $_bodyEl = value));
+  component_subscribe($$self, _viewDates, (value) => $$invalidate(14, $_viewDates = value));
+  component_subscribe($$self, _slotTimeLimits, (value) => $$invalidate(20, $_slotTimeLimits = value));
+  component_subscribe($$self, _times, (value) => $$invalidate(15, $_times = value));
+  component_subscribe($$self, scrollTime, (value) => $$invalidate(13, $scrollTime = value));
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(12, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(19, $slotHeight = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(3, $theme = value));
+  let el;
+  let compact;
+  let lines = [];
+  function scrollToTime() {
+    $$invalidate(0, el.scrollTop = (($scrollTime.seconds - $_slotTimeLimits.min.seconds) / $slotDuration.seconds - 0.5) * $slotHeight, el);
+  }
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(0, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("$$scope" in $$props2) $$invalidate(18, $$scope = $$props2.$$scope);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*el*/
+    1) {
+      set_store_value(_bodyEl, $_bodyEl = el, $_bodyEl);
+    }
+    if ($$self.$$.dirty & /*$slotDuration, $_times*/
+    36864) {
+      {
+        $$invalidate(1, compact = $slotDuration.seconds >= 3600);
+        $$invalidate(2, lines.length = $_times.length, lines);
+      }
+    }
+    if ($$self.$$.dirty & /*el, $_viewDates, $scrollTime*/
+    24577) {
+      if (el) {
+        scrollToTime();
+      }
+    }
+  };
+  return [
+    el,
+    compact,
+    lines,
+    $theme,
+    _bodyEl,
+    _viewDates,
+    _slotTimeLimits,
+    _times,
+    scrollTime,
+    slotDuration,
+    slotHeight,
+    theme,
+    $slotDuration,
+    $scrollTime,
+    $_viewDates,
+    $_times,
+    slots,
+    div1_binding,
+    $$scope
+  ];
+}
+var Body2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$7, create_fragment$7, safe_not_equal, {});
+  }
+};
+function create_fragment$62(ctx) {
+  let article;
+  let div;
+  let div_class_value;
+  let setContent_action;
+  let t;
+  let switch_instance;
+  let article_role_value;
+  let article_tabindex_value;
+  let current;
+  let mounted;
+  let dispose;
+  var switch_value = (
+    /*$_interaction*/
+    ctx[10].resizer
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { event: (
+      /*event*/
+      ctx2[0]
+    ) } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+    switch_instance.$on("pointerdown", function() {
+      if (is_function(
+        /*createDragHandler*/
+        ctx[34](
+          /*$_interaction*/
+          ctx[10],
+          true
+        )
+      )) ctx[34](
+        /*$_interaction*/
+        ctx[10],
+        true
+      ).apply(this, arguments);
+    });
+  }
+  return {
+    c() {
+      article = element("article");
+      div = element("div");
+      t = space();
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[2].eventBody);
+      attr(
+        article,
+        "class",
+        /*classes*/
+        ctx[4]
+      );
+      attr(
+        article,
+        "style",
+        /*style*/
+        ctx[5]
+      );
+      attr(article, "role", article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0);
+      attr(article, "tabindex", article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0);
+    },
+    m(target, anchor) {
+      insert(target, article, anchor);
+      append(article, div);
+      append(article, t);
+      if (switch_instance) mount_component(switch_instance, article, null);
+      ctx[53](article);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            div,
+            /*content*/
+            ctx[6]
+          )),
+          listen(article, "click", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7]
+            )) ctx[7].apply(this, arguments);
+          }),
+          listen(article, "keydown", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7] && keyEnter(
+                /*onclick*/
+                ctx[7]
+              )
+            )) /*onclick*/
+            (ctx[7] && keyEnter(
+              /*onclick*/
+              ctx[7]
+            )).apply(this, arguments);
+          }),
+          listen(article, "mouseenter", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[33](
+                /*$eventMouseEnter*/
+                ctx[8],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[33](
+              /*$eventMouseEnter*/
+              ctx[8],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "mouseleave", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[33](
+                /*$eventMouseLeave*/
+                ctx[9],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[33](
+              /*$eventMouseLeave*/
+              ctx[9],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "pointerdown", function() {
+            if (is_function(!bgEvent(
+              /*display*/
+              ctx[1]
+            ) && !helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[34](
+              /*$_interaction*/
+              ctx[10]
+            ))) (!bgEvent(
+              /*display*/
+              ctx[1]
+            ) && !helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[34](
+              /*$_interaction*/
+              ctx[10]
+            )).apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty[0] & /*$theme*/
+      4 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[2].eventBody)) {
+        attr(div, "class", div_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*content*/
+      64) setContent_action.update.call(
+        null,
+        /*content*/
+        ctx[6]
+      );
+      if (dirty[0] & /*$_interaction*/
+      1024 && switch_value !== (switch_value = /*$_interaction*/
+      ctx[10].resizer)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+          switch_instance.$on("pointerdown", function() {
+            if (is_function(
+              /*createDragHandler*/
+              ctx[34](
+                /*$_interaction*/
+                ctx[10],
+                true
+              )
+            )) ctx[34](
+              /*$_interaction*/
+              ctx[10],
+              true
+            ).apply(this, arguments);
+          });
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, article, null);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = {};
+        if (dirty[0] & /*event*/
+        1) switch_instance_changes.event = /*event*/
+        ctx[0];
+        switch_instance.$set(switch_instance_changes);
+      }
+      if (!current || dirty[0] & /*classes*/
+      16) {
+        attr(
+          article,
+          "class",
+          /*classes*/
+          ctx[4]
+        );
+      }
+      if (!current || dirty[0] & /*style*/
+      32) {
+        attr(
+          article,
+          "style",
+          /*style*/
+          ctx[5]
+        );
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_role_value !== (article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0)) {
+        attr(article, "role", article_role_value);
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_tabindex_value !== (article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0)) {
+        attr(article, "tabindex", article_tabindex_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(article);
+      }
+      if (switch_instance) destroy_component(switch_instance);
+      ctx[53](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$62($$self, $$props, $$invalidate) {
+  let $eventClick;
+  let $_view;
+  let $eventAllUpdated;
+  let $eventDidMount;
+  let $_intlEventTime;
+  let $theme;
+  let $eventContent;
+  let $displayEventEnd;
+  let $eventClassNames;
+  let $_iClasses;
+  let $slotEventOverlap;
+  let $eventTextColor;
+  let $_resTxtColor;
+  let $eventColor;
+  let $eventBackgroundColor;
+  let $_resBgColor;
+  let $slotHeight;
+  let $_slotTimeLimits;
+  let $slotDuration;
+  let $eventMouseEnter;
+  let $eventMouseLeave;
+  let $_interaction;
+  let { date } = $$props;
+  let { chunk } = $$props;
+  let { displayEventEnd, eventAllUpdated, eventBackgroundColor, eventTextColor, eventColor, eventContent, eventClick, eventDidMount, eventClassNames, eventMouseEnter, eventMouseLeave, slotEventOverlap, slotDuration, slotHeight, theme, _view, _intlEventTime, _interaction, _iClasses, _resBgColor, _resTxtColor, _slotTimeLimits, _tasks } = getContext("state");
+  component_subscribe($$self, displayEventEnd, (value) => $$invalidate(41, $displayEventEnd = value));
+  component_subscribe($$self, eventAllUpdated, (value) => $$invalidate(55, $eventAllUpdated = value));
+  component_subscribe($$self, eventBackgroundColor, (value) => $$invalidate(48, $eventBackgroundColor = value));
+  component_subscribe($$self, eventTextColor, (value) => $$invalidate(45, $eventTextColor = value));
+  component_subscribe($$self, eventColor, (value) => $$invalidate(47, $eventColor = value));
+  component_subscribe($$self, eventContent, (value) => $$invalidate(40, $eventContent = value));
+  component_subscribe($$self, eventClick, (value) => $$invalidate(37, $eventClick = value));
+  component_subscribe($$self, eventDidMount, (value) => $$invalidate(56, $eventDidMount = value));
+  component_subscribe($$self, eventClassNames, (value) => $$invalidate(42, $eventClassNames = value));
+  component_subscribe($$self, eventMouseEnter, (value) => $$invalidate(8, $eventMouseEnter = value));
+  component_subscribe($$self, eventMouseLeave, (value) => $$invalidate(9, $eventMouseLeave = value));
+  component_subscribe($$self, slotEventOverlap, (value) => $$invalidate(44, $slotEventOverlap = value));
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(52, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(50, $slotHeight = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(2, $theme = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(38, $_view = value));
+  component_subscribe($$self, _intlEventTime, (value) => $$invalidate(39, $_intlEventTime = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(10, $_interaction = value));
+  component_subscribe($$self, _iClasses, (value) => $$invalidate(43, $_iClasses = value));
+  component_subscribe($$self, _resBgColor, (value) => $$invalidate(49, $_resBgColor = value));
+  component_subscribe($$self, _resTxtColor, (value) => $$invalidate(46, $_resTxtColor = value));
+  component_subscribe($$self, _slotTimeLimits, (value) => $$invalidate(51, $_slotTimeLimits = value));
+  let el;
+  let event;
+  let display;
+  let classes;
+  let style;
+  let content;
+  let timeText;
+  let onclick;
+  onMount(() => {
+    if (is_function($eventDidMount)) {
+      $eventDidMount({
+        event: toEventWithLocalDates(event),
+        timeText,
+        el,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+  });
+  afterUpdate(() => {
+    if (is_function($eventAllUpdated) && !helperEvent(display)) {
+      task(() => $eventAllUpdated({ view: toViewWithLocalDates($_view) }), "eau", _tasks);
+    }
+  });
+  function createHandler(fn, display2) {
+    return !helperEvent(display2) && is_function(fn) ? (jsEvent) => fn({
+      event: toEventWithLocalDates(event),
+      el,
+      jsEvent,
+      view: toViewWithLocalDates($_view)
+    }) : void 0;
+  }
+  function createDragHandler(interaction, resize) {
+    return interaction.action ? (jsEvent) => interaction.action.drag(event, jsEvent, resize) : void 0;
+  }
+  function article_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(3, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("date" in $$props2) $$invalidate(35, date = $$props2.date);
+    if ("chunk" in $$props2) $$invalidate(36, chunk = $$props2.chunk);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[1] & /*chunk*/
+    32) {
+      $$invalidate(0, event = chunk.event);
+    }
+    if ($$self.$$.dirty[0] & /*event, style, display, $theme*/
+    39 | $$self.$$.dirty[1] & /*$slotDuration, $_slotTimeLimits, chunk, date, $slotHeight, $_resBgColor, $eventBackgroundColor, $eventColor, $_resTxtColor, $eventTextColor, $slotEventOverlap, $_iClasses, $eventClassNames, $_view*/
+    4192432) {
+      {
+        $$invalidate(1, display = event.display);
+        let step = $slotDuration.seconds / 60;
+        let offset = $_slotTimeLimits.min.seconds / 60;
+        let start = (chunk.start - date) / 1e3 / 60;
+        let end = (chunk.end - date) / 1e3 / 60;
+        let top = (start - offset) / step * $slotHeight;
+        let height2 = (end - start) / step * $slotHeight;
+        let maxHeight = ($_slotTimeLimits.max.seconds / 60 - start) / step * $slotHeight;
+        let bgColor = event.backgroundColor || $_resBgColor(event) || $eventBackgroundColor || $eventColor;
+        let txtColor = event.textColor || $_resTxtColor(event) || $eventTextColor;
+        $$invalidate(5, style = `top:${top}px;min-height:${height2}px;height:${height2}px;max-height:${maxHeight}px;`);
+        if (bgColor) {
+          $$invalidate(5, style += `background-color:${bgColor};`);
+        }
+        if (txtColor) {
+          $$invalidate(5, style += `color:${txtColor};`);
+        }
+        if (!bgEvent(display) && !helperEvent(display) || ghostEvent(display)) {
+          $$invalidate(5, style += `z-index:${chunk.column + 1};left:${100 / chunk.group.columns.length * chunk.column}%;width:${100 / chunk.group.columns.length * ($slotEventOverlap ? 0.5 * (1 + chunk.group.columns.length - chunk.column) : 1)}%;`);
+        }
+        $$invalidate(4, classes = [
+          bgEvent(display) ? $theme.bgEvent : $theme.event,
+          ...$_iClasses([], event),
+          ...createEventClasses($eventClassNames, event, $_view)
+        ].join(" "));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$theme*/
+    4 | $$self.$$.dirty[1] & /*chunk, $displayEventEnd, $eventContent, $_intlEventTime, $_view*/
+    1952) {
+      $$invalidate(6, [timeText, content] = createEventContent(chunk, $displayEventEnd, $eventContent, $theme, $_intlEventTime, $_view), content);
+    }
+    if ($$self.$$.dirty[0] & /*display*/
+    2 | $$self.$$.dirty[1] & /*$eventClick*/
+    64) {
+      $$invalidate(7, onclick = !bgEvent(display) && createHandler($eventClick, display));
+    }
+  };
+  return [
+    event,
+    display,
+    $theme,
+    el,
+    classes,
+    style,
+    content,
+    onclick,
+    $eventMouseEnter,
+    $eventMouseLeave,
+    $_interaction,
+    displayEventEnd,
+    eventAllUpdated,
+    eventBackgroundColor,
+    eventTextColor,
+    eventColor,
+    eventContent,
+    eventClick,
+    eventDidMount,
+    eventClassNames,
+    eventMouseEnter,
+    eventMouseLeave,
+    slotEventOverlap,
+    slotDuration,
+    slotHeight,
+    theme,
+    _view,
+    _intlEventTime,
+    _interaction,
+    _iClasses,
+    _resBgColor,
+    _resTxtColor,
+    _slotTimeLimits,
+    createHandler,
+    createDragHandler,
+    date,
+    chunk,
+    $eventClick,
+    $_view,
+    $_intlEventTime,
+    $eventContent,
+    $displayEventEnd,
+    $eventClassNames,
+    $_iClasses,
+    $slotEventOverlap,
+    $eventTextColor,
+    $_resTxtColor,
+    $eventColor,
+    $eventBackgroundColor,
+    $_resBgColor,
+    $slotHeight,
+    $_slotTimeLimits,
+    $slotDuration,
+    article_binding
+  ];
+}
+var Event$1 = class Event2 extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$62, create_fragment$62, safe_not_equal, { date: 35, chunk: 36 }, null, [-1, -1]);
+  }
+};
+function create_fragment$52(ctx) {
+  let div;
+  let div_class_value;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[1].nowIndicator);
+      set_style(
+        div,
+        "top",
+        /*top*/
+        ctx[0] + "px"
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$theme*/
+      2 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[1].nowIndicator)) {
+        attr(div, "class", div_class_value);
+      }
+      if (dirty & /*top*/
+      1) {
+        set_style(
+          div,
+          "top",
+          /*top*/
+          ctx2[0] + "px"
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+function instance$52($$self, $$props, $$invalidate) {
+  let $slotHeight;
+  let $_slotTimeLimits;
+  let $slotDuration;
+  let $_today;
+  let $_now;
+  let $theme;
+  let { slotDuration, slotHeight, theme, _now, _today, _slotTimeLimits } = getContext("state");
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(11, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(9, $slotHeight = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(1, $theme = value));
+  component_subscribe($$self, _now, (value) => $$invalidate(13, $_now = value));
+  component_subscribe($$self, _today, (value) => $$invalidate(12, $_today = value));
+  component_subscribe($$self, _slotTimeLimits, (value) => $$invalidate(10, $_slotTimeLimits = value));
+  let start;
+  let top = 0;
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_now, $_today*/
+    12288) {
+      $$invalidate(8, start = ($_now - $_today) / 1e3 / 60);
+    }
+    if ($$self.$$.dirty & /*$slotDuration, $_slotTimeLimits, start, $slotHeight*/
+    3840) {
+      {
+        let step = $slotDuration.seconds / 60;
+        let offset = $_slotTimeLimits.min.seconds / 60;
+        $$invalidate(0, top = (start - offset) / step * $slotHeight);
+      }
+    }
+  };
+  return [
+    top,
+    $theme,
+    slotDuration,
+    slotHeight,
+    theme,
+    _now,
+    _today,
+    _slotTimeLimits,
+    start,
+    $slotHeight,
+    $_slotTimeLimits,
+    $slotDuration,
+    $_today,
+    $_now
+  ];
+}
+var NowIndicator = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$52, create_fragment$52, safe_not_equal, {});
+  }
+};
+function get_each_context$32(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[33] = list[i];
+  return child_ctx;
+}
+function get_each_context_1$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[33] = list[i];
+  return child_ctx;
+}
+function create_each_block_1$1(key_1, ctx) {
+  let first;
+  let event;
+  let current;
+  event = new Event$1({
+    props: {
+      date: (
+        /*date*/
+        ctx[0]
+      ),
+      chunk: (
+        /*chunk*/
+        ctx[33]
+      )
+    }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const event_changes = {};
+      if (dirty[0] & /*date*/
+      1) event_changes.date = /*date*/
+      ctx[0];
+      if (dirty[0] & /*bgChunks*/
+      8) event_changes.chunk = /*chunk*/
+      ctx[33];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_if_block_23(ctx) {
+  let event;
+  let current;
+  event = new Event$1({
+    props: {
+      date: (
+        /*date*/
+        ctx[0]
+      ),
+      chunk: (
+        /*iChunks*/
+        ctx[4][1]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(event.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const event_changes = {};
+      if (dirty[0] & /*date*/
+      1) event_changes.date = /*date*/
+      ctx2[0];
+      if (dirty[0] & /*iChunks*/
+      16) event_changes.chunk = /*iChunks*/
+      ctx2[4][1];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_each_block$32(key_1, ctx) {
+  let first;
+  let event;
+  let current;
+  event = new Event$1({
+    props: {
+      date: (
+        /*date*/
+        ctx[0]
+      ),
+      chunk: (
+        /*chunk*/
+        ctx[33]
+      )
+    }
+  });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const event_changes = {};
+      if (dirty[0] & /*date*/
+      1) event_changes.date = /*date*/
+      ctx[0];
+      if (dirty[0] & /*chunks*/
+      4) event_changes.chunk = /*chunk*/
+      ctx[33];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_if_block_13(ctx) {
+  let event;
+  let current;
+  event = new Event$1({
+    props: {
+      date: (
+        /*date*/
+        ctx[0]
+      ),
+      chunk: (
+        /*iChunks*/
+        ctx[4][0]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(event.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const event_changes = {};
+      if (dirty[0] & /*date*/
+      1) event_changes.date = /*date*/
+      ctx2[0];
+      if (dirty[0] & /*iChunks*/
+      16) event_changes.chunk = /*iChunks*/
+      ctx2[4][0];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_if_block$2(ctx) {
+  let nowindicator;
+  let current;
+  nowindicator = new NowIndicator({});
+  return {
+    c() {
+      create_component(nowindicator.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(nowindicator, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current) return;
+      transition_in(nowindicator.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(nowindicator.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(nowindicator, detaching);
+    }
+  };
+}
+function create_fragment$42(ctx) {
+  let div3;
+  let div0;
+  let each_blocks_1 = [];
+  let each0_lookup = /* @__PURE__ */ new Map();
+  let div0_class_value;
+  let t0;
+  let div1;
+  let t1;
+  let each_blocks = [];
+  let each1_lookup = /* @__PURE__ */ new Map();
+  let t2;
+  let div1_class_value;
+  let t3;
+  let div2;
+  let div2_class_value;
+  let div3_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value_1 = ensure_array_like(
+    /*bgChunks*/
+    ctx[3]
+  );
+  const get_key = (ctx2) => (
+    /*chunk*/
+    ctx2[33].event
+  );
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    let child_ctx = get_each_context_1$1(ctx, each_value_1, i);
+    let key = get_key(child_ctx);
+    each0_lookup.set(key, each_blocks_1[i] = create_each_block_1$1(key, child_ctx));
+  }
+  let if_block0 = (
+    /*iChunks*/
+    ctx[4][1] && create_if_block_23(ctx)
+  );
+  let each_value = ensure_array_like(
+    /*chunks*/
+    ctx[2]
+  );
+  const get_key_1 = (ctx2) => (
+    /*chunk*/
+    ctx2[33].event
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$32(ctx, each_value, i);
+    let key = get_key_1(child_ctx);
+    each1_lookup.set(key, each_blocks[i] = create_each_block$32(key, child_ctx));
+  }
+  let if_block1 = (
+    /*iChunks*/
+    ctx[4][0] && !/*iChunks*/
+    ctx[4][0].event.allDay && create_if_block_13(ctx)
+  );
+  let if_block2 = (
+    /*$nowIndicator*/
+    ctx[9] && /*isToday*/
+    ctx[5] && create_if_block$2()
+  );
+  return {
+    c() {
+      div3 = element("div");
+      div0 = element("div");
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      t0 = space();
+      div1 = element("div");
+      if (if_block0) if_block0.c();
+      t1 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      t2 = space();
+      if (if_block1) if_block1.c();
+      t3 = space();
+      div2 = element("div");
+      if (if_block2) if_block2.c();
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[7].bgEvents);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[7].events);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[7].extra);
+      attr(div3, "class", div3_class_value = /*$theme*/
+      ctx[7].day + " " + /*$theme*/
+      ctx[7].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[5] ? " " + /*$theme*/
+      ctx[7].today : "") + /*highlight*/
+      (ctx[6] ? " " + /*$theme*/
+      ctx[7].highlight : ""));
+      attr(div3, "role", "cell");
+    },
+    m(target, anchor) {
+      insert(target, div3, anchor);
+      append(div3, div0);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        if (each_blocks_1[i]) {
+          each_blocks_1[i].m(div0, null);
+        }
+      }
+      append(div3, t0);
+      append(div3, div1);
+      if (if_block0) if_block0.m(div1, null);
+      append(div1, t1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div1, null);
+        }
+      }
+      append(div1, t2);
+      if (if_block1) if_block1.m(div1, null);
+      append(div3, t3);
+      append(div3, div2);
+      if (if_block2) if_block2.m(div2, null);
+      ctx[29](div3);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(div3, "pointerenter", function() {
+            if (is_function(
+              /*createPointerEnterHandler*/
+              ctx[20](
+                /*$_interaction*/
+                ctx[8]
+              )
+            )) ctx[20](
+              /*$_interaction*/
+              ctx[8]
+            ).apply(this, arguments);
+          }),
+          listen(div3, "pointerleave", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[8].pointer?.leave
+            )) ctx[8].pointer?.leave.apply(this, arguments);
+          }),
+          listen(div3, "pointerdown", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[8].action?.select
+            )) ctx[8].action?.select.apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty[0] & /*date, bgChunks*/
+      9) {
+        each_value_1 = ensure_array_like(
+          /*bgChunks*/
+          ctx[3]
+        );
+        group_outros();
+        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, div0, outro_and_destroy_block, create_each_block_1$1, null, get_each_context_1$1);
+        check_outros();
+      }
+      if (!current || dirty[0] & /*$theme*/
+      128 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx[7].bgEvents)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (
+        /*iChunks*/
+        ctx[4][1]
+      ) {
+        if (if_block0) {
+          if_block0.p(ctx, dirty);
+          if (dirty[0] & /*iChunks*/
+          16) {
+            transition_in(if_block0, 1);
+          }
+        } else {
+          if_block0 = create_if_block_23(ctx);
+          if_block0.c();
+          transition_in(if_block0, 1);
+          if_block0.m(div1, t1);
+        }
+      } else if (if_block0) {
+        group_outros();
+        transition_out(if_block0, 1, 1, () => {
+          if_block0 = null;
+        });
+        check_outros();
+      }
+      if (dirty[0] & /*date, chunks*/
+      5) {
+        each_value = ensure_array_like(
+          /*chunks*/
+          ctx[2]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div1, outro_and_destroy_block, create_each_block$32, t2, get_each_context$32);
+        check_outros();
+      }
+      if (
+        /*iChunks*/
+        ctx[4][0] && !/*iChunks*/
+        ctx[4][0].event.allDay
+      ) {
+        if (if_block1) {
+          if_block1.p(ctx, dirty);
+          if (dirty[0] & /*iChunks*/
+          16) {
+            transition_in(if_block1, 1);
+          }
+        } else {
+          if_block1 = create_if_block_13(ctx);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(div1, null);
+        }
+      } else if (if_block1) {
+        group_outros();
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
+        });
+        check_outros();
+      }
+      if (!current || dirty[0] & /*$theme*/
+      128 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx[7].events)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (
+        /*$nowIndicator*/
+        ctx[9] && /*isToday*/
+        ctx[5]
+      ) {
+        if (if_block2) {
+          if (dirty[0] & /*$nowIndicator, isToday*/
+          544) {
+            transition_in(if_block2, 1);
+          }
+        } else {
+          if_block2 = create_if_block$2();
+          if_block2.c();
+          transition_in(if_block2, 1);
+          if_block2.m(div2, null);
+        }
+      } else if (if_block2) {
+        group_outros();
+        transition_out(if_block2, 1, 1, () => {
+          if_block2 = null;
+        });
+        check_outros();
+      }
+      if (!current || dirty[0] & /*$theme*/
+      128 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx[7].extra)) {
+        attr(div2, "class", div2_class_value);
+      }
+      if (!current || dirty[0] & /*$theme, date, isToday, highlight*/
+      225 && div3_class_value !== (div3_class_value = /*$theme*/
+      ctx[7].day + " " + /*$theme*/
+      ctx[7].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[5] ? " " + /*$theme*/
+      ctx[7].today : "") + /*highlight*/
+      (ctx[6] ? " " + /*$theme*/
+      ctx[7].highlight : ""))) {
+        attr(div3, "class", div3_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks_1[i]);
+      }
+      transition_in(if_block0);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      transition_in(if_block1);
+      transition_in(if_block2);
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        transition_out(each_blocks_1[i]);
+      }
+      transition_out(if_block0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      transition_out(if_block1);
+      transition_out(if_block2);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div3);
+      }
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].d();
+      }
+      if (if_block0) if_block0.d();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      if (if_block1) if_block1.d();
+      if (if_block2) if_block2.d();
+      ctx[29](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$42($$self, $$props, $$invalidate) {
+  let $slotHeight;
+  let $slotDuration;
+  let $_slotTimeLimits;
+  let $highlightedDates;
+  let $_today;
+  let $_iEvents;
+  let $_events;
+  let $theme;
+  let $_interaction;
+  let $nowIndicator;
+  let { date } = $$props;
+  let { resource = void 0 } = $$props;
+  let { _events, _iEvents, highlightedDates, nowIndicator, slotDuration, slotHeight, theme, _interaction, _today, _slotTimeLimits } = getContext("state");
+  component_subscribe($$self, _events, (value) => $$invalidate(28, $_events = value));
+  component_subscribe($$self, _iEvents, (value) => $$invalidate(27, $_iEvents = value));
+  component_subscribe($$self, highlightedDates, (value) => $$invalidate(25, $highlightedDates = value));
+  component_subscribe($$self, nowIndicator, (value) => $$invalidate(9, $nowIndicator = value));
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(31, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(30, $slotHeight = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(7, $theme = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(8, $_interaction = value));
+  component_subscribe($$self, _today, (value) => $$invalidate(26, $_today = value));
+  component_subscribe($$self, _slotTimeLimits, (value) => $$invalidate(24, $_slotTimeLimits = value));
+  let el;
+  let chunks, bgChunks, iChunks = [];
+  let isToday, highlight;
+  let start, end;
+  function dateFromPoint(y) {
+    y -= rect(el).top;
+    return {
+      allDay: false,
+      date: addDuration(addDuration(cloneDate(date), $_slotTimeLimits.min), $slotDuration, floor(y / $slotHeight)),
+      resource,
+      dayEl: el
+    };
+  }
+  function createPointerEnterHandler(interaction) {
+    return interaction.pointer ? (jsEvent) => interaction.pointer.enterTimeGrid(date, el, jsEvent, resource) : void 0;
+  }
+  function div3_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(1, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("date" in $$props2) $$invalidate(0, date = $$props2.date);
+    if ("resource" in $$props2) $$invalidate(21, resource = $$props2.resource);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*date, $_slotTimeLimits*/
+    16777217) {
+      {
+        $$invalidate(22, start = addDuration(cloneDate(date), $_slotTimeLimits.min));
+        $$invalidate(23, end = addDuration(cloneDate(date), $_slotTimeLimits.max));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$_events, start, end, resource, bgChunks, chunks*/
+    283115532) {
+      {
+        $$invalidate(2, chunks = []);
+        $$invalidate(3, bgChunks = []);
+        for (let event of $_events) {
+          if (!event.allDay && eventIntersects(event, start, end, resource, true)) {
+            let chunk = createEventChunk(event, start, end);
+            switch (event.display) {
+              case "background":
+                bgChunks.push(chunk);
+                break;
+              default:
+                chunks.push(chunk);
+            }
+          }
+        }
+        groupEventChunks(chunks);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$_iEvents, start, end, resource*/
+    148897792) {
+      $$invalidate(4, iChunks = $_iEvents.map((event) => event && eventIntersects(event, start, end, resource, true) ? createEventChunk(event, start, end) : null));
+    }
+    if ($$self.$$.dirty[0] & /*date, $_today*/
+    67108865) {
+      $$invalidate(5, isToday = datesEqual(date, $_today));
+    }
+    if ($$self.$$.dirty[0] & /*$highlightedDates, date*/
+    33554433) {
+      $$invalidate(6, highlight = $highlightedDates.some((d) => datesEqual(d, date)));
+    }
+    if ($$self.$$.dirty[0] & /*el*/
+    2) {
+      if (el) {
+        setPayload(el, dateFromPoint);
+      }
+    }
+  };
+  return [
+    date,
+    el,
+    chunks,
+    bgChunks,
+    iChunks,
+    isToday,
+    highlight,
+    $theme,
+    $_interaction,
+    $nowIndicator,
+    _events,
+    _iEvents,
+    highlightedDates,
+    nowIndicator,
+    slotDuration,
+    slotHeight,
+    theme,
+    _interaction,
+    _today,
+    _slotTimeLimits,
+    createPointerEnterHandler,
+    resource,
+    start,
+    end,
+    $_slotTimeLimits,
+    $highlightedDates,
+    $_today,
+    $_iEvents,
+    $_events,
+    div3_binding
+  ];
+}
+var Day$1 = class Day2 extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$42, create_fragment$42, safe_not_equal, { date: 0, resource: 21 }, null, [-1, -1]);
+  }
+};
+function create_fragment$33(ctx) {
+  let article;
+  let div;
+  let div_class_value;
+  let setContent_action;
+  let t;
+  let switch_instance;
+  let article_role_value;
+  let article_tabindex_value;
+  let current;
+  let mounted;
+  let dispose;
+  var switch_value = (
+    /*$_interaction*/
+    ctx[10].resizer
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { event: (
+      /*event*/
+      ctx2[0]
+    ) } };
+  }
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+    switch_instance.$on("pointerdown", function() {
+      if (is_function(
+        /*createDragHandler*/
+        ctx[30](
+          /*$_interaction*/
+          ctx[10],
+          true
+        )
+      )) ctx[30](
+        /*$_interaction*/
+        ctx[10],
+        true
+      ).apply(this, arguments);
+    });
+  }
+  return {
+    c() {
+      article = element("article");
+      div = element("div");
+      t = space();
+      if (switch_instance) create_component(switch_instance.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[2].eventBody);
+      attr(
+        article,
+        "class",
+        /*classes*/
+        ctx[4]
+      );
+      attr(
+        article,
+        "style",
+        /*style*/
+        ctx[5]
+      );
+      attr(article, "role", article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0);
+      attr(article, "tabindex", article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0);
+    },
+    m(target, anchor) {
+      insert(target, article, anchor);
+      append(article, div);
+      append(article, t);
+      if (switch_instance) mount_component(switch_instance, article, null);
+      ctx[47](article);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            div,
+            /*content*/
+            ctx[6]
+          )),
+          listen(article, "click", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7]
+            )) ctx[7].apply(this, arguments);
+          }),
+          listen(article, "keydown", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[7] && keyEnter(
+                /*onclick*/
+                ctx[7]
+              )
+            )) /*onclick*/
+            (ctx[7] && keyEnter(
+              /*onclick*/
+              ctx[7]
+            )).apply(this, arguments);
+          }),
+          listen(article, "mouseenter", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[29](
+                /*$eventMouseEnter*/
+                ctx[8],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[29](
+              /*$eventMouseEnter*/
+              ctx[8],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "mouseleave", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[29](
+                /*$eventMouseLeave*/
+                ctx[9],
+                /*display*/
+                ctx[1]
+              )
+            )) ctx[29](
+              /*$eventMouseLeave*/
+              ctx[9],
+              /*display*/
+              ctx[1]
+            ).apply(this, arguments);
+          }),
+          listen(article, "pointerdown", function() {
+            if (is_function(!helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[30](
+              /*$_interaction*/
+              ctx[10]
+            ))) (!helperEvent(
+              /*display*/
+              ctx[1]
+            ) && /*createDragHandler*/
+            ctx[30](
+              /*$_interaction*/
+              ctx[10]
+            )).apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty[0] & /*$theme*/
+      4 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[2].eventBody)) {
+        attr(div, "class", div_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*content*/
+      64) setContent_action.update.call(
+        null,
+        /*content*/
+        ctx[6]
+      );
+      if (dirty[0] & /*$_interaction*/
+      1024 && switch_value !== (switch_value = /*$_interaction*/
+      ctx[10].resizer)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+          switch_instance.$on("pointerdown", function() {
+            if (is_function(
+              /*createDragHandler*/
+              ctx[30](
+                /*$_interaction*/
+                ctx[10],
+                true
+              )
+            )) ctx[30](
+              /*$_interaction*/
+              ctx[10],
+              true
+            ).apply(this, arguments);
+          });
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, article, null);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = {};
+        if (dirty[0] & /*event*/
+        1) switch_instance_changes.event = /*event*/
+        ctx[0];
+        switch_instance.$set(switch_instance_changes);
+      }
+      if (!current || dirty[0] & /*classes*/
+      16) {
+        attr(
+          article,
+          "class",
+          /*classes*/
+          ctx[4]
+        );
+      }
+      if (!current || dirty[0] & /*style*/
+      32) {
+        attr(
+          article,
+          "style",
+          /*style*/
+          ctx[5]
+        );
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_role_value !== (article_role_value = /*onclick*/
+      ctx[7] ? "button" : void 0)) {
+        attr(article, "role", article_role_value);
+      }
+      if (!current || dirty[0] & /*onclick*/
+      128 && article_tabindex_value !== (article_tabindex_value = /*onclick*/
+      ctx[7] ? 0 : void 0)) {
+        attr(article, "tabindex", article_tabindex_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      if (switch_instance) transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance) transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(article);
+      }
+      if (switch_instance) destroy_component(switch_instance);
+      ctx[47](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$33($$self, $$props, $$invalidate) {
+  let $eventClick;
+  let $_view;
+  let $eventAllUpdated;
+  let $eventDidMount;
+  let $_intlEventTime;
+  let $theme;
+  let $eventContent;
+  let $displayEventEnd;
+  let $eventClassNames;
+  let $_iClasses;
+  let $eventTextColor;
+  let $_resTxtColor;
+  let $eventColor;
+  let $eventBackgroundColor;
+  let $_resBgColor;
+  let $eventMouseEnter;
+  let $eventMouseLeave;
+  let $_interaction;
+  let { chunk } = $$props;
+  let { longChunks = {} } = $$props;
+  let { displayEventEnd, eventAllUpdated, eventBackgroundColor, eventTextColor, eventClick, eventColor, eventContent, eventClassNames, eventDidMount, eventMouseEnter, eventMouseLeave, theme, _view, _intlEventTime, _interaction, _iClasses, _resBgColor, _resTxtColor, _tasks } = getContext("state");
+  component_subscribe($$self, displayEventEnd, (value) => $$invalidate(39, $displayEventEnd = value));
+  component_subscribe($$self, eventAllUpdated, (value) => $$invalidate(49, $eventAllUpdated = value));
+  component_subscribe($$self, eventBackgroundColor, (value) => $$invalidate(45, $eventBackgroundColor = value));
+  component_subscribe($$self, eventTextColor, (value) => $$invalidate(42, $eventTextColor = value));
+  component_subscribe($$self, eventClick, (value) => $$invalidate(35, $eventClick = value));
+  component_subscribe($$self, eventColor, (value) => $$invalidate(44, $eventColor = value));
+  component_subscribe($$self, eventContent, (value) => $$invalidate(38, $eventContent = value));
+  component_subscribe($$self, eventClassNames, (value) => $$invalidate(40, $eventClassNames = value));
+  component_subscribe($$self, eventDidMount, (value) => $$invalidate(50, $eventDidMount = value));
+  component_subscribe($$self, eventMouseEnter, (value) => $$invalidate(8, $eventMouseEnter = value));
+  component_subscribe($$self, eventMouseLeave, (value) => $$invalidate(9, $eventMouseLeave = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(2, $theme = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(36, $_view = value));
+  component_subscribe($$self, _intlEventTime, (value) => $$invalidate(37, $_intlEventTime = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(10, $_interaction = value));
+  component_subscribe($$self, _iClasses, (value) => $$invalidate(41, $_iClasses = value));
+  component_subscribe($$self, _resBgColor, (value) => $$invalidate(46, $_resBgColor = value));
+  component_subscribe($$self, _resTxtColor, (value) => $$invalidate(43, $_resTxtColor = value));
+  let el;
+  let event;
+  let classes;
+  let style;
+  let content;
+  let timeText;
+  let margin = 1;
+  let display;
+  let onclick;
+  onMount(() => {
+    if (is_function($eventDidMount)) {
+      $eventDidMount({
+        event: toEventWithLocalDates(event),
+        timeText,
+        el,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+  });
+  afterUpdate(() => {
+    if (is_function($eventAllUpdated) && !helperEvent(display)) {
+      task(() => $eventAllUpdated({ view: toViewWithLocalDates($_view) }), "eau", _tasks);
+    }
+  });
+  function createHandler(fn, display2) {
+    return !helperEvent(display2) && is_function(fn) ? (jsEvent) => fn({
+      event: toEventWithLocalDates(event),
+      el,
+      jsEvent,
+      view: toViewWithLocalDates($_view)
+    }) : void 0;
+  }
+  function createDragHandler(interaction, resize) {
+    return interaction.action ? (jsEvent) => interaction.action.drag(event, jsEvent, resize) : void 0;
+  }
+  function reposition() {
+    if (!el) {
+      return;
+    }
+    $$invalidate(34, margin = repositionEvent(chunk, longChunks, height(el)));
+  }
+  function article_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(3, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("chunk" in $$props2) $$invalidate(31, chunk = $$props2.chunk);
+    if ("longChunks" in $$props2) $$invalidate(32, longChunks = $$props2.longChunks);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[1] & /*chunk*/
+    1) {
+      $$invalidate(0, event = chunk.event);
+    }
+    if ($$self.$$.dirty[0] & /*event, style, $theme*/
+    37 | $$self.$$.dirty[1] & /*$_resBgColor, $eventBackgroundColor, $eventColor, $_resTxtColor, $eventTextColor, chunk, margin, $_iClasses, $eventClassNames, $_view*/
+    65065) {
+      {
+        $$invalidate(1, display = event.display);
+        let bgColor = event.backgroundColor || $_resBgColor(event) || $eventBackgroundColor || $eventColor;
+        let txtColor = event.textColor || $_resTxtColor(event) || $eventTextColor;
+        $$invalidate(5, style = `width:calc(${chunk.days * 100}% + ${(chunk.days - 1) * 7}px);margin-top:${margin}px;`);
+        if (bgColor) {
+          $$invalidate(5, style += `background-color:${bgColor};`);
+        }
+        if (txtColor) {
+          $$invalidate(5, style += `color:${txtColor};`);
+        }
+        $$invalidate(4, classes = [
+          $theme.event,
+          ...$_iClasses([], event),
+          ...createEventClasses($eventClassNames, event, $_view)
+        ].join(" "));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$theme*/
+    4 | $$self.$$.dirty[1] & /*chunk, $displayEventEnd, $eventContent, $_intlEventTime, $_view*/
+    481) {
+      $$invalidate(6, [timeText, content] = createEventContent(chunk, $displayEventEnd, $eventContent, $theme, $_intlEventTime, $_view), content);
+    }
+    if ($$self.$$.dirty[0] & /*display*/
+    2 | $$self.$$.dirty[1] & /*$eventClick*/
+    16) {
+      $$invalidate(7, onclick = createHandler($eventClick, display));
+    }
+  };
+  return [
+    event,
+    display,
+    $theme,
+    el,
+    classes,
+    style,
+    content,
+    onclick,
+    $eventMouseEnter,
+    $eventMouseLeave,
+    $_interaction,
+    displayEventEnd,
+    eventAllUpdated,
+    eventBackgroundColor,
+    eventTextColor,
+    eventClick,
+    eventColor,
+    eventContent,
+    eventClassNames,
+    eventDidMount,
+    eventMouseEnter,
+    eventMouseLeave,
+    theme,
+    _view,
+    _intlEventTime,
+    _interaction,
+    _iClasses,
+    _resBgColor,
+    _resTxtColor,
+    createHandler,
+    createDragHandler,
+    chunk,
+    longChunks,
+    reposition,
+    margin,
+    $eventClick,
+    $_view,
+    $_intlEventTime,
+    $eventContent,
+    $displayEventEnd,
+    $eventClassNames,
+    $_iClasses,
+    $eventTextColor,
+    $_resTxtColor,
+    $eventColor,
+    $eventBackgroundColor,
+    $_resBgColor,
+    article_binding
+  ];
+}
+var Event3 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance$33,
+      create_fragment$33,
+      safe_not_equal,
+      {
+        chunk: 31,
+        longChunks: 32,
+        reposition: 33
+      },
+      null,
+      [-1, -1]
+    );
+  }
+  get reposition() {
+    return this.$$.ctx[33];
+  }
+};
+function get_each_context$23(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[21] = list[i];
+  child_ctx[22] = list;
+  child_ctx[23] = i;
+  return child_ctx;
+}
+function create_if_block$12(ctx) {
+  let div;
+  let event;
+  let div_class_value;
+  let current;
+  event = new Event3({ props: { chunk: (
+    /*iChunks*/
+    ctx[2][0]
+  ) } });
+  return {
+    c() {
+      div = element("div");
+      create_component(event.$$.fragment);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[8].events + " " + /*$theme*/
+      ctx[8].preview);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(event, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const event_changes = {};
+      if (dirty & /*iChunks*/
+      4) event_changes.chunk = /*iChunks*/
+      ctx2[2][0];
+      event.$set(event_changes);
+      if (!current || dirty & /*$theme*/
+      256 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[8].events + " " + /*$theme*/
+      ctx2[8].preview)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(event);
+    }
+  };
+}
+function create_each_block$23(key_1, ctx) {
+  let first;
+  let event;
+  let i = (
+    /*i*/
+    ctx[23]
+  );
+  let current;
+  const assign_event = () => (
+    /*event_binding*/
+    ctx[19](event, i)
+  );
+  const unassign_event = () => (
+    /*event_binding*/
+    ctx[19](null, i)
+  );
+  let event_props = {
+    chunk: (
+      /*chunk*/
+      ctx[21]
+    ),
+    longChunks: (
+      /*longChunks*/
+      ctx[1]
+    )
+  };
+  event = new Event3({ props: event_props });
+  assign_event();
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (i !== /*i*/
+      ctx[23]) {
+        unassign_event();
+        i = /*i*/
+        ctx[23];
+        assign_event();
+      }
+      const event_changes = {};
+      if (dirty & /*dayChunks*/
+      16) event_changes.chunk = /*chunk*/
+      ctx[21];
+      if (dirty & /*longChunks*/
+      2) event_changes.longChunks = /*longChunks*/
+      ctx[1];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      unassign_event();
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_fragment$23(ctx) {
+  let div1;
+  let show_if = (
+    /*iChunks*/
+    ctx[2][0] && datesEqual(
+      /*iChunks*/
+      ctx[2][0].date,
+      /*date*/
+      ctx[0]
+    )
+  );
+  let t;
+  let div0;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let div0_class_value;
+  let div1_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let if_block = show_if && create_if_block$12(ctx);
+  let each_value = ensure_array_like(
+    /*dayChunks*/
+    ctx[4]
+  );
+  const get_key = (ctx2) => (
+    /*chunk*/
+    ctx2[21].event
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$23(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$23(key, child_ctx));
+  }
+  return {
+    c() {
+      div1 = element("div");
+      if (if_block) if_block.c();
+      t = space();
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[8].events);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[8].day + " " + /*$theme*/
+      ctx[8].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[5] ? " " + /*$theme*/
+      ctx[8].today : "") + /*highlight*/
+      (ctx[6] ? " " + /*$theme*/
+      ctx[8].highlight : ""));
+      attr(div1, "role", "cell");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      if (if_block) if_block.m(div1, null);
+      append(div1, t);
+      append(div1, div0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+      ctx[20](div1);
+      current = true;
+      if (!mounted) {
+        dispose = listen(div1, "pointerdown", function() {
+          if (is_function(
+            /*$_interaction*/
+            ctx[9].action?.select
+          )) ctx[9].action?.select.apply(this, arguments);
+        });
+        mounted = true;
+      }
+    },
+    p(new_ctx, [dirty]) {
+      ctx = new_ctx;
+      if (dirty & /*iChunks, date*/
+      5) show_if = /*iChunks*/
+      ctx[2][0] && datesEqual(
+        /*iChunks*/
+        ctx[2][0].date,
+        /*date*/
+        ctx[0]
+      );
+      if (show_if) {
+        if (if_block) {
+          if_block.p(ctx, dirty);
+          if (dirty & /*iChunks, date*/
+          5) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$12(ctx);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(div1, t);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+      if (dirty & /*dayChunks, longChunks, refs*/
+      146) {
+        each_value = ensure_array_like(
+          /*dayChunks*/
+          ctx[4]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div0, outro_and_destroy_block, create_each_block$23, null, get_each_context$23);
+        check_outros();
+      }
+      if (!current || dirty & /*$theme*/
+      256 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx[8].events)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme, date, isToday, highlight*/
+      353 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx[8].day + " " + /*$theme*/
+      ctx[8].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[5] ? " " + /*$theme*/
+      ctx[8].today : "") + /*highlight*/
+      (ctx[6] ? " " + /*$theme*/
+      ctx[8].highlight : ""))) {
+        attr(div1, "class", div1_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (if_block) if_block.d();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      ctx[20](null);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance$23($$self, $$props, $$invalidate) {
+  let $highlightedDates;
+  let $_today;
+  let $theme;
+  let $_interaction;
+  let { date } = $$props;
+  let { chunks } = $$props;
+  let { longChunks } = $$props;
+  let { iChunks = [] } = $$props;
+  let { resource = void 0 } = $$props;
+  let { highlightedDates, theme, _interaction, _today } = getContext("state");
+  component_subscribe($$self, highlightedDates, (value) => $$invalidate(17, $highlightedDates = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(8, $theme = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(9, $_interaction = value));
+  component_subscribe($$self, _today, (value) => $$invalidate(18, $_today = value));
+  let el;
+  let dayChunks;
+  let isToday;
+  let highlight;
+  let refs = [];
+  function reposition() {
+    runReposition(refs, dayChunks);
+  }
+  function event_binding($$value, i) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      refs[i] = $$value;
+      $$invalidate(7, refs);
+    });
+  }
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(3, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("date" in $$props2) $$invalidate(0, date = $$props2.date);
+    if ("chunks" in $$props2) $$invalidate(14, chunks = $$props2.chunks);
+    if ("longChunks" in $$props2) $$invalidate(1, longChunks = $$props2.longChunks);
+    if ("iChunks" in $$props2) $$invalidate(2, iChunks = $$props2.iChunks);
+    if ("resource" in $$props2) $$invalidate(15, resource = $$props2.resource);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*chunks, date, dayChunks*/
+    16401) {
+      {
+        $$invalidate(4, dayChunks = []);
+        for (let chunk of chunks) {
+          if (datesEqual(chunk.date, date)) {
+            dayChunks.push(chunk);
+          }
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*date, $_today*/
+    262145) {
+      $$invalidate(5, isToday = datesEqual(date, $_today));
+    }
+    if ($$self.$$.dirty & /*$highlightedDates, date*/
+    131073) {
+      $$invalidate(6, highlight = $highlightedDates.some((d) => datesEqual(d, date)));
+    }
+    if ($$self.$$.dirty & /*el, date, resource*/
+    32777) {
+      if (el) {
+        setPayload(el, () => ({ allDay: true, date, resource, dayEl: el }));
+      }
+    }
+  };
+  return [
+    date,
+    longChunks,
+    iChunks,
+    el,
+    dayChunks,
+    isToday,
+    highlight,
+    refs,
+    $theme,
+    $_interaction,
+    highlightedDates,
+    theme,
+    _interaction,
+    _today,
+    chunks,
+    resource,
+    reposition,
+    $highlightedDates,
+    $_today,
+    event_binding,
+    div1_binding
+  ];
+}
+var Day3 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$23, create_fragment$23, safe_not_equal, {
+      date: 0,
+      chunks: 14,
+      longChunks: 1,
+      iChunks: 2,
+      resource: 15,
+      reposition: 16
+    });
+  }
+  get reposition() {
+    return this.$$.ctx[16];
+  }
+};
+function get_each_context$13(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[18] = list[i];
+  child_ctx[19] = list;
+  child_ctx[20] = i;
+  return child_ctx;
+}
+function create_each_block$13(ctx) {
+  let day;
+  let i = (
+    /*i*/
+    ctx[20]
+  );
+  let current;
+  const assign_day = () => (
+    /*day_binding*/
+    ctx[15](day, i)
+  );
+  const unassign_day = () => (
+    /*day_binding*/
+    ctx[15](null, i)
+  );
+  let day_props = {
+    date: (
+      /*date*/
+      ctx[18]
+    ),
+    chunks: (
+      /*chunks*/
+      ctx[2]
+    ),
+    longChunks: (
+      /*longChunks*/
+      ctx[3]
+    ),
+    iChunks: (
+      /*iChunks*/
+      ctx[4]
+    ),
+    resource: (
+      /*resource*/
+      ctx[1]
+    )
+  };
+  day = new Day3({ props: day_props });
+  assign_day();
+  return {
+    c() {
+      create_component(day.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(day, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (i !== /*i*/
+      ctx2[20]) {
+        unassign_day();
+        i = /*i*/
+        ctx2[20];
+        assign_day();
+      }
+      const day_changes = {};
+      if (dirty & /*dates*/
+      1) day_changes.date = /*date*/
+      ctx2[18];
+      if (dirty & /*chunks*/
+      4) day_changes.chunks = /*chunks*/
+      ctx2[2];
+      if (dirty & /*longChunks*/
+      8) day_changes.longChunks = /*longChunks*/
+      ctx2[3];
+      if (dirty & /*iChunks*/
+      16) day_changes.iChunks = /*iChunks*/
+      ctx2[4];
+      if (dirty & /*resource*/
+      2) day_changes.resource = /*resource*/
+      ctx2[1];
+      day.$set(day_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(day.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(day.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      unassign_day();
+      destroy_component(day, detaching);
+    }
+  };
+}
+function create_fragment$13(ctx) {
+  let each_1_anchor;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*dates*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$13(get_each_context$13(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+      if (!mounted) {
+        dispose = listen(
+          window,
+          "resize",
+          /*reposition*/
+          ctx[9]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*dates, chunks, longChunks, iChunks, resource, refs*/
+      63) {
+        each_value = ensure_array_like(
+          /*dates*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$13(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$13(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function instance$13($$self, $$props, $$invalidate) {
+  let $hiddenDays;
+  let $_iEvents;
+  let $_events;
+  let { dates } = $$props;
+  let { resource = void 0 } = $$props;
+  let { _events, _iEvents, _queue2, hiddenDays } = getContext("state");
+  component_subscribe($$self, _events, (value) => $$invalidate(14, $_events = value));
+  component_subscribe($$self, _iEvents, (value) => $$invalidate(13, $_iEvents = value));
+  component_subscribe($$self, hiddenDays, (value) => $$invalidate(12, $hiddenDays = value));
+  let chunks, longChunks, iChunks = [];
+  let start;
+  let end;
+  let refs = [];
+  let debounceHandle = {};
+  function reposition() {
+    debounce(() => runReposition(refs, dates), debounceHandle, _queue2);
+  }
+  function day_binding($$value, i) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      refs[i] = $$value;
+      $$invalidate(5, refs);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("dates" in $$props2) $$invalidate(0, dates = $$props2.dates);
+    if ("resource" in $$props2) $$invalidate(1, resource = $$props2.resource);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*dates*/
+    1) {
+      {
+        $$invalidate(10, start = dates[0]);
+        $$invalidate(11, end = addDay(cloneDate(dates[dates.length - 1])));
+      }
+    }
+    if ($$self.$$.dirty & /*$_events, start, end, resource, chunks, $hiddenDays*/
+    23558) {
+      {
+        $$invalidate(2, chunks = []);
+        for (let event of $_events) {
+          if (event.allDay && event.display !== "background" && eventIntersects(event, start, end, resource)) {
+            let chunk = createEventChunk(event, start, end);
+            chunks.push(chunk);
+          }
+        }
+        $$invalidate(3, longChunks = prepareEventChunks(chunks, $hiddenDays));
+        reposition();
+      }
+    }
+    if ($$self.$$.dirty & /*$_iEvents, start, end, resource, $hiddenDays*/
+    15362) {
+      $$invalidate(4, iChunks = $_iEvents.map((event) => {
+        let chunk;
+        if (event && event.allDay && eventIntersects(event, start, end, resource)) {
+          chunk = createEventChunk(event, start, end);
+          prepareEventChunks([chunk], $hiddenDays);
+        } else {
+          chunk = null;
+        }
+        return chunk;
+      }));
+    }
+  };
+  return [
+    dates,
+    resource,
+    chunks,
+    longChunks,
+    iChunks,
+    refs,
+    _events,
+    _iEvents,
+    hiddenDays,
+    reposition,
+    start,
+    end,
+    $hiddenDays,
+    $_iEvents,
+    $_events,
+    day_binding
+  ];
+}
+var Week2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$13, create_fragment$13, safe_not_equal, { dates: 0, resource: 1 });
+  }
+};
+function get_each_context3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[10] = list[i];
+  return child_ctx;
+}
+function get_each_context_12(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[10] = list[i];
+  return child_ctx;
+}
+function create_each_block_12(ctx) {
+  let div;
+  let time;
+  let time_datetime_value;
+  let time_aria_label_value;
+  let setContent_action;
+  let t;
+  let div_class_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      time = element("time");
+      t = space();
+      attr(time, "datetime", time_datetime_value = toISOString(
+        /*date*/
+        ctx[10],
+        10
+      ));
+      attr(time, "aria-label", time_aria_label_value = /*$_intlDayHeaderAL*/
+      ctx[2].format(
+        /*date*/
+        ctx[10]
+      ));
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[0].day + " " + /*$theme*/
+      ctx[0].weekdays?.[
+        /*date*/
+        ctx[10].getUTCDay()
+      ]);
+      attr(div, "role", "columnheader");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, time);
+      append(div, t);
+      if (!mounted) {
+        dispose = action_destroyer(setContent_action = setContent.call(
+          null,
+          time,
+          /*$_intlDayHeader*/
+          ctx[3].format(
+            /*date*/
+            ctx[10]
+          )
+        ));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*$_viewDates*/
+      2 && time_datetime_value !== (time_datetime_value = toISOString(
+        /*date*/
+        ctx[10],
+        10
+      ))) {
+        attr(time, "datetime", time_datetime_value);
+      }
+      if (dirty & /*$_intlDayHeaderAL, $_viewDates*/
+      6 && time_aria_label_value !== (time_aria_label_value = /*$_intlDayHeaderAL*/
+      ctx[2].format(
+        /*date*/
+        ctx[10]
+      ))) {
+        attr(time, "aria-label", time_aria_label_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_intlDayHeader, $_viewDates*/
+      10) setContent_action.update.call(
+        null,
+        /*$_intlDayHeader*/
+        ctx[3].format(
+          /*date*/
+          ctx[10]
+        )
+      );
+      if (dirty & /*$theme, $_viewDates*/
+      3 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[0].day + " " + /*$theme*/
+      ctx[0].weekdays?.[
+        /*date*/
+        ctx[10].getUTCDay()
+      ])) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_default_slot_2(ctx) {
+  let each_1_anchor;
+  let each_value_1 = ensure_array_like(
+    /*$_viewDates*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks[i] = create_each_block_12(get_each_context_12(ctx, each_value_1, i));
+  }
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme, $_viewDates, $_intlDayHeaderAL, $_intlDayHeader*/
+      15) {
+        each_value_1 = ensure_array_like(
+          /*$_viewDates*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_12(ctx2, each_value_1, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block_12(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value_1.length;
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_if_block3(ctx) {
+  let div2;
+  let div1;
+  let section;
+  let t;
+  let div0;
+  let div0_class_value;
+  let div1_class_value;
+  let div2_class_value;
+  let current;
+  section = new Section({
+    props: {
+      $$slots: { default: [create_default_slot_1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div1 = element("div");
+      create_component(section.$$.fragment);
+      t = space();
+      div0 = element("div");
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].hiddenScroll);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].content);
+      attr(div2, "class", div2_class_value = /*$theme*/
+      ctx[0].allDay);
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div1);
+      mount_component(section, div1, null);
+      append(div1, t);
+      append(div1, div0);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const section_changes = {};
+      if (dirty & /*$$scope, $_viewDates*/
+      32770) {
+        section_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      section.$set(section_changes);
+      if (!current || dirty & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[0].hiddenScroll)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[0].content)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div2_class_value !== (div2_class_value = /*$theme*/
+      ctx2[0].allDay)) {
+        attr(div2, "class", div2_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(section.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(section.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(section);
+    }
+  };
+}
+function create_default_slot_1(ctx) {
+  let week;
+  let current;
+  week = new Week2({ props: { dates: (
+    /*$_viewDates*/
+    ctx[1]
+  ) } });
+  return {
+    c() {
+      create_component(week.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(week, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const week_changes = {};
+      if (dirty & /*$_viewDates*/
+      2) week_changes.dates = /*$_viewDates*/
+      ctx2[1];
+      week.$set(week_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(week.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(week.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(week, detaching);
+    }
+  };
+}
+function create_each_block3(ctx) {
+  let day;
+  let current;
+  day = new Day$1({ props: { date: (
+    /*date*/
+    ctx[10]
+  ) } });
+  return {
+    c() {
+      create_component(day.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(day, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const day_changes = {};
+      if (dirty & /*$_viewDates*/
+      2) day_changes.date = /*date*/
+      ctx2[10];
+      day.$set(day_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(day.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(day.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(day, detaching);
+    }
+  };
+}
+function create_default_slot2(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*$_viewDates*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block3(get_each_context3(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$_viewDates*/
+      2) {
+        each_value = ensure_array_like(
+          /*$_viewDates*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context3(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block3(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_fragment3(ctx) {
+  let div1;
+  let section;
+  let t0;
+  let div0;
+  let div0_class_value;
+  let div1_class_value;
+  let t1;
+  let t2;
+  let body;
+  let current;
+  section = new Section({
+    props: {
+      $$slots: { default: [create_default_slot_2] },
+      $$scope: { ctx }
+    }
+  });
+  let if_block = (
+    /*$allDaySlot*/
+    ctx[4] && create_if_block3(ctx)
+  );
+  body = new Body2({
+    props: {
+      $$slots: { default: [create_default_slot2] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      div1 = element("div");
+      create_component(section.$$.fragment);
+      t0 = space();
+      div0 = element("div");
+      t1 = space();
+      if (if_block) if_block.c();
+      t2 = space();
+      create_component(body.$$.fragment);
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].hiddenScroll);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].header);
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      mount_component(section, div1, null);
+      append(div1, t0);
+      append(div1, div0);
+      insert(target, t1, anchor);
+      if (if_block) if_block.m(target, anchor);
+      insert(target, t2, anchor);
+      mount_component(body, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const section_changes = {};
+      if (dirty & /*$$scope, $_viewDates, $theme, $_intlDayHeaderAL, $_intlDayHeader*/
+      32783) {
+        section_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      section.$set(section_changes);
+      if (!current || dirty & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[0].hiddenScroll)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[0].header)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (
+        /*$allDaySlot*/
+        ctx2[4]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*$allDaySlot*/
+          16) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block3(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(t2.parentNode, t2);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+      const body_changes = {};
+      if (dirty & /*$$scope, $_viewDates*/
+      32770) {
+        body_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      body.$set(body_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(section.$$.fragment, local);
+      transition_in(if_block);
+      transition_in(body.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(section.$$.fragment, local);
+      transition_out(if_block);
+      transition_out(body.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+        detach(t1);
+        detach(t2);
+      }
+      destroy_component(section);
+      if (if_block) if_block.d(detaching);
+      destroy_component(body, detaching);
+    }
+  };
+}
+function instance3($$self, $$props, $$invalidate) {
+  let $theme;
+  let $_viewDates;
+  let $_intlDayHeaderAL;
+  let $_intlDayHeader;
+  let $allDaySlot;
+  let { _viewDates, _intlDayHeader, _intlDayHeaderAL, allDaySlot, theme } = getContext("state");
+  component_subscribe($$self, _viewDates, (value) => $$invalidate(1, $_viewDates = value));
+  component_subscribe($$self, _intlDayHeader, (value) => $$invalidate(3, $_intlDayHeader = value));
+  component_subscribe($$self, _intlDayHeaderAL, (value) => $$invalidate(2, $_intlDayHeaderAL = value));
+  component_subscribe($$self, allDaySlot, (value) => $$invalidate(4, $allDaySlot = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(0, $theme = value));
+  return [
+    $theme,
+    $_viewDates,
+    $_intlDayHeaderAL,
+    $_intlDayHeader,
+    $allDaySlot,
+    _viewDates,
+    _intlDayHeader,
+    _intlDayHeaderAL,
+    allDaySlot,
+    theme
+  ];
+}
+var View2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance3, create_fragment3, safe_not_equal, {});
+  }
+};
+var index2 = {
+  createOptions(options) {
+    options.buttonText.timeGridDay = "day";
+    options.buttonText.timeGridWeek = "week";
+    options.view = "timeGridWeek";
+    options.views.timeGridDay = {
+      buttonText: btnTextDay,
+      component: View2,
+      dayHeaderFormat: { weekday: "long" },
+      duration: { days: 1 },
+      theme: themeView("ec-time-grid ec-day-view"),
+      titleFormat: { year: "numeric", month: "long", day: "numeric" }
+    };
+    options.views.timeGridWeek = {
+      buttonText: btnTextWeek,
+      component: View2,
+      duration: { weeks: 1 },
+      theme: themeView("ec-time-grid ec-week-view")
+    };
+  },
+  createStores(state) {
+    state._slotTimeLimits = slotTimeLimits(state);
+    state._times = times(state);
+  }
+};
+
+// node_modules/@event-calendar/list/index.js
+function create_fragment$34(ctx) {
+  let div1;
+  let div0;
+  let div0_class_value;
+  let div1_class_value;
+  let current;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[5].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[4],
+    null
+  );
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      if (default_slot) default_slot.c();
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].content);
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].body);
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      if (default_slot) {
+        default_slot.m(div0, null);
+      }
+      ctx[6](div1);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        16)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[4],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[4]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[4],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx2[0].content)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (!current || dirty & /*$theme*/
+      1 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx2[0].body)) {
+        attr(div1, "class", div1_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (default_slot) default_slot.d(detaching);
+      ctx[6](null);
+    }
+  };
+}
+function instance$34($$self, $$props, $$invalidate) {
+  let $theme;
+  let $_bodyEl;
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { _bodyEl, theme } = getContext("state");
+  component_subscribe($$self, _bodyEl, (value) => $$invalidate(1, $_bodyEl = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(0, $theme = value));
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      $_bodyEl = $$value;
+      _bodyEl.set($_bodyEl);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("$$scope" in $$props2) $$invalidate(4, $$scope = $$props2.$$scope);
+  };
+  return [$theme, $_bodyEl, _bodyEl, theme, $$scope, slots, div1_binding];
+}
+var Body3 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$34, create_fragment$34, safe_not_equal, {});
+  }
+};
+function create_fragment$24(ctx) {
+  let article;
+  let div0;
+  let div0_class_value;
+  let t;
+  let div1;
+  let div1_class_value;
+  let setContent_action;
+  let article_role_value;
+  let article_tabindex_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      article = element("article");
+      div0 = element("div");
+      t = space();
+      div1 = element("div");
+      attr(div0, "class", div0_class_value = /*$theme*/
+      ctx[0].eventTag);
+      attr(
+        div0,
+        "style",
+        /*style*/
+        ctx[3]
+      );
+      attr(div1, "class", div1_class_value = /*$theme*/
+      ctx[0].eventBody);
+      attr(
+        article,
+        "class",
+        /*classes*/
+        ctx[2]
+      );
+      attr(article, "role", article_role_value = /*onclick*/
+      ctx[5] ? "button" : void 0);
+      attr(article, "tabindex", article_tabindex_value = /*onclick*/
+      ctx[5] ? 0 : void 0);
+    },
+    m(target, anchor) {
+      insert(target, article, anchor);
+      append(article, div0);
+      append(article, t);
+      append(article, div1);
+      ctx[40](article);
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            div1,
+            /*content*/
+            ctx[4]
+          )),
+          listen(article, "click", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[5]
+            )) ctx[5].apply(this, arguments);
+          }),
+          listen(article, "keydown", function() {
+            if (is_function(
+              /*onclick*/
+              ctx[5] && keyEnter(
+                /*onclick*/
+                ctx[5]
+              )
+            )) /*onclick*/
+            (ctx[5] && keyEnter(
+              /*onclick*/
+              ctx[5]
+            )).apply(this, arguments);
+          }),
+          listen(article, "mouseenter", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[26](
+                /*$eventMouseEnter*/
+                ctx[6]
+              )
+            )) ctx[26](
+              /*$eventMouseEnter*/
+              ctx[6]
+            ).apply(this, arguments);
+          }),
+          listen(article, "mouseleave", function() {
+            if (is_function(
+              /*createHandler*/
+              ctx[26](
+                /*$eventMouseLeave*/
+                ctx[7]
+              )
+            )) ctx[26](
+              /*$eventMouseLeave*/
+              ctx[7]
+            ).apply(this, arguments);
+          }),
+          listen(article, "pointerdown", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[8].action?.noAction
+            )) ctx[8].action?.noAction.apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty[0] & /*$theme*/
+      1 && div0_class_value !== (div0_class_value = /*$theme*/
+      ctx[0].eventTag)) {
+        attr(div0, "class", div0_class_value);
+      }
+      if (dirty[0] & /*style*/
+      8) {
+        attr(
+          div0,
+          "style",
+          /*style*/
+          ctx[3]
+        );
+      }
+      if (dirty[0] & /*$theme*/
+      1 && div1_class_value !== (div1_class_value = /*$theme*/
+      ctx[0].eventBody)) {
+        attr(div1, "class", div1_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty[0] & /*content*/
+      16) setContent_action.update.call(
+        null,
+        /*content*/
+        ctx[4]
+      );
+      if (dirty[0] & /*classes*/
+      4) {
+        attr(
+          article,
+          "class",
+          /*classes*/
+          ctx[2]
+        );
+      }
+      if (dirty[0] & /*onclick*/
+      32 && article_role_value !== (article_role_value = /*onclick*/
+      ctx[5] ? "button" : void 0)) {
+        attr(article, "role", article_role_value);
+      }
+      if (dirty[0] & /*onclick*/
+      32 && article_tabindex_value !== (article_tabindex_value = /*onclick*/
+      ctx[5] ? 0 : void 0)) {
+        attr(article, "tabindex", article_tabindex_value);
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(article);
+      }
+      ctx[40](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function instance$24($$self, $$props, $$invalidate) {
+  let $eventClick;
+  let $_view;
+  let $eventAllUpdated;
+  let $eventDidMount;
+  let $_intlEventTime;
+  let $theme;
+  let $eventContent;
+  let $displayEventEnd;
+  let $eventClassNames;
+  let $eventTextColor;
+  let $_resTxtColor;
+  let $eventColor;
+  let $eventBackgroundColor;
+  let $_resBgColor;
+  let $eventMouseEnter;
+  let $eventMouseLeave;
+  let $_interaction;
+  let { chunk } = $$props;
+  let { displayEventEnd, eventAllUpdated, eventBackgroundColor, eventTextColor, eventColor, eventContent, eventClassNames, eventClick, eventDidMount, eventMouseEnter, eventMouseLeave, theme, _view, _intlEventTime, _resBgColor, _resTxtColor, _interaction, _tasks } = getContext("state");
+  component_subscribe($$self, displayEventEnd, (value) => $$invalidate(33, $displayEventEnd = value));
+  component_subscribe($$self, eventAllUpdated, (value) => $$invalidate(42, $eventAllUpdated = value));
+  component_subscribe($$self, eventBackgroundColor, (value) => $$invalidate(38, $eventBackgroundColor = value));
+  component_subscribe($$self, eventTextColor, (value) => $$invalidate(35, $eventTextColor = value));
+  component_subscribe($$self, eventColor, (value) => $$invalidate(37, $eventColor = value));
+  component_subscribe($$self, eventContent, (value) => $$invalidate(32, $eventContent = value));
+  component_subscribe($$self, eventClassNames, (value) => $$invalidate(34, $eventClassNames = value));
+  component_subscribe($$self, eventClick, (value) => $$invalidate(29, $eventClick = value));
+  component_subscribe($$self, eventDidMount, (value) => $$invalidate(43, $eventDidMount = value));
+  component_subscribe($$self, eventMouseEnter, (value) => $$invalidate(6, $eventMouseEnter = value));
+  component_subscribe($$self, eventMouseLeave, (value) => $$invalidate(7, $eventMouseLeave = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(0, $theme = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(30, $_view = value));
+  component_subscribe($$self, _intlEventTime, (value) => $$invalidate(31, $_intlEventTime = value));
+  component_subscribe($$self, _resBgColor, (value) => $$invalidate(39, $_resBgColor = value));
+  component_subscribe($$self, _resTxtColor, (value) => $$invalidate(36, $_resTxtColor = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(8, $_interaction = value));
+  let el;
+  let event;
+  let classes;
+  let style;
+  let content;
+  let timeText;
+  let onclick;
+  onMount(() => {
+    if (is_function($eventDidMount)) {
+      $eventDidMount({
+        event: toEventWithLocalDates(event),
+        timeText,
+        el,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+  });
+  afterUpdate(() => {
+    if (is_function($eventAllUpdated)) {
+      task(() => $eventAllUpdated({ view: toViewWithLocalDates($_view) }), "eau", _tasks);
+    }
+  });
+  function createHandler(fn) {
+    return is_function(fn) ? (jsEvent) => fn({
+      event: toEventWithLocalDates(event),
+      el,
+      jsEvent,
+      view: toViewWithLocalDates($_view)
+    }) : void 0;
+  }
+  function article_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(1, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("chunk" in $$props2) $$invalidate(27, chunk = $$props2.chunk);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*chunk*/
+    134217728) {
+      $$invalidate(28, event = chunk.event);
+    }
+    if ($$self.$$.dirty[0] & /*event, style, $theme, $_view*/
+    1342177289 | $$self.$$.dirty[1] & /*$_resBgColor, $eventBackgroundColor, $eventColor, $_resTxtColor, $eventTextColor, $eventClassNames*/
+    504) {
+      {
+        $$invalidate(3, style = "");
+        let bgColor = event.backgroundColor || $_resBgColor(event) || $eventBackgroundColor || $eventColor;
+        if (bgColor) {
+          $$invalidate(3, style = `background-color:${bgColor};`);
+        }
+        let txtColor = event.textColor || $_resTxtColor(event) || $eventTextColor;
+        if (txtColor) {
+          $$invalidate(3, style += `color:${txtColor};`);
+        }
+        $$invalidate(2, classes = [$theme.event, ...createEventClasses($eventClassNames, event, $_view)].join(" "));
+      }
+    }
+    if ($$self.$$.dirty[0] & /*chunk, $theme, $_view*/
+    1207959553 | $$self.$$.dirty[1] & /*$displayEventEnd, $eventContent, $_intlEventTime*/
+    7) {
+      {
+        $$invalidate(4, [timeText, content] = createEventContent(chunk, $displayEventEnd, $eventContent, $theme, $_intlEventTime, $_view), content);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*$eventClick*/
+    536870912) {
+      $$invalidate(5, onclick = createHandler($eventClick));
+    }
+  };
+  return [
+    $theme,
+    el,
+    classes,
+    style,
+    content,
+    onclick,
+    $eventMouseEnter,
+    $eventMouseLeave,
+    $_interaction,
+    displayEventEnd,
+    eventAllUpdated,
+    eventBackgroundColor,
+    eventTextColor,
+    eventColor,
+    eventContent,
+    eventClassNames,
+    eventClick,
+    eventDidMount,
+    eventMouseEnter,
+    eventMouseLeave,
+    theme,
+    _view,
+    _intlEventTime,
+    _resBgColor,
+    _resTxtColor,
+    _interaction,
+    createHandler,
+    chunk,
+    event,
+    $eventClick,
+    $_view,
+    $_intlEventTime,
+    $eventContent,
+    $displayEventEnd,
+    $eventClassNames,
+    $eventTextColor,
+    $_resTxtColor,
+    $eventColor,
+    $eventBackgroundColor,
+    $_resBgColor,
+    article_binding
+  ];
+}
+var Event4 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$24, create_fragment$24, safe_not_equal, { chunk: 27 }, null, [-1, -1]);
+  }
+};
+function get_each_context$14(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[21] = list[i];
+  return child_ctx;
+}
+function create_if_block$13(ctx) {
+  let div;
+  let h4;
+  let time0;
+  let setContent_action;
+  let t0;
+  let time1;
+  let time1_class_value;
+  let setContent_action_1;
+  let h4_class_value;
+  let t1;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let div_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let each_value = ensure_array_like(
+    /*chunks*/
+    ctx[2]
+  );
+  const get_key = (ctx2) => (
+    /*chunk*/
+    ctx2[21].event
+  );
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$14(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$14(key, child_ctx));
+  }
+  return {
+    c() {
+      div = element("div");
+      h4 = element("h4");
+      time0 = element("time");
+      t0 = space();
+      time1 = element("time");
+      t1 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(
+        time0,
+        "datetime",
+        /*datetime*/
+        ctx[5]
+      );
+      attr(time1, "class", time1_class_value = /*$theme*/
+      ctx[6].daySide);
+      attr(
+        time1,
+        "datetime",
+        /*datetime*/
+        ctx[5]
+      );
+      attr(h4, "class", h4_class_value = /*$theme*/
+      ctx[6].dayHead);
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[6].day + " " + /*$theme*/
+      ctx[6].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[3] ? " " + /*$theme*/
+      ctx[6].today : "") + /*highlight*/
+      (ctx[4] ? " " + /*$theme*/
+      ctx[6].highlight : ""));
+      attr(div, "role", "listitem");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, h4);
+      append(h4, time0);
+      append(h4, t0);
+      append(h4, time1);
+      append(div, t1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      ctx[20](div);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            time0,
+            /*$_intlListDay*/
+            ctx[8].format(
+              /*date*/
+              ctx[0]
+            )
+          )),
+          action_destroyer(setContent_action_1 = setContent.call(
+            null,
+            time1,
+            /*$_intlListDaySide*/
+            ctx[9].format(
+              /*date*/
+              ctx[0]
+            )
+          )),
+          listen(div, "pointerdown", function() {
+            if (is_function(
+              /*$_interaction*/
+              ctx[7].action?.select
+            )) ctx[7].action?.select.apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (!current || dirty & /*datetime*/
+      32) {
+        attr(
+          time0,
+          "datetime",
+          /*datetime*/
+          ctx[5]
+        );
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*$_intlListDay, date*/
+      257) setContent_action.update.call(
+        null,
+        /*$_intlListDay*/
+        ctx[8].format(
+          /*date*/
+          ctx[0]
+        )
+      );
+      if (!current || dirty & /*$theme*/
+      64 && time1_class_value !== (time1_class_value = /*$theme*/
+      ctx[6].daySide)) {
+        attr(time1, "class", time1_class_value);
+      }
+      if (!current || dirty & /*datetime*/
+      32) {
+        attr(
+          time1,
+          "datetime",
+          /*datetime*/
+          ctx[5]
+        );
+      }
+      if (setContent_action_1 && is_function(setContent_action_1.update) && dirty & /*$_intlListDaySide, date*/
+      513) setContent_action_1.update.call(
+        null,
+        /*$_intlListDaySide*/
+        ctx[9].format(
+          /*date*/
+          ctx[0]
+        )
+      );
+      if (!current || dirty & /*$theme*/
+      64 && h4_class_value !== (h4_class_value = /*$theme*/
+      ctx[6].dayHead)) {
+        attr(h4, "class", h4_class_value);
+      }
+      if (dirty & /*chunks*/
+      4) {
+        each_value = ensure_array_like(
+          /*chunks*/
+          ctx[2]
+        );
+        group_outros();
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, div, outro_and_destroy_block, create_each_block$14, null, get_each_context$14);
+        check_outros();
+      }
+      if (!current || dirty & /*$theme, date, isToday, highlight*/
+      89 && div_class_value !== (div_class_value = /*$theme*/
+      ctx[6].day + " " + /*$theme*/
+      ctx[6].weekdays?.[
+        /*date*/
+        ctx[0].getUTCDay()
+      ] + /*isToday*/
+      (ctx[3] ? " " + /*$theme*/
+      ctx[6].today : "") + /*highlight*/
+      (ctx[4] ? " " + /*$theme*/
+      ctx[6].highlight : ""))) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      ctx[20](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_each_block$14(key_1, ctx) {
+  let first;
+  let event;
+  let current;
+  event = new Event4({ props: { chunk: (
+    /*chunk*/
+    ctx[21]
+  ) } });
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      first = empty();
+      create_component(event.$$.fragment);
+      this.first = first;
+    },
+    m(target, anchor) {
+      insert(target, first, anchor);
+      mount_component(event, target, anchor);
+      current = true;
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const event_changes = {};
+      if (dirty & /*chunks*/
+      4) event_changes.chunk = /*chunk*/
+      ctx[21];
+      event.$set(event_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(event.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(event.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(first);
+      }
+      destroy_component(event, detaching);
+    }
+  };
+}
+function create_fragment$14(ctx) {
+  let if_block_anchor;
+  let current;
+  let if_block = (
+    /*chunks*/
+    ctx[2].length && create_if_block$13(ctx)
+  );
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (
+        /*chunks*/
+        ctx2[2].length
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*chunks*/
+          4) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$13(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function instance$14($$self, $$props, $$invalidate) {
+  let $highlightedDates;
+  let $_today;
+  let $_events;
+  let $theme;
+  let $_interaction;
+  let $_intlListDay;
+  let $_intlListDaySide;
+  let { date } = $$props;
+  let { _events, _interaction, _intlListDay, _intlListDaySide, _today, highlightedDates, theme } = getContext("state");
+  component_subscribe($$self, _events, (value) => $$invalidate(19, $_events = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(7, $_interaction = value));
+  component_subscribe($$self, _intlListDay, (value) => $$invalidate(8, $_intlListDay = value));
+  component_subscribe($$self, _intlListDaySide, (value) => $$invalidate(9, $_intlListDaySide = value));
+  component_subscribe($$self, _today, (value) => $$invalidate(18, $_today = value));
+  component_subscribe($$self, highlightedDates, (value) => $$invalidate(17, $highlightedDates = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(6, $theme = value));
+  let el;
+  let chunks;
+  let isToday, highlight;
+  let datetime;
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      el = $$value;
+      $$invalidate(1, el);
+    });
+  }
+  $$self.$$set = ($$props2) => {
+    if ("date" in $$props2) $$invalidate(0, date = $$props2.date);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*date, $_events, chunks*/
+    524293) {
+      {
+        $$invalidate(2, chunks = []);
+        let start = date;
+        let end = addDay(cloneDate(date));
+        for (let event of $_events) {
+          if (!bgEvent(event.display) && eventIntersects(event, start, end)) {
+            let chunk = createEventChunk(event, start, end);
+            chunks.push(chunk);
+          }
+        }
+        sortEventChunks(chunks);
+      }
+    }
+    if ($$self.$$.dirty & /*date, $_today*/
+    262145) {
+      $$invalidate(3, isToday = datesEqual(date, $_today));
+    }
+    if ($$self.$$.dirty & /*$highlightedDates, date*/
+    131073) {
+      $$invalidate(4, highlight = $highlightedDates.some((d) => datesEqual(d, date)));
+    }
+    if ($$self.$$.dirty & /*date*/
+    1) {
+      $$invalidate(5, datetime = toISOString(date, 10));
+    }
+    if ($$self.$$.dirty & /*el, date*/
+    3) {
+      if (el) {
+        setPayload(el, () => ({
+          allDay: true,
+          date,
+          resource: void 0,
+          dayEl: el
+        }));
+      }
+    }
+  };
+  return [
+    date,
+    el,
+    chunks,
+    isToday,
+    highlight,
+    datetime,
+    $theme,
+    $_interaction,
+    $_intlListDay,
+    $_intlListDaySide,
+    _events,
+    _interaction,
+    _intlListDay,
+    _intlListDaySide,
+    _today,
+    highlightedDates,
+    theme,
+    $highlightedDates,
+    $_today,
+    $_events,
+    div_binding
+  ];
+}
+var Day4 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$14, create_fragment$14, safe_not_equal, { date: 0 });
+  }
+};
+function get_each_context4(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[15] = list[i];
+  return child_ctx;
+}
+function create_else_block2(ctx) {
+  let each_1_anchor;
+  let current;
+  let each_value = ensure_array_like(
+    /*$_viewDates*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block4(get_each_context4(ctx, each_value, i));
+  }
+  const out = (i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  });
+  return {
+    c() {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      each_1_anchor = empty();
+    },
+    m(target, anchor) {
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(target, anchor);
+        }
+      }
+      insert(target, each_1_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$_viewDates*/
+      2) {
+        each_value = ensure_array_like(
+          /*$_viewDates*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context4(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block4(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(each_1_anchor);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+function create_if_block4(ctx) {
+  let div;
+  let div_class_value;
+  let setContent_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[3].noEvents);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = [
+          action_destroyer(setContent_action = setContent.call(
+            null,
+            div,
+            /*content*/
+            ctx[0]
+          )),
+          listen(
+            div,
+            "click",
+            /*handleClick*/
+            ctx[10]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme*/
+      8 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[3].noEvents)) {
+        attr(div, "class", div_class_value);
+      }
+      if (setContent_action && is_function(setContent_action.update) && dirty & /*content*/
+      1) setContent_action.update.call(
+        null,
+        /*content*/
+        ctx2[0]
+      );
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function create_each_block4(ctx) {
+  let day;
+  let current;
+  day = new Day4({ props: { date: (
+    /*date*/
+    ctx[15]
+  ) } });
+  return {
+    c() {
+      create_component(day.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(day, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const day_changes = {};
+      if (dirty & /*$_viewDates*/
+      2) day_changes.date = /*date*/
+      ctx2[15];
+      day.$set(day_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(day.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(day.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(day, detaching);
+    }
+  };
+}
+function create_default_slot3(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block4, create_else_block2];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*noEvents*/
+      ctx2[2]
+    ) return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+function create_fragment4(ctx) {
+  let body;
+  let current;
+  body = new Body3({
+    props: {
+      $$slots: { default: [create_default_slot3] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(body.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(body, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const body_changes = {};
+      if (dirty & /*$$scope, $theme, content, noEvents, $_viewDates*/
+      262159) {
+        body_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      body.$set(body_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(body.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(body.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(body, detaching);
+    }
+  };
+}
+function instance4($$self, $$props, $$invalidate) {
+  let $_view;
+  let $noEventsClick;
+  let $noEventsContent;
+  let $_events;
+  let $_viewDates;
+  let $theme;
+  let { _events, _view, _viewDates, noEventsClick, noEventsContent, theme } = getContext("state");
+  component_subscribe($$self, _events, (value) => $$invalidate(12, $_events = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(13, $_view = value));
+  component_subscribe($$self, _viewDates, (value) => $$invalidate(1, $_viewDates = value));
+  component_subscribe($$self, noEventsClick, (value) => $$invalidate(14, $noEventsClick = value));
+  component_subscribe($$self, noEventsContent, (value) => $$invalidate(11, $noEventsContent = value));
+  component_subscribe($$self, theme, (value) => $$invalidate(3, $theme = value));
+  let noEvents, content;
+  function handleClick(jsEvent) {
+    if (is_function($noEventsClick)) {
+      $noEventsClick({
+        jsEvent,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+  }
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_viewDates, $_events*/
+    4098) {
+      {
+        $$invalidate(2, noEvents = true);
+        if ($_viewDates.length) {
+          let start = $_viewDates[0];
+          let end = addDay(cloneDate($_viewDates[$_viewDates.length - 1]));
+          for (let event of $_events) {
+            if (!bgEvent(event.display) && event.start < end && event.end > start) {
+              $$invalidate(2, noEvents = false);
+              break;
+            }
+          }
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*$noEventsContent, content*/
+    2049) {
+      {
+        $$invalidate(0, content = is_function($noEventsContent) ? $noEventsContent() : $noEventsContent);
+        if (typeof content === "string") {
+          $$invalidate(0, content = { html: content });
+        }
+      }
+    }
+  };
+  return [
+    content,
+    $_viewDates,
+    noEvents,
+    $theme,
+    _events,
+    _view,
+    _viewDates,
+    noEventsClick,
+    noEventsContent,
+    theme,
+    handleClick,
+    $noEventsContent,
+    $_events
+  ];
+}
+var View3 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance4, create_fragment4, safe_not_equal, {});
+  }
+};
+var index3 = {
+  createOptions(options) {
+    options.buttonText.listDay = "list";
+    options.buttonText.listWeek = "list";
+    options.buttonText.listMonth = "list";
+    options.buttonText.listYear = "list";
+    options.listDayFormat = { weekday: "long" };
+    options.listDaySideFormat = { year: "numeric", month: "long", day: "numeric" };
+    options.noEventsClick = void 0;
+    options.noEventsContent = "No events";
+    options.theme.daySide = "ec-day-side";
+    options.theme.eventTag = "ec-event-tag";
+    options.theme.noEvents = "ec-no-events";
+    options.view = "listWeek";
+    options.views.listDay = {
+      buttonText: btnTextDay,
+      component: View3,
+      duration: { days: 1 },
+      theme: themeView("ec-list ec-day-view")
+    };
+    options.views.listWeek = {
+      buttonText: btnTextWeek,
+      component: View3,
+      duration: { weeks: 1 },
+      theme: themeView("ec-list ec-week-view")
+    };
+    options.views.listMonth = {
+      buttonText: btnTextMonth,
+      component: View3,
+      duration: { months: 1 },
+      theme: themeView("ec-list ec-month-view")
+    };
+    options.views.listYear = {
+      buttonText: btnTextYear,
+      component: View3,
+      duration: { years: 1 },
+      theme: themeView("ec-list ec-year-view")
+    };
+  },
+  createStores(state) {
+    state._intlListDay = intl(state.locale, state.listDayFormat);
+    state._intlListDaySide = intl(state.locale, state.listDaySideFormat);
+  }
+};
+
+// node_modules/@event-calendar/interaction/index.js
+var busy = false;
+function animate(fn) {
+  if (!busy) {
+    busy = true;
+    window.requestAnimationFrame(() => {
+      fn();
+      busy = false;
+    });
+  }
+}
+function limit(value, minLimit, maxLimit) {
+  return max(minLimit, min(maxLimit, value));
+}
+var { window: window_1 } = globals;
+function create_fragment$35(ctx) {
+  let mounted;
+  let dispose;
+  return {
+    c: noop,
+    m(target, anchor) {
+      if (!mounted) {
+        dispose = [
+          listen(
+            window_1,
+            "pointermove",
+            /*handlePointerMove*/
+            ctx[31]
+          ),
+          listen(
+            window_1,
+            "pointerup",
+            /*handlePointerUp*/
+            ctx[32]
+          ),
+          listen(
+            window_1,
+            "pointercancel",
+            /*handlePointerUp*/
+            ctx[32]
+          ),
+          listen(
+            window_1,
+            "scroll",
+            /*handleScroll*/
+            ctx[0]
+          ),
+          listen(window_1, "selectstart", createPreventDefaultHandler(
+            /*complexAction*/
+            ctx[33]
+          )),
+          listen(window_1, "contextmenu", function() {
+            if (is_function(createPreventDefaultHandler(
+              /*contextmenu_handler*/
+              ctx[41]
+            ))) createPreventDefaultHandler(
+              /*contextmenu_handler*/
+              ctx[41]
+            ).apply(this, arguments);
+          }),
+          listen(
+            window_1,
+            "touchstart",
+            /*handleTouchStart*/
+            ctx[34]
+          ),
+          listen(
+            window_1,
+            "touchmove",
+            /*touchmove_handler*/
+            ctx[40],
+            { passive: false }
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+var ACTION_DRAG = 1;
+var ACTION_RESIZE = 2;
+var ACTION_SELECT = 3;
+var ACTION_CLICK = 4;
+var ACTION_NO_ACTION = 5;
+function validJsEvent(jsEvent) {
+  return jsEvent.isPrimary && (jsEvent.pointerType !== "mouse" || jsEvent.buttons & 1);
+}
+function createPreventDefaultHandler(condition) {
+  return (jsEvent) => {
+    if (condition()) {
+      jsEvent.preventDefault();
+    }
+  };
+}
+function instance$35($$self, $$props, $$invalidate) {
+  let $_view;
+  let $unselectFn;
+  let $_events;
+  let $_iEvents;
+  let $selectBackgroundColor;
+  let $_dayGrid;
+  let $_iClass;
+  let $dateClick;
+  let $eventDrop;
+  let $eventResize;
+  let $eventDragStop;
+  let $eventResizeStop;
+  let $selectFn;
+  let $unselectCancel;
+  let $unselectAuto;
+  let $slotHeight;
+  let $dragScroll;
+  let $eventDragStart;
+  let $eventResizeStart;
+  let $eventDragMinDistance;
+  let $selectMinDistance;
+  let $longPressDelay;
+  let $eventLongPressDelay;
+  let $selectLongPressDelay;
+  let $datesAboveResources;
+  let $slotDuration;
+  let $view;
+  let $selectable;
+  let $_draggable;
+  let { _iEvents, _iClass, _events, _view, _dayGrid, _draggable, dateClick, dragScroll, datesAboveResources, eventDragMinDistance, eventDragStart, eventDragStop, eventDrop, eventLongPressDelay, eventResizeStart, eventResizeStop, eventResize, longPressDelay, selectable, select: selectFn, selectBackgroundColor, selectLongPressDelay, selectMinDistance, slotDuration, slotHeight, unselect: unselectFn, unselectAuto, unselectCancel, view: view2 } = getContext("state");
+  component_subscribe($$self, _iEvents, (value) => $$invalidate(69, $_iEvents = value));
+  component_subscribe($$self, _iClass, (value) => $$invalidate(72, $_iClass = value));
+  component_subscribe($$self, _events, (value) => $$invalidate(68, $_events = value));
+  component_subscribe($$self, _view, (value) => $$invalidate(66, $_view = value));
+  component_subscribe($$self, _dayGrid, (value) => $$invalidate(71, $_dayGrid = value));
+  component_subscribe($$self, _draggable, (value) => $$invalidate(94, $_draggable = value));
+  component_subscribe($$self, dateClick, (value) => $$invalidate(73, $dateClick = value));
+  component_subscribe($$self, dragScroll, (value) => $$invalidate(82, $dragScroll = value));
+  component_subscribe($$self, datesAboveResources, (value) => $$invalidate(90, $datesAboveResources = value));
+  component_subscribe($$self, eventDragMinDistance, (value) => $$invalidate(85, $eventDragMinDistance = value));
+  component_subscribe($$self, eventDragStart, (value) => $$invalidate(83, $eventDragStart = value));
+  component_subscribe($$self, eventDragStop, (value) => $$invalidate(76, $eventDragStop = value));
+  component_subscribe($$self, eventDrop, (value) => $$invalidate(74, $eventDrop = value));
+  component_subscribe($$self, eventLongPressDelay, (value) => $$invalidate(88, $eventLongPressDelay = value));
+  component_subscribe($$self, eventResizeStart, (value) => $$invalidate(84, $eventResizeStart = value));
+  component_subscribe($$self, eventResizeStop, (value) => $$invalidate(77, $eventResizeStop = value));
+  component_subscribe($$self, eventResize, (value) => $$invalidate(75, $eventResize = value));
+  component_subscribe($$self, longPressDelay, (value) => $$invalidate(87, $longPressDelay = value));
+  component_subscribe($$self, selectable, (value) => $$invalidate(93, $selectable = value));
+  component_subscribe($$self, selectFn, (value) => $$invalidate(78, $selectFn = value));
+  component_subscribe($$self, selectBackgroundColor, (value) => $$invalidate(70, $selectBackgroundColor = value));
+  component_subscribe($$self, selectLongPressDelay, (value) => $$invalidate(89, $selectLongPressDelay = value));
+  component_subscribe($$self, selectMinDistance, (value) => $$invalidate(86, $selectMinDistance = value));
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(91, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(81, $slotHeight = value));
+  component_subscribe($$self, unselectFn, (value) => $$invalidate(67, $unselectFn = value));
+  component_subscribe($$self, unselectAuto, (value) => $$invalidate(80, $unselectAuto = value));
+  component_subscribe($$self, unselectCancel, (value) => $$invalidate(79, $unselectCancel = value));
+  component_subscribe($$self, view2, (value) => $$invalidate(92, $view = value));
+  let action;
+  let interacting;
+  let event;
+  let display;
+  let date, newDate;
+  let resource, newResource;
+  let fromX, fromY;
+  let toX, toY;
+  let bodyEl, bodyRect, clipEl, clipRect;
+  let delta;
+  let allDay;
+  let iClass;
+  let minEnd;
+  let selectStep;
+  let selected;
+  let noDateClick;
+  let timer;
+  let viewport;
+  function drag(eventToDrag, jsEvent, resize, forceDate) {
+    if (!action) {
+      action = validJsEvent(jsEvent) ? resize ? ACTION_RESIZE : $_draggable(eventToDrag) ? ACTION_DRAG : ACTION_NO_ACTION : ACTION_NO_ACTION;
+      if (complexAction()) {
+        event = eventToDrag;
+        common(jsEvent);
+        if (forceDate) {
+          date = forceDate;
+        }
+        iClass = resize ? allDay ? "resizingX" : "resizingY" : "dragging";
+        if (resize) {
+          minEnd = cloneDate(event.start);
+          if (allDay) {
+            minEnd.setUTCHours(event.end.getUTCHours(), event.end.getUTCMinutes(), event.end.getUTCSeconds(), 0);
+            if (minEnd < event.start) {
+              addDay(minEnd);
+            }
+          } else {
+            addDuration(minEnd, $slotDuration);
+          }
+        }
+        move(jsEvent);
+      }
+    }
+  }
+  function select(jsEvent) {
+    if (!action) {
+      action = validJsEvent(jsEvent) ? $selectable && !listView($view) ? ACTION_SELECT : ACTION_CLICK : ACTION_NO_ACTION;
+      if (complexAction()) {
+        common(jsEvent);
+        iClass = "selecting";
+        selectStep = allDay ? createDuration({ day: 1 }) : $slotDuration;
+        event = {
+          allDay,
+          start: date,
+          end: addDuration(cloneDate(date), selectStep),
+          resourceIds: resource ? [resource.id] : []
+        };
+        move(jsEvent);
+      }
+    }
+  }
+  function noAction() {
+    if (!action) {
+      action = ACTION_NO_ACTION;
+    }
+  }
+  function common(jsEvent) {
+    window.getSelection().removeAllRanges();
+    fromX = toX = jsEvent.clientX;
+    fromY = toY = jsEvent.clientY;
+    let dayEl = getElementWithPayload(toX, toY);
+    ({ allDay, date, resource } = getPayload(dayEl)(toY));
+    bodyEl = ancestor(dayEl, resource ? 4 : 3);
+    clipEl = ancestor(dayEl, resource && (dragging() || $datesAboveResources) ? 2 : 1);
+    calcViewport();
+    if (jsEvent.pointerType !== "mouse") {
+      $$invalidate(1, timer = setTimeout(
+        () => {
+          if (action) {
+            interacting = true;
+            move(jsEvent);
+          }
+        },
+        (selecting() ? $selectLongPressDelay : $eventLongPressDelay) ?? $longPressDelay
+      ));
+    }
+  }
+  function move(jsEvent) {
+    if (interacting || jsEvent && jsEvent.pointerType === "mouse" && distance() >= (selecting() ? $selectMinDistance : $eventDragMinDistance)) {
+      interacting = true;
+      unselect(jsEvent);
+      set_store_value(_iClass, $_iClass = iClass, $_iClass);
+      if (!$_iEvents[0]) {
+        if (selecting()) {
+          createIEventSelect();
+        } else {
+          createIEvent(jsEvent, resizing() ? $eventResizeStart : $eventDragStart);
+        }
+      }
+      let dayEl = findDayEl();
+      if (dayEl) {
+        let newAllDay;
+        ({ allDay: newAllDay, date: newDate, resource: newResource } = getPayload(dayEl)(toY));
+        if (newAllDay === allDay) {
+          delta = createDuration((newDate - date) / 1e3);
+          set_store_value(_iEvents, $_iEvents[0].end = addDuration(cloneDate(event.end), delta), $_iEvents);
+          if (resizing()) {
+            if ($_iEvents[0].end < minEnd) {
+              set_store_value(_iEvents, $_iEvents[0].end = minEnd, $_iEvents);
+            }
+          } else if (selecting()) {
+            if ($_iEvents[0].end < event.end) {
+              set_store_value(_iEvents, $_iEvents[0].start = subtractDuration($_iEvents[0].end, selectStep), $_iEvents);
+              set_store_value(_iEvents, $_iEvents[0].end = event.end, $_iEvents);
+            } else {
+              set_store_value(_iEvents, $_iEvents[0].start = event.start, $_iEvents);
+            }
+          } else {
+            set_store_value(_iEvents, $_iEvents[0].start = addDuration(cloneDate(event.start), delta), $_iEvents);
+            if (resource) {
+              set_store_value(_iEvents, $_iEvents[0].resourceIds = event.resourceIds.filter((id) => id !== resource.id), $_iEvents);
+              $_iEvents[0].resourceIds.push(newResource.id);
+            }
+          }
+        }
+      }
+    }
+    if ($dragScroll) {
+      let threshold = $slotHeight * 2;
+      animate(() => {
+        if (bodyEl) {
+          if (toY < threshold) {
+            window.scrollBy(0, max(-10, (toY - threshold) / 3));
+          }
+          if (toY < bodyRect.top + threshold) {
+            bodyEl.scrollTop += max(-10, (toY - bodyRect.top - threshold) / 3);
+          }
+          if (toY > window.innerHeight - threshold) {
+            window.scrollBy(0, min(10, (toY - window.innerHeight + threshold) / 3));
+          }
+          if (toY > bodyRect.bottom - threshold) {
+            bodyEl.scrollTop += min(10, (toY - bodyRect.bottom + threshold) / 3);
+          }
+        }
+      });
+    }
+  }
+  function handleScroll() {
+    if (complexAction()) {
+      calcViewport();
+      move();
+    }
+  }
+  function handlePointerMove(jsEvent) {
+    if (complexAction() && jsEvent.isPrimary) {
+      toX = jsEvent.clientX;
+      toY = jsEvent.clientY;
+      move(jsEvent);
+    }
+  }
+  function handlePointerUp(jsEvent) {
+    if (selected && $unselectAuto && !($unselectCancel && jsEvent.target.closest($unselectCancel))) {
+      unselect(jsEvent);
+    }
+    if (action && jsEvent.isPrimary) {
+      if (interacting) {
+        if (selecting()) {
+          selected = true;
+          if (is_function($selectFn)) {
+            let { start, end } = toEventWithLocalDates($_iEvents[0]);
+            $selectFn({
+              start,
+              end,
+              startStr: toISOString($_iEvents[0].start),
+              endStr: toISOString($_iEvents[0].end),
+              allDay,
+              jsEvent,
+              view: toViewWithLocalDates($_view),
+              resource
+            });
+          }
+        } else {
+          event.display = display;
+          let callback = resizing() ? $eventResizeStop : $eventDragStop;
+          if (is_function(callback)) {
+            callback({
+              event: toEventWithLocalDates(event),
+              jsEvent,
+              view: toViewWithLocalDates($_view)
+            });
+          }
+          let oldEvent = cloneEvent(event);
+          updateEvent(event, $_iEvents[0]);
+          destroyIEvent();
+          callback = resizing() ? $eventResize : $eventDrop;
+          if (is_function(callback)) {
+            let eventRef = event;
+            let info;
+            if (resizing()) {
+              info = { endDelta: delta };
+            } else {
+              info = {
+                delta,
+                oldResource: resource !== newResource ? resource : void 0,
+                newResource: resource !== newResource ? newResource : void 0
+              };
+            }
+            callback(assign2(info, {
+              event: toEventWithLocalDates(event),
+              oldEvent: toEventWithLocalDates(oldEvent),
+              jsEvent,
+              view: toViewWithLocalDates($_view),
+              revert() {
+                updateEvent(eventRef, oldEvent);
+              }
+            }));
+          }
+        }
+      } else {
+        if (clicking() || selecting()) {
+          if (is_function($dateClick) && !noDateClick) {
+            toX = jsEvent.clientX;
+            toY = jsEvent.clientY;
+            let dayEl = getElementWithPayload(toX, toY);
+            if (dayEl) {
+              let { allDay: allDay2, date: date2, resource: resource2 } = getPayload(dayEl)(toY);
+              $dateClick({
+                allDay: allDay2,
+                date: toLocalDate(date2),
+                dateStr: toISOString(date2),
+                dayEl,
+                jsEvent,
+                view: toViewWithLocalDates($_view),
+                resource: resource2
+              });
+            }
+          }
+        }
+      }
+      interacting = false;
+      action = fromX = fromY = toX = toY = event = display = date = newDate = resource = newResource = delta = allDay = set_store_value(_iClass, $_iClass = minEnd = selectStep = void 0, $_iClass);
+      bodyEl = clipEl = bodyRect = clipRect = void 0;
+      if (timer) {
+        clearTimeout(timer);
+        $$invalidate(1, timer = void 0);
+      }
+    }
+    noDateClick = false;
+  }
+  function findDayEl() {
+    return getElementWithPayload(limit(toX, viewport[0], viewport[1]), limit(toY, viewport[2], viewport[3]));
+  }
+  function calcViewport() {
+    bodyRect = rect(bodyEl);
+    clipRect = rect(clipEl);
+    viewport = [
+      max(0, clipRect.left + ($_dayGrid ? 0 : 8)),
+      min(
+        document.documentElement.clientWidth,
+        clipRect.right
+      ) - 2,
+      max(
+        0,
+        bodyRect.top
+        // top
+      ),
+      min(document.documentElement.clientHeight, bodyRect.bottom) - 2
+    ];
+  }
+  function createIEvent(jsEvent, callback) {
+    if (is_function(callback)) {
+      callback({
+        event: toEventWithLocalDates(event),
+        jsEvent,
+        view: toViewWithLocalDates($_view)
+      });
+    }
+    display = event.display;
+    event.display = "preview";
+    set_store_value(_iEvents, $_iEvents[0] = cloneEvent(event), $_iEvents);
+    event.display = "ghost";
+    _events.set($_events);
+  }
+  function createIEventSelect() {
+    set_store_value(
+      _iEvents,
+      $_iEvents[0] = {
+        id: "{select}",
+        allDay: event.allDay,
+        start: event.start,
+        title: "",
+        display: "preview",
+        extendedProps: {},
+        backgroundColor: $selectBackgroundColor,
+        resourceIds: event.resourceIds
+      },
+      $_iEvents
+    );
+  }
+  function destroyIEvent() {
+    set_store_value(_iEvents, $_iEvents[0] = null, $_iEvents);
+  }
+  function updateEvent(target, source) {
+    target.start = source.start;
+    target.end = source.end;
+    target.resourceIds = source.resourceIds;
+    _events.set($_events);
+  }
+  function distance() {
+    return Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
+  }
+  function dragging() {
+    return action === ACTION_DRAG;
+  }
+  function resizing() {
+    return action === ACTION_RESIZE;
+  }
+  function clicking() {
+    return action === ACTION_CLICK;
+  }
+  function selecting() {
+    return action === ACTION_SELECT;
+  }
+  function complexAction() {
+    return action && action < ACTION_CLICK;
+  }
+  function unselect(jsEvent) {
+    if (selected) {
+      selected = false;
+      destroyIEvent();
+      if (is_function($unselectFn)) {
+        $unselectFn({
+          jsEvent,
+          view: toViewWithLocalDates($_view)
+        });
+      }
+    }
+  }
+  function noClick() {
+    noDateClick = true;
+  }
+  _view.subscribe(unselect);
+  function handleTouchStart(jsEvent) {
+    if (complexAction()) {
+      let target = jsEvent.target;
+      let stops = [];
+      let stop = () => run_all(stops);
+      stops.push(listen(target, "touchmove", createPreventDefaultHandler(() => interacting)));
+      stops.push(listen(target, "touchend", stop));
+      stops.push(listen(target, "touchcancel", stop));
+    }
+  }
+  function touchmove_handler(event2) {
+    bubble.call(this, $$self, event2);
+  }
+  const contextmenu_handler = () => timer;
+  return [
+    handleScroll,
+    timer,
+    _iEvents,
+    _iClass,
+    _events,
+    _view,
+    _dayGrid,
+    _draggable,
+    dateClick,
+    dragScroll,
+    datesAboveResources,
+    eventDragMinDistance,
+    eventDragStart,
+    eventDragStop,
+    eventDrop,
+    eventLongPressDelay,
+    eventResizeStart,
+    eventResizeStop,
+    eventResize,
+    longPressDelay,
+    selectable,
+    selectFn,
+    selectBackgroundColor,
+    selectLongPressDelay,
+    selectMinDistance,
+    slotDuration,
+    slotHeight,
+    unselectFn,
+    unselectAuto,
+    unselectCancel,
+    view2,
+    handlePointerMove,
+    handlePointerUp,
+    complexAction,
+    handleTouchStart,
+    drag,
+    select,
+    noAction,
+    unselect,
+    noClick,
+    touchmove_handler,
+    contextmenu_handler
+  ];
+}
+var Action = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance$35,
+      create_fragment$35,
+      safe_not_equal,
+      {
+        drag: 35,
+        select: 36,
+        noAction: 37,
+        handleScroll: 0,
+        unselect: 38,
+        noClick: 39
+      },
+      null,
+      [-1, -1, -1, -1]
+    );
+  }
+  get drag() {
+    return this.$$.ctx[35];
+  }
+  get select() {
+    return this.$$.ctx[36];
+  }
+  get noAction() {
+    return this.$$.ctx[37];
+  }
+  get handleScroll() {
+    return this.$$.ctx[0];
+  }
+  get unselect() {
+    return this.$$.ctx[38];
+  }
+  get noClick() {
+    return this.$$.ctx[39];
+  }
+};
+function create_fragment$25(ctx) {
+  let mounted;
+  let dispose;
+  return {
+    c: noop,
+    m(target, anchor) {
+      if (!mounted) {
+        dispose = [
+          listen(
+            window,
+            "pointermove",
+            /*handlePointerMove*/
+            ctx[5]
+          ),
+          listen(
+            window,
+            "scroll",
+            /*handleScroll*/
+            ctx[0]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+function validEvent(jsEvent) {
+  return jsEvent.isPrimary && jsEvent.pointerType === "mouse";
+}
+function instance$25($$self, $$props, $$invalidate) {
+  let $_iEvents;
+  let $slotDuration;
+  let $slotHeight;
+  let $_slotTimeLimits;
+  let { _iEvents, _events, _viewDates, _slotTimeLimits, slotDuration, slotHeight, hiddenDays, _view, datesAboveResources, theme } = getContext("state");
+  component_subscribe($$self, _iEvents, (value) => $$invalidate(9, $_iEvents = value));
+  component_subscribe($$self, _slotTimeLimits, (value) => $$invalidate(18, $_slotTimeLimits = value));
+  component_subscribe($$self, slotDuration, (value) => $$invalidate(16, $slotDuration = value));
+  component_subscribe($$self, slotHeight, (value) => $$invalidate(17, $slotHeight = value));
+  let y;
+  let colDate;
+  let colEl;
+  let colRect;
+  let resource;
+  let date;
+  function enterTimeGrid(date2, el, jsEvent, resourceObj) {
+    if (validEvent(jsEvent)) {
+      colDate = date2;
+      colEl = el;
+      colRect = rect(colEl);
+      y = jsEvent.clientY;
+      resource = resourceObj;
+    }
+  }
+  function enterDayGrid(date2, jsEvent) {
+    if (validEvent(jsEvent)) {
+      colDate = date2;
+      colEl = null;
+      y = resource = void 0;
+    }
+  }
+  function leave(jsEvent) {
+    if (validEvent(jsEvent)) {
+      removePointerEvent();
+    }
+  }
+  function move() {
+    if (!colDate) {
+      return;
+    }
+    if (colEl) {
+      let ry = y - colRect.top;
+      date = addDuration(addDuration(cloneDate(colDate), $_slotTimeLimits.min), $slotDuration, floor(ry / $slotHeight));
+    } else {
+      date = colDate;
+    }
+    if (!$_iEvents[1]) {
+      createPointerEvent();
+    }
+    set_store_value(_iEvents, $_iEvents[1].start = date, $_iEvents);
+    set_store_value(_iEvents, $_iEvents[1].end = addDuration(cloneDate(date), $slotDuration), $_iEvents);
+    set_store_value(_iEvents, $_iEvents[1].resourceIds = resource ? [resource.id] : [], $_iEvents);
+  }
+  function handleScroll() {
+    if (colEl) {
+      colRect = rect(colEl);
+      move();
+    }
+  }
+  function handlePointerMove(jsEvent) {
+    if (validEvent(jsEvent)) {
+      y = jsEvent.clientY;
+      move();
+    }
+  }
+  function createPointerEvent() {
+    set_store_value(
+      _iEvents,
+      $_iEvents[1] = {
+        id: "{pointer}",
+        title: "",
+        display: "pointer",
+        extendedProps: {},
+        backgroundColor: "transparent"
+      },
+      $_iEvents
+    );
+  }
+  function removePointerEvent() {
+    colDate = colEl = set_store_value(_iEvents, $_iEvents[1] = null, $_iEvents);
+  }
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$_iEvents*/
+    512) {
+      if ($_iEvents[0]) {
+        removePointerEvent();
+      }
+    }
+  };
+  return [
+    handleScroll,
+    _iEvents,
+    _slotTimeLimits,
+    slotDuration,
+    slotHeight,
+    handlePointerMove,
+    enterTimeGrid,
+    enterDayGrid,
+    leave,
+    $_iEvents
+  ];
+}
+var Pointer = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$25, create_fragment$25, safe_not_equal, {
+      enterTimeGrid: 6,
+      enterDayGrid: 7,
+      leave: 8,
+      handleScroll: 0
+    });
+  }
+  get enterTimeGrid() {
+    return this.$$.ctx[6];
+  }
+  get enterDayGrid() {
+    return this.$$.ctx[7];
+  }
+  get leave() {
+    return this.$$.ctx[8];
+  }
+  get handleScroll() {
+    return this.$$.ctx[0];
+  }
+};
+function create_if_block$14(ctx) {
+  let div;
+  let div_class_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", div_class_value = /*$theme*/
+      ctx[1].resizer);
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = listen(
+          div,
+          "pointerdown",
+          /*pointerdown_handler*/
+          ctx[8]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$theme*/
+      2 && div_class_value !== (div_class_value = /*$theme*/
+      ctx2[1].resizer)) {
+        attr(div, "class", div_class_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment$15(ctx) {
+  let if_block_anchor;
+  let if_block = (
+    /*resizable*/
+    ctx[0] && create_if_block$14(ctx)
+  );
+  return {
+    c() {
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+    },
+    p(ctx2, [dirty]) {
+      if (
+        /*resizable*/
+        ctx2[0]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block$14(ctx2);
+          if_block.c();
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function instance$15($$self, $$props, $$invalidate) {
+  let $editable;
+  let $eventDurationEditable;
+  let $theme;
+  let { event } = $$props;
+  let { theme, eventDurationEditable, editable } = getContext("state");
+  component_subscribe($$self, theme, (value) => $$invalidate(1, $theme = value));
+  component_subscribe($$self, eventDurationEditable, (value) => $$invalidate(7, $eventDurationEditable = value));
+  component_subscribe($$self, editable, (value) => $$invalidate(6, $editable = value));
+  let resizable;
+  function pointerdown_handler(event2) {
+    bubble.call(this, $$self, event2);
+  }
+  $$self.$$set = ($$props2) => {
+    if ("event" in $$props2) $$invalidate(5, event = $$props2.event);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*event, $eventDurationEditable, $editable*/
+    224) {
+      $$invalidate(0, resizable = !bgEvent(event.display) && !helperEvent(event.display) && ((event.durationEditable ?? $eventDurationEditable) || (event.editable ?? $editable)));
+    }
+  };
+  return [
+    resizable,
+    $theme,
+    theme,
+    eventDurationEditable,
+    editable,
+    event,
+    $editable,
+    $eventDurationEditable,
+    pointerdown_handler
+  ];
+}
+var Resizer = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$15, create_fragment$15, safe_not_equal, { event: 5 });
+  }
+};
+function create_if_block5(ctx) {
+  let pointer_1;
+  let current;
+  let pointer_1_props = {};
+  pointer_1 = new Pointer({ props: pointer_1_props });
+  ctx[16](pointer_1);
+  return {
+    c() {
+      create_component(pointer_1.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(pointer_1, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const pointer_1_changes = {};
+      pointer_1.$set(pointer_1_changes);
+    },
+    i(local) {
+      if (current) return;
+      transition_in(pointer_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(pointer_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      ctx[16](null);
+      destroy_component(pointer_1, detaching);
+    }
+  };
+}
+function create_fragment5(ctx) {
+  let action;
+  let t;
+  let if_block_anchor;
+  let current;
+  let action_props = {};
+  action = new Action({ props: action_props });
+  ctx[15](action);
+  let if_block = (
+    /*$pointer*/
+    ctx[1] && create_if_block5(ctx)
+  );
+  return {
+    c() {
+      create_component(action.$$.fragment);
+      t = space();
+      if (if_block) if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      mount_component(action, target, anchor);
+      insert(target, t, anchor);
+      if (if_block) if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const action_changes = {};
+      action.$set(action_changes);
+      if (
+        /*$pointer*/
+        ctx2[1]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*$pointer*/
+          2) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block5(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current) return;
+      transition_in(action.$$.fragment, local);
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(action.$$.fragment, local);
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t);
+        detach(if_block_anchor);
+      }
+      ctx[15](null);
+      destroy_component(action, detaching);
+      if (if_block) if_block.d(detaching);
+    }
+  };
+}
+function instance5($$self, $$props, $$invalidate) {
+  let $_interaction;
+  let $_bodyEl;
+  let $theme;
+  let $_draggable;
+  let $_iClasses;
+  let $editable;
+  let $eventStartEditable;
+  let $pointer;
+  let { theme, editable, eventStartEditable, eventDurationEditable, pointer, _bodyEl, _interaction, _iClasses, _draggable } = getContext("state");
+  component_subscribe($$self, theme, (value) => $$invalidate(11, $theme = value));
+  component_subscribe($$self, editable, (value) => $$invalidate(13, $editable = value));
+  component_subscribe($$self, eventStartEditable, (value) => $$invalidate(14, $eventStartEditable = value));
+  component_subscribe($$self, pointer, (value) => $$invalidate(1, $pointer = value));
+  component_subscribe($$self, _bodyEl, (value) => $$invalidate(10, $_bodyEl = value));
+  component_subscribe($$self, _interaction, (value) => $$invalidate(0, $_interaction = value));
+  component_subscribe($$self, _iClasses, (value) => $$invalidate(17, $_iClasses = value));
+  component_subscribe($$self, _draggable, (value) => $$invalidate(12, $_draggable = value));
+  set_store_value(_interaction, $_interaction.resizer = Resizer, $_interaction);
+  function bodyScrollHandler() {
+    for (let component of Object.values($_interaction)) {
+      component?.handleScroll?.();
+    }
+  }
+  function action_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      $_interaction.action = $$value;
+      _interaction.set($_interaction);
+    });
+  }
+  function pointer_1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      $_interaction.pointer = $$value;
+      _interaction.set($_interaction);
+    });
+  }
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$eventStartEditable, $editable*/
+    24576) {
+      set_store_value(_draggable, $_draggable = (event) => (event.startEditable ?? $eventStartEditable) || (event.editable ?? $editable), $_draggable);
+    }
+    if ($$self.$$.dirty & /*$theme, $_draggable*/
+    6144) {
+      set_store_value(
+        _iClasses,
+        $_iClasses = (className, event) => {
+          let { display } = event;
+          return helperEvent(display) ? [$theme[display]] : !bgEvent(display) && $_draggable(event) ? [$theme.draggable] : [];
+        },
+        $_iClasses
+      );
+    }
+    if ($$self.$$.dirty & /*$_bodyEl*/
+    1024) {
+      if ($_bodyEl) {
+        listen($_bodyEl, "scroll", bodyScrollHandler);
+      }
+    }
+  };
+  return [
+    $_interaction,
+    $pointer,
+    theme,
+    editable,
+    eventStartEditable,
+    pointer,
+    _bodyEl,
+    _interaction,
+    _iClasses,
+    _draggable,
+    $_bodyEl,
+    $theme,
+    $_draggable,
+    $editable,
+    $eventStartEditable,
+    action_binding,
+    pointer_1_binding
+  ];
+}
+var Auxiliary2 = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance5, create_fragment5, safe_not_equal, {});
+  }
+};
+var index4 = {
+  createOptions(options) {
+    options.dateClick = void 0;
+    options.dragScroll = true;
+    options.editable = false;
+    options.eventDragMinDistance = 5;
+    options.eventDragStart = void 0;
+    options.eventDragStop = void 0;
+    options.eventDrop = void 0;
+    options.eventDurationEditable = true;
+    options.eventLongPressDelay = void 0;
+    options.eventResizeStart = void 0;
+    options.eventResizeStop = void 0;
+    options.eventResize = void 0;
+    options.eventStartEditable = true;
+    options.longPressDelay = 1e3;
+    options.pointer = false;
+    options.select = void 0;
+    options.selectBackgroundColor = void 0;
+    options.selectLongPressDelay = void 0;
+    options.selectMinDistance = 5;
+    options.unselect = void 0;
+    options.unselectAuto = true;
+    options.unselectCancel = "";
+    options.theme.draggable = "ec-draggable";
+    options.theme.ghost = "ec-ghost";
+    options.theme.preview = "ec-preview";
+    options.theme.pointer = "ec-pointer";
+    options.theme.resizer = "ec-resizer";
+    options.theme.dragging = "ec-dragging";
+    options.theme.resizingY = "ec-resizing-y";
+    options.theme.resizingX = "ec-resizing-x";
+    options.theme.selecting = "ec-selecting";
+  },
+  createStores(state) {
+    state._draggable = writable(noop);
+    state._auxiliary.update(($_auxiliary) => [...$_auxiliary, Auxiliary2]);
+  }
+};
+
+// Resources/Private/TypeScript/calendar.ts
+import DocumentService from "@typo3/core/document-service.js";
+
+// Resources/Private/TypeScript/calendar-event-creation.ts
+import AjaxRequest from "@typo3/core/ajax/ajax-request.js";
+import Viewport from "@typo3/backend/viewport.js";
+
+// Resources/Private/TypeScript/calendar-creation-modal.ts
+import Modal from "@typo3/backend/modal.js";
+import { html } from "lit";
+var formatDateTimeLocal = (date) => {
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+function chooseCalendarCreationType(labels, initialStart, initialEnd, initialAllDay) {
+  return new Promise((resolve) => {
+    let resolved = false;
+    const modal = Modal.advanced({
+      title: labels.title,
+      content: html`
+                <form class="xima-calendar-creation-form">
+                    <div class="form-group" style="margin-bottom:2.5rem">
+                        <label class="form-label" for="xima-calendar-creation-type">${labels.title}</label>
+                        <select id="xima-calendar-creation-type" class="form-select">
+                            <option value="event">${labels.event}</option>
+                            <option value="event-appointment">${labels.appointment}</option>
+                        </select>
+                    </div>
+                    <hr class="xima-calendar-creation-form__separator" style="margin:0 0 1rem">
+                    <div class="xima-calendar-creation-form__fields" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;align-items:end">
+                        <div class="form-group">
+                            <label class="form-label" for="xima-calendar-creation-start">${labels.start}</label>
+                            <input id="xima-calendar-creation-start" class="form-control" type="datetime-local" value=${formatDateTimeLocal(initialStart)}>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="xima-calendar-creation-end">${labels.end}</label>
+                            <input id="xima-calendar-creation-end" class="form-control" type="datetime-local" value=${formatDateTimeLocal(initialEnd)}>
+                        </div>
+                    </div>
+                    <div class="form-check xima-calendar-creation-form__all-day">
+                        <input id="xima-calendar-creation-all-day" class="form-check-input" type="checkbox" ?checked=${initialAllDay}>
+                        <label class="form-check-label" for="xima-calendar-creation-all-day">${labels.allDay}</label>
+                    </div>
+                </form>
+            `,
+      size: "default",
+      additionalCssClasses: ["xima-calendar-creation-modal"],
+      buttons: [
+        {
+          text: labels.create,
+          btnClass: "btn-primary",
+          name: "create"
+        }
+      ]
+    });
+    modal.addEventListener("typo3-modal-shown", () => {
+      const modalContent = modal.querySelector(".modal-content");
+      if (modalContent) {
+        modalContent.style.setProperty("height", "auto", "important");
+        modalContent.style.setProperty("max-height", "none", "important");
+      }
+      const form = modal.querySelector(".xima-calendar-creation-form");
+      if (!form) {
+        return;
+      }
+      const allDayInput = form.querySelector("#xima-calendar-creation-all-day");
+      const startInput = form.querySelector("#xima-calendar-creation-start");
+      const endInput = form.querySelector("#xima-calendar-creation-end");
+      const updateDateFields = () => {
+        const disabled = allDayInput?.checked ?? false;
+        if (startInput) {
+          startInput.readOnly = disabled;
+          startInput.classList.toggle("xima-calendar-creation-form__date-disabled", disabled);
+          startInput.setAttribute("aria-disabled", String(disabled));
+        }
+        if (endInput) {
+          endInput.readOnly = disabled;
+          endInput.classList.toggle("xima-calendar-creation-form__date-disabled", disabled);
+          endInput.setAttribute("aria-disabled", String(disabled));
+        }
+      };
+      const enableDateFields = () => {
+        if (allDayInput?.checked) {
+          allDayInput.checked = false;
+          updateDateFields();
+        }
+      };
+      startInput?.addEventListener("click", enableDateFields);
+      endInput?.addEventListener("click", enableDateFields);
+      allDayInput?.addEventListener("change", updateDateFields);
+      updateDateFields();
+      form.elements.namedItem("xima-calendar-creation-type")?.focus();
+    });
+    modal.addEventListener("button.clicked", (event) => {
+      const name = event.target.getAttribute("name");
+      if (name !== "create") {
+        return;
+      }
+      const type = modal.querySelector("#xima-calendar-creation-type")?.value;
+      const startValue = modal.querySelector("#xima-calendar-creation-start")?.value;
+      const endValue = modal.querySelector("#xima-calendar-creation-end")?.value;
+      const allDay = modal.querySelector("#xima-calendar-creation-all-day")?.checked ?? false;
+      const start = startValue ? new Date(startValue) : null;
+      const end = endValue ? new Date(endValue) : null;
+      if (type !== "event" && type !== "event-appointment" || !start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) {
+        return;
+      }
+      resolved = true;
+      resolve({ type, start, end, allDay });
+      modal.hideModal();
+    });
+    modal.addEventListener("typo3-modal-hidden", () => {
+      if (!resolved) {
+        resolve(null);
+      }
+    });
+  });
+}
+
+// Resources/Private/TypeScript/calendar-event-creation.ts
+var EVENT_TABLE = "tx_ximatypo3calendar_domain_model_event";
+var FALLBACK_START_TIME = "09:00";
+var FALLBACK_END_TIME = "09:30";
+var PENDING_EVENT_STORAGE_KEY = "xima_calendar_pending_event";
+function createCalendarCreationController(container, typo3Top) {
+  let selectionCancelled = false;
+  const canCreateEvents = () => Number(container.dataset.appointmentPid) > 0 && container.dataset.createAllowed === "1" && Boolean(container.dataset.createEventUrl);
+  const isValidTime = (value) => {
+    const match = value.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) {
+      return false;
+    }
+    return Number(match[1]) < 24 && Number(match[2]) < 60;
+  };
+  const configuredStartTime = container.dataset.newEventDefaultStartTime || "";
+  const configuredEndTime = container.dataset.newEventDefaultEndTime || "";
+  const defaultStartTime = isValidTime(configuredStartTime) ? configuredStartTime : FALLBACK_START_TIME;
+  const defaultEndTime = isValidTime(configuredEndTime) ? configuredEndTime : FALLBACK_END_TIME;
+  const defaultAllDay = container.dataset.newEventDefaultAllDay === "1";
+  const isMonthView = () => container.querySelector(".ec-day-grid") !== null;
+  const modalLabels = {
+    title: container.dataset.newEventTypeModalTitle || "Create new record",
+    event: container.dataset.newEventTypeEventLabel || "Event",
+    appointment: container.dataset.newEventTypeAppointmentLabel || "Event Appointment",
+    start: container.dataset.newEventStartLabel || "Start",
+    end: container.dataset.newEventEndLabel || "End",
+    allDay: container.dataset.newEventAllDayLabel || "All-day",
+    create: container.dataset.newEventCreateLabel || "Create"
+  };
+  const setTime = (date, value) => {
+    const match = value.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) {
+      return;
+    }
+    date.setHours(Number(match[1]), Number(match[2]), 0, 0);
+  };
+  const openRecordForm = (table, uid) => {
+    const params = new URLSearchParams();
+    params.set(`edit[${table}][${uid}]`, "edit");
+    params.set("module", typo3Top.TYPO3.ModuleMenu.App.getCurrentModule());
+    params.set("returnUrl", document.location.pathname + document.location.search);
+    const moduleUrl = typo3Top.TYPO3.settings.FormEngine.moduleUrl;
+    Viewport.ContentContainer.setUrl(`${moduleUrl}&${params.toString()}`);
+  };
+  const createEvent = async (selection) => {
+    if (!canCreateEvents()) {
+      return;
+    }
+    const response = await new AjaxRequest(container.dataset.createEventUrl).post({
+      start: Math.floor(selection.start.getTime() / 1e3),
+      end: Math.floor(selection.end.getTime() / 1e3),
+      allDay: selection.allDay ? 1 : 0,
+      type: selection.type
+    });
+    const result = await response.resolve();
+    if (result.success && result.eventUid) {
+      sessionStorage.setItem(PENDING_EVENT_STORAGE_KEY, String(result.eventUid));
+      if (selection.type === "event-appointment" && result.entryUid) {
+        openRecordForm("tx_ximatypo3calendar_domain_model_entry", result.entryUid);
+      } else {
+        openRecordForm(EVENT_TABLE, result.eventUid);
+      }
+    }
+  };
+  const cleanupPendingEvent = async () => {
+    const eventUid = sessionStorage.getItem(PENDING_EVENT_STORAGE_KEY);
+    const cleanupUrl = container.dataset.cleanupEventUrl;
+    if (!eventUid || !cleanupUrl) {
+      return;
+    }
+    try {
+      const url = new URL(cleanupUrl, document.location.origin);
+      url.searchParams.set("eventUid", eventUid);
+      const response = await new AjaxRequest(url).get();
+      const result = await response.resolve();
+      if (result.success) {
+        sessionStorage.removeItem(PENDING_EVENT_STORAGE_KEY);
+      }
+    } catch {
+    }
+  };
+  const cancelSelection = () => {
+    selectionCancelled = true;
+  };
+  const prepareSelection = (selection, forceAllDay = false) => {
+    let start = new Date(selection.start);
+    let end = new Date(selection.end);
+    const selectionIsAllDay = selection.allDay;
+    const allDay = forceAllDay || selectionIsAllDay && defaultAllDay;
+    if (selectionIsAllDay) {
+      if (allDay) {
+        start.setHours(0, 0, 0, 0);
+        end = new Date(end);
+        end.setHours(0, 0, 0, 0);
+      } else {
+        setTime(start, defaultStartTime);
+        end = new Date(end);
+        end.setDate(end.getDate() - 1);
+        setTime(end, defaultEndTime);
+        if (end <= start) {
+          end.setDate(end.getDate() + 1);
+        }
+      }
+    }
+    return { start, end, allDay };
+  };
+  return {
+    select: (selection) => {
+      if (selectionCancelled) {
+        selectionCancelled = false;
+        return;
+      }
+      const startDay = new Date(selection.start);
+      const endDay = new Date(selection.end);
+      startDay.setHours(0, 0, 0, 0);
+      endDay.setHours(0, 0, 0, 0);
+      const selectedDayCount = Math.round((endDay.getTime() - startDay.getTime()) / 864e5);
+      const forceAllDay = isMonthView() && selection.allDay && selectedDayCount >= 2;
+      const preparedSelection = prepareSelection(selection, forceAllDay);
+      void chooseCalendarCreationType(modalLabels, preparedSelection.start, preparedSelection.end, preparedSelection.allDay).then((creation) => {
+        if (creation !== null) {
+          void createEvent(creation);
+        }
+      });
+    },
+    dateClick: (click) => {
+      const start = new Date(click.date);
+      const end = new Date(start.getTime() + (click.allDay ? 864e5 : 18e5));
+      const preparedSelection = prepareSelection({ start, end, allDay: click.allDay });
+      void chooseCalendarCreationType(modalLabels, preparedSelection.start, preparedSelection.end, preparedSelection.allDay).then((creation) => {
+        if (creation !== null) {
+          void createEvent(creation);
+        }
+      });
+    },
+    cleanupPendingEvent,
+    cancelSelection
+  };
+}
+
+// Resources/Private/TypeScript/calendar-details.ts
+import Viewport2 from "@typo3/backend/viewport.js";
+function createCalendarDetailsController(container, typo3Top) {
+  const content = container.closest(".xima-calendar-content");
+  const detailPanel = content?.querySelector(".xima-calendar-event-detail");
+  const detailTitle = detailPanel?.querySelector(".xima-calendar-event-detail__title");
+  let inlineDetail = null;
+  let inlineDetailEventId = null;
+  const clearInlineDetail = () => {
+    inlineDetail?.remove();
+    inlineDetail = null;
+    inlineDetailEventId = null;
+  };
+  const openEventEditor = (info) => {
+    const eventUid = info.event.extendedProps.eventUid;
+    if (typeof eventUid !== "number" && typeof eventUid !== "string") {
+      return;
+    }
+    const table = "tx_ximatypo3calendar_domain_model_event";
+    const returnUrl = document.location.pathname + document.location.search;
+    Viewport2.ContentContainer.setUrl(
+      typo3Top.TYPO3.settings.FormEngine.moduleUrl + "&edit[" + table + "][" + eventUid + "]=edit&module=" + encodeURIComponent(typo3Top.TYPO3.ModuleMenu.App.getCurrentModule()) + "&returnUrl=" + returnUrl
+    );
+  };
+  return {
+    datesSet: clearInlineDetail,
+    eventClick: (info) => {
+      const eventId2 = info.event.id ?? null;
+      if (inlineDetail && inlineDetailEventId === eventId2) {
+        clearInlineDetail();
+        return;
+      }
+      clearInlineDetail();
+      if (info.view?.type?.startsWith("list")) {
+        inlineDetail = document.createElement("div");
+        inlineDetail.className = "xima-calendar-inline-event-detail";
+        inlineDetail.textContent = info.event.title ?? "";
+        info.el.insertAdjacentElement("afterend", inlineDetail);
+        inlineDetailEventId = eventId2;
+        return;
+      }
+      if (detailTitle && detailPanel?.offsetParent !== null && window.innerHeight >= 930) {
+        detailTitle.textContent = info.event.title ?? "";
+        return;
+      }
+      openEventEditor(info);
+    }
+  };
+}
+
+// Resources/Private/TypeScript/calendar-interaction.ts
+function createCalendarInteractionController(container, calendar, creationController, options) {
+  const highlightCurrentWeekday = () => {
+    const today2 = /* @__PURE__ */ new Date();
+    const currentWeekday = (today2.getDay() - options.firstDay + 7) % 7;
+    const weekdayHeaders = container.querySelectorAll(".ec-header .ec-days .ec-day");
+    weekdayHeaders.forEach((header, index5) => {
+      header.classList.toggle("active", index5 === currentWeekday);
+    });
+  };
+  const clearSelectionOverlay = () => {
+    document.querySelectorAll(".xima-calendar-selection-overlay").forEach((overlay) => overlay.remove());
+  };
+  const hideSelectionPreview = () => {
+    container.classList.add("xima-calendar-selection-cancelled");
+    container.querySelectorAll(".ec-event.ec-preview, .ec-events.ec-preview").forEach((preview) => {
+      preview.remove();
+    });
+    clearSelectionOverlay();
+  };
+  const resetSelectionPreview = () => {
+    container.classList.remove("xima-calendar-selection-cancelled");
+  };
+  const appendOverlay = (left, top, right, bottom) => {
+    const overlay = document.createElement("div");
+    overlay.className = "xima-calendar-selection-overlay";
+    overlay.style.left = `${left}px`;
+    overlay.style.top = `${top}px`;
+    overlay.style.width = `${right - left}px`;
+    overlay.style.height = `${bottom - top}px`;
+    document.body.appendChild(overlay);
+  };
+  const updateSelectionOverlay = () => {
+    clearSelectionOverlay();
+    const calendarElement = container.querySelector(".ec.ec-selecting");
+    if (!calendarElement) {
+      return;
+    }
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      const previews2 = Array.from(calendarElement.querySelectorAll(".ec-body .ec-event.ec-preview"));
+      if (previews2.length === 0) {
+        return;
+      }
+      const previewRects2 = previews2.map((preview) => preview.getBoundingClientRect());
+      const selectedDays2 = Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).filter((day) => {
+        const dayRect = day.getBoundingClientRect();
+        return previewRects2.some(
+          (previewRect) => dayRect.right > previewRect.left && dayRect.left < previewRect.right
+        );
+      });
+      if (selectedDays2.length === 0) {
+        return;
+      }
+      const bodyRect = calendarElement.querySelector(".ec-body")?.getBoundingClientRect();
+      if (!bodyRect) {
+        return;
+      }
+      previews2.forEach((preview, index5) => {
+        const previewRect = previewRects2[index5];
+        const day = selectedDays2.find((candidate) => {
+          const dayRect2 = candidate.getBoundingClientRect();
+          return dayRect2.right > previewRect.left && dayRect2.left < previewRect.right;
+        });
+        if (!day) {
+          return;
+        }
+        const dayRect = day.getBoundingClientRect();
+        const left = Math.max(dayRect.left, bodyRect.left);
+        const right = Math.min(dayRect.right, bodyRect.right);
+        const top = Math.max(previewRect.top, bodyRect.top);
+        const bottom = Math.min(previewRect.bottom, bodyRect.bottom);
+        if (right <= left || bottom <= top) {
+          return;
+        }
+        appendOverlay(left, top, right, bottom);
+      });
+      return;
+    }
+    if (!calendarElement.classList.contains("ec-day-grid")) {
+      return;
+    }
+    const previews = Array.from(calendarElement.querySelectorAll(".ec-events.ec-preview > .ec-event"));
+    if (previews.length === 0) {
+      return;
+    }
+    const previewRects = previews.map((preview) => preview.getBoundingClientRect());
+    const selectedDays = Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).filter((day) => {
+      const dayRect = day.getBoundingClientRect();
+      return previewRects.some(
+        (previewRect) => dayRect.right > previewRect.left && dayRect.left < previewRect.right && dayRect.bottom > previewRect.top && dayRect.top < previewRect.bottom
+      );
+    });
+    const rows = /* @__PURE__ */ new Map();
+    selectedDays.forEach((day) => {
+      const rect2 = day.getBoundingClientRect();
+      const row = Math.round(rect2.top);
+      const rowRects = rows.get(row) ?? [];
+      rowRects.push(rect2);
+      rows.set(row, rowRects);
+    });
+    rows.forEach((rects) => {
+      appendOverlay(
+        Math.min(...rects.map((rect2) => rect2.left)),
+        Math.min(...rects.map((rect2) => rect2.top)),
+        Math.max(...rects.map((rect2) => rect2.right)),
+        Math.max(...rects.map((rect2) => rect2.bottom))
+      );
+    });
+  };
+  let selectionOverlayFrame;
+  const scheduleSelectionOverlayUpdate = () => {
+    if (selectionOverlayFrame !== void 0) {
+      return;
+    }
+    selectionOverlayFrame = requestAnimationFrame(() => {
+      selectionOverlayFrame = void 0;
+      updateSelectionOverlay();
+    });
+  };
+  let monthNavigationLocked = false;
+  const handleSelectionMonthHover = (event) => {
+    if (!options.enableDragNewEvent || event.buttons === 0) {
+      monthNavigationLocked = false;
+      return;
+    }
+    const calendarElement = container.querySelector(".ec.ec-selecting");
+    const body = calendarElement?.querySelector(".ec-body");
+    if (!calendarElement || !body) {
+      monthNavigationLocked = false;
+      return;
+    }
+    const bodyRect = body.getBoundingClientRect();
+    const dayRects = Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).map((day) => day.getBoundingClientRect());
+    if (dayRects.length === 0) {
+      monthNavigationLocked = false;
+      return;
+    }
+    let passedRightEdge = false;
+    let passedLeftEdge = false;
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      const pointerInBody = event.clientY >= bodyRect.top && event.clientY <= bodyRect.bottom;
+      passedRightEdge = event.clientX >= bodyRect.right && pointerInBody;
+      passedLeftEdge = event.clientX <= bodyRect.left && pointerInBody;
+    } else {
+      const rows = /* @__PURE__ */ new Map();
+      dayRects.forEach((rect2) => {
+        const row = Math.round(rect2.top);
+        const rowRects = rows.get(row) ?? [];
+        rowRects.push(rect2);
+        rows.set(row, rowRects);
+      });
+      const rowBounds = Array.from(rows.entries()).sort(([firstRow], [secondRow]) => firstRow - secondRow);
+      const firstRowRects = rowBounds[0][1];
+      const lastRowRects = rowBounds[rowBounds.length - 1][1];
+      const firstRowTop = Math.min(...firstRowRects.map((rect2) => rect2.top));
+      const firstRowBottom = Math.max(...firstRowRects.map((rect2) => rect2.bottom));
+      const lastRowTop = Math.min(...lastRowRects.map((rect2) => rect2.top));
+      const lastRowBottom = Math.max(...lastRowRects.map((rect2) => rect2.bottom));
+      const pointerInFirstRow = event.clientY >= firstRowTop && event.clientY <= firstRowBottom;
+      const pointerInLastRow = event.clientY >= lastRowTop && event.clientY <= lastRowBottom;
+      passedRightEdge = event.clientX >= bodyRect.right && pointerInLastRow;
+      passedLeftEdge = event.clientX <= bodyRect.left && pointerInFirstRow;
+    }
+    if (!passedRightEdge && !passedLeftEdge) {
+      monthNavigationLocked = false;
+      return;
+    }
+    if (monthNavigationLocked) {
+      return;
+    }
+    const currentStart = calendar.getView().currentStart;
+    if (!currentStart) {
+      return;
+    }
+    const nextDate = new Date(currentStart);
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      nextDate.setDate(nextDate.getDate() + (passedRightEdge ? 7 : -7));
+    } else {
+      nextDate.setMonth(nextDate.getMonth() + (passedRightEdge ? 1 : -1));
+    }
+    monthNavigationLocked = true;
+    calendar.setOption("date", nextDate);
+    scheduleSelectionOverlayUpdate();
+  };
+  const calendarObserver = new MutationObserver(() => {
+    highlightCurrentWeekday();
+    scheduleSelectionOverlayUpdate();
+  });
+  const onPointerUp = () => {
+    window.setTimeout(() => {
+      clearSelectionOverlay();
+      resetSelectionPreview();
+    }, 0);
+  };
+  const onPointerCancel = () => {
+    clearSelectionOverlay();
+    resetSelectionPreview();
+  };
+  const cancelSelectionOnEscape = (event) => {
+    if (event.key !== "Escape" || !container.querySelector(".ec.ec-selecting")) {
+      return;
+    }
+    creationController.cancelSelection();
+    hideSelectionPreview();
+    calendar.unselect();
+    window.dispatchEvent(new PointerEvent("pointercancel", { isPrimary: true }));
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  calendarObserver.observe(container, { childList: true, subtree: true });
+  requestAnimationFrame(highlightCurrentWeekday);
+  container.addEventListener("pointermove", scheduleSelectionOverlayUpdate);
+  document.addEventListener("pointermove", handleSelectionMonthHover);
+  container.addEventListener("pointerup", onPointerUp);
+  container.addEventListener("pointercancel", onPointerCancel);
+  document.addEventListener("keydown", cancelSelectionOnEscape, true);
+  return {
+    destroy: () => {
+      calendarObserver.disconnect();
+      clearSelectionOverlay();
+      container.removeEventListener("pointermove", scheduleSelectionOverlayUpdate);
+      document.removeEventListener("pointermove", handleSelectionMonthHover);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerCancel);
+      document.removeEventListener("keydown", cancelSelectionOnEscape, true);
+    }
+  };
+}
+
+// Resources/Private/TypeScript/calendar.ts
+DocumentService.ready().then(() => {
+  const container = document.getElementById("xima-calendar-mount");
+  if (!container) {
+    return;
+  }
+  const ajaxUrl = container.dataset.ajaxUrl ?? "";
+  const enableDragNewEvent = container.dataset.enableDragNewEvent === "1";
+  const enableClickNewEvent = container.dataset.enableClickNewEvent === "1";
+  const calendarOptions = {
+    firstDay: 0
+  };
+  const typo3Top = window.top;
+  const detailsController = createCalendarDetailsController(container, typo3Top);
+  const creationController = createCalendarCreationController(container, typo3Top);
+  const ec = new Calendar({
+    target: container,
+    props: {
+      plugins: [index, index2, index3, index4],
+      options: {
+        ...calendarOptions,
+        height: "100%",
+        selectable: enableDragNewEvent,
+        scrollTime: "08:00:00",
+        dayMaxEvents: true,
+        moreLinkContent: ({ num }) => `+${num} weitere`,
+        view: "dayGridMonth",
+        theme: (theme) => ({
+          ...theme,
+          button: "btn btn-default",
+          buttonGroup: "btn-group",
+          active: "active"
+        }),
+        buttonText: (buttonText) => ({
+          ...buttonText,
+          dayGridMonth: "Month",
+          timeGridWeek: "Week",
+          listMonth: "List",
+          today: "Today"
+        }),
+        headerToolbar: {
+          start: "prev next today",
+          center: "title",
+          end: "dayGridMonth,timeGridWeek,listMonth"
+        },
+        datesSet: detailsController.datesSet,
+        select: enableDragNewEvent ? creationController.select : void 0,
+        dateClick: enableClickNewEvent ? creationController.dateClick : void 0,
+        eventSources: [
+          {
+            url: ajaxUrl
+          }
+        ],
+        eventClick: detailsController.eventClick
+      }
+    }
+  });
+  createCalendarInteractionController(container, ec, creationController, {
+    firstDay: calendarOptions.firstDay,
+    enableDragNewEvent
+  });
+  const cleanupPendingEvent = () => {
+    void creationController.cleanupPendingEvent().then(() => ec.refetchEvents());
+  };
+  cleanupPendingEvent();
+  window.addEventListener("pageshow", cleanupPendingEvent);
+  document.querySelectorAll(".xima-cal-filter__checkbox").forEach((cb) => {
+    cb.addEventListener("change", () => ec.refetchEvents());
+  });
+});
+//# sourceMappingURL=calendar.js.map
