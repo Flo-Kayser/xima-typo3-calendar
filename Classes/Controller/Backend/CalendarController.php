@@ -93,6 +93,13 @@ class CalendarController extends ActionController
             'newEventDefaultStartTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.startTime', '09:00'),
             'newEventDefaultEndTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.endTime', '09:30'),
             'newEventDefaultAllDay' => $this->isPageTsConfigEnabled($request, 'newEvent.defaults.allDay'),
+            'newEventTypeModalTitle' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.title'),
+            'newEventTypeEventLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.event'),
+            'newEventTypeAppointmentLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.appointment'),
+            'newEventStartLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.start'),
+            'newEventEndLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.end'),
+            'newEventAllDayLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.allDay'),
+            'newEventCreateLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.create'),
             'enableEventPreview' => $this->isEventPreviewEnabled($request),
         ]);
 
@@ -120,7 +127,12 @@ class CalendarController extends ActionController
         $start = (int)($data['start'] ?? 0);
         $end = (int)($data['end'] ?? 0);
         $allDay = (int)($data['allDay'] ?? 0) === 1;
+        $creationType = (string)($data['type'] ?? 'event-appointment');
         $pid = $this->getAppointmentPid();
+
+        if (!in_array($creationType, ['event', 'event-appointment'], true)) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid creation type.'], 400);
+        }
 
         if ($pid <= 0 || $start <= 0 || $end <= $start) {
             return new JsonResponse(['success' => false, 'message' => 'Invalid event data.'], 400);
@@ -130,7 +142,7 @@ class CalendarController extends ActionController
             return new JsonResponse(['success' => false, 'message' => 'No permission to create events.'], 403);
         }
 
-        $result = $this->eventCreationService->create($pid, $start, $end, $allDay);
+        $result = $this->eventCreationService->create($pid, $start, $end, $allDay, $creationType);
 
         return new JsonResponse($result, $result['success'] ? 200 : 500);
     }

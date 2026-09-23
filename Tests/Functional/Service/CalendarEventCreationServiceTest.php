@@ -31,6 +31,7 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
 
         self::assertTrue($result['success']);
         self::assertArrayHasKey('eventUid', $result);
+        self::assertArrayHasKey('entryUid', $result);
 
         $eventUid = (int)$result['eventUid'];
         $event = $this->get(ConnectionPool::class)
@@ -75,6 +76,21 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
         $this->get(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_EVENT)
             ->update(self::TABLE_EVENT, ['title' => 'Created event'], ['uid' => $eventUid]);
+
+        self::assertTrue($this->subject->cleanup($eventUid));
+        self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));
+        self::assertSame(1, $this->countEntriesForEvent($eventUid));
+    }
+
+    #[Test]
+    public function cleanupKeepsAnAppointmentThatAlreadyHasATitle(): void
+    {
+        $result = $this->subject->create(2, 1767225600, 1767229200, false);
+        $eventUid = (int)$result['eventUid'];
+
+        $this->get(ConnectionPool::class)
+            ->getConnectionForTable(self::TABLE_ENTRY)
+            ->update(self::TABLE_ENTRY, ['title' => 'Created appointment'], ['event' => $eventUid]);
 
         self::assertTrue($this->subject->cleanup($eventUid));
         self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));
