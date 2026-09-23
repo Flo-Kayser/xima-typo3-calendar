@@ -16,6 +16,9 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
  */
 final class CalendarPermissionService
 {
+    private const APPOINTMENT_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
+    private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
+
     public const PERMISSION_GROUP = 'tx_ximatypo3calendar_permissions';
 
     /** Grants publishing events (setting the LIVE status). */
@@ -32,6 +35,38 @@ final class CalendarPermissionService
     public function canViewAllEvents(?BackendUserAuthentication $backendUser = null): bool
     {
         return $this->checkCustomOption(self::PERMISSION_VIEW_ALL_EVENTS, $backendUser);
+    }
+
+    public function canCreateAppointmentAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        $backendUser ??= $this->getBackendUser();
+        if (!$backendUser instanceof BackendUserAuthentication) {
+            return false;
+        }
+
+        return $backendUser->recordEditAccessInternals(
+            self::APPOINTMENT_TABLE,
+            ['pid' => $pid],
+            true,
+        );
+    }
+
+    public function canCreateEventAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        $backendUser ??= $this->getBackendUser();
+        if (!$backendUser instanceof BackendUserAuthentication) {
+            return false;
+        }
+
+        return $backendUser->recordEditAccessInternals(
+            self::EVENT_TABLE,
+            ['pid' => $pid],
+            true,
+        );
     }
 
     private function checkCustomOption(string $option, ?BackendUserAuthentication $backendUser): bool

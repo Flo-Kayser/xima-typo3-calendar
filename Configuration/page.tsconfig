@@ -20,3 +20,18 @@ TCEMAIN.preview {
 mod.calendar_detailEventView {
     showDetailEventView = 0
 }
+
+mod.tx_ximatypo3calendar {
+    newEvent {
+        interaction {
+            enableDrag = 1
+            enableClick = 1
+        }
+
+        defaults {
+            startTime = 10:00
+            endTime = 15:30
+            allDay = 0
+        }
+    }
+}
