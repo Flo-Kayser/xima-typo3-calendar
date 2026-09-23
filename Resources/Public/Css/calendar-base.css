@@ -57,7 +57,7 @@
     font-weight: 600;
 }
 
-.xima-calendar-content:has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) {
+.xima-calendar-content:has(.xima-calendar-event-detail):has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) {
     grid-template-rows: minmax(0, 1fr) 25%;
 
     .xima-calendar-event-detail {
@@ -66,11 +66,11 @@
 }
 
 @media (max-height: 929px) {
-    .xima-calendar-content:has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) {
+    .xima-calendar-content:has(.xima-calendar-event-detail):has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) {
         grid-template-rows: minmax(0, 1fr) 0;
     }
 
-    .xima-calendar-content:has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) .xima-calendar-event-detail {
+    .xima-calendar-content:has(.xima-calendar-event-detail):has(#xima-calendar-mount .ec-day-grid, #xima-calendar-mount .ec-time-grid) .xima-calendar-event-detail {
         display: none;
     }
 }
