@@ -3,7 +3,6 @@ import DayGrid from '@event-calendar/day-grid';
 import TimeGrid from '@event-calendar/time-grid';
 import List from '@event-calendar/list';
 import Interaction from '@event-calendar/interaction';
-import '@event-calendar/core/index.css';
 import DocumentService from '@typo3/core/document-service.js';
 import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';

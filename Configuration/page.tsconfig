@@ -17,8 +17,8 @@ TCEMAIN.preview {
   }
 }
 
-mod.calendar_detailEventView {
-    showDetailEventView = 0
+mod.tx_ximatypo3calendar {
+    enableEventPreview = 0
 }
 
 mod.tx_ximatypo3calendar {

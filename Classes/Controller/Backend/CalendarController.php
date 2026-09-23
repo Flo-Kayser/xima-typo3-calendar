@@ -93,7 +93,7 @@ class CalendarController extends ActionController
             'newEventDefaultStartTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.startTime', '09:00'),
             'newEventDefaultEndTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.endTime', '09:30'),
             'newEventDefaultAllDay' => $this->isPageTsConfigEnabled($request, 'newEvent.defaults.allDay'),
-            'showDetailEventView' => $this->isDetailViewEnabled($request),
+            'enableEventPreview' => $this->isEventPreviewEnabled($request),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
@@ -145,12 +145,12 @@ class CalendarController extends ActionController
         return new JsonResponse(['success' => $this->eventCreationService->cleanup($eventUid)]);
     }
 
-    private function isDetailViewEnabled(RequestInterface $request): bool
+    private function isEventPreviewEnabled(RequestInterface $request): bool
     {
         $pageId = (int)($request->getQueryParams()['id'] ?? 0);
         $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
 
-        return (bool)($pageTsConfig['mod.']['calendar_detailEventView.']['showDetailEventView'] ?? false);
+        return (bool)($pageTsConfig['mod.']['tx_ximatypo3calendar.']['enableEventPreview'] ?? false);
     }
 
     private function isPageTsConfigEnabled(RequestInterface $request, string $option): bool
