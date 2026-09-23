@@ -47,7 +47,7 @@ class CalendarController extends ActionController
 
         $moduleTemplate->assignMultiple([
             'ajaxUrl' => $ajaxUrl,
-            'showDetailEventView' => $this->isDetailViewEnabled($request),
+            'enableEventPreview' => $this->isEventPreviewEnabled($request),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
@@ -68,11 +68,11 @@ class CalendarController extends ActionController
         return new JsonResponse($events);
     }
 
-    private function isDetailViewEnabled(RequestInterface $request): bool
+    private function isEventPreviewEnabled(RequestInterface $request): bool
     {
         $pageId = (int)($request->getQueryParams()['id'] ?? 0);
         $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
 
-        return (bool)($pageTsConfig['mod.']['calendar_detailEventView.']['showDetailEventView'] ?? false);
+        return (bool)($pageTsConfig['mod.']['tx_ximatypo3calendar.']['enableEventPreview'] ?? false);
     }
 }

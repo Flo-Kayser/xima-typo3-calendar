@@ -3,8 +3,7 @@
 <f:section name="Content">
     <f:be.pageRenderer
     includeCssFiles="{
-        0: 'EXT:xima_typo3_calendar/Resources/Public/JavaScript/calendar.css',
-        1: 'EXT:xima_typo3_calendar/Resources/Public/Css/calendar-base.css'
+        0: 'EXT:xima_typo3_calendar/Resources/Public/Css/calendar.css'
     }" />
 
     <div class="xima-calendar-module">
@@ -30,7 +29,7 @@
                 data-ajax-url="{ajaxUrl}">
             </div>
 
-            <f:if condition="{showDetailEventView}">
+            <f:if condition="{enableEventPreview}">
                 <section class="xima-calendar-event-detail" aria-label="Kalenderdetails" aria-live="polite">
                     <span class="xima-calendar-event-detail__title"></span>
                 </section>
