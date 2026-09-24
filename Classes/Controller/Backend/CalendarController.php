@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use Xima\XimaTypo3Calendar\Domain\Repository\EntryRepository;
 use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
+use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
@@ -38,11 +39,13 @@ class CalendarController extends ActionController
         protected CalendarPermissionService $permissionService,
         protected CalendarPageConfigurationService $pageConfigurationService,
         protected CalendarStoragePidResolver $storagePidResolver,
+        protected CalendarPendingCreationService $pendingCreationService,
     ) {
     }
 
     public function processRequest(RequestInterface $request): ResponseInterface
     {
+        $this->cleanupPendingCreation($request);
         $moduleTemplate = $this->moduleTemplateFactory->create($request);
 
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
@@ -96,6 +99,22 @@ class CalendarController extends ActionController
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
+    }
+
+    private function cleanupPendingCreation(RequestInterface $request): void
+    {
+        $params = $request->getQueryParams();
+        $pid = $this->storagePidResolver->resolveStoragePid();
+
+        $eventUid = (int)($params['ximaCalendarPendingEvent'] ?? 0);
+        if ($eventUid > 0) {
+            $this->pendingCreationService->cleanupEvent($eventUid, $pid);
+        }
+
+        $entryUid = (int)($params['ximaCalendarPendingEntry'] ?? 0);
+        if ($entryUid > 0) {
+            $this->pendingCreationService->cleanupEntry($entryUid, $pid);
+        }
     }
 
     public function eventsAction(ServerRequestInterface $request): ResponseInterface

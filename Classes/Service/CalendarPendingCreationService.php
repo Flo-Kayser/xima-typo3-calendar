@@ -67,7 +67,7 @@ final class CalendarPendingCreationService
             ->fetchAllAssociative();
 
         $hasContent = $this->hasContent($event, [
-            'title', 'description', 'additional_information', 'slug', 'url', 'registration_link',
+            'title', 'description', 'additional_information', 'registration_link',
         ]) || array_reduce(
             $entries,
             fn (bool $hasEntryContent, array $entry): bool => $hasEntryContent || $this->hasContent($entry, [
