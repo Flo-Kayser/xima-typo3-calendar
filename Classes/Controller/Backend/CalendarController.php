@@ -9,10 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
@@ -23,8 +21,9 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use Xima\XimaTypo3Calendar\Domain\Repository\CalendarRepository;
 use Xima\XimaTypo3Calendar\Domain\Repository\EntryRepository;
 use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
-use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
+use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
+use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
@@ -34,7 +33,6 @@ class CalendarController extends ActionController
     private const ENTRY_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
 
     public function __construct(
-        protected ConnectionPool $connectionPool,
         protected IconFactory $iconFactory,
         protected PageRenderer $pageRenderer,
         protected UriBuilder $backendUriBuilder,
@@ -44,7 +42,8 @@ class CalendarController extends ActionController
         protected CalendarRepository $calendarRepository,
         protected EntryRepository $entryRepository,
         protected CalendarPermissionService $permissionService,
-        protected CalendarEventCreationService $eventCreationService,
+        protected CalendarPageConfigurationService $pageConfigurationService,
+        protected CalendarStoragePidResolver $storagePidResolver,
     ) {
     }
 
@@ -55,76 +54,51 @@ class CalendarController extends ActionController
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
-        $appointmentPid = $this->getAppointmentPid();
+        $appointmentPid = $this->storagePidResolver->resolveStoragePid();
         $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
+        $canCreateEvent = $this->canCreateEvent($appointmentPid);
+        $canCreateAppointment = $this->canCreateAppointment($appointmentPid);
 
-        if ($this->canCreateEvents()) {
-            $newEventUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
-                'edit' => [
-                    self::EVENT_TABLE => [
-                        $appointmentPid => 'new',
-                    ],
-                ],
-                'defVals' => $eventRecordType === null ? [] : [
-                    self::EVENT_TABLE => [
-                        'record_type' => $eventRecordType,
-                    ],
-                ],
-                'returnUrl' => (string)$request->getUri(),
-            ]);
-            $newAppointmentUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
-                'edit' => [
-                    self::ENTRY_TABLE => [
-                        $appointmentPid => 'new',
-                    ],
-                ],
-                'defVals' => [
-                    self::ENTRY_TABLE => [
-                        'record_type' => 'event-appointment',
-                    ],
-                ],
-                'returnUrl' => (string)$request->getUri(),
-            ]);
-            $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
-            $newAppointmentTitle = $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventAppointment');
-            if ($newAppointmentTitle === '' || str_starts_with($newAppointmentTitle, 'LLL:')) {
-                $newAppointmentTitle = 'New Event Appointment';
-            }
-            $newEventButton = $buttonBar->makeLinkButton()
-                ->setHref((string)$newEventUrl)
-                ->setTitle($GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEvent'))
-                ->setShowLabelText(true)
-                ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
-            $buttonBar->addButton($newEventButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
-            $newAppointmentButton = $buttonBar->makeLinkButton()
-                ->setHref((string)$newAppointmentUrl)
-                ->setTitle($newAppointmentTitle)
-                ->setShowLabelText(true)
-                ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
-            $buttonBar->addButton($newAppointmentButton, ButtonBar::BUTTON_POSITION_RIGHT, 1);
-        }
+        $this->addNewRecordButtons(
+            $moduleTemplate,
+            $request,
+            $appointmentPid,
+            $eventRecordType,
+            $canCreateEvent,
+            $canCreateAppointment,
+        );
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');
 
-        $moduleTemplate->assignMultiple([
+        $labels = $this->getNewEventLabels();
+        $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
             'createEventUrl' => $createEventUrl,
             'cleanupEventUrl' => $cleanupEventUrl,
             'appointmentPid' => $appointmentPid,
-            'canCreateAppointments' => $this->canCreateEvents(),
-            'enableDragNewEvent' => $this->isPageTsConfigEnabled($request, 'newEvent.interaction.enableDrag'),
-            'enableClickNewEvent' => $this->isPageTsConfigEnabled($request, 'newEvent.interaction.enableClick'),
-            'newEventDefaultStartTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.startTime', '09:00'),
-            'newEventDefaultEndTime' => $this->getPageTsConfigValue($request, 'newEvent.defaults.endTime', '09:30'),
-            'newEventDefaultAllDay' => $this->isPageTsConfigEnabled($request, 'newEvent.defaults.allDay'),
-            'newEventTypeModalTitle' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.title'),
-            'newEventTypeEventLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.event'),
-            'newEventTypeAppointmentLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.appointment'),
-            'newEventStartLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.start'),
-            'newEventEndLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.end'),
-            'newEventAllDayLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.allDay'),
-            'newEventCreateLabel' => $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:newEventType.create'),
-            'enableEventPreview' => $this->isEventPreviewEnabled($request),
+            'createAllowed' => $canCreateEvent && $canCreateAppointment,
+            'enableDragNewEvent' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.interaction.enableDrag'),
+            'enableClickNewEvent' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.interaction.enableClick'),
+            'defaultStartTime' => $this->pageConfigurationService->getValue($request, 'newEvent.defaults.startTime', '09:00'),
+            'defaultEndTime' => $this->pageConfigurationService->getValue($request, 'newEvent.defaults.endTime', '09:30'),
+            'defaultAllDay' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.defaults.allDay'),
+            'labels' => [
+                'title' => $labels['newEventTypeModalTitle'],
+                'event' => $labels['newEventTypeEventLabel'],
+                'appointment' => $labels['newEventTypeAppointmentLabel'],
+                'start' => $labels['newEventStartLabel'],
+                'end' => $labels['newEventEndLabel'],
+                'allDay' => $labels['newEventAllDayLabel'],
+                'create' => $labels['newEventCreateLabel'],
+            ],
+        ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+
+        $moduleTemplate->assignMultiple([
+            'calendarConfig' => $calendarConfig,
+            'enableEventPreview' => $this->pageConfigurationService->isOptionEnabled(
+                $request,
+                'enableEventPreview',
+            ),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
@@ -145,113 +119,86 @@ class CalendarController extends ActionController
         return new JsonResponse($events);
     }
 
-    public function createEventAction(ServerRequestInterface $request): ResponseInterface
-    {
-        $data = $request->getParsedBody();
-        $start = (int)($data['start'] ?? 0);
-        $end = (int)($data['end'] ?? 0);
-        $allDay = (int)($data['allDay'] ?? 0) === 1;
-        $creationType = (string)($data['type'] ?? 'event-appointment');
-        $pid = $this->getAppointmentPid();
+    private function addNewRecordButtons(
+        ModuleTemplate $moduleTemplate,
+        RequestInterface $request,
+        int $pid,
+        ?string $eventRecordType,
+        bool $canCreateEvent,
+        bool $canCreateAppointment,
+    ): void {
+        $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
+        $returnUrl = (string)$request->getUri();
 
-        if (!in_array($creationType, ['event', 'event-appointment'], true)) {
-            return new JsonResponse(['success' => false, 'message' => 'Invalid creation type.'], 400);
+        if ($canCreateEvent) {
+            $eventUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
+                'edit' => [self::EVENT_TABLE => [$pid => 'new']],
+                'defVals' => $eventRecordType === null ? [] : [
+                    self::EVENT_TABLE => ['record_type' => $eventRecordType],
+                ],
+                'returnUrl' => $returnUrl,
+            ]);
+            $this->addNewRecordButton(
+                $buttonBar,
+                (string)$eventUrl,
+                $this->getLanguageLabel('newEvent', 'New Event'),
+            );
         }
 
-        if ($pid <= 0 || $start <= 0 || $end <= $start) {
-            return new JsonResponse(['success' => false, 'message' => 'Invalid event data.'], 400);
+        if ($canCreateAppointment) {
+            $appointmentUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
+                'edit' => [self::ENTRY_TABLE => [$pid => 'new']],
+                'defVals' => [self::ENTRY_TABLE => ['record_type' => 'event-appointment']],
+                'returnUrl' => $returnUrl,
+            ]);
+            $this->addNewRecordButton(
+                $buttonBar,
+                (string)$appointmentUrl,
+                $this->getLanguageLabel('newEventAppointment', 'New Event Appointment'),
+            );
         }
-
-        if (!$this->canCreateEvents()) {
-            return new JsonResponse(['success' => false, 'message' => 'No permission to create events.'], 403);
-        }
-
-        $result = $this->eventCreationService->create($pid, $start, $end, $allDay, $creationType);
-
-        return new JsonResponse($result, $result['success'] ? 200 : 500);
     }
 
-    public function cleanupEventAction(ServerRequestInterface $request): ResponseInterface
+    private function addNewRecordButton(ButtonBar $buttonBar, string $url, string $title): void
     {
-        $eventUid = (int)($request->getQueryParams()['eventUid'] ?? 0);
-        if ($eventUid <= 0 || !$this->canCreateEvents()) {
-            return new JsonResponse(['success' => false], 400);
-        }
-
-        return new JsonResponse(['success' => $this->eventCreationService->cleanup($eventUid)]);
+        $button = $buttonBar->makeLinkButton()
+            ->setHref($url)
+            ->setTitle($title)
+            ->setShowLabelText(true)
+            ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
+        $buttonBar->addButton($button, ButtonBar::BUTTON_POSITION_RIGHT, 1);
     }
 
-    private function isEventPreviewEnabled(RequestInterface $request): bool
+    /** @return array<string, string> */
+    private function getNewEventLabels(): array
     {
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
-        $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
-
-        return (bool)($pageTsConfig['mod.']['tx_ximatypo3calendar.']['enableEventPreview'] ?? false);
+        return [
+            'newEventTypeModalTitle' => $this->getLanguageLabel('newEventType.title', 'Create new record'),
+            'newEventTypeEventLabel' => $this->getLanguageLabel('newEventType.event', 'Event'),
+            'newEventTypeAppointmentLabel' => $this->getLanguageLabel('newEventType.appointment', 'Event Appointment'),
+            'newEventStartLabel' => $this->getLanguageLabel('newEventType.start', 'Start'),
+            'newEventEndLabel' => $this->getLanguageLabel('newEventType.end', 'End'),
+            'newEventAllDayLabel' => $this->getLanguageLabel('newEventType.allDay', 'All-day'),
+            'newEventCreateLabel' => $this->getLanguageLabel('newEventType.create', 'Create'),
+        ];
     }
 
-    private function isPageTsConfigEnabled(RequestInterface $request, string $option): bool
+    private function getLanguageLabel(string $key, string $fallback): string
     {
-        return (int)$this->getPageTsConfigValue($request, $option, 1) === 1;
+        $label = $GLOBALS['LANG']->sL(
+            'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:' . $key,
+        );
+
+        return $label === '' || str_starts_with($label, 'LLL:') ? $fallback : $label;
     }
 
-    private function getPageTsConfigValue(RequestInterface $request, string $option, mixed $default): mixed
+    private function canCreateEvent(int $pid): bool
     {
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
-        $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
-        $value = $pageTsConfig['mod.']['tx_ximatypo3calendar.'] ?? [];
-
-        foreach (explode('.', $option) as $part) {
-            if (!is_array($value)) {
-                return $default;
-            }
-
-            $nestedKey = $part . '.';
-            if (array_key_exists($nestedKey, $value)) {
-                $value = $value[$nestedKey];
-            } elseif (array_key_exists($part, $value)) {
-                $value = $value[$part];
-            } else {
-                return $default;
-            }
-        }
-
-        return $value;
+        return $pid > 0 && $this->permissionService->canCreateEventAtPid($pid);
     }
 
-    private function getAppointmentPid(): int
+    private function canCreateAppointment(int $pid): bool
     {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
-        $pid = $queryBuilder
-            ->select('uid')
-            ->from('pages')
-            ->where($queryBuilder->expr()->eq('module', $queryBuilder->createNamedParameter('events')))
-            ->orderBy('uid')
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchOne();
-
-        if ($pid) {
-            return (int)$pid;
-        }
-
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_ximatypo3calendar_domain_model_entry');
-
-        return (int)$queryBuilder
-            ->select('pid')
-            ->from('tx_ximatypo3calendar_domain_model_entry')
-            ->where($queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)))
-            ->orderBy('pid')
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchOne();
-    }
-
-    private function canCreateEvents(): bool
-    {
-        $pid = $this->getAppointmentPid();
-
-        return $pid > 0
-            && $this->permissionService->canCreateEventAtPid($pid)
-            && $this->permissionService->canCreateAppointmentAtPid($pid);
+        return $pid > 0 && $this->permissionService->canCreateAppointmentAtPid($pid);
     }
 }
