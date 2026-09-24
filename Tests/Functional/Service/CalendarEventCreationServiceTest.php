@@ -7,6 +7,7 @@ namespace Xima\XimaTypo3Calendar\Tests\Functional\Service;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
+use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
 
 final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalTestCase
@@ -21,7 +22,10 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/be_users.csv');
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/calendar.csv');
         $this->setUpBackendUser(1);
-        $this->subject = new CalendarEventCreationService($this->get(ConnectionPool::class));
+        $this->subject = new CalendarEventCreationService(
+            $this->get(ConnectionPool::class),
+            $this->get(CalendarPendingCreationService::class),
+        );
     }
 
     #[Test]
@@ -74,12 +78,45 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     }
 
     #[Test]
+    public function createsAnAppointmentBelowTheFirstExistingEvent(): void
+    {
+        $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false);
+
+        self::assertTrue($result['success']);
+        self::assertArrayNotHasKey('eventUid', $result);
+        self::assertArrayHasKey('entryUid', $result);
+
+        $entry = $this->get(ConnectionPool::class)
+            ->getQueryBuilderForTable(self::TABLE_ENTRY)
+            ->select('event')
+            ->from(self::TABLE_ENTRY)
+            ->where('uid = ' . (int)$result['entryUid'])
+            ->executeQuery()
+            ->fetchAssociative();
+
+        self::assertSame(1, (int)($entry['event'] ?? 0));
+    }
+
+    #[Test]
+    public function cleanupRemovesAnUntitledAppointmentWithoutRemovingItsEvent(): void
+    {
+        $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false);
+        $entryUid = (int)$result['entryUid'];
+        $this->get(CalendarPendingCreationService::class)->registerEntry($entryUid, 2);
+
+        self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEntry($entryUid, 2));
+        self::assertSame(0, $this->countRecords(self::TABLE_ENTRY, $entryUid));
+        self::assertSame(1, $this->countRecords(self::TABLE_EVENT, 1));
+    }
+
+    #[Test]
     public function cleanupRemovesAnUntitledEventAndItsAppointment(): void
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
+        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
 
-        self::assertTrue($this->subject->cleanup($eventUid));
+        self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 2));
         self::assertSame(0, $this->countRecords(self::TABLE_EVENT, $eventUid));
         self::assertSame(0, $this->countEntriesForEvent($eventUid));
     }
@@ -89,11 +126,12 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
+        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
         $this->get(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_EVENT)
             ->update(self::TABLE_EVENT, ['title' => 'Created event'], ['uid' => $eventUid]);
 
-        self::assertTrue($this->subject->cleanup($eventUid));
+        self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 2));
         self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));
         self::assertSame(1, $this->countEntriesForEvent($eventUid));
     }
@@ -103,12 +141,25 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
+        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
 
         $this->get(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_ENTRY)
             ->update(self::TABLE_ENTRY, ['title' => 'Created appointment'], ['event' => $eventUid]);
 
-        self::assertTrue($this->subject->cleanup($eventUid));
+        self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 2));
+        self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));
+        self::assertSame(1, $this->countEntriesForEvent($eventUid));
+    }
+
+    #[Test]
+    public function cleanupDoesNotRemoveAnEventFromAnotherStoragePage(): void
+    {
+        $result = $this->subject->create(2, 1767225600, 1767229200, false);
+        $eventUid = (int)$result['eventUid'];
+        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
+
+        self::assertFalse($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 999));
         self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));
         self::assertSame(1, $this->countEntriesForEvent($eventUid));
     }

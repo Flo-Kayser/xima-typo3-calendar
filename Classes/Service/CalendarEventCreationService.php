@@ -18,6 +18,7 @@ final class CalendarEventCreationService
 
     public function __construct(
         private readonly ConnectionPool $connectionPool,
+        private readonly CalendarPendingCreationService $pendingCreationService,
     ) {
     }
 
@@ -56,6 +57,12 @@ final class CalendarEventCreationService
         $dataHandler->process_datamap();
 
         if ($dataHandler->errorLog !== []) {
+            $eventUid = (int)($dataHandler->substNEWwithIDs[$newEventId] ?? 0);
+            if ($eventUid > 0) {
+                $this->pendingCreationService->registerEvent($eventUid, $pid);
+                $this->pendingCreationService->cleanupEvent($eventUid, $pid);
+            }
+
             return ['success' => false, 'errors' => $dataHandler->errorLog];
         }
 
@@ -67,6 +74,9 @@ final class CalendarEventCreationService
         $result = ['success' => true, 'eventUid' => $eventUid];
         $entryUid = (int)($dataHandler->substNEWwithIDs[$newEntryId] ?? 0);
         if ($entryUid <= 0) {
+            $this->pendingCreationService->registerEvent($eventUid, $pid);
+            $this->pendingCreationService->cleanupEvent($eventUid, $pid);
+
             return ['success' => false, 'message' => 'Appointment could not be created.'];
         }
         $result['entryUid'] = $entryUid;
@@ -74,54 +84,67 @@ final class CalendarEventCreationService
         return $result;
     }
 
-    public function cleanup(int $eventUid): bool
+    /**
+     * Creates an appointment below the first existing event on the storage page.
+     *
+     * @return array{success: bool, entryUid?: int, errors?: array<int, mixed>, message?: string}
+     */
+    public function createAppointment(int $pid, int $start, int $end, bool $allDay): array
     {
-        $eventQueryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);
-        $event = $eventQueryBuilder
-            ->select('uid', 'title')
-            ->from(self::EVENT_TABLE)
-            ->where($eventQueryBuilder->expr()->eq(
-                'uid',
-                $eventQueryBuilder->createNamedParameter($eventUid, Connection::PARAM_INT)
-            ))
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchAssociative();
-
-        if ($event === false) {
-            return true;
+        $eventUid = $this->findFirstEventUid($pid);
+        if ($eventUid <= 0) {
+            return ['success' => false, 'message' => 'No event exists for the appointment.'];
         }
 
-        $entryQueryBuilder = $this->connectionPool->getQueryBuilderForTable(self::ENTRY_TABLE);
-        $entries = $entryQueryBuilder
-            ->select('uid', 'title')
-            ->from(self::ENTRY_TABLE)
-            ->where($entryQueryBuilder->expr()->eq(
-                'event',
-                $entryQueryBuilder->createNamedParameter($eventUid, Connection::PARAM_INT)
-            ))
-            ->executeQuery()
-            ->fetchAllAssociative();
-
-        $hasContent = trim((string)$event['title']) !== ''
-            || array_reduce(
-                $entries,
-                static fn (bool $hasTitle, array $entry): bool => $hasTitle || trim((string)$entry['title']) !== '',
-                false,
-            );
-        if ($hasContent) {
-            return true;
-        }
-
-        $commandMap = [self::EVENT_TABLE => [$eventUid => ['delete' => 1]]];
-        foreach ($entries as $entry) {
-            $commandMap[self::ENTRY_TABLE][(int)$entry['uid']] = ['delete' => 1];
-        }
+        $newEntryId = StringUtility::getUniqueId('NEW');
+        $dataMap = [
+            self::ENTRY_TABLE => [
+                $newEntryId => [
+                    'pid' => $pid,
+                    'record_type' => 'event-appointment',
+                    'event' => $eventUid,
+                    'start_date' => $start,
+                    'end_date' => $end,
+                    'all_day' => $allDay ? 1 : 0,
+                ],
+            ],
+        ];
 
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
-        $dataHandler->start([], $commandMap);
-        $dataHandler->process_cmdmap();
+        $dataHandler->start($dataMap, []);
+        $dataHandler->process_datamap();
 
-        return $dataHandler->errorLog === [];
+        if ($dataHandler->errorLog !== []) {
+            return ['success' => false, 'errors' => $dataHandler->errorLog];
+        }
+
+        $entryUid = (int)($dataHandler->substNEWwithIDs[$newEntryId] ?? 0);
+        if ($entryUid <= 0) {
+            return ['success' => false, 'message' => 'Appointment could not be created.'];
+        }
+
+        return ['success' => true, 'entryUid' => $entryUid];
+    }
+
+    private function findFirstEventUid(int $pid): int
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);
+        return (int)$queryBuilder
+            ->select('uid')
+            ->from(self::EVENT_TABLE)
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'pid',
+                    $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT),
+                ),
+                $queryBuilder->expr()->eq(
+                    'deleted',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+            )
+            ->orderBy('uid', 'ASC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchOne();
     }
 }

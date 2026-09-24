@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
 use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
+use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
@@ -68,6 +69,27 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
         self::assertSame(['success' => false, 'message' => 'No permission to create events.'], $this->decode($response));
     }
 
+    #[Test]
+    public function rejectsCleanupWithoutExactlyOneRecordUid(): void
+    {
+        $request = new ServerRequest('https://example.com/typo3/');
+        $response = $this->controller()->cleanupEventAction($request);
+
+        self::assertSame(400, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function rejectsCleanupWithEventAndEntryUid(): void
+    {
+        $request = (new ServerRequest('https://example.com/typo3/'))->withQueryParams([
+            'eventUid' => 1,
+            'entryUid' => 1,
+        ]);
+        $response = $this->controller()->cleanupEventAction($request);
+
+        self::assertSame(400, $response->getStatusCode());
+    }
+
     /**
      * @param array<string, mixed> $overrides
      */
@@ -107,7 +129,11 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
         return new CalendarEventCreationController(
             $this->get(CalendarStoragePidResolver::class),
             new CalendarPermissionService(),
-            new CalendarEventCreationService($connectionPool),
+            new CalendarEventCreationService(
+                $connectionPool,
+                $this->get(CalendarPendingCreationService::class),
+            ),
+            $this->get(CalendarPendingCreationService::class),
         );
     }
 

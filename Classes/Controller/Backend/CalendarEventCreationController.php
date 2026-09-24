@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
+use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 
@@ -19,6 +20,7 @@ final class CalendarEventCreationController
         private readonly CalendarStoragePidResolver $storagePidResolver,
         private readonly CalendarPermissionService $permissionService,
         private readonly CalendarEventCreationService $eventCreationService,
+        private readonly CalendarPendingCreationService $pendingCreationService,
     ) {
     }
 
@@ -43,11 +45,24 @@ final class CalendarEventCreationController
             return $this->invalidEventDataResponse();
         }
 
-        if (!$this->canCreateEvents($pid)) {
+        $hasPermission = $creationType === 'event'
+            ? $this->permissionService->canCreateEventAndAppointmentAtPid($pid)
+            : $this->permissionService->canCreateAppointmentAtPid($pid);
+        if (!$hasPermission) {
             return new JsonResponse(['success' => false, 'message' => 'No permission to create events.'], 403);
         }
 
-        $result = $this->eventCreationService->create($pid, $start, $end, $allDay);
+        $result = $creationType === 'event'
+            ? $this->eventCreationService->create($pid, $start, $end, $allDay)
+            : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay);
+        if ($result['success']) {
+            if ($creationType === 'event' && isset($result['eventUid'])) {
+                $this->pendingCreationService->registerEvent((int)$result['eventUid'], $pid);
+            }
+            if ($creationType === 'event-appointment' && isset($result['entryUid'])) {
+                $this->pendingCreationService->registerEntry((int)$result['entryUid'], $pid);
+            }
+        }
 
         return new JsonResponse($result, $result['success'] ? 200 : 500);
     }
@@ -55,30 +70,24 @@ final class CalendarEventCreationController
     public function cleanupEventAction(ServerRequestInterface $request): ResponseInterface
     {
         $eventUid = (int)($request->getQueryParams()['eventUid'] ?? 0);
-        if ($eventUid <= 0) {
+        $entryUid = (int)($request->getQueryParams()['entryUid'] ?? 0);
+        if (($eventUid <= 0 && $entryUid <= 0) || ($eventUid > 0 && $entryUid > 0)) {
             return new JsonResponse(['success' => false], 400);
         }
 
-        if (!$this->canCreateEvents($this->storagePidResolver->resolveStoragePid())) {
+        $pid = $this->storagePidResolver->resolveStoragePid();
+        if ($eventUid > 0 && !$this->permissionService->canCreateEventAndAppointmentAtPid($pid)) {
+            return new JsonResponse(['success' => false], 403);
+        }
+        if ($entryUid > 0 && !$this->permissionService->canCreateAppointmentAtPid($pid)) {
             return new JsonResponse(['success' => false], 403);
         }
 
-        return new JsonResponse(['success' => $this->eventCreationService->cleanup($eventUid)]);
-    }
+        $success = $eventUid > 0
+            ? $this->pendingCreationService->cleanupEvent($eventUid, $pid)
+            : $this->pendingCreationService->cleanupEntry($entryUid, $pid);
 
-    private function canCreateEvents(int $pid): bool
-    {
-        return $this->canCreateEvent($pid) && $this->canCreateAppointment($pid);
-    }
-
-    private function canCreateEvent(int $pid): bool
-    {
-        return $pid > 0 && $this->permissionService->canCreateEventAtPid($pid);
-    }
-
-    private function canCreateAppointment(int $pid): bool
-    {
-        return $pid > 0 && $this->permissionService->canCreateAppointmentAtPid($pid);
+        return new JsonResponse(['success' => $success]);
     }
 
     private function invalidEventDataResponse(): JsonResponse
