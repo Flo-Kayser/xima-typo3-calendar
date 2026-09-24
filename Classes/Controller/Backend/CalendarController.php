@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Controller\Backend;
 
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
@@ -15,10 +14,8 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
-use Xima\XimaTypo3Calendar\Domain\Repository\CalendarRepository;
 use Xima\XimaTypo3Calendar\Domain\Repository\EntryRepository;
 use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
@@ -36,10 +33,7 @@ class CalendarController extends ActionController
         protected IconFactory $iconFactory,
         protected PageRenderer $pageRenderer,
         protected UriBuilder $backendUriBuilder,
-        protected ContainerInterface $container,
         protected ModuleTemplateFactory $moduleTemplateFactory,
-        protected ResourceFactory $resourceFactory,
-        protected CalendarRepository $calendarRepository,
         protected EntryRepository $entryRepository,
         protected CalendarPermissionService $permissionService,
         protected CalendarPageConfigurationService $pageConfigurationService,
@@ -56,8 +50,10 @@ class CalendarController extends ActionController
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
         $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
-        $canCreateEvent = $this->canCreateEvent($appointmentPid);
-        $canCreateAppointment = $this->canCreateAppointment($appointmentPid);
+        $canCreateEvent = $appointmentPid > 0
+            && $this->permissionService->canCreateEventAtPid($appointmentPid);
+        $canCreateAppointment = $appointmentPid > 0
+            && $this->permissionService->canCreateAppointmentAtPid($appointmentPid);
 
         $this->addNewRecordButtons(
             $moduleTemplate,
@@ -71,17 +67,15 @@ class CalendarController extends ActionController
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');
 
         $labels = $this->getNewEventLabels();
+        $newEventConfiguration = $this->pageConfigurationService->getNewEventConfiguration($request);
         $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
             'createEventUrl' => $createEventUrl,
             'cleanupEventUrl' => $cleanupEventUrl,
             'appointmentPid' => $appointmentPid,
-            'createAllowed' => $canCreateEvent && $canCreateAppointment,
-            'enableDragNewEvent' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.interaction.enableDrag'),
-            'enableClickNewEvent' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.interaction.enableClick'),
-            'defaultStartTime' => $this->pageConfigurationService->getValue($request, 'newEvent.defaults.startTime', '09:00'),
-            'defaultEndTime' => $this->pageConfigurationService->getValue($request, 'newEvent.defaults.endTime', '09:30'),
-            'defaultAllDay' => $this->pageConfigurationService->isOptionEnabled($request, 'newEvent.defaults.allDay'),
+            'canCreateEvent' => $canCreateEvent,
+            'canCreateAppointment' => $canCreateAppointment,
+            ...$newEventConfiguration,
             'labels' => [
                 'title' => $labels['newEventTypeModalTitle'],
                 'event' => $labels['newEventTypeEventLabel'],
@@ -192,13 +186,4 @@ class CalendarController extends ActionController
         return $label === '' || str_starts_with($label, 'LLL:') ? $fallback : $label;
     }
 
-    private function canCreateEvent(int $pid): bool
-    {
-        return $pid > 0 && $this->permissionService->canCreateEventAtPid($pid);
-    }
-
-    private function canCreateAppointment(int $pid): bool
-    {
-        return $pid > 0 && $this->permissionService->canCreateAppointmentAtPid($pid);
-    }
 }

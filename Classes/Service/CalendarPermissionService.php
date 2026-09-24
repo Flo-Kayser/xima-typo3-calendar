@@ -69,6 +69,15 @@ final class CalendarPermissionService
         );
     }
 
+    public function canCreateEventAndAppointmentAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        return $pid > 0
+            && $this->canCreateEventAtPid($pid, $backendUser)
+            && $this->canCreateAppointmentAtPid($pid, $backendUser);
+    }
+
     private function checkCustomOption(string $option, ?BackendUserAuthentication $backendUser): bool
     {
         $backendUser ??= $this->getBackendUser();
@@ -76,7 +85,6 @@ final class CalendarPermissionService
             return false;
         }
 
-        // BackendUserAuthentication::check() returns true for administrators.
         return $backendUser->check('custom_options', self::PERMISSION_GROUP . ':' . $option);
     }
 

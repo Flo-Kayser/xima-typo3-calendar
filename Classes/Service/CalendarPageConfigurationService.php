@@ -9,6 +9,12 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 final class CalendarPageConfigurationService
 {
+    private const DEFAULT_START_TIME = '09:00';
+    private const DEFAULT_END_TIME = '09:30';
+    private const DEFAULT_ALL_DAY = false;
+    private const DEFAULT_ENABLE_DRAG = true;
+    private const DEFAULT_ENABLE_CLICK = true;
+
     /** @var array<int, array<string, mixed>> */
     private array $pageTsConfig = [];
 
@@ -33,6 +39,48 @@ final class CalendarPageConfigurationService
             } else {
                 return $default;
             }
+        }
+
+        return $value;
+    }
+
+    /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool} */
+    public function getNewEventConfiguration(RequestInterface $request): array
+    {
+        return [
+            'enableDragNewEvent' => $this->isOptionEnabled(
+                $request,
+                'newEvent.interaction.enableDrag',
+                self::DEFAULT_ENABLE_DRAG,
+            ),
+            'enableClickNewEvent' => $this->isOptionEnabled(
+                $request,
+                'newEvent.interaction.enableClick',
+                self::DEFAULT_ENABLE_CLICK,
+            ),
+            'defaultStartTime' => $this->getValidTime(
+                $request,
+                'newEvent.defaults.startTime',
+                self::DEFAULT_START_TIME,
+            ),
+            'defaultEndTime' => $this->getValidTime(
+                $request,
+                'newEvent.defaults.endTime',
+                self::DEFAULT_END_TIME,
+            ),
+            'defaultAllDay' => $this->isOptionEnabled(
+                $request,
+                'newEvent.defaults.allDay',
+                self::DEFAULT_ALL_DAY,
+            ),
+        ];
+    }
+
+    private function getValidTime(RequestInterface $request, string $option, string $default): string
+    {
+        $value = $this->getValue($request, $option, $default);
+        if (!is_string($value) || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $value)) {
+            return $default;
         }
 
         return $value;
