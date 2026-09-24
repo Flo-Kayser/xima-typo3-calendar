@@ -24,7 +24,7 @@ final class CalendarEventCreationService
     /**
      * @return array{success: bool, eventUid?: int, entryUid?: int, errors?: array<int, mixed>, message?: string}
      */
-    public function create(int $pid, int $start, int $end, bool $allDay, string $creationType = 'event-appointment'): array
+    public function create(int $pid, int $start, int $end, bool $allDay): array
     {
         $newEventId = StringUtility::getUniqueId('NEW');
         $eventData = ['pid' => $pid];
@@ -39,19 +39,17 @@ final class CalendarEventCreationService
             ],
         ];
 
-        if ($creationType === 'event-appointment') {
-            $newEntryId = StringUtility::getUniqueId('NEW');
-            $dataMap[self::ENTRY_TABLE] = [
-                $newEntryId => [
-                    'pid' => $pid,
-                    'record_type' => 'event-appointment',
-                    'event' => $newEventId,
-                    'start_date' => $start,
-                    'end_date' => $end,
-                    'all_day' => $allDay ? 1 : 0,
-                ],
-            ];
-        }
+        $newEntryId = StringUtility::getUniqueId('NEW');
+        $dataMap[self::ENTRY_TABLE] = [
+            $newEntryId => [
+                'pid' => $pid,
+                'record_type' => 'event-appointment',
+                'event' => $newEventId,
+                'start_date' => $start,
+                'end_date' => $end,
+                'all_day' => $allDay ? 1 : 0,
+            ],
+        ];
 
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         $dataHandler->start($dataMap, []);
@@ -67,13 +65,11 @@ final class CalendarEventCreationService
         }
 
         $result = ['success' => true, 'eventUid' => $eventUid];
-        if ($creationType === 'event-appointment') {
-            $entryUid = (int)($dataHandler->substNEWwithIDs[$newEntryId] ?? 0);
-            if ($entryUid <= 0) {
-                return ['success' => false, 'message' => 'Appointment could not be created.'];
-            }
-            $result['entryUid'] = $entryUid;
+        $entryUid = (int)($dataHandler->substNEWwithIDs[$newEntryId] ?? 0);
+        if ($entryUid <= 0) {
+            return ['success' => false, 'message' => 'Appointment could not be created.'];
         }
+        $result['entryUid'] = $entryUid;
 
         return $result;
     }

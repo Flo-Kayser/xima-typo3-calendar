@@ -58,6 +58,22 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     }
 
     #[Test]
+    public function createsAnAppointmentWhenTheCreationTypeIsEvent(): void
+    {
+        $result = $this->subject->create(2, 1767225600, 1767229200, true);
+
+        self::assertTrue($result['success']);
+        self::assertArrayHasKey('entryUid', $result);
+        self::assertSame(1, (int)($this->get(ConnectionPool::class)
+            ->getQueryBuilderForTable(self::TABLE_ENTRY)
+            ->select('all_day')
+            ->from(self::TABLE_ENTRY)
+            ->where('uid = ' . (int)$result['entryUid'])
+            ->executeQuery()
+            ->fetchOne()));
+    }
+
+    #[Test]
     public function cleanupRemovesAnUntitledEventAndItsAppointment(): void
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
