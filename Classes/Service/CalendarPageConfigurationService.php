@@ -18,72 +18,64 @@ final class CalendarPageConfigurationService
     /** @var array<int, array<string, mixed>> */
     private array $pageTsConfig = [];
 
-    public function isOptionEnabled(RequestInterface $request, string $option, bool $default = true): bool
+    public function isEventPreviewEnabled(RequestInterface $request): bool
     {
-        return (int)$this->getValue($request, $option, $default ? 1 : 0) === 1;
-    }
-
-    public function getValue(RequestInterface $request, string $option, mixed $default = null): mixed
-    {
-        $value = $this->getCalendarPageTsConfig($request);
-        foreach (explode('.', $option) as $part) {
-            if (!is_array($value)) {
-                return $default;
-            }
-
-            $nestedKey = $part . '.';
-            if (array_key_exists($nestedKey, $value)) {
-                $value = $value[$nestedKey];
-            } elseif (array_key_exists($part, $value)) {
-                $value = $value[$part];
-            } else {
-                return $default;
-            }
-        }
-
-        return $value;
+        return $this->isEnabled(
+            $this->getCalendarPageTsConfig($request)['enableEventPreview'] ?? null,
+            false,
+        );
     }
 
     /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool} */
     public function getNewEventConfiguration(RequestInterface $request): array
     {
+        $config = $this->getCalendarPageTsConfig($request);
+        $newEvent = $this->asArray($config['newEvent.'] ?? $config['newEvent'] ?? []);
+        $interaction = $this->asArray($newEvent['interaction.'] ?? $newEvent['interaction'] ?? []);
+        $defaults = $this->asArray($newEvent['defaults.'] ?? $newEvent['defaults'] ?? []);
+
         return [
-            'enableDragNewEvent' => $this->isOptionEnabled(
-                $request,
-                'newEvent.interaction.enableDrag',
+            'enableDragNewEvent' => $this->isEnabled(
+                $interaction['enableDrag'] ?? null,
                 self::DEFAULT_ENABLE_DRAG,
             ),
-            'enableClickNewEvent' => $this->isOptionEnabled(
-                $request,
-                'newEvent.interaction.enableClick',
+            'enableClickNewEvent' => $this->isEnabled(
+                $interaction['enableClick'] ?? null,
                 self::DEFAULT_ENABLE_CLICK,
             ),
             'defaultStartTime' => $this->getValidTime(
-                $request,
-                'newEvent.defaults.startTime',
+                $defaults['startTime'] ?? null,
                 self::DEFAULT_START_TIME,
             ),
             'defaultEndTime' => $this->getValidTime(
-                $request,
-                'newEvent.defaults.endTime',
+                $defaults['endTime'] ?? null,
                 self::DEFAULT_END_TIME,
             ),
-            'defaultAllDay' => $this->isOptionEnabled(
-                $request,
-                'newEvent.defaults.allDay',
+            'defaultAllDay' => $this->isEnabled(
+                $defaults['allDay'] ?? null,
                 self::DEFAULT_ALL_DAY,
             ),
         ];
     }
 
-    private function getValidTime(RequestInterface $request, string $option, string $default): string
+    private function getValidTime(mixed $value, string $default): string
     {
-        $value = $this->getValue($request, $option, $default);
         if (!is_string($value) || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $value)) {
             return $default;
         }
 
         return $value;
+    }
+
+    private function isEnabled(mixed $value, bool $default): bool
+    {
+        return (int)($value ?? ($default ? 1 : 0)) === 1;
+    }
+
+    /** @return array<string, mixed> */
+    private function asArray(mixed $value): array
+    {
+        return is_array($value) ? $value : [];
     }
 
     /** @return array<string, mixed> */

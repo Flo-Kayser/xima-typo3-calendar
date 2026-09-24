@@ -69,33 +69,28 @@ class CalendarController extends ActionController
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');
 
-        $labels = $this->getNewEventLabels();
         $newEventConfiguration = $this->pageConfigurationService->getNewEventConfiguration($request);
         $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
             'createEventUrl' => $createEventUrl,
             'cleanupEventUrl' => $cleanupEventUrl,
-            'appointmentPid' => $appointmentPid,
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
             ...$newEventConfiguration,
             'labels' => [
-                'title' => $labels['newEventTypeModalTitle'],
-                'event' => $labels['newEventTypeEventLabel'],
-                'appointment' => $labels['newEventTypeAppointmentLabel'],
-                'start' => $labels['newEventStartLabel'],
-                'end' => $labels['newEventEndLabel'],
-                'allDay' => $labels['newEventAllDayLabel'],
-                'create' => $labels['newEventCreateLabel'],
+                'title' => $this->getLanguageLabel('newEventType.title', 'Create new record'),
+                'event' => $this->getLanguageLabel('newEventType.event', 'Event'),
+                'appointment' => $this->getLanguageLabel('newEventType.appointment', 'Event Appointment'),
+                'start' => $this->getLanguageLabel('newEventType.start', 'Start'),
+                'end' => $this->getLanguageLabel('newEventType.end', 'End'),
+                'allDay' => $this->getLanguageLabel('newEventType.allDay', 'All-day'),
+                'create' => $this->getLanguageLabel('newEventType.create', 'Create'),
             ],
         ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 
         $moduleTemplate->assignMultiple([
             'calendarConfig' => $calendarConfig,
-            'enableEventPreview' => $this->pageConfigurationService->isOptionEnabled(
-                $request,
-                'enableEventPreview',
-            ),
+            'enableEventPreview' => $this->pageConfigurationService->isEventPreviewEnabled($request),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
@@ -180,20 +175,6 @@ class CalendarController extends ActionController
             ->setShowLabelText(true)
             ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
         $buttonBar->addButton($button, ButtonBar::BUTTON_POSITION_RIGHT, 1);
-    }
-
-    /** @return array<string, string> */
-    private function getNewEventLabels(): array
-    {
-        return [
-            'newEventTypeModalTitle' => $this->getLanguageLabel('newEventType.title', 'Create new record'),
-            'newEventTypeEventLabel' => $this->getLanguageLabel('newEventType.event', 'Event'),
-            'newEventTypeAppointmentLabel' => $this->getLanguageLabel('newEventType.appointment', 'Event Appointment'),
-            'newEventStartLabel' => $this->getLanguageLabel('newEventType.start', 'Start'),
-            'newEventEndLabel' => $this->getLanguageLabel('newEventType.end', 'End'),
-            'newEventAllDayLabel' => $this->getLanguageLabel('newEventType.allDay', 'All-day'),
-            'newEventCreateLabel' => $this->getLanguageLabel('newEventType.create', 'Create'),
-        ];
     }
 
     private function getLanguageLabel(string $key, string $fallback): string
