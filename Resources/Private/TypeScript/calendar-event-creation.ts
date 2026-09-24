@@ -2,7 +2,7 @@ import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import Notification from '@typo3/backend/notification.js';
 import Viewport from '@typo3/backend/viewport.js';
 import {chooseCalendarCreationType, type CalendarCreationValues} from './calendar-creation-modal';
-import type {CalendarConfig} from './calendar-runtime-config';
+import type {CalendarConfig, Typo3TopWindow} from './calendar-runtime-config';
 import {
     getSelectedDayCount,
     prepareCalendarSelection,
@@ -10,13 +10,6 @@ import {
     type CalendarSelection,
 } from './interaction/calendar-selection';
 type CreateEventResponse = { success: boolean; eventUid?: number; entryUid?: number };
-
-type Typo3TopWindow = Window & {
-    TYPO3: {
-        settings: { FormEngine: { moduleUrl: string } };
-        ModuleMenu: { App: { getCurrentModule: () => string } };
-    };
-};
 
 const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
 const PENDING_EVENT_STORAGE_KEY = 'xima_calendar_pending_event';
@@ -38,8 +31,7 @@ export function createCalendarCreationController(
     let selectionCancelled = false;
     let clearCalendarSelection: (() => void) | undefined;
     const canCreate = (type: CalendarCreationValues['type']): boolean => (
-        calendarConfig.appointmentPid > 0
-        && Boolean(calendarConfig.createEventUrl)
+        Boolean(calendarConfig.createEventUrl)
         && (type === 'event'
             ? calendarConfig.canCreateEvent && calendarConfig.canCreateAppointment
             : calendarConfig.canCreateAppointment)

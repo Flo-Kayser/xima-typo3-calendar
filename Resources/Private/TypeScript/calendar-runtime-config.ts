@@ -8,11 +8,17 @@ export type CalendarModalLabels = {
     create: string;
 };
 
+export type Typo3TopWindow = Window & {
+    TYPO3: {
+        settings: { FormEngine: { moduleUrl: string } };
+        ModuleMenu: { App: { getCurrentModule: () => string } };
+    };
+};
+
 export type CalendarConfig = {
     ajaxUrl: string;
     createEventUrl: string;
     cleanupEventUrl: string;
-    appointmentPid: number;
     canCreateEvent: boolean;
     canCreateAppointment: boolean;
     enableDragNewEvent: boolean;
@@ -25,7 +31,11 @@ export type CalendarConfig = {
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean';
-const isNumber = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
+const hasValues = (
+    record: Record<string, unknown>,
+    keys: readonly string[],
+    predicate: (value: unknown) => boolean,
+): boolean => keys.every(key => predicate(record[key]));
 
 const isCalendarModalLabels = (value: unknown): value is CalendarModalLabels => {
     if (!value || typeof value !== 'object') {
@@ -33,8 +43,7 @@ const isCalendarModalLabels = (value: unknown): value is CalendarModalLabels => 
     }
 
     const labels = value as Record<string, unknown>;
-    return ['title', 'event', 'appointment', 'start', 'end', 'allDay', 'create']
-        .every((key) => isString(labels[key]));
+    return hasValues(labels, ['title', 'event', 'appointment', 'start', 'end', 'allDay', 'create'], isString);
 };
 
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
@@ -43,17 +52,13 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     }
 
     const config = value as Record<string, unknown>;
-    return isString(config.ajaxUrl)
-        && isString(config.createEventUrl)
-        && isString(config.cleanupEventUrl)
-        && isNumber(config.appointmentPid)
-        && isBoolean(config.canCreateEvent)
-        && isBoolean(config.canCreateAppointment)
-        && isBoolean(config.enableDragNewEvent)
-        && isBoolean(config.enableClickNewEvent)
-        && isString(config.defaultStartTime)
-        && isString(config.defaultEndTime)
-        && isBoolean(config.defaultAllDay)
+    return hasValues(config, ['ajaxUrl', 'createEventUrl', 'cleanupEventUrl'], isString)
+        && hasValues(
+            config,
+            ['canCreateEvent', 'canCreateAppointment', 'enableDragNewEvent', 'enableClickNewEvent', 'defaultAllDay'],
+            isBoolean,
+        )
+        && hasValues(config, ['defaultStartTime', 'defaultEndTime'], isString)
         && isCalendarModalLabels(config.labels);
 };
 

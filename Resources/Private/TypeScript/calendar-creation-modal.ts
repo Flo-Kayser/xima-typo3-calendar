@@ -1,5 +1,6 @@
 import Modal from '@typo3/backend/modal.js';
 import {html} from 'lit';
+import type {CalendarModalLabels} from './calendar-runtime-config';
 
 export type CalendarCreationType = 'event' | 'event-appointment';
 
@@ -10,16 +11,6 @@ export type CalendarCreationValues = {
     allDay: boolean;
 };
 
-type ModalLabels = {
-    title: string;
-    event: string;
-    appointment: string;
-    start: string;
-    end: string;
-    allDay: string;
-    create: string;
-};
-
 const formatDateTimeLocal = (date: Date): string => {
     const pad = (value: number): string => String(value).padStart(2, '0');
 
@@ -28,13 +19,12 @@ const formatDateTimeLocal = (date: Date): string => {
 };
 
 export function chooseCalendarCreationType(
-    labels: ModalLabels,
+    labels: CalendarModalLabels,
     initialStart: Date,
     initialEnd: Date,
     initialAllDay: boolean,
 ): Promise<CalendarCreationValues | null> {
     return new Promise((resolve) => {
-        let resolved = false;
         const modal = Modal.advanced({
             title: labels.title,
             content: html`
@@ -129,14 +119,11 @@ export function chooseCalendarCreationType(
                 return;
             }
 
-            resolved = true;
             resolve({type, start, end, allDay});
             modal.hideModal();
         });
         modal.addEventListener('typo3-modal-hidden', () => {
-            if (!resolved) {
-                resolve(null);
-            }
+            resolve(null);
         });
     });
 }

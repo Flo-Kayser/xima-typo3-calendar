@@ -1,4 +1,5 @@
 import Viewport from '@typo3/backend/viewport.js';
+import type {Typo3TopWindow} from './calendar-runtime-config';
 
 type EventCalendarEventClickInfo = {
     event: {
@@ -9,21 +10,6 @@ type EventCalendarEventClickInfo = {
     el: HTMLElement;
     view?: {
         type?: string;
-    };
-};
-
-type Typo3TopWindow = Window & {
-    TYPO3: {
-        settings: {
-            FormEngine: {
-                moduleUrl: string;
-            };
-        };
-        ModuleMenu: {
-            App: {
-                getCurrentModule: () => string;
-            };
-        };
     };
 };
 

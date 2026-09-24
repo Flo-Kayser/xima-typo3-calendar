@@ -8,25 +8,10 @@ import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './interaction/calendar-interaction';
-import {readCalendarConfig} from './calendar-runtime-config';
+import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
-type Typo3TopWindow = Window & {
-    TYPO3: {
-        settings: {
-            FormEngine: {
-                moduleUrl: string;
-            };
-        };
-        ModuleMenu: {
-            App: {
-                getCurrentModule: () => string;
-            };
-        };
-    };
-};
-
 DocumentService.ready().then(() => {
     const container = document.getElementById('xima-calendar-mount');
     if (!container) {
