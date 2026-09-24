@@ -1,6 +1,7 @@
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import Viewport from '@typo3/backend/viewport.js';
 import {chooseCalendarCreationType, type CalendarCreationValues} from './calendar-creation-modal';
+import type {CalendarConfig} from './calendar-runtime-config';
 
 type CalendarSelection = {
     start: Date;
@@ -25,17 +26,18 @@ const PENDING_EVENT_STORAGE_KEY = 'xima_calendar_pending_event';
 export function createCalendarCreationController(
     container: HTMLElement,
     typo3Top: Typo3TopWindow,
+    calendarConfig: CalendarConfig,
 ): {
     select: (selection: CalendarSelection) => void;
     dateClick: (click: CalendarDateClick) => void;
-    cleanupPendingEvent: () => Promise<void>;
+    cleanupPendingEvent: () => Promise<boolean>;
     cancelSelection: () => void;
 } {
     let selectionCancelled = false;
     const canCreateEvents = (): boolean => (
-        Number(container.dataset.appointmentPid) > 0
-        && container.dataset.createAllowed === '1'
-        && Boolean(container.dataset.createEventUrl)
+        calendarConfig.appointmentPid > 0
+        && calendarConfig.createAllowed
+        && Boolean(calendarConfig.createEventUrl)
     );
 
     const isValidTime = (value: string): boolean => {
@@ -47,21 +49,13 @@ export function createCalendarCreationController(
         return Number(match[1]) < 24 && Number(match[2]) < 60;
     };
 
-    const configuredStartTime = container.dataset.newEventDefaultStartTime || '';
-    const configuredEndTime = container.dataset.newEventDefaultEndTime || '';
+    const configuredStartTime = calendarConfig.defaultStartTime;
+    const configuredEndTime = calendarConfig.defaultEndTime;
     const defaultStartTime = isValidTime(configuredStartTime) ? configuredStartTime : FALLBACK_START_TIME;
     const defaultEndTime = isValidTime(configuredEndTime) ? configuredEndTime : FALLBACK_END_TIME;
-    const defaultAllDay = container.dataset.newEventDefaultAllDay === '1';
+    const defaultAllDay = calendarConfig.defaultAllDay;
     const isMonthView = (): boolean => container.querySelector('.ec-day-grid') !== null;
-    const modalLabels = {
-        title: container.dataset.newEventTypeModalTitle || 'Create new record',
-        event: container.dataset.newEventTypeEventLabel || 'Event',
-        appointment: container.dataset.newEventTypeAppointmentLabel || 'Event Appointment',
-        start: container.dataset.newEventStartLabel || 'Start',
-        end: container.dataset.newEventEndLabel || 'End',
-        allDay: container.dataset.newEventAllDayLabel || 'All-day',
-        create: container.dataset.newEventCreateLabel || 'Create',
-    };
+    const modalLabels = calendarConfig.labels;
 
     const setTime = (date: Date, value: string): void => {
         const match = value.match(/^(\d{1,2}):(\d{2})$/);
@@ -87,7 +81,7 @@ export function createCalendarCreationController(
             return;
         }
 
-        const response = await new AjaxRequest(container.dataset.createEventUrl as string).post({
+        const response = await new AjaxRequest(calendarConfig.createEventUrl).post({
             start: Math.floor(selection.start.getTime() / 1000),
             end: Math.floor(selection.end.getTime() / 1000),
             allDay: selection.allDay ? 1 : 0,
@@ -105,11 +99,11 @@ export function createCalendarCreationController(
         }
     };
 
-    const cleanupPendingEvent = async (): Promise<void> => {
+    const cleanupPendingEvent = async (): Promise<boolean> => {
         const eventUid = sessionStorage.getItem(PENDING_EVENT_STORAGE_KEY);
-        const cleanupUrl = container.dataset.cleanupEventUrl;
+        const cleanupUrl = calendarConfig.cleanupEventUrl;
         if (!eventUid || !cleanupUrl) {
-            return;
+            return false;
         }
 
         try {
@@ -119,10 +113,13 @@ export function createCalendarCreationController(
             const result = await response.resolve() as { success?: boolean };
             if (result.success) {
                 sessionStorage.removeItem(PENDING_EVENT_STORAGE_KEY);
+                return true;
             }
         } catch {
             // Keep the UID so cleanup can be retried on the next return.
         }
+
+        return false;
     };
 
     const cancelSelection = (): void => {

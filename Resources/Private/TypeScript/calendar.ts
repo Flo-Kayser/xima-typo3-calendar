@@ -7,6 +7,7 @@ import DocumentService from '@typo3/core/document-service.js';
 import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './calendar-interaction';
+import {readCalendarConfig} from './calendar-runtime-config';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
@@ -31,16 +32,16 @@ DocumentService.ready().then(() => {
         return;
     }
 
-    const ajaxUrl = container.dataset.ajaxUrl ?? '';
-    const enableDragNewEvent = container.dataset.enableDragNewEvent === '1';
-    const enableClickNewEvent = container.dataset.enableClickNewEvent === '1';
+    const calendarConfig = readCalendarConfig(container);
+    const enableDragNewEvent = calendarConfig.enableDragNewEvent;
+    const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const calendarOptions = {
         firstDay: 0,
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const detailsController = createCalendarDetailsController(container, typo3Top);
-    const creationController = createCalendarCreationController(container, typo3Top);
+    const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
 
     const ec = new Calendar({
         target: container,
@@ -77,7 +78,7 @@ DocumentService.ready().then(() => {
                 dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
                 eventSources: [
                     {
-                        url: ajaxUrl,
+                        url: calendarConfig.ajaxUrl,
                     },
                 ],
                 eventClick: detailsController.eventClick,
@@ -91,7 +92,11 @@ DocumentService.ready().then(() => {
     });
 
     const cleanupPendingEvent = (): void => {
-        void creationController.cleanupPendingEvent().then(() => ec.refetchEvents());
+        void creationController.cleanupPendingEvent().then((cleanedUp) => {
+            if (cleanedUp) {
+                ec.refetchEvents();
+            }
+        });
     };
     cleanupPendingEvent();
     window.addEventListener('pageshow', cleanupPendingEvent);
