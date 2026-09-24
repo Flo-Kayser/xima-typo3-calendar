@@ -21,6 +21,7 @@ use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
+use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
@@ -39,6 +40,7 @@ class CalendarController extends ActionController
         protected CalendarPermissionService $permissionService,
         protected CalendarPageConfigurationService $pageConfigurationService,
         protected CalendarStoragePidResolver $storagePidResolver,
+        protected CalendarSelectionService $calendarSelectionService,
         protected CalendarPendingCreationService $pendingCreationService,
     ) {
     }
@@ -52,6 +54,7 @@ class CalendarController extends ActionController
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
+        $calendars = $this->calendarSelectionService->getAvailableCalendars();
         $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
         $canCreateEvent = $appointmentPid > 0
             && $this->permissionService->canCreateEventAtPid($appointmentPid);
@@ -76,11 +79,14 @@ class CalendarController extends ActionController
             'cleanupEventUrl' => $cleanupEventUrl,
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
+            'calendars' => $calendars,
             ...$newEventConfiguration,
             'labels' => [
                 'title' => $this->getLanguageLabel('newEventType.title', 'Create new record'),
                 'event' => $this->getLanguageLabel('newEventType.event', 'Event'),
                 'appointment' => $this->getLanguageLabel('newEventType.appointment', 'Event Appointment'),
+                'calendar' => $this->getLanguageLabel('newEventType.calendar', 'Calendar'),
+                'selectCalendar' => $this->getLanguageLabel('newEventType.selectCalendar', 'Select a calendar'),
                 'start' => $this->getLanguageLabel('newEventType.start', 'Start'),
                 'end' => $this->getLanguageLabel('newEventType.end', 'End'),
                 'allDay' => $this->getLanguageLabel('newEventType.allDay', 'All-day'),
@@ -185,5 +191,4 @@ class CalendarController extends ActionController
 
         return $label === '' || str_starts_with($label, 'LLL:') ? $fallback : $label;
     }
-
 }

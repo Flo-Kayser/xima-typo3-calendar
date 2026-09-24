@@ -13,6 +13,7 @@ use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
 use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
+use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
 
@@ -34,7 +35,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     public function rejectsANonArrayPayload(): void
     {
         $response = $this->controller()->createEventAction(
-            (new ServerRequest('https://example.com/typo3/'))->withParsedBody('invalid')
+            (new ServerRequest('https://example.com/typo3/'))->withParsedBody(new \stdClass())
         );
 
         self::assertSame(400, $response->getStatusCode());
@@ -73,6 +74,17 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     }
 
     #[Test]
+    public function refusesACalendarThatDoesNotBelongToTheStoragePage(): void
+    {
+        $this->setBackendUserPermissions(true, true);
+
+        $response = $this->createEvent(['calendarUid' => 999]);
+
+        self::assertSame(400, $response->getStatusCode());
+        self::assertSame(['success' => false, 'message' => 'Invalid calendar.'], $this->decode($response));
+    }
+
+    #[Test]
     public function rejectsCleanupWithoutExactlyOneRecordUid(): void
     {
         $request = new ServerRequest('https://example.com/typo3/');
@@ -103,6 +115,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
             'end' => 1767229200,
             'allDay' => 0,
             'type' => 'event-appointment',
+            'calendarUid' => 1,
         ], $overrides);
 
         return $this->controller()->createEventAction(
@@ -132,6 +145,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
         return new CalendarEventCreationController(
             $this->get(CalendarStoragePidResolver::class),
             new CalendarPermissionService(),
+            $this->get(CalendarSelectionService::class),
             new CalendarEventCreationService(
                 $connectionPool,
                 $this->get(CalendarPendingCreationService::class),

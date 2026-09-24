@@ -25,7 +25,7 @@ final class CalendarEventCreationService
     /**
      * @return array{success: bool, eventUid?: int, entryUid?: int, errors?: array<int, mixed>, message?: string}
      */
-    public function create(int $pid, int $start, int $end, bool $allDay): array
+    public function create(int $pid, int $start, int $end, bool $allDay, ?int $calendarUid = null): array
     {
         $newEventId = StringUtility::getUniqueId('NEW');
         $eventData = ['pid' => $pid];
@@ -41,15 +41,19 @@ final class CalendarEventCreationService
         ];
 
         $newEntryId = StringUtility::getUniqueId('NEW');
+        $entryData = [
+            'pid' => $pid,
+            'record_type' => 'event-appointment',
+            'event' => $newEventId,
+            'start_date' => $start,
+            'end_date' => $end,
+            'all_day' => $allDay ? 1 : 0,
+        ];
+        if ($calendarUid !== null) {
+            $entryData['calendar'] = $calendarUid;
+        }
         $dataMap[self::ENTRY_TABLE] = [
-            $newEntryId => [
-                'pid' => $pid,
-                'record_type' => 'event-appointment',
-                'event' => $newEventId,
-                'start_date' => $start,
-                'end_date' => $end,
-                'all_day' => $allDay ? 1 : 0,
-            ],
+            $newEntryId => $entryData,
         ];
 
         $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
@@ -90,7 +94,7 @@ final class CalendarEventCreationService
      *
      * @return array{success: bool, entryUid?: int, errors?: array<int, mixed>, message?: string}
      */
-    public function createAppointment(int $pid, int $start, int $end, bool $allDay): array
+    public function createAppointment(int $pid, int $start, int $end, bool $allDay, ?int $calendarUid = null): array
     {
         $eventUid = $this->findFirstEventUid($pid);
         if ($eventUid <= 0) {
@@ -98,16 +102,20 @@ final class CalendarEventCreationService
         }
 
         $newEntryId = StringUtility::getUniqueId('NEW');
+        $entryData = [
+            'pid' => $pid,
+            'record_type' => 'event-appointment',
+            'event' => $eventUid,
+            'start_date' => $start,
+            'end_date' => $end,
+            'all_day' => $allDay ? 1 : 0,
+        ];
+        if ($calendarUid !== null) {
+            $entryData['calendar'] = $calendarUid;
+        }
         $dataMap = [
             self::ENTRY_TABLE => [
-                $newEntryId => [
-                    'pid' => $pid,
-                    'record_type' => 'event-appointment',
-                    'event' => $eventUid,
-                    'start_date' => $start,
-                    'end_date' => $end,
-                    'all_day' => $allDay ? 1 : 0,
-                ],
+                $newEntryId => $entryData,
             ],
         ];
 

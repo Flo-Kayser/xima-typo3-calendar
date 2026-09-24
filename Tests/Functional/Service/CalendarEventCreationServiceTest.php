@@ -31,7 +31,7 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     #[Test]
     public function createsAnEventAndItsAppointment(): void
     {
-        $result = $this->subject->create(2, 1767225600, 1767229200, false);
+        $result = $this->subject->create(2, 1767225600, 1767229200, false, 1);
 
         self::assertTrue($result['success']);
         self::assertArrayHasKey('eventUid', $result);
@@ -47,7 +47,7 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
             ->fetchAssociative();
         $entry = $this->get(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE_ENTRY)
-            ->select('event', 'record_type', 'start_date', 'end_date', 'all_day')
+            ->select('event', 'calendar', 'record_type', 'start_date', 'end_date', 'all_day')
             ->from(self::TABLE_ENTRY)
             ->where('event = ' . $eventUid)
             ->executeQuery()
@@ -55,6 +55,7 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
 
         self::assertSame('event', $event['record_type'] ?? null);
         self::assertSame($eventUid, (int)($entry['event'] ?? 0));
+        self::assertSame(1, (int)($entry['calendar'] ?? 0));
         self::assertSame('event-appointment', $entry['record_type'] ?? null);
         self::assertSame(1767225600, (int)($entry['start_date'] ?? 0));
         self::assertSame(1767229200, (int)($entry['end_date'] ?? 0));
@@ -80,7 +81,7 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     #[Test]
     public function createsAnAppointmentBelowTheFirstExistingEvent(): void
     {
-        $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false);
+        $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false, 1);
 
         self::assertTrue($result['success']);
         self::assertArrayNotHasKey('eventUid', $result);
@@ -88,13 +89,14 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
 
         $entry = $this->get(ConnectionPool::class)
             ->getQueryBuilderForTable(self::TABLE_ENTRY)
-            ->select('event')
+            ->select('event', 'calendar')
             ->from(self::TABLE_ENTRY)
             ->where('uid = ' . (int)$result['entryUid'])
             ->executeQuery()
             ->fetchAssociative();
 
         self::assertSame(1, (int)($entry['event'] ?? 0));
+        self::assertSame(1, (int)($entry['calendar'] ?? 0));
     }
 
     #[Test]

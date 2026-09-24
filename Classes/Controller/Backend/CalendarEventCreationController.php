@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\Http\JsonResponse;
 use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
+use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 
 final class CalendarEventCreationController
@@ -19,6 +20,7 @@ final class CalendarEventCreationController
     public function __construct(
         private readonly CalendarStoragePidResolver $storagePidResolver,
         private readonly CalendarPermissionService $permissionService,
+        private readonly CalendarSelectionService $calendarSelectionService,
         private readonly CalendarEventCreationService $eventCreationService,
         private readonly CalendarPendingCreationService $pendingCreationService,
     ) {
@@ -35,6 +37,8 @@ final class CalendarEventCreationController
         $end = (int)($data['end'] ?? 0);
         $allDay = (int)($data['allDay'] ?? 0) === 1;
         $creationType = (string)($data['type'] ?? 'event-appointment');
+        $calendarUid = isset($data['calendarUid']) ? (int)$data['calendarUid'] : null;
+        $calendarUid = $calendarUid > 0 ? $calendarUid : null;
         $pid = $this->storagePidResolver->resolveStoragePid();
 
         if (!in_array($creationType, self::CREATION_TYPES, true)) {
@@ -52,9 +56,15 @@ final class CalendarEventCreationController
             return new JsonResponse(['success' => false, 'message' => 'No permission to create events.'], 403);
         }
 
+        $calendars = $this->calendarSelectionService->getAvailableCalendars();
+        if (($calendars !== [] && $calendarUid === null)
+            || ($calendarUid !== null && !$this->calendarSelectionService->isAvailable($calendarUid))) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid calendar.'], 400);
+        }
+
         $result = $creationType === 'event'
-            ? $this->eventCreationService->create($pid, $start, $end, $allDay)
-            : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay);
+            ? $this->eventCreationService->create($pid, $start, $end, $allDay, $calendarUid)
+            : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay, $calendarUid);
         return new JsonResponse($result, $result['success'] ? 200 : 500);
     }
 
