@@ -25,6 +25,9 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/be_users.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/calendar.csv');
+        $this->get(ConnectionPool::class)
+            ->getConnectionForTable('pages')
+            ->update('pages', ['module' => 'events'], ['uid' => 2]);
     }
 
     #[Test]
