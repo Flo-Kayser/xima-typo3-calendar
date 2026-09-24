@@ -7,7 +7,7 @@ import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
-import {createCalendarInteractionController} from './calendar-interaction';
+import {createCalendarInteractionController} from './interaction/calendar-interaction';
 import {readCalendarConfig} from './calendar-runtime-config';
 
 type EventCalendarTheme = Record<string, string | string[]>;
@@ -99,6 +99,7 @@ DocumentService.ready().then(() => {
         firstDay: calendarOptions.firstDay,
         enableDragNewEvent,
     });
+    creationController.setClearCalendarSelection(() => ec.unselect());
 
     const cleanupPendingCreation = (): void => {
         void creationController.cleanupPendingCreation().then((cleanedUp) => {
@@ -109,6 +110,8 @@ DocumentService.ready().then(() => {
     };
     cleanupPendingCreation();
     window.addEventListener('pageshow', cleanupPendingCreation);
+    window.addEventListener('popstate', cleanupPendingCreation);
+    window.top.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
 
     document.querySelectorAll<HTMLInputElement>('.xima-cal-filter__checkbox').forEach(cb => {
         cb.addEventListener('change', () => ec.refetchEvents());

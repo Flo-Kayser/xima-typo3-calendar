@@ -278,6 +278,11 @@
     display: none !important;
 }
 
+#xima-calendar-mount.xima-calendar-selection-dialog-open .ec-event.ec-preview,
+#xima-calendar-mount.xima-calendar-selection-dialog-open .ec-events.ec-preview {
+    display: none !important;
+}
+
 .xima-calendar-selection-overlay {
     position: fixed;
     z-index: 1000;
