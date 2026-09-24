@@ -38,17 +38,9 @@ final class CalendarPendingCreationService
             return false;
         }
 
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::EVENT_TABLE);
-        $event = $queryBuilder
-            ->select('uid', 'pid', 'title', 'description', 'additional_information', 'slug', 'url', 'registration_link')
-            ->from(self::EVENT_TABLE)
-            ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($eventUid, Connection::PARAM_INT)),
-                $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($expectedPid, Connection::PARAM_INT)),
-            )
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchAssociative();
+        $event = $this->fetchRecord(self::EVENT_TABLE, $eventUid, $expectedPid, [
+            'title', 'description', 'additional_information', 'slug', 'url', 'registration_link',
+        ]);
 
         if ($event === false) {
             $this->forget(self::PENDING_EVENTS_SESSION_KEY, $eventUid);
@@ -99,17 +91,9 @@ final class CalendarPendingCreationService
             return false;
         }
 
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::ENTRY_TABLE);
-        $entry = $queryBuilder
-            ->select('uid', 'pid', 'title', 'description', 'online_link', 'ticket_link', 'address', 'directions')
-            ->from(self::ENTRY_TABLE)
-            ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryUid, Connection::PARAM_INT)),
-                $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($expectedPid, Connection::PARAM_INT)),
-            )
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchAssociative();
+        $entry = $this->fetchRecord(self::ENTRY_TABLE, $entryUid, $expectedPid, [
+            'title', 'description', 'online_link', 'ticket_link', 'address', 'directions',
+        ]);
 
         if ($entry === false || $this->hasContent($entry, [
             'title', 'description', 'online_link', 'ticket_link', 'address', 'directions',
@@ -133,6 +117,26 @@ final class CalendarPendingCreationService
         $dataHandler->process_cmdmap();
 
         return $dataHandler->errorLog === [];
+    }
+
+    /**
+     * @param list<string> $fields
+     * @return array<string, mixed>|false
+     */
+    private function fetchRecord(string $table, int $uid, int $pid, array $fields): array|false
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable($table);
+
+        return $queryBuilder
+            ->select(...$fields)
+            ->from($table)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)),
+                $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)),
+            )
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchAssociative();
     }
 
     private function register(string $key, int $uid, int $pid): void

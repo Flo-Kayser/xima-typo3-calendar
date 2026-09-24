@@ -80,6 +80,7 @@ final class CalendarEventCreationService
             return ['success' => false, 'message' => 'Appointment could not be created.'];
         }
         $result['entryUid'] = $entryUid;
+        $this->pendingCreationService->registerEvent($eventUid, $pid);
 
         return $result;
     }
@@ -123,6 +124,7 @@ final class CalendarEventCreationService
             return ['success' => false, 'message' => 'Appointment could not be created.'];
         }
 
+        $this->pendingCreationService->registerEntry($entryUid, $pid);
         return ['success' => true, 'entryUid' => $entryUid];
     }
 

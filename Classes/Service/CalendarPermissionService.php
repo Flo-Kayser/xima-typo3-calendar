@@ -41,19 +41,18 @@ final class CalendarPermissionService
         int $pid,
         ?BackendUserAuthentication $backendUser = null,
     ): bool {
-        $backendUser ??= $this->getBackendUser();
-        if (!$backendUser instanceof BackendUserAuthentication) {
-            return false;
-        }
-
-        return $backendUser->recordEditAccessInternals(
-            self::APPOINTMENT_TABLE,
-            ['pid' => $pid],
-            true,
-        );
+        return $this->canEditTableAtPid(self::APPOINTMENT_TABLE, $pid, $backendUser);
     }
 
     public function canCreateEventAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        return $this->canEditTableAtPid(self::EVENT_TABLE, $pid, $backendUser);
+    }
+
+    private function canEditTableAtPid(
+        string $table,
         int $pid,
         ?BackendUserAuthentication $backendUser = null,
     ): bool {
@@ -63,7 +62,7 @@ final class CalendarPermissionService
         }
 
         return $backendUser->recordEditAccessInternals(
-            self::EVENT_TABLE,
+            $table,
             ['pid' => $pid],
             true,
         );

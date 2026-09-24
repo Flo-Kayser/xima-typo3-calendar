@@ -102,7 +102,6 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false);
         $entryUid = (int)$result['entryUid'];
-        $this->get(CalendarPendingCreationService::class)->registerEntry($entryUid, 2);
 
         self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEntry($entryUid, 2));
         self::assertSame(0, $this->countRecords(self::TABLE_ENTRY, $entryUid));
@@ -114,7 +113,6 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
-        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
 
         self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 2));
         self::assertSame(0, $this->countRecords(self::TABLE_EVENT, $eventUid));
@@ -126,7 +124,6 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
-        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
         $this->get(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_EVENT)
             ->update(self::TABLE_EVENT, ['title' => 'Created event'], ['uid' => $eventUid]);
@@ -141,7 +138,6 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
-        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
 
         $this->get(ConnectionPool::class)
             ->getConnectionForTable(self::TABLE_ENTRY)
@@ -157,7 +153,6 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);
         $eventUid = (int)$result['eventUid'];
-        $this->get(CalendarPendingCreationService::class)->registerEvent($eventUid, 2);
 
         self::assertFalse($this->get(CalendarPendingCreationService::class)->cleanupEvent($eventUid, 999));
         self::assertSame(1, $this->countRecords(self::TABLE_EVENT, $eventUid));

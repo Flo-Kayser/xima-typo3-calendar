@@ -55,15 +55,6 @@ final class CalendarEventCreationController
         $result = $creationType === 'event'
             ? $this->eventCreationService->create($pid, $start, $end, $allDay)
             : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay);
-        if ($result['success']) {
-            if ($creationType === 'event' && isset($result['eventUid'])) {
-                $this->pendingCreationService->registerEvent((int)$result['eventUid'], $pid);
-            }
-            if ($creationType === 'event-appointment' && isset($result['entryUid'])) {
-                $this->pendingCreationService->registerEntry((int)$result['entryUid'], $pid);
-            }
-        }
-
         return new JsonResponse($result, $result['success'] ? 200 : 500);
     }
 
@@ -76,10 +67,10 @@ final class CalendarEventCreationController
         }
 
         $pid = $this->storagePidResolver->resolveStoragePid();
-        if ($eventUid > 0 && !$this->permissionService->canCreateEventAndAppointmentAtPid($pid)) {
-            return new JsonResponse(['success' => false], 403);
-        }
-        if ($entryUid > 0 && !$this->permissionService->canCreateAppointmentAtPid($pid)) {
+        $hasPermission = $eventUid > 0
+            ? $this->permissionService->canCreateEventAndAppointmentAtPid($pid)
+            : $this->permissionService->canCreateAppointmentAtPid($pid);
+        if (!$hasPermission) {
             return new JsonResponse(['success' => false], 403);
         }
 
