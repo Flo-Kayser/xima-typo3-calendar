@@ -1,6 +1,6 @@
 import Modal from '@typo3/backend/modal.js';
 import {html} from 'lit';
-import type {CalendarModalLabels} from './calendar-runtime-config';
+import type {CalendarModalLabels, CalendarOption} from './calendar-runtime-config';
 
 export type CalendarCreationType = 'event' | 'event-appointment';
 
@@ -9,6 +9,7 @@ export type CalendarCreationValues = {
     start: Date;
     end: Date;
     allDay: boolean;
+    calendarUid: number | null;
 };
 
 const formatDateTimeLocal = (date: Date): string => {
@@ -20,6 +21,7 @@ const formatDateTimeLocal = (date: Date): string => {
 
 export function chooseCalendarCreationType(
     labels: CalendarModalLabels,
+    calendars: CalendarOption[],
     initialStart: Date,
     initialEnd: Date,
     initialAllDay: boolean,
@@ -36,6 +38,17 @@ export function chooseCalendarCreationType(
                             <option value="event-appointment">${labels.appointment}</option>
                         </select>
                     </div>
+                    ${calendars.length > 0 ? html`
+                        <div class="form-group">
+                            <label class="form-label" for="xima-calendar-creation-calendar">${labels.calendar}</label>
+                            <select id="xima-calendar-creation-calendar" class="form-select">
+                                ${calendars.length > 1 ? html`<option value="">${labels.selectCalendar}</option>` : ''}
+                                ${calendars.map(calendar => html`
+                                    <option value=${calendar.uid} ?selected=${calendars.length === 1}>${calendar.title}</option>
+                                `)}
+                            </select>
+                        </div>
+                    ` : ''}
                     <hr class="xima-calendar-creation-form__separator" style="margin:0 0 1rem">
                     <div class="xima-calendar-creation-form__fields" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;align-items:end">
                         <div class="form-group">
@@ -110,16 +123,21 @@ export function chooseCalendarCreationType(
             }
 
             const type = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-type')?.value;
+            const calendarValue = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar')?.value;
             const startValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-start')?.value;
             const endValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-end')?.value;
             const allDay = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-all-day')?.checked ?? false;
             const start = startValue ? new Date(startValue) : null;
             const end = endValue ? new Date(endValue) : null;
+            const calendarUid = calendarValue ? Number(calendarValue) : null;
             if ((type !== 'event' && type !== 'event-appointment') || !start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) {
                 return;
             }
+            if (calendars.length > 0 && !calendarUid) {
+                return;
+            }
 
-            resolve({type, start, end, allDay});
+            resolve({type, start, end, allDay, calendarUid});
             modal.hideModal();
         });
         modal.addEventListener('typo3-modal-hidden', () => {

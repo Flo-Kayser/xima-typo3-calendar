@@ -26,6 +26,12 @@
 			<trans-unit id="newEventType.appointment" resname="newEventType.appointment">
 				<source>Event Appointment</source>
 			</trans-unit>
+			<trans-unit id="newEventType.calendar" resname="newEventType.calendar">
+				<source>Calendar</source>
+			</trans-unit>
+			<trans-unit id="newEventType.selectCalendar" resname="newEventType.selectCalendar">
+				<source>Select a calendar</source>
+			</trans-unit>
 			<trans-unit id="newEventType.start" resname="newEventType.start"><source>Start</source></trans-unit>
 			<trans-unit id="newEventType.end" resname="newEventType.end"><source>End</source></trans-unit>
 			<trans-unit id="newEventType.allDay" resname="newEventType.allDay"><source>All-day</source></trans-unit>

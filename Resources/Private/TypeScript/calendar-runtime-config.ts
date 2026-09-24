@@ -2,10 +2,17 @@ export type CalendarModalLabels = {
     title: string;
     event: string;
     appointment: string;
+    calendar: string;
+    selectCalendar: string;
     start: string;
     end: string;
     allDay: string;
     create: string;
+};
+
+export type CalendarOption = {
+    uid: number;
+    title: string;
 };
 
 export type Typo3TopWindow = Window & {
@@ -26,11 +33,13 @@ export type CalendarConfig = {
     defaultStartTime: string;
     defaultEndTime: string;
     defaultAllDay: boolean;
+    calendars: CalendarOption[];
     labels: CalendarModalLabels;
 };
 
 const isString = (value: unknown): value is string => typeof value === 'string';
 const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean';
+const isNumber = (value: unknown): value is number => typeof value === 'number' && Number.isInteger(value);
 const hasValues = (
     record: Record<string, unknown>,
     keys: readonly string[],
@@ -43,8 +52,22 @@ const isCalendarModalLabels = (value: unknown): value is CalendarModalLabels => 
     }
 
     const labels = value as Record<string, unknown>;
-    return hasValues(labels, ['title', 'event', 'appointment', 'start', 'end', 'allDay', 'create'], isString);
+    return hasValues(
+        labels,
+        ['title', 'event', 'appointment', 'calendar', 'selectCalendar', 'start', 'end', 'allDay', 'create'],
+        isString,
+    );
 };
+
+const isCalendarOptions = (value: unknown): value is CalendarOption[] => (
+    Array.isArray(value)
+    && value.every(option => (
+        Boolean(option)
+        && typeof option === 'object'
+        && isNumber((option as Record<string, unknown>).uid)
+        && isString((option as Record<string, unknown>).title)
+    ))
+);
 
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     if (!value || typeof value !== 'object') {
@@ -59,6 +82,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
             isBoolean,
         )
         && hasValues(config, ['defaultStartTime', 'defaultEndTime'], isString)
+        && isCalendarOptions(config.calendars)
         && isCalendarModalLabels(config.labels);
 };
 
