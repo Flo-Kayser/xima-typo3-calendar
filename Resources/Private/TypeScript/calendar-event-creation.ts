@@ -1,4 +1,5 @@
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
+import Notification from '@typo3/backend/notification.js';
 import Viewport from '@typo3/backend/viewport.js';
 import {chooseCalendarCreationType, type CalendarCreationValues} from './calendar-creation-modal';
 import type {CalendarConfig} from './calendar-runtime-config';
@@ -19,9 +20,8 @@ type Typo3TopWindow = Window & {
 };
 
 const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
-const FALLBACK_START_TIME = '09:00';
-const FALLBACK_END_TIME = '09:30';
 const PENDING_EVENT_STORAGE_KEY = 'xima_calendar_pending_event';
+const PENDING_ENTRY_STORAGE_KEY = 'xima_calendar_pending_entry';
 
 export function createCalendarCreationController(
     container: HTMLElement,
@@ -30,29 +30,20 @@ export function createCalendarCreationController(
 ): {
     select: (selection: CalendarSelection) => void;
     dateClick: (click: CalendarDateClick) => void;
-    cleanupPendingEvent: () => Promise<boolean>;
+    cleanupPendingCreation: () => Promise<boolean>;
     cancelSelection: () => void;
 } {
     let selectionCancelled = false;
-    const canCreateEvents = (): boolean => (
+    const canCreate = (type: CalendarCreationValues['type']): boolean => (
         calendarConfig.appointmentPid > 0
-        && calendarConfig.createAllowed
         && Boolean(calendarConfig.createEventUrl)
+        && (type === 'event'
+            ? calendarConfig.canCreateEvent && calendarConfig.canCreateAppointment
+            : calendarConfig.canCreateAppointment)
     );
 
-    const isValidTime = (value: string): boolean => {
-        const match = value.match(/^(\d{1,2}):(\d{2})$/);
-        if (!match) {
-            return false;
-        }
-
-        return Number(match[1]) < 24 && Number(match[2]) < 60;
-    };
-
-    const configuredStartTime = calendarConfig.defaultStartTime;
-    const configuredEndTime = calendarConfig.defaultEndTime;
-    const defaultStartTime = isValidTime(configuredStartTime) ? configuredStartTime : FALLBACK_START_TIME;
-    const defaultEndTime = isValidTime(configuredEndTime) ? configuredEndTime : FALLBACK_END_TIME;
+    const defaultStartTime = calendarConfig.defaultStartTime;
+    const defaultEndTime = calendarConfig.defaultEndTime;
     const defaultAllDay = calendarConfig.defaultAllDay;
     const isMonthView = (): boolean => container.querySelector('.ec-day-grid') !== null;
     const modalLabels = calendarConfig.labels;
@@ -76,8 +67,15 @@ export function createCalendarCreationController(
         Viewport.ContentContainer.setUrl(`${moduleUrl}&${params.toString()}`);
     };
 
+    const showCreationError = (): void => {
+        Notification.error(
+            'Error',
+            'The event could not be created. Please try again.',
+        );
+    };
+
     const createEvent = async (selection: CalendarCreationValues): Promise<void> => {
-        if (!canCreateEvents()) {
+        if (!canCreate(selection.type)) {
             return;
         }
 
@@ -89,34 +87,61 @@ export function createCalendarCreationController(
         });
         const result = await response.resolve() as CreateEventResponse;
 
-        if (result.success && result.eventUid) {
+        if (!result.success) {
+            throw new Error('Event creation failed');
+        }
+
+        if (selection.type === 'event-appointment' && result.entryUid) {
+            sessionStorage.setItem(PENDING_ENTRY_STORAGE_KEY, String(result.entryUid));
+            openRecordForm('tx_ximatypo3calendar_domain_model_entry', result.entryUid);
+        } else if (result.eventUid) {
             sessionStorage.setItem(PENDING_EVENT_STORAGE_KEY, String(result.eventUid));
-            if (selection.type === 'event-appointment' && result.entryUid) {
-                openRecordForm('tx_ximatypo3calendar_domain_model_entry', result.entryUid);
-            } else {
-                openRecordForm(EVENT_TABLE, result.eventUid);
-            }
+            openRecordForm(EVENT_TABLE, result.eventUid);
+        } else {
+            throw new Error('Creation response is incomplete');
         }
     };
 
-    const cleanupPendingEvent = async (): Promise<boolean> => {
+    const openCreationDialog = (
+        start: Date,
+        end: Date,
+        allDay: boolean,
+    ): void => {
+        void chooseCalendarCreationType(modalLabels, start, end, allDay)
+            .then((creation) => {
+                if (creation !== null) {
+                    return createEvent(creation);
+                }
+            })
+            .catch(showCreationError);
+    };
+
+    const cleanupPendingCreation = async (): Promise<boolean> => {
         const eventUid = sessionStorage.getItem(PENDING_EVENT_STORAGE_KEY);
+        const entryUid = sessionStorage.getItem(PENDING_ENTRY_STORAGE_KEY);
         const cleanupUrl = calendarConfig.cleanupEventUrl;
-        if (!eventUid || !cleanupUrl) {
+        if ((!eventUid && !entryUid) || !cleanupUrl) {
             return false;
         }
 
         try {
             const url = new URL(cleanupUrl, document.location.origin);
-            url.searchParams.set('eventUid', eventUid);
+            if (eventUid) {
+                url.searchParams.set('eventUid', eventUid);
+            } else if (entryUid) {
+                url.searchParams.set('entryUid', entryUid);
+            }
             const response = await new AjaxRequest(url).get();
             const result = await response.resolve() as { success?: boolean };
             if (result.success) {
-                sessionStorage.removeItem(PENDING_EVENT_STORAGE_KEY);
+                if (eventUid) {
+                    sessionStorage.removeItem(PENDING_EVENT_STORAGE_KEY);
+                } else {
+                    sessionStorage.removeItem(PENDING_ENTRY_STORAGE_KEY);
+                }
                 return true;
             }
         } catch {
-            // Keep the UID so cleanup can be retried on the next return.
         }
 
         return false;
@@ -164,23 +189,15 @@ export function createCalendarCreationController(
             const selectedDayCount = Math.round((endDay.getTime() - startDay.getTime()) / 86400000);
             const forceAllDay = isMonthView() && selection.allDay && selectedDayCount >= 2;
             const preparedSelection = prepareSelection(selection, forceAllDay);
-            void chooseCalendarCreationType(modalLabels, preparedSelection.start, preparedSelection.end, preparedSelection.allDay).then((creation) => {
-                if (creation !== null) {
-                    void createEvent(creation);
-                }
-            });
+            openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay);
         },
         dateClick: (click: CalendarDateClick): void => {
             const start = new Date(click.date);
             const end = new Date(start.getTime() + (click.allDay ? 86400000 : 1800000));
             const preparedSelection = prepareSelection({start, end, allDay: click.allDay});
-            void chooseCalendarCreationType(modalLabels, preparedSelection.start, preparedSelection.end, preparedSelection.allDay).then((creation) => {
-                if (creation !== null) {
-                    void createEvent(creation);
-                }
-            });
+            openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay);
         },
-        cleanupPendingEvent,
+        cleanupPendingCreation,
         cancelSelection,
     };
 }

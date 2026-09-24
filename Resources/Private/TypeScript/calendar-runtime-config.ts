@@ -13,7 +13,8 @@ export type CalendarConfig = {
     createEventUrl: string;
     cleanupEventUrl: string;
     appointmentPid: number;
-    createAllowed: boolean;
+    canCreateEvent: boolean;
+    canCreateAppointment: boolean;
     enableDragNewEvent: boolean;
     enableClickNewEvent: boolean;
     defaultStartTime: string;
@@ -22,42 +23,47 @@ export type CalendarConfig = {
     labels: CalendarModalLabels;
 };
 
-const defaultConfig: CalendarConfig = {
-    ajaxUrl: '',
-    createEventUrl: '',
-    cleanupEventUrl: '',
-    appointmentPid: 0,
-    createAllowed: false,
-    enableDragNewEvent: false,
-    enableClickNewEvent: false,
-    defaultStartTime: '09:00',
-    defaultEndTime: '09:30',
-    defaultAllDay: false,
-    labels: {
-        title: 'Create new record',
-        event: 'Event',
-        appointment: 'Event Appointment',
-        start: 'Start',
-        end: 'End',
-        allDay: 'All-day',
-        create: 'Create',
-    },
-};
+const isString = (value: unknown): value is string => typeof value === 'string';
+const isBoolean = (value: unknown): value is boolean => typeof value === 'boolean';
+const isNumber = (value: unknown): value is number => typeof value === 'number' && Number.isFinite(value);
 
-export function readCalendarConfig(container: HTMLElement): CalendarConfig {
-    let rawConfig: Partial<CalendarConfig> = {};
-    try {
-        rawConfig = JSON.parse(container.dataset.calendarConfig ?? '{}') as Partial<CalendarConfig>;
-    } catch {
-        return defaultConfig;
+const isCalendarModalLabels = (value: unknown): value is CalendarModalLabels => {
+    if (!value || typeof value !== 'object') {
+        return false;
     }
 
-    return {
-        ...defaultConfig,
-        ...rawConfig,
-        labels: {
-            ...defaultConfig.labels,
-            ...(rawConfig.labels ?? {}),
-        },
-    };
+    const labels = value as Record<string, unknown>;
+    return ['title', 'event', 'appointment', 'start', 'end', 'allDay', 'create']
+        .every((key) => isString(labels[key]));
+};
+
+const isCalendarConfig = (value: unknown): value is CalendarConfig => {
+    if (!value || typeof value !== 'object') {
+        return false;
+    }
+
+    const config = value as Record<string, unknown>;
+    return isString(config.ajaxUrl)
+        && isString(config.createEventUrl)
+        && isString(config.cleanupEventUrl)
+        && isNumber(config.appointmentPid)
+        && isBoolean(config.canCreateEvent)
+        && isBoolean(config.canCreateAppointment)
+        && isBoolean(config.enableDragNewEvent)
+        && isBoolean(config.enableClickNewEvent)
+        && isString(config.defaultStartTime)
+        && isString(config.defaultEndTime)
+        && isBoolean(config.defaultAllDay)
+        && isCalendarModalLabels(config.labels);
+};
+
+export function readCalendarConfig(container: HTMLElement): CalendarConfig | null {
+    let rawConfig: unknown;
+    try {
+        rawConfig = JSON.parse(container.dataset.calendarConfig ?? 'null') as unknown;
+    } catch {
+        return null;
+    }
+
+    return isCalendarConfig(rawConfig) ? rawConfig : null;
 }

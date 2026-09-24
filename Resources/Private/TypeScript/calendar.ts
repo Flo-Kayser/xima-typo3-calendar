@@ -4,6 +4,7 @@ import TimeGrid from '@event-calendar/time-grid';
 import List from '@event-calendar/list';
 import Interaction from '@event-calendar/interaction';
 import DocumentService from '@typo3/core/document-service.js';
+import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './calendar-interaction';
@@ -33,6 +34,14 @@ DocumentService.ready().then(() => {
     }
 
     const calendarConfig = readCalendarConfig(container);
+    if (!calendarConfig) {
+        Notification.error(
+            'Configuration error',
+            'The calendar configuration is invalid.',
+        );
+        return;
+    }
+
     const enableDragNewEvent = calendarConfig.enableDragNewEvent;
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const calendarOptions = {
@@ -91,15 +100,15 @@ DocumentService.ready().then(() => {
         enableDragNewEvent,
     });
 
-    const cleanupPendingEvent = (): void => {
-        void creationController.cleanupPendingEvent().then((cleanedUp) => {
+    const cleanupPendingCreation = (): void => {
+        void creationController.cleanupPendingCreation().then((cleanedUp) => {
             if (cleanedUp) {
                 ec.refetchEvents();
             }
         });
     };
-    cleanupPendingEvent();
-    window.addEventListener('pageshow', cleanupPendingEvent);
+    cleanupPendingCreation();
+    window.addEventListener('pageshow', cleanupPendingCreation);
 
     document.querySelectorAll<HTMLInputElement>('.xima-cal-filter__checkbox').forEach(cb => {
         cb.addEventListener('change', () => ec.refetchEvents());
