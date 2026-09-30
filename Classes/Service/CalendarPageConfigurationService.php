@@ -58,6 +58,24 @@ final class CalendarPageConfigurationService
         ];
     }
 
+    /** @return array<string, string> */
+    public function getCategoryColors(RequestInterface $request): array
+    {
+        $config = $this->getCalendarPageTsConfig($request);
+        $colors = $this->asArray($config['categoryColors.'] ?? $config['categoryColors'] ?? []);
+        $result = [];
+
+        foreach ($colors as $categoryUid => $color) {
+            if (!is_numeric($categoryUid) || !is_string($color) || !preg_match('/^#[0-9a-fA-F]{6}$/', $color)) {
+                continue;
+            }
+
+            $result[(string)(int)$categoryUid] = $color;
+        }
+
+        return $result;
+    }
+
     private function getValidTime(mixed $value, string $default): string
     {
         if (!is_string($value) || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $value)) {

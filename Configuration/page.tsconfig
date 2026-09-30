@@ -20,6 +20,9 @@ TCEMAIN.preview {
 mod.tx_ximatypo3calendar {
     enableEventPreview = 0
 
+    categoryColors {
+    }
+
     newEvent {
         interaction {
             enableDrag = 1

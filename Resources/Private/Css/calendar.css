@@ -1,2 +1,39 @@
 @import '@event-calendar/core/index.css';
 @import '../../Public/Css/calendar-base.css';
+
+#xima-calendar-mount {
+    .ec-day-grid,
+    .ec-time-grid {
+        .ec-events {
+            margin-right: 0;
+        }
+
+        .ec-event {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ec-event-body {
+            flex-direction: row;
+            align-items: baseline;
+            gap: 0.35rem;
+            min-width: 0;
+        }
+
+        .ec-event-time,
+        .ec-event-title {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .ec-event-time {
+            flex: 0 0 auto;
+            margin: 0;
+        }
+
+        .ec-event-title {
+            min-width: 0;
+        }
+    }
+}

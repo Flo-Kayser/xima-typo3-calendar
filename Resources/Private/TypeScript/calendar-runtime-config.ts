@@ -34,6 +34,7 @@ export type CalendarConfig = {
     defaultEndTime: string;
     defaultAllDay: boolean;
     calendars: CalendarOption[];
+    categoryColors: Record<string, string>;
     labels: CalendarModalLabels;
 };
 
@@ -69,6 +70,13 @@ const isCalendarOptions = (value: unknown): value is CalendarOption[] => (
     ))
 );
 
+const isCategoryColors = (value: unknown): value is Record<string, string> => (
+    Boolean(value)
+    && typeof value === 'object'
+    && !Array.isArray(value)
+    && Object.values(value as Record<string, unknown>).every(isString)
+);
+
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     if (!value || typeof value !== 'object') {
         return false;
@@ -83,6 +91,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         )
         && hasValues(config, ['defaultStartTime', 'defaultEndTime'], isString)
         && isCalendarOptions(config.calendars)
+        && isCategoryColors(config.categoryColors)
         && isCalendarModalLabels(config.labels);
 };
 

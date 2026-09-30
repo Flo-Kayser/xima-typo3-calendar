@@ -83,6 +83,12 @@ class CalendarController extends ActionController
             'filterStateUrl',
             $filterStateUrl,
         );
+        $categoryColors = (object)$this->pageConfigurationService->getCategoryColors($request);
+        $this->pageRenderer->addInlineSetting(
+            'ximaCalendar',
+            'categoryColors',
+            $categoryColors,
+        );
         $this->pageRenderer->addInlineLanguageLabelFile(
             'EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf',
             'filter',
@@ -96,6 +102,7 @@ class CalendarController extends ActionController
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
             'calendars' => $calendars,
+            'categoryColors' => $categoryColors,
             ...$newEventConfiguration,
             'labels' => [
                 'title' => $this->getLanguageLabel('newEventType.title', 'Create new record'),

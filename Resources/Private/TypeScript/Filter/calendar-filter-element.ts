@@ -1,5 +1,6 @@
 import {html, LitElement, nothing} from 'lit';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
+import {getCategoryColor, type CategoryColors} from '../calendar-category-color';
 
 import './calendar-filter-toolbar';
 import type {
@@ -21,6 +22,7 @@ type Typo3TopWindow = Window & {
       ximaCalendar?: {
         filterOptionsUrl?: string;
         filterStateUrl?: string;
+        categoryColors?: CategoryColors;
       };
     };
   };
@@ -103,6 +105,23 @@ export class CalendarFilterElement extends LitElement {
           align-items: center;
           gap: 0.25rem;
           min-height: 1.75rem;
+        }
+
+        .xima-calendar-filter__category-checkbox {
+          appearance: none;
+          width: 1rem;
+          height: 1rem;
+          flex: 0 0 1rem;
+          margin: 0;
+          border: 2px solid var(--xima-category-color);
+          border-radius: 50%;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .xima-calendar-filter__category-checkbox:checked {
+          background: var(--xima-category-color);
+          box-shadow: inset 0 0 0 2px var(--typo3-component-bg);
         }
 
         .xima-calendar-filter__tree-toggle {
@@ -225,9 +244,10 @@ export class CalendarFilterElement extends LitElement {
             </button>
             <label class="form-check">
               <input
-                class="form-check-input"
+                class="xima-calendar-filter__category-checkbox"
                 type="checkbox"
                 value=${category.value}
+                style=${`--xima-category-color: ${this.getCategoryColor(category.value)}`}
                 ?checked=${this.filterState?.activeCategories.includes(category.value) ?? false}
                 @change=${() => this.handleCategoryChange(category.value)}
               />
@@ -419,6 +439,12 @@ export class CalendarFilterElement extends LitElement {
     }
 
     return [...result];
+  }
+
+  private getCategoryColor(categoryUid: number): string {
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const overrides = typo3Top.TYPO3?.settings?.ximaCalendar?.categoryColors ?? {};
+    return getCategoryColor(categoryUid, overrides);
   }
 }
 
