@@ -9,6 +9,10 @@ return [
         'path' => '/xima/calendar/events',
         'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarController::class . '::eventsAction',
     ],
+    'xima_calendar_filter_options' => [
+        'path' => '/xima/calendar/filter/options',
+        'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarFilterController::class . '::optionsAction',
+    ],
     'xima_calendar_create_event' => [
         'path' => '/xima/calendar/event/create',
         'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController::class . '::createEventAction',

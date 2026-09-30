@@ -51,6 +51,7 @@ class CalendarController extends ActionController
         $moduleTemplate = $this->moduleTemplateFactory->create($request);
 
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
+        $filterOptionsUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_options');
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
@@ -71,6 +72,15 @@ class CalendarController extends ActionController
         );
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');
+        $this->pageRenderer->addInlineSetting(
+            'ximaCalendar',
+            'filterOptionsUrl',
+            $filterOptionsUrl,
+        );
+        $this->pageRenderer->addInlineLanguageLabelFile(
+            'EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf',
+            'filter',
+        );
 
         $newEventConfiguration = $this->pageConfigurationService->getNewEventConfiguration($request);
         $calendarConfig = json_encode([

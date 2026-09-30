@@ -22,6 +22,10 @@
 				<source />
 				<target>Event-Termin erstellen</target>
 			</trans-unit>
+			<trans-unit id="filter.search" resname="filter.search">
+				<source />
+				<target>Suchbegriff eingeben</target>
+			</trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source />
 				<target>Was möchten Sie erstellen?</target>

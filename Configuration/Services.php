@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExis
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
+use Xima\XimaTypo3Calendar\Controller\Backend\CalendarFilterController;
 use Xima\XimaTypo3Calendar\Widgets\CalendarWidget;
 use Xima\XimaTypo3Calendar\Widgets\Provider\CanceledAppointmentsDataProvider;
 use Xima\XimaTypo3Calendar\Widgets\Provider\ModuleButtonProvider;
@@ -29,6 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->load('Xima\\XimaTypo3Calendar\\', '../Classes/*')
         ->exclude('../Classes/Domain/Model/*');
     $services->set(CalendarEventCreationController::class)->public();
+    $services->set(CalendarFilterController::class)->public();
 
     $services->set(ReadyToPublishEventsDataProvider::class)
         ->arg('$limit', 8);
