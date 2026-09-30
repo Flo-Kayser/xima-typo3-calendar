@@ -46,11 +46,11 @@ final class CalendarFeedRequestUtilityTest extends TestCase
         $queryParams = [
             'types' => 'event,event-appointment,event',
             'categories' => '4,9,invalid',
-            'statuses' => '0,2,2,invalid',
+            'statuses' => '0,2,2,canceled,invalid',
         ];
 
         self::assertSame(['event', 'event-appointment'], CalendarFeedRequestUtility::getRecordTypes($queryParams));
         self::assertSame([4, 9], CalendarFeedRequestUtility::getCategoryUids($queryParams));
-        self::assertSame([0, 2], CalendarFeedRequestUtility::getStatuses($queryParams));
+        self::assertSame([0, 2, 'canceled'], CalendarFeedRequestUtility::getStatuses($queryParams));
     }
 }

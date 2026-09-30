@@ -54,8 +54,8 @@ final class CalendarFeedRequestUtility
         $values = self::getListValues($queryParams['statuses'] ?? []);
 
         return array_values(array_unique(array_filter(
-            array_map(static fn (string $item): int => is_numeric($item) ? (int)$item : -1, $values),
-            static fn (int $item): bool => $item >= 0,
+            array_map(static fn (string $item): int|string => is_numeric($item) ? (int)$item : $item, $values),
+            static fn (int|string $item): bool => is_int($item) ? $item >= 0 : $item === 'canceled',
         )));
     }
 

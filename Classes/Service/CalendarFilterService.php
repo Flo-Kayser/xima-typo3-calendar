@@ -21,7 +21,7 @@ final class CalendarFilterService
     }
 
     /**
-     * @return array{types: list<array{value: string, label: string}>, categories: list<array{value: int, label: string, parentUid: int|null}>, statuses: list<array{value: int, label: string}>}
+     * @return array{types: list<array{value: string, label: string}>, categories: list<array{value: int, label: string, parentUid: int|null}>, statuses: list<array{value: int|string, label: string}>}
      */
     public function getOptions(): array
     {
@@ -33,7 +33,7 @@ final class CalendarFilterService
     }
 
     /**
-     * @return array{activeTypes: list<string>, activeCategories: list<int>, activeStatuses: list<int>, expanded: array{categoryNodes: array<int, bool>}}
+     * @return array{activeTypes: list<string>, activeCategories: list<int>, activeStatuses: list<int|string>, expanded: array{categoryNodes: array<int, bool>}}
      */
     public function getState(): array
     {
@@ -61,7 +61,7 @@ final class CalendarFilterService
         $expanded = is_array($state['expanded'] ?? null) ? $state['expanded'] : [];
         $types = array_fill_keys(array_column($options['types'], 'value'), true);
         $categories = array_fill_keys(array_column($options['categories'], 'value'), true);
-        $statuses = array_fill_keys(array_column($options['statuses'], 'value'), true);
+        $statuses = array_fill_keys(array_map('strval', array_column($options['statuses'], 'value')), true);
         $activeTypes = array_values(array_filter(
             $this->getStringList($state['activeTypes'] ?? null),
             static fn (string $type): bool => isset($types[$type]),
@@ -71,8 +71,8 @@ final class CalendarFilterService
             static fn (int $category): bool => isset($categories[$category]),
         ));
         $activeStatuses = array_values(array_filter(
-            $this->getIntList($state['activeStatuses'] ?? null, true),
-            static fn (int $status): bool => isset($statuses[$status]),
+            $this->getStatusList($state['activeStatuses'] ?? null),
+            static fn (int|string $status): bool => isset($statuses[(string)$status]),
         ));
         $expandedCategories = array_intersect_key(
             $this->getExpandedCategoryNodes($expanded['categoryNodes'] ?? null),
@@ -143,14 +143,24 @@ final class CalendarFilterService
     }
 
     /**
-     * @return list<array{value: int, label: string}>
+     * @return list<array{value: int|string, label: string}>
      */
     private function getStatuses(): array
     {
-        return array_map(static fn (EventStatus $status): array => [
+        $statuses = array_map(static fn (EventStatus $status): array => [
             'value' => $status->value,
             'label' => ucfirst(strtolower($status->name)),
         ], EventStatus::cases());
+
+        $statuses[] = [
+            'value' => 'canceled',
+            'label' => $this->translate(
+                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event-appointment/labels.xlf:canceled.label',
+                'Canceled',
+            ),
+        ];
+
+        return $statuses;
     }
 
     private function translate(string $label, string $fallback): string
@@ -182,6 +192,16 @@ final class CalendarFilterService
             static fn (mixed $item): int => is_numeric($item) ? (int)$item : -1,
             $values,
         ), static fn (int $item): bool => $item >= $minimum));
+    }
+
+    private function getStatusList(mixed $value): array
+    {
+        $values = is_array($value) ? $value : [$value];
+
+        return array_values(array_filter(array_map(
+            static fn (mixed $item): int|string => is_numeric($item) ? (int)$item : (string)$item,
+            $values,
+        ), static fn (int|string $item): bool => is_int($item) ? $item >= 0 : $item !== ''));
     }
 
     private function getExpandedCategoryNodes(mixed $value): array

@@ -17,7 +17,7 @@ export type CalendarFilterOptions = {
 export type CalendarFilterState = {
   activeTypes: string[];
   activeCategories: number[];
-  activeStatuses: number[];
+  activeStatuses: Array<number | string>;
   expanded: {
     categoryNodes: Record<number, boolean>;
   };
@@ -26,7 +26,7 @@ export type CalendarFilterState = {
 export type CalendarFilterSelection = {
   types: string[];
   categories: number[];
-  statuses: number[];
+  statuses: Array<number | string>;
 };
 
 export type CalendarFilterResponse = {

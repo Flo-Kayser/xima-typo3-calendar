@@ -176,8 +176,8 @@ import{html as r,LitElement as u,nothing as n}from"lit";import c from"@typo3/cor
                 class="form-check-input"
                 type="checkbox"
                 value=${e.value}
-                ?checked=${this.filterState?.activeStatuses.includes(Number(e.value))??!1}
-                @change=${()=>this.handleStatusChange(Number(e.value))}
+                ?checked=${this.filterState?.activeStatuses.includes(e.value)??!1}
+                @change=${()=>this.handleStatusChange(e.value)}
               />
               <span class="form-check-label">${e.label}</span>
             </label>

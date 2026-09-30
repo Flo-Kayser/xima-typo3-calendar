@@ -135,16 +135,31 @@ class EntryRepository extends Repository
             );
         }
 
-        $statuses = array_values(array_filter($filters['statuses'] ?? [], static fn (mixed $status): bool => is_int($status) || is_numeric($status)));
-        if ($statuses !== []) {
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->in(
-                    'v.status',
-                    $queryBuilder->createNamedParameter(array_map('intval', $statuses), Connection::PARAM_INT_ARRAY),
-                )
+        $statuses = $filters['statuses'] ?? [];
+        $eventStatuses = array_values(array_filter(
+            $statuses,
+            static fn (mixed $status): bool => is_int($status) || is_numeric($status),
+        ));
+        $includeCanceled = in_array('canceled', $statuses, true);
+        if ($eventStatuses !== [] || $includeCanceled) {
+            $canceledCondition = $queryBuilder->expr()->eq(
+                'e.canceled',
+                $queryBuilder->createNamedParameter(1, Connection::PARAM_INT),
             );
+            if ($eventStatuses !== []) {
+                $eventStatusCondition = $queryBuilder->expr()->in(
+                    'v.status',
+                    $queryBuilder->createNamedParameter(array_map('intval', $eventStatuses), Connection::PARAM_INT_ARRAY),
+                );
+                if ($includeCanceled) {
+                    $queryBuilder->andWhere($eventStatusCondition, $canceledCondition);
+                } else {
+                    $queryBuilder->andWhere($eventStatusCondition);
+                }
+            } else {
+                $queryBuilder->andWhere($canceledCondition);
+            }
         }
-
         $categories = array_values(array_filter($filters['categories'] ?? [], static fn (mixed $category): bool => is_int($category) || is_numeric($category)));
         if ($categories !== []) {
             $categoryParameter = $queryBuilder->createNamedParameter(

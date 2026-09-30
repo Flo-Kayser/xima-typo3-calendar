@@ -259,8 +259,8 @@ export class CalendarFilterElement extends LitElement {
                 class="form-check-input"
                 type="checkbox"
                 value=${status.value}
-                ?checked=${this.filterState?.activeStatuses.includes(Number(status.value)) ?? false}
-                @change=${() => this.handleStatusChange(Number(status.value))}
+                ?checked=${this.filterState?.activeStatuses.includes(status.value) ?? false}
+                @change=${() => this.handleStatusChange(status.value)}
               />
               <span class="form-check-label">${status.label}</span>
             </label>
@@ -328,7 +328,7 @@ export class CalendarFilterElement extends LitElement {
     this.dispatchFilterChange();
   }
 
-  private handleStatusChange(status: number): void {
+  private handleStatusChange(status: number | string): void {
     if (this.filterState === null) {
       return;
     }

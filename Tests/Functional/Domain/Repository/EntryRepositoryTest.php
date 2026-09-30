@@ -44,6 +44,32 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
     }
 
     #[Test]
+    public function backendCalendarEntriesCanBeFilteredByCanceledStatus(): void
+    {
+        $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
+            1767225600,
+            1767229200,
+            [],
+            ['statuses' => ['canceled']],
+        );
+
+        self::assertSame([2], array_map('intval', array_column($rows, 'uid')));
+    }
+
+    #[Test]
+    public function canceledStatusNarrowsSelectedEventStatuses(): void
+    {
+        $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
+            1767225600,
+            1767229200,
+            [],
+            ['statuses' => [2, 'canceled']],
+        );
+
+        self::assertSame([], $rows);
+    }
+
+    #[Test]
     public function backendCalendarEntriesCanBeFilteredByRecordType(): void
     {
         $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
