@@ -56,8 +56,7 @@ class EntryRepository extends Repository
         int $endTime,
         array $calendarUids = [],
         array $filters = [],
-    ): array
-    {
+    ): array {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
         $entryEndDateExpression = 'COALESCE(NULLIF('
             . $queryBuilder->quoteIdentifier('e.end_date')
