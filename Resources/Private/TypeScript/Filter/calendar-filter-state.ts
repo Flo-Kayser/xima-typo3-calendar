@@ -19,11 +19,14 @@ export type CalendarFilterState = {
   activeCategories: number[];
   activeStatuses: number[];
   expanded: {
-    type: boolean;
-    categories: boolean;
-    status: boolean;
     categoryNodes: Record<number, boolean>;
   };
+};
+
+export type CalendarFilterSelection = {
+  types: string[];
+  categories: number[];
+  statuses: number[];
 };
 
 export type CalendarFilterResponse = {

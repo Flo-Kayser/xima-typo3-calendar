@@ -9,9 +9,13 @@ import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
+import type {CalendarFilterSelection} from './Filter/calendar-filter-state';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
+type CalendarFilterWindow = Window & {
+    ximaCalendarFilterState?: CalendarFilterSelection;
+};
 DocumentService.ready().then(() => {
     const container = document.getElementById('xima-calendar-mount');
     if (!container) {
@@ -34,6 +38,12 @@ DocumentService.ready().then(() => {
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
+    const filterWindow = window.top as unknown as CalendarFilterWindow;
+    let activeFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
+        types: [],
+        categories: [],
+        statuses: [],
+    };
     const detailsController = createCalendarDetailsController(container, typo3Top);
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
 
@@ -73,6 +83,11 @@ DocumentService.ready().then(() => {
                 eventSources: [
                     {
                         url: calendarConfig.ajaxUrl,
+                        extraParams: () => ({
+                            types: activeFilters.types,
+                            categories: activeFilters.categories,
+                            statuses: activeFilters.statuses,
+                        }),
                     },
                 ],
                 eventClick: detailsController.eventClick,
@@ -98,7 +113,13 @@ DocumentService.ready().then(() => {
     window.addEventListener('popstate', cleanupPendingCreation);
     window.top.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
 
-    document.querySelectorAll<HTMLInputElement>('.xima-cal-filter__checkbox').forEach(cb => {
-        cb.addEventListener('change', () => ec.refetchEvents());
+    filterWindow.addEventListener('xima-calendar-filter-changed', (event: Event) => {
+        const selection = (event as CustomEvent<CalendarFilterSelection>).detail;
+        if (!selection) {
+            return;
+        }
+
+        activeFilters = selection;
+        ec.refetchEvents();
     });
 });

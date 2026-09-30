@@ -6,17 +6,21 @@ import type {
   CalendarCategoryOption,
   CalendarFilterOptions,
   CalendarFilterResponse,
+  CalendarFilterSelection,
   CalendarFilterState,
 } from './calendar-filter-state';
 
 type Typo3TopWindow = Window & {
+  ximaCalendarFilterState?: CalendarFilterSelection;
   TYPO3?: {
     settings?: {
       ajaxUrls?: {
         xima_calendar_filter_options?: string;
+        xima_calendar_filter_state?: string;
       };
       ximaCalendar?: {
         filterOptionsUrl?: string;
+        filterStateUrl?: string;
       };
     };
   };
@@ -31,6 +35,8 @@ export class CalendarFilterElement extends LitElement {
   private filterState: CalendarFilterState | null = null;
 
   private filterLoadError = false;
+
+  private filterStateSaveQueue: Promise<void> = Promise.resolve();
 
   public connectedCallback(): void {
     super.connectedCallback();
@@ -164,6 +170,7 @@ export class CalendarFilterElement extends LitElement {
                 class="form-check-input"
                 type="checkbox"
                 value=${type.value}
+                ?checked=${this.filterState?.activeTypes.includes(String(type.value)) ?? false}
                 @change=${() => this.handleTypeChange(String(type.value))}
               />
               <span class="form-check-label">${type.label}</span>
@@ -221,6 +228,7 @@ export class CalendarFilterElement extends LitElement {
                 class="form-check-input"
                 type="checkbox"
                 value=${category.value}
+                ?checked=${this.filterState?.activeCategories.includes(category.value) ?? false}
                 @change=${() => this.handleCategoryChange(category.value)}
               />
               <span class="form-check-label">${category.label}</span>
@@ -251,6 +259,7 @@ export class CalendarFilterElement extends LitElement {
                 class="form-check-input"
                 type="checkbox"
                 value=${status.value}
+                ?checked=${this.filterState?.activeStatuses.includes(Number(status.value)) ?? false}
                 @change=${() => this.handleStatusChange(Number(status.value))}
               />
               <span class="form-check-label">${status.label}</span>
@@ -281,6 +290,7 @@ export class CalendarFilterElement extends LitElement {
 
       this.filterOptions = data.options;
       this.filterState = data.state;
+      this.publishFilterState();
     } catch (error) {
       console.error('Calendar filter options could not be loaded', error);
       this.filterLoadError = true;
@@ -290,7 +300,12 @@ export class CalendarFilterElement extends LitElement {
   }
 
   private handleTypeChange(type: string): void {
-    this.dispatchFilterChange({type});
+    if (this.filterState === null) {
+      return;
+    }
+
+    this.filterState.activeTypes = this.toggleValue(this.filterState.activeTypes, type);
+    this.dispatchFilterChange();
   }
 
   private toggleCategory(category: CalendarCategoryOption): void {
@@ -301,22 +316,109 @@ export class CalendarFilterElement extends LitElement {
     this.filterState.expanded.categoryNodes[category.value] =
       !this.filterState.expanded.categoryNodes[category.value];
     this.requestUpdate();
+    this.persistFilterState();
   }
 
   private handleCategoryChange(categoryUid: number): void {
-    this.dispatchFilterChange({categoryUid});
+    if (this.filterState === null) {
+      return;
+    }
+
+    this.filterState.activeCategories = this.toggleValue(this.filterState.activeCategories, categoryUid);
+    this.dispatchFilterChange();
   }
 
   private handleStatusChange(status: number): void {
-    this.dispatchFilterChange({status});
+    if (this.filterState === null) {
+      return;
+    }
+
+    this.filterState.activeStatuses = this.toggleValue(this.filterState.activeStatuses, status);
+    this.dispatchFilterChange();
   }
 
-  private dispatchFilterChange(detail: Record<string, number | string>): void {
-    this.dispatchEvent(new CustomEvent('xima-calendar-filter-changed', {
+  private toggleValue<T extends string | number>(values: T[], value: T): T[] {
+    return values.includes(value)
+      ? values.filter((item) => item !== value)
+      : [...values, value];
+  }
+
+  private publishFilterState(): void {
+    if (this.filterState === null) {
+      return;
+    }
+
+    const selection: CalendarFilterSelection = {
+      types: [...this.filterState.activeTypes],
+      categories: this.getCategoryFilterUids(this.filterState.activeCategories),
+      statuses: [...this.filterState.activeStatuses],
+    };
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    typo3Top.ximaCalendarFilterState = selection;
+    typo3Top.dispatchEvent(new CustomEvent('xima-calendar-filter-changed', {
       bubbles: true,
       composed: true,
-      detail,
+      detail: selection,
     }));
+  }
+
+  private dispatchFilterChange(): void {
+    this.publishFilterState();
+    this.requestUpdate();
+    this.persistFilterState();
+  }
+
+  private persistFilterState(): void {
+    if (this.filterState === null) {
+      return;
+    }
+
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const url = typo3Top.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_state
+      ?? typo3Top.TYPO3?.settings?.ximaCalendar?.filterStateUrl;
+    if (!url) {
+      return;
+    }
+
+    const state = {
+      activeTypes: [...this.filterState.activeTypes],
+      activeCategories: [...this.filterState.activeCategories],
+      activeStatuses: [...this.filterState.activeStatuses],
+      expanded: {
+        categoryNodes: {...this.filterState.expanded.categoryNodes},
+      },
+    };
+
+    this.filterStateSaveQueue = this.filterStateSaveQueue
+      .catch(() => undefined)
+      .then(async () => {
+        try {
+          const response = await new AjaxRequest(url).post(state);
+          await response.resolve();
+        } catch (error) {
+          console.error('Calendar filter state could not be saved', error);
+        }
+      });
+  }
+
+  private getCategoryFilterUids(categoryUids: number[]): number[] {
+    if (this.filterOptions === null) {
+      return [...categoryUids];
+    }
+
+    const result = new Set(categoryUids);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const category of this.filterOptions.categories) {
+        if (category.parentUid !== null && result.has(category.parentUid) && !result.has(category.value)) {
+          result.add(category.value);
+          changed = true;
+        }
+      }
+    }
+
+    return [...result];
   }
 }
 
