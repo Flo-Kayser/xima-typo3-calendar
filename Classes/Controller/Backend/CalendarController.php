@@ -52,6 +52,7 @@ class CalendarController extends ActionController
 
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
         $filterOptionsUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_options');
+        $filterStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_state');
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
@@ -76,6 +77,11 @@ class CalendarController extends ActionController
             'ximaCalendar',
             'filterOptionsUrl',
             $filterOptionsUrl,
+        );
+        $this->pageRenderer->addInlineSetting(
+            'ximaCalendar',
+            'filterStateUrl',
+            $filterStateUrl,
         );
         $this->pageRenderer->addInlineLanguageLabelFile(
             'EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf',
@@ -135,8 +141,18 @@ class CalendarController extends ActionController
         $startDatetime = CalendarFeedRequestUtility::getStartTimestamp($params);
         $endDatetime = CalendarFeedRequestUtility::getEndTimestamp($params);
         $calendarUids = CalendarFeedRequestUtility::getCalendarUids($params);
+        $filters = [
+            'types' => CalendarFeedRequestUtility::getRecordTypes($params),
+            'categories' => CalendarFeedRequestUtility::getCategoryUids($params),
+            'statuses' => CalendarFeedRequestUtility::getStatuses($params),
+        ];
 
-        $rows = $this->entryRepository->getBackendCalendarEntries($startDatetime, $endDatetime, $calendarUids);
+        $rows = $this->entryRepository->getBackendCalendarEntries(
+            $startDatetime,
+            $endDatetime,
+            $calendarUids,
+            $filters,
+        );
 
         $events = VkurkoCalendarSerializer::serializeBackendEntries($rows);
 

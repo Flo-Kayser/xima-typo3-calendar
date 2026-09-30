@@ -34,6 +34,58 @@ final class CalendarFeedRequestUtility
         return array_map('intval', (array)($queryParams['calendars'] ?? []));
     }
 
+    public static function getRecordTypes(array $queryParams): array
+    {
+        $values = self::getListValues($queryParams['types'] ?? []);
+
+        return array_values(array_unique(array_filter(
+            array_map(static fn (string $value): string => trim($value), $values),
+            static fn (string $value): bool => $value !== '',
+        )));
+    }
+
+    public static function getCategoryUids(array $queryParams): array
+    {
+        return self::getIntegerList($queryParams['categories'] ?? []);
+    }
+
+    public static function getStatuses(array $queryParams): array
+    {
+        $values = self::getListValues($queryParams['statuses'] ?? []);
+
+        return array_values(array_unique(array_filter(
+            array_map(static fn (string $item): int => is_numeric($item) ? (int)$item : -1, $values),
+            static fn (int $item): bool => $item >= 0,
+        )));
+    }
+
+    private static function getListValues(mixed $value): array
+    {
+        $values = is_array($value) ? $value : [$value];
+        $result = [];
+        foreach ($values as $item) {
+            if (!is_scalar($item)) {
+                continue;
+            }
+
+            foreach (explode(',', (string)$item) as $part) {
+                $result[] = trim($part);
+            }
+        }
+
+        return $result;
+    }
+
+    private static function getIntegerList(mixed $value): array
+    {
+        $values = self::getListValues($value);
+
+        return array_values(array_unique(array_filter(
+            array_map(static fn (string $item): int => is_numeric($item) ? (int)$item : 0, $values),
+            static fn (int $item): bool => $item > 0,
+        )));
+    }
+
     private static function parseTimestamp(mixed $value, int $default): int
     {
         if (!is_scalar($value) || trim((string)$value) === '') {

@@ -51,11 +51,12 @@ class EntryRepository extends Repository
         return $timestamps;
     }
 
-    /**
-     * @param int[] $calendarUids
-     * @throws Exception
-     */
-    public function getBackendCalendarEntries(int $startTime, int $endTime, array $calendarUids = []): array
+    public function getBackendCalendarEntries(
+        int $startTime,
+        int $endTime,
+        array $calendarUids = [],
+        array $filters = [],
+    ): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
         $entryEndDateExpression = 'COALESCE(NULLIF('
@@ -117,7 +118,48 @@ class EntryRepository extends Repository
 
         if ($calendarUids !== []) {
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->in('e.calendar', $calendarUids)
+                $queryBuilder->expr()->in(
+                    'e.calendar',
+                    $queryBuilder->createNamedParameter($calendarUids, Connection::PARAM_INT_ARRAY),
+                )
+            );
+        }
+
+        $types = array_values(array_filter($filters['types'] ?? [], static fn (mixed $type): bool => is_string($type) && $type !== ''));
+        if ($types !== []) {
+            $typeParameter = $queryBuilder->createNamedParameter($types, Connection::PARAM_STR_ARRAY);
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->or(
+                    $queryBuilder->expr()->in('e.record_type', $typeParameter),
+                    $queryBuilder->expr()->in('v.record_type', $typeParameter),
+                )
+            );
+        }
+
+        $statuses = array_values(array_filter($filters['statuses'] ?? [], static fn (mixed $status): bool => is_int($status) || is_numeric($status)));
+        if ($statuses !== []) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->in(
+                    'v.status',
+                    $queryBuilder->createNamedParameter(array_map('intval', $statuses), Connection::PARAM_INT_ARRAY),
+                )
+            );
+        }
+
+        $categories = array_values(array_filter($filters['categories'] ?? [], static fn (mixed $category): bool => is_int($category) || is_numeric($category)));
+        if ($categories !== []) {
+            $categoryParameter = $queryBuilder->createNamedParameter(
+                array_map('intval', $categories),
+                Connection::PARAM_INT_ARRAY,
+            );
+            $queryBuilder->andWhere(
+                'EXISTS (SELECT 1 FROM sys_category_record_mm mm'
+                . ' INNER JOIN sys_category cat ON cat.uid = mm.uid_local'
+                . ' WHERE mm.uid_foreign = v.uid'
+                . ' AND mm.uid_local IN (' . $categoryParameter . ')'
+                . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+                . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+                . ' AND cat.deleted = 0)'
             );
         }
 
