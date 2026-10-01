@@ -19,11 +19,17 @@ type CalendarFilterWindow = Window & {
 };
 
 type CalendarEventData = {
+    title?: string;
     start?: string | Date;
     end?: string | Date;
     extendedProps?: Record<string, unknown>;
     backgroundColor?: string;
     textColor?: string;
+};
+
+const isCanceledEvent = (event: CalendarEventData): boolean => {
+    const canceled = event.extendedProps?.appointmentCanceled;
+    return canceled === true || canceled === 1 || canceled === '1';
 };
 
 const applyCategoryColor = (
@@ -36,8 +42,21 @@ const applyCategoryColor = (
         return;
     }
 
-    element.style.backgroundColor = getCategoryColor(categoryUid, categoryColors);
-    element.style.color = getCategoryTextColor(categoryUid, categoryColors);
+    const categoryColor = getCategoryColor(categoryUid, categoryColors);
+    element.style.setProperty('--xima-category-color', categoryColor);
+    const isCanceledDraft = isCanceledEvent(event)
+        && Number(event.extendedProps?.eventStatus) === 0;
+    if (isCanceledEvent(event) && !isCanceledDraft) {
+        element.style.borderColor = categoryColor;
+        element.style.backgroundColor = `color-mix(in srgb, ${categoryColor} 50%, transparent)`;
+        element.style.color = 'var(--typo3-component-color)';
+    } else if (Number(event.extendedProps?.eventStatus) === 1) {
+        element.style.backgroundColor = `color-mix(in srgb, ${categoryColor} 85%, transparent)`;
+        element.style.color = getCategoryTextColor(categoryUid, categoryColors);
+    } else {
+        element.style.backgroundColor = categoryColor;
+        element.style.color = getCategoryTextColor(categoryUid, categoryColors);
+    }
 };
 
 const applyCategoryColorsToEvents = (
@@ -51,10 +70,27 @@ const applyCategoryColorsToEvents = (
 
     return {
         ...event,
+        title: isCanceledEvent(event)
+            ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
+            : event.title,
         backgroundColor: getCategoryColor(categoryUid, categoryColors),
         textColor: getCategoryTextColor(categoryUid, categoryColors),
     };
 });
+
+const getEventStatusClass = (event: CalendarEventData): string[] => {
+    const status = Number(event.extendedProps?.eventStatus);
+    const statusClass = {
+        0: 'xima-calendar-event--draft',
+        1: 'xima-calendar-event--review',
+        2: 'xima-calendar-event--live',
+    }[status];
+
+    return [
+        ...(isCanceledEvent(event) ? ['xima-calendar-event--canceled'] : []),
+        ...(statusClass ? [statusClass] : []),
+    ];
+};
 
 const startOfDay = (date: Date): Date => {
     const result = new Date(date);
@@ -197,6 +233,7 @@ DocumentService.ready().then(() => {
                         },
                     },
                 ],
+                eventClassNames: ({event}: {event: CalendarEventData}) => getEventStatusClass(event),
                 eventDidMount: ({event, el}: {
                     event: CalendarEventData;
                     el: HTMLElement;

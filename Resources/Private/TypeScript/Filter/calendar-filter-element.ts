@@ -96,6 +96,26 @@ export class CalendarFilterElement extends LitElement {
           margin: 0;
         }
 
+        .xima-calendar-filter__status-label {
+          display: inline-block;
+          padding: 0.05rem 0.25rem;
+          border-radius: 0.2rem;
+        }
+
+        .xima-calendar-filter__status-label--draft {
+          background: repeating-linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 6px,
+            color-mix(in srgb, var(--typo3-component-color) 28%, transparent) 6px,
+            color-mix(in srgb, var(--typo3-component-color) 28%, transparent) 8px
+          );
+        }
+
+        .xima-calendar-filter__status-label--review {
+          border: 2px dashed var(--typo3-component-color);
+        }
+
         .xima-calendar-filter__tree {
           margin-top: 0.5rem;
         }
@@ -282,12 +302,23 @@ export class CalendarFilterElement extends LitElement {
                 ?checked=${this.filterState?.activeStatuses.includes(status.value) ?? false}
                 @change=${() => this.handleStatusChange(status.value)}
               />
-              <span class="form-check-label">${status.label}</span>
+              <span class="form-check-label xima-calendar-filter__status-label ${this.getStatusPreviewClass(status.value)}">${status.label}</span>
             </label>
           `)}
         </div>
       </section>
     `;
+  }
+
+  private getStatusPreviewClass(status: number | string): string {
+    switch (String(status)) {
+      case '0':
+        return 'xima-calendar-filter__status-label--draft';
+      case '1':
+        return 'xima-calendar-filter__status-label--review';
+      default:
+        return '';
+    }
   }
 
   private async loadFilterOptions(): Promise<void> {
