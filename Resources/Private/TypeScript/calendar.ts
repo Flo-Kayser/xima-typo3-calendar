@@ -52,18 +52,14 @@ const applyCategoryColor = (
 
 const applyCategoryColorsToEvents = (
     events: CalendarEventData[],
-    categoryColors: Record<string, string>,
 ): CalendarEventData[] => events.map((event) => {
-    const categoryUid = Number(event.extendedProps?.eventCategoryId);
-    if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
-        return event;
-    }
+    const title = isCanceledEvent(event)
+        ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
+        : event.title;
 
     return {
         ...event,
-        title: isCanceledEvent(event)
-            ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
-            : event.title,
+        title,
     };
 });
 
@@ -264,7 +260,7 @@ DocumentService.ready().then(() => {
                             }
 
                             const events = await response.json() as CalendarEventData[];
-                            return applyCategoryColorsToEvents(events, calendarConfig.categoryColors);
+                            return applyCategoryColorsToEvents(events);
                         },
                     },
                 ],
