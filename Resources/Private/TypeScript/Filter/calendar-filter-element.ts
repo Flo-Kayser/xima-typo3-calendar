@@ -116,6 +116,12 @@ export class CalendarFilterElement extends LitElement {
           border: 2px dashed var(--typo3-component-color);
         }
 
+        .xima-calendar-filter__status-label--canceled {
+          background:
+            repeating-linear-gradient(135deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px),
+            repeating-linear-gradient(45deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px);
+        }
+
         .xima-calendar-filter__tree {
           margin-top: 0.5rem;
         }
@@ -316,6 +322,8 @@ export class CalendarFilterElement extends LitElement {
         return 'xima-calendar-filter__status-label--draft';
       case '1':
         return 'xima-calendar-filter__status-label--review';
+      case 'canceled':
+        return 'xima-calendar-filter__status-label--canceled';
       default:
         return '';
     }

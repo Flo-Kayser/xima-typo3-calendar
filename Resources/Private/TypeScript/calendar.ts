@@ -43,20 +43,11 @@ const applyCategoryColor = (
     }
 
     const categoryColor = getCategoryColor(categoryUid, categoryColors);
+    const categoryTextColor = getCategoryTextColor(categoryUid, categoryColors);
+    element.dataset.ximaCategoryColor = categoryColor;
+    element.dataset.ximaCategoryTextColor = categoryTextColor;
     element.style.setProperty('--xima-category-color', categoryColor);
-    const isCanceledDraft = isCanceledEvent(event)
-        && Number(event.extendedProps?.eventStatus) === 0;
-    if (isCanceledEvent(event) && !isCanceledDraft) {
-        element.style.borderColor = categoryColor;
-        element.style.backgroundColor = `color-mix(in srgb, ${categoryColor} 50%, transparent)`;
-        element.style.color = 'var(--typo3-component-color)';
-    } else if (Number(event.extendedProps?.eventStatus) === 1) {
-        element.style.backgroundColor = `color-mix(in srgb, ${categoryColor} 85%, transparent)`;
-        element.style.color = getCategoryTextColor(categoryUid, categoryColors);
-    } else {
-        element.style.backgroundColor = categoryColor;
-        element.style.color = getCategoryTextColor(categoryUid, categoryColors);
-    }
+    element.style.setProperty('--xima-category-text-color', categoryTextColor);
 };
 
 const applyCategoryColorsToEvents = (
@@ -73,12 +64,11 @@ const applyCategoryColorsToEvents = (
         title: isCanceledEvent(event)
             ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
             : event.title,
-        backgroundColor: getCategoryColor(categoryUid, categoryColors),
-        textColor: getCategoryTextColor(categoryUid, categoryColors),
     };
 });
 
 const getEventStatusClass = (event: CalendarEventData): string[] => {
+    const categoryUid = Number(event.extendedProps?.eventCategoryId);
     const status = Number(event.extendedProps?.eventStatus);
     const statusClass = {
         0: 'xima-calendar-event--draft',
@@ -87,6 +77,9 @@ const getEventStatusClass = (event: CalendarEventData): string[] => {
     }[status];
 
     return [
+        ...(Number.isInteger(categoryUid) && categoryUid > 0
+            ? ['xima-calendar-event--categorized']
+            : []),
         ...(isCanceledEvent(event) ? ['xima-calendar-event--canceled'] : []),
         ...(statusClass ? [statusClass] : []),
     ];
@@ -110,6 +103,10 @@ const getDayCellDate = (cell: HTMLElement): Date | null => {
 
 const applyMultiDayWidth = (event: CalendarEventData, element: HTMLElement): void => {
     if (!event.start || !event.end) {
+        return;
+    }
+
+    if (element.closest('.ec-popup')) {
         return;
     }
 
@@ -140,13 +137,50 @@ const applyMultiDayWidth = (event: CalendarEventData, element: HTMLElement): voi
     }
 
     const targetEvents = cells[endIndex].querySelector<HTMLElement>(':scope > .ec-events');
-    const targetRight = targetEvents?.getBoundingClientRect().right;
+    const targetRight = targetEvents?.getBoundingClientRect().right
+        ?? cells[endIndex].getBoundingClientRect().right;
     const eventLeft = element.getBoundingClientRect().left;
     if (targetRight === undefined || targetRight <= eventLeft) {
         return;
     }
 
     element.style.width = `${targetRight - eventLeft}px`;
+};
+
+const applyEventSpacing = (): void => {
+    document.querySelectorAll<HTMLElement>('#xima-calendar-mount .ec-day-grid .ec-event:not(.ec-preview)').forEach((element) => {
+        const start = element.dataset.ximaEventStart;
+        const end = element.dataset.ximaEventEnd;
+        if (start && end) {
+            applyMultiDayWidth({start, end}, element);
+        }
+
+        const categoryColor = element.dataset.ximaCategoryColor;
+        const categoryTextColor = element.dataset.ximaCategoryTextColor;
+        if (categoryColor && categoryTextColor) {
+            element.style.setProperty('--xima-category-color', categoryColor);
+            element.style.setProperty('--xima-category-text-color', categoryTextColor);
+        }
+
+        const nativeMargin = Number.parseFloat(element.style.marginTop);
+        if (Number.isNaN(nativeMargin) || nativeMargin <= 5) {
+            return;
+        }
+
+        const appliedMargin = Number.parseFloat(element.dataset.ximaAppliedMarginTop ?? '');
+        if (appliedMargin === nativeMargin) {
+            return;
+        }
+
+        const spacing = nativeMargin <= 35
+            ? 2
+            : nativeMargin <= 65
+                ? 4
+                : 6;
+        const margin = nativeMargin + spacing;
+        element.style.marginTop = `${margin}px`;
+        element.dataset.ximaAppliedMarginTop = `${margin}`;
+    });
 };
 
 DocumentService.ready().then(() => {
@@ -186,6 +220,7 @@ DocumentService.ready().then(() => {
             plugins: [DayGrid, TimeGrid, List, Interaction],
             options: {
                 ...calendarOptions,
+                eventGap: 3,
                 height: '100%',
                 selectable: enableDragNewEvent,
                 scrollTime: '08:00:00',
@@ -234,12 +269,21 @@ DocumentService.ready().then(() => {
                     },
                 ],
                 eventClassNames: ({event}: {event: CalendarEventData}) => getEventStatusClass(event),
+                eventAllUpdated: () => window.requestAnimationFrame(applyEventSpacing),
                 eventDidMount: ({event, el}: {
                     event: CalendarEventData;
                     el: HTMLElement;
                 }) => {
                     applyCategoryColor(event, el, calendarConfig.categoryColors);
+                    if (event.start) {
+                        el.dataset.ximaEventStart = String(event.start);
+                    }
+                    if (event.end) {
+                        el.dataset.ximaEventEnd = String(event.end);
+                    }
                     applyMultiDayWidth(event, el);
+                    window.requestAnimationFrame(() => applyMultiDayWidth(event, el));
+                    window.requestAnimationFrame(applyEventSpacing);
                 },
                 eventClick: detailsController.eventClick,
             },
@@ -250,6 +294,7 @@ DocumentService.ready().then(() => {
         firstDay: calendarOptions.firstDay,
         enableDragNewEvent,
     });
+    window.addEventListener('resize', () => window.requestAnimationFrame(applyEventSpacing));
     creationController.setClearCalendarSelection(() => ec.unselect());
 
     const cleanupPendingCreation = (): void => {

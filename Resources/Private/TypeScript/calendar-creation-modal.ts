@@ -19,6 +19,17 @@ const formatDateTimeLocal = (date: Date): string => {
         + `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
+const getInitialEnd = (date: Date, allDay: boolean): Date => {
+    if (!allDay) {
+        return date;
+    }
+
+    const end = new Date(date);
+    end.setDate(end.getDate() - 1);
+    end.setHours(23, 59, 0, 0);
+    return end;
+};
+
 export function chooseCalendarCreationType(
     labels: CalendarModalLabels,
     calendars: CalendarOption[],
@@ -57,7 +68,7 @@ export function chooseCalendarCreationType(
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="xima-calendar-creation-end">${labels.end}</label>
-                            <input id="xima-calendar-creation-end" class="form-control" type="datetime-local" value=${formatDateTimeLocal(initialEnd)}>
+                            <input id="xima-calendar-creation-end" class="form-control" type="datetime-local" value=${formatDateTimeLocal(getInitialEnd(initialEnd, initialAllDay))}>
                         </div>
                     </div>
                     <div class="form-check xima-calendar-creation-form__all-day">
