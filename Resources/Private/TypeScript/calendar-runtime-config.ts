@@ -26,6 +26,8 @@ export type CalendarConfig = {
     ajaxUrl: string;
     createEventUrl: string;
     cleanupEventUrl: string;
+    viewStateUrl: string;
+    initialView: 'dayGridMonth' | 'timeGridWeek' | 'listMonth';
     canCreateEvent: boolean;
     canCreateAppointment: boolean;
     enableDragNewEvent: boolean;
@@ -83,7 +85,8 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     }
 
     const config = value as Record<string, unknown>;
-    return hasValues(config, ['ajaxUrl', 'createEventUrl', 'cleanupEventUrl'], isString)
+    return hasValues(config, ['ajaxUrl', 'createEventUrl', 'cleanupEventUrl', 'viewStateUrl', 'initialView'], isString)
+        && ['dayGridMonth', 'timeGridWeek', 'listMonth'].includes(config.initialView as string)
         && hasValues(
             config,
             ['canCreateEvent', 'canCreateAppointment', 'enableDragNewEvent', 'enableClickNewEvent', 'defaultAllDay'],

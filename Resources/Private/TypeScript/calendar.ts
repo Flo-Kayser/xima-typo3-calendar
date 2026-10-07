@@ -6,6 +6,7 @@ import {
     List,
     TimeGrid,
 } from '@event-calendar/core';
+import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './calendar-event-creation';
@@ -137,6 +138,18 @@ DocumentService.ready().then(async () => {
     };
     const detailsController = createCalendarDetailsController(container, typo3Top);
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
+    let currentView = calendarConfig.initialView;
+    const persistCalendarView = (view: string): void => {
+        if (view === currentView) {
+            return;
+        }
+
+        currentView = view as typeof currentView;
+        void new AjaxRequest(calendarConfig.viewStateUrl)
+            .post({view})
+            .then(response => response.resolve())
+            .catch(error => console.error('Calendar view could not be saved', error));
+    };
 
     const ec = createCalendar(
         container,
@@ -145,13 +158,19 @@ DocumentService.ready().then(async () => {
             ...calendarOptions,
             eventGap: 3,
             height: '100%',
+            nowIndicator: true,
             selectable: enableDragNewEvent,
             scrollTime: '08:00:00',
             dayMaxEvents: true,
             moreLinkContent: ({num}: {num: number}) => `+${num} weitere`,
-            view: 'dayGridMonth',
+            view: calendarConfig.initialView,
             views: {
                 timeGridWeek: {
+                    slotMinTime: '00:00:00',
+                    slotMaxTime: '24:00:00',
+                    slotDuration: '00:15:00',
+                    slotLabelInterval: '01:00:00',
+                    snapDuration: '00:15:00',
                     slotEventOverlap: false,
                 },
             },
@@ -173,7 +192,10 @@ DocumentService.ready().then(async () => {
                 center: 'title',
                 end: 'dayGridMonth,timeGridWeek,listMonth',
             },
-            datesSet: detailsController.datesSet,
+            datesSet: ({view}: {view: {type: string}}) => {
+                detailsController.datesSet();
+                persistCalendarView(view.type);
+            },
             select: enableDragNewEvent ? creationController.select : undefined,
             dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
             eventSources: [
