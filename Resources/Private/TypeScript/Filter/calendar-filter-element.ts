@@ -117,13 +117,9 @@ export class CalendarFilterElement extends LitElement {
         }
 
         .xima-calendar-filter__status-label--draft {
-          background: repeating-linear-gradient(
-            135deg,
-            transparent 0,
-            transparent 6px,
-            color-mix(in srgb, var(--typo3-component-color) 28%, transparent) 6px,
-            color-mix(in srgb, var(--typo3-component-color) 28%, transparent) 8px
-          );
+          background:
+            repeating-linear-gradient(135deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px),
+            repeating-linear-gradient(45deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px);
         }
 
         .xima-calendar-filter__status-label--review {
@@ -131,9 +127,12 @@ export class CalendarFilterElement extends LitElement {
         }
 
         .xima-calendar-filter__status-label--canceled {
-          background:
-            repeating-linear-gradient(135deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px),
-            repeating-linear-gradient(45deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px);
+          background: none;
+        }
+
+        .xima-calendar-filter__status-label--rejected {
+          background: none;
+          border: 2px solid var(--typo3-component-color);
         }
 
         .xima-calendar-filter__tree {
@@ -338,6 +337,8 @@ export class CalendarFilterElement extends LitElement {
         return 'xima-calendar-filter__status-label--draft';
       case '1':
         return 'xima-calendar-filter__status-label--review';
+      case '3':
+        return 'xima-calendar-filter__status-label--rejected';
       case 'canceled':
         return 'xima-calendar-filter__status-label--canceled';
       default:

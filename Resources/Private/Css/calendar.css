@@ -3,6 +3,10 @@
 @import './calendar-event-appointment.css';
 
 #xima-calendar-mount {
+    .ec-time-grid {
+        --ec-event-col-gap: 1px;
+    }
+
     .ec-day-grid {
         .ec-events {
             transform: translateY(4px);

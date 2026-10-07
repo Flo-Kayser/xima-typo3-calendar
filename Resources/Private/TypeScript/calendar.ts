@@ -129,6 +129,7 @@ const getEventStatusClass = (event: CalendarEventData): string[] => {
         0: 'xima-calendar-event--draft',
         1: 'xima-calendar-event--review',
         2: 'xima-calendar-event--live',
+        3: 'xima-calendar-event--rejected',
     }[status];
 
     return [

@@ -62,6 +62,14 @@
         );
     }
 
+    .ec-event.xima-calendar-event--rejected {
+        background-color: color-mix(in srgb, var(--xima-category-color) 30%, transparent) !important;
+        border: 2px solid light-dark(
+            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #000 30%),
+            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #fff 30%)
+        );
+    }
+
     .ec-event.xima-calendar-event--canceled {
         opacity: 0.3;
     }
