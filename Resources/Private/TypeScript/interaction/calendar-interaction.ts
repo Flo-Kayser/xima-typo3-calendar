@@ -1,4 +1,5 @@
-import {createCalendarSelectionNavigation, type CalendarApi} from './calendar-selection-navigation';
+import type {Calendar} from '@event-calendar/core';
+import {createCalendarSelectionNavigation} from './calendar-selection-navigation';
 import {createCalendarSelectionOverlay} from './calendar-selection-overlay';
 
 type CalendarCreationController = {
@@ -6,13 +7,12 @@ type CalendarCreationController = {
 };
 
 type CalendarInteractionOptions = {
-    firstDay: number;
     enableDragNewEvent: boolean;
 };
 
 export function createCalendarInteractionController(
     container: HTMLElement,
-    calendar: CalendarApi,
+    calendar: Calendar,
     creationController: CalendarCreationController,
     options: CalendarInteractionOptions,
 ): {destroy: () => void} {
@@ -23,18 +23,7 @@ export function createCalendarInteractionController(
         options.enableDragNewEvent,
     );
 
-    const highlightCurrentWeekday = (): void => {
-        const today = new Date();
-        const currentWeekday = (today.getDay() - options.firstDay + 7) % 7;
-        container.querySelectorAll<HTMLElement>('.ec-header .ec-grid .ec-col-head').forEach((header, index) => {
-            header.classList.toggle('active', index === currentWeekday);
-        });
-    };
-
-    const calendarObserver = new MutationObserver(() => {
-        highlightCurrentWeekday();
-        overlay.scheduleUpdate();
-    });
+    const calendarObserver = new MutationObserver(overlay.scheduleUpdate);
     const onPointerUp = (): void => {
         window.setTimeout(() => {
             overlay.clear();
@@ -59,7 +48,6 @@ export function createCalendarInteractionController(
     };
 
     calendarObserver.observe(container, {childList: true, subtree: true});
-    requestAnimationFrame(highlightCurrentWeekday);
     container.addEventListener('pointermove', overlay.scheduleUpdate);
     document.addEventListener('pointermove', navigateSelection);
     container.addEventListener('pointerup', onPointerUp);

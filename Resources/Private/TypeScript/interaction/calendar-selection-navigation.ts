@@ -1,12 +1,8 @@
-export type CalendarApi = {
-    getView: () => { currentStart?: Date };
-    setOption: (name: string, value: unknown) => CalendarApi;
-    unselect: () => CalendarApi;
-};
+import type {Calendar} from '@event-calendar/core';
 
 export function createCalendarSelectionNavigation(
     container: HTMLElement,
-    calendar: CalendarApi,
+    calendar: Calendar,
     enableDragNewEvent: boolean,
 ): (event: PointerEvent) => void {
     let navigationLocked = false;
@@ -75,6 +71,6 @@ export function createCalendarSelectionNavigation(
             nextDate.setMonth(nextDate.getMonth() + (passedRightEdge ? 1 : -1));
         }
         navigationLocked = true;
-        calendar.setOption('date', nextDate);
+        calendar.gotoDate(nextDate);
     };
 }

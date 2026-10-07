@@ -13,7 +13,7 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
 
     const hidePreview = (): void => {
         container.classList.add('xima-calendar-selection-cancelled');
-        container.querySelectorAll<HTMLElement>('.ec-event.ec-preview, .ec-events.ec-preview').forEach(preview => preview.remove());
+        container.querySelectorAll<HTMLElement>('.ec-event.ec-preview').forEach(preview => preview.remove());
         clear();
     };
 
@@ -77,7 +77,7 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
             return;
         }
 
-        const previews = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-events.ec-preview > .ec-event'));
+        const previews = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-events > .ec-event.ec-preview'));
         if (previews.length === 0) {
             return;
         }

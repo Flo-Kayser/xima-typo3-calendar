@@ -1,6 +1,7 @@
 import {
     createCalendar,
     DayGrid,
+    destroyCalendar,
     Interaction,
     List,
     TimeGrid,
@@ -27,7 +28,11 @@ type CalendarEventData = {
     extendedProps?: Record<string, unknown>;
     backgroundColor?: string;
     textColor?: string;
+    style?: string | string[];
+    styles?: string | string[];
 };
+
+const calendarCleanups = new WeakMap<HTMLElement, () => Promise<void>>();
 
 const isCanceledEvent = (event: CalendarEventData): boolean => {
     const canceled = event.extendedProps?.appointmentCanceled;
@@ -54,14 +59,31 @@ const applyCategoryColor = (
 
 const applyCategoryColorsToEvents = (
     events: CalendarEventData[],
+    categoryColors: Record<string, string>,
 ): CalendarEventData[] => events.map((event) => {
     const title = isCanceledEvent(event)
         ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
         : event.title;
+    const categoryUid = Number(event.extendedProps?.eventCategoryId);
+    if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
+        return {...event, title};
+    }
+
+    const categoryColor = getCategoryColor(categoryUid, categoryColors);
+    const categoryTextColor = getCategoryTextColor(categoryUid, categoryColors);
+    const existingStyles = event.styles ?? event.style ?? [];
+    const styles = Array.isArray(existingStyles) ? existingStyles : [existingStyles];
 
     return {
         ...event,
         title,
+        backgroundColor: categoryColor,
+        textColor: categoryTextColor,
+        styles: [
+            ...styles,
+            `--xima-category-color:${categoryColor}`,
+            `--xima-category-text-color:${categoryTextColor}`,
+        ],
     };
 });
 
@@ -83,11 +105,13 @@ const getEventStatusClass = (event: CalendarEventData): string[] => {
     ];
 };
 
-DocumentService.ready().then(() => {
+DocumentService.ready().then(async () => {
     const container = document.getElementById('xima-calendar-mount');
     if (!container) {
         return;
     }
+
+    await calendarCleanups.get(container)?.();
 
     const calendarConfig = readCalendarConfig(container);
     if (!calendarConfig) {
@@ -126,6 +150,11 @@ DocumentService.ready().then(() => {
             dayMaxEvents: true,
             moreLinkContent: ({num}: {num: number}) => `+${num} weitere`,
             view: 'dayGridMonth',
+            views: {
+                timeGridWeek: {
+                    slotEventOverlap: false,
+                },
+            },
             theme: (theme: EventCalendarTheme) => ({
                 ...theme,
                 button: 'btn btn-default',
@@ -163,7 +192,7 @@ DocumentService.ready().then(() => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        return applyCategoryColorsToEvents(events);
+                        return applyCategoryColorsToEvents(events, calendarConfig.categoryColors);
                     },
                 },
             ],
@@ -178,25 +207,21 @@ DocumentService.ready().then(() => {
         },
     );
 
-    createCalendarInteractionController(container, ec, creationController, {
-        firstDay: calendarOptions.firstDay,
+    const interactionController = createCalendarInteractionController(container, ec, creationController, {
         enableDragNewEvent,
     });
     creationController.setClearCalendarSelection(() => ec.unselect());
 
+    let destroyed = false;
     const cleanupPendingCreation = (): void => {
         void creationController.cleanupPendingCreation().then((cleanedUp) => {
-            if (cleanedUp) {
+            if (cleanedUp && !destroyed) {
                 ec.refetchEvents();
             }
         });
     };
-    cleanupPendingCreation();
-    window.addEventListener('pageshow', cleanupPendingCreation);
-    window.addEventListener('popstate', cleanupPendingCreation);
-    window.top.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
 
-    filterWindow.addEventListener('xima-calendar-filter-changed', (event: Event) => {
+    const onFilterChanged = (event: Event): void => {
         const selection = (event as CustomEvent<CalendarFilterSelection>).detail;
         if (!selection) {
             return;
@@ -204,5 +229,28 @@ DocumentService.ready().then(() => {
 
         activeFilters = selection;
         ec.refetchEvents();
-    });
+    };
+
+    cleanupPendingCreation();
+    window.addEventListener('pageshow', cleanupPendingCreation);
+    window.addEventListener('popstate', cleanupPendingCreation);
+    window.top.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
+    filterWindow.addEventListener('xima-calendar-filter-changed', onFilterChanged);
+
+    const cleanup = async (): Promise<void> => {
+        if (destroyed) {
+            return;
+        }
+
+        destroyed = true;
+        window.removeEventListener('pageshow', cleanupPendingCreation);
+        window.removeEventListener('popstate', cleanupPendingCreation);
+        window.top.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
+        filterWindow.removeEventListener('xima-calendar-filter-changed', onFilterChanged);
+        interactionController.destroy();
+        calendarCleanups.delete(container);
+        await destroyCalendar(ec);
+    };
+
+    calendarCleanups.set(container, cleanup);
 });
