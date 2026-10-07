@@ -70,8 +70,17 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
     }
 
     #[Test]
-    public function backendCalendarEntriesCanBeFilteredByRecordType(): void
+    public function backendCalendarEntriesCanBeFilteredByParentEventType(): void
     {
+        $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
+            1767225600,
+            1767229200,
+            [],
+            ['types' => ['event']],
+        );
+
+        self::assertCount(2, $rows);
+
         $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
             1767225600,
             1767229200,
@@ -79,7 +88,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             ['types' => ['event-appointment']],
         );
 
-        self::assertCount(2, $rows);
+        self::assertSame([], $rows);
     }
 
     #[Test]

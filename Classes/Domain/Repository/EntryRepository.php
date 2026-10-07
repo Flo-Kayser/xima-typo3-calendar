@@ -128,10 +128,7 @@ class EntryRepository extends Repository
         if ($types !== []) {
             $typeParameter = $queryBuilder->createNamedParameter($types, Connection::PARAM_STR_ARRAY);
             $queryBuilder->andWhere(
-                $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->in('e.record_type', $typeParameter),
-                    $queryBuilder->expr()->in('v.record_type', $typeParameter),
-                )
+                $queryBuilder->expr()->in('v.record_type', $typeParameter)
             );
         }
 

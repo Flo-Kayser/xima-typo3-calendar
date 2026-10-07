@@ -130,21 +130,16 @@ final class CalendarFilterService
     private function getTypes(): array
     {
         $types = [];
-        foreach ([
-            'tx_ximatypo3calendar_domain_model_event',
-            'tx_ximatypo3calendar_domain_model_entry',
-        ] as $table) {
-            foreach ($GLOBALS['TCA'][$table]['columns']['record_type']['config']['items'] ?? [] as $item) {
-                $value = (string)($item['value'] ?? '');
-                if ($value === '') {
-                    continue;
-                }
-
-                $types[$value] = [
-                    'value' => $value,
-                    'label' => $this->translate((string)($item['label'] ?? $value), $value),
-                ];
+        foreach ($GLOBALS['TCA']['tx_ximatypo3calendar_domain_model_event']['columns']['record_type']['config']['items'] ?? [] as $item) {
+            $value = (string)($item['value'] ?? '');
+            if ($value === '') {
+                continue;
             }
+
+            $types[$value] = [
+                'value' => $value,
+                'label' => $this->translate((string)($item['label'] ?? $value), $value),
+            ];
         }
 
         return array_values($types);
