@@ -26,7 +26,7 @@ export function createCalendarInteractionController(
     const highlightCurrentWeekday = (): void => {
         const today = new Date();
         const currentWeekday = (today.getDay() - options.firstDay + 7) % 7;
-        container.querySelectorAll<HTMLElement>('.ec-header .ec-days .ec-day').forEach((header, index) => {
+        container.querySelectorAll<HTMLElement>('.ec-header .ec-grid .ec-col-head').forEach((header, index) => {
             header.classList.toggle('active', index === currentWeekday);
         });
     };

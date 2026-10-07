@@ -128,11 +128,11 @@
                     var(--typo3-state-default-bg, #333)
                 );
 
-                .ec-days {
+                .ec-grid {
                     background-color: transparent;
                 }
 
-                .ec-day {
+                .ec-col-head {
                     display: flex;
                     align-items: center;
                     justify-content: center;

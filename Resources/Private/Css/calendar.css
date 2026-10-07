@@ -5,15 +5,7 @@
 #xima-calendar-mount {
     .ec-day-grid,
     .ec-time-grid {
-        .ec-events {
-            margin-right: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
         .ec-event {
-            width: 100%;
             box-sizing: border-box;
             box-shadow: none !important;
         }
