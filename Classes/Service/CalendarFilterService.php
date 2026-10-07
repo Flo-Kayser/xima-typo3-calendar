@@ -32,17 +32,14 @@ final class CalendarFilterService
         ];
     }
 
+    private const DEFAULT_VIEW = 'dayGridMonth';
+
     /**
-     * @return array{activeTypes: list<string>, activeCategories: list<int>, activeStatuses: list<int|string>, expanded: array{categoryNodes: array<int, bool>}}
+     * @return array{activeTypes: list<string>, activeCategories: list<int>, activeStatuses: list<int|string>, expanded: array{categoryNodes: array<int, bool>}, view: string}
      */
     public function getState(): array
     {
-        $backendUser = $GLOBALS['BE_USER'] ?? null;
-        $storedState = $backendUser instanceof BackendUserAuthentication
-            ? $backendUser->getModuleData(self::MODULE_IDENTIFIER)
-            : null;
-
-        return $this->normalizeState(is_array($storedState) ? $storedState : []);
+        return $this->normalizeState($this->getStoredState());
     }
 
     public function saveState(array $state): void
@@ -52,6 +49,26 @@ final class CalendarFilterService
             return;
         }
 
+        $backendUser->pushModuleData(
+            self::MODULE_IDENTIFIER,
+            $this->normalizeState(array_merge($this->getStoredState(), $state)),
+        );
+    }
+
+    public function getView(): string
+    {
+        return $this->normalizeView($this->getStoredState()['view'] ?? null);
+    }
+
+    public function saveView(string $view): void
+    {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+        if (!$backendUser instanceof BackendUserAuthentication) {
+            return;
+        }
+
+        $state = $this->getStoredState();
+        $state['view'] = $view;
         $backendUser->pushModuleData(self::MODULE_IDENTIFIER, $this->normalizeState($state));
     }
 
@@ -86,7 +103,25 @@ final class CalendarFilterService
             'expanded' => [
                 'categoryNodes' => $expandedCategories,
             ],
+            'view' => $this->normalizeView($state['view'] ?? null),
         ];
+    }
+
+    private function getStoredState(): array
+    {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+        $storedState = $backendUser instanceof BackendUserAuthentication
+            ? $backendUser->getModuleData(self::MODULE_IDENTIFIER)
+            : null;
+
+        return is_array($storedState) ? $storedState : [];
+    }
+
+    private function normalizeView(mixed $view): string
+    {
+        return in_array($view, ['dayGridMonth', 'timeGridWeek', 'listMonth'], true)
+            ? $view
+            : self::DEFAULT_VIEW;
     }
 
     /**

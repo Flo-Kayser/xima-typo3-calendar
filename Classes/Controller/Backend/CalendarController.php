@@ -23,6 +23,7 @@ use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
+use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
@@ -42,6 +43,7 @@ class CalendarController extends ActionController
         protected CalendarStoragePidResolver $storagePidResolver,
         protected CalendarSelectionService $calendarSelectionService,
         protected CalendarPendingCreationService $pendingCreationService,
+        protected CalendarFilterService $filterService,
     ) {
     }
 
@@ -53,6 +55,7 @@ class CalendarController extends ActionController
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
         $filterOptionsUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_options');
         $filterStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_state');
+        $viewStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_view_state');
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
@@ -99,6 +102,8 @@ class CalendarController extends ActionController
             'ajaxUrl' => $ajaxUrl,
             'createEventUrl' => $createEventUrl,
             'cleanupEventUrl' => $cleanupEventUrl,
+            'viewStateUrl' => $viewStateUrl,
+            'initialView' => $this->filterService->getView(),
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
             'calendars' => $calendars,

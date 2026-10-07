@@ -17,6 +17,10 @@ return [
         'path' => '/xima/calendar/filter/state',
         'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarFilterController::class . '::saveStateAction',
     ],
+    'xima_calendar_view_state' => [
+        'path' => '/xima/calendar/view/state',
+        'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarFilterController::class . '::saveViewAction',
+    ],
     'xima_calendar_create_event' => [
         'path' => '/xima/calendar/event/create',
         'target' => \Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController::class . '::createEventAction',

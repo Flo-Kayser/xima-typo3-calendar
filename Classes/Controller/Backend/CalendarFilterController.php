@@ -36,4 +36,16 @@ final class CalendarFilterController
 
         return new JsonResponse(['success' => true]);
     }
+
+    public function saveViewAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $body = $request->getParsedBody();
+        if (!is_array($body) || !is_string($body['view'] ?? null)) {
+            return new JsonResponse(['success' => false], 400);
+        }
+
+        $this->filterService->saveView($body['view']);
+
+        return new JsonResponse(['success' => true]);
+    }
 }
