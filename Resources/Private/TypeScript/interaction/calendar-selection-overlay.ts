@@ -41,9 +41,17 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
         if (calendarElement.classList.contains('ec-time-grid')) {
             const previews = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-body .ec-event.ec-preview'));
             const bodyRect = calendarElement.querySelector<HTMLElement>('.ec-body')?.getBoundingClientRect();
-            if (previews.length === 0 || !bodyRect) {
+            const viewportRect = calendarElement.querySelector<HTMLElement>('.ec-main')?.getBoundingClientRect();
+            if (previews.length === 0 || !bodyRect || !viewportRect) {
                 return;
             }
+
+            const visibleRect = {
+                left: Math.max(bodyRect.left, viewportRect.left),
+                right: Math.min(bodyRect.right, viewportRect.right),
+                top: Math.max(bodyRect.top, viewportRect.top),
+                bottom: Math.min(bodyRect.bottom, viewportRect.bottom),
+            };
 
             const previewRects = previews.map(preview => preview.getBoundingClientRect());
             const selectedDays = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-body .ec-day'))
@@ -62,10 +70,10 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
                 }
 
                 const dayRect = day.getBoundingClientRect();
-                const left = Math.max(dayRect.left, bodyRect.left);
-                const right = Math.min(dayRect.right, bodyRect.right);
-                const top = Math.max(previewRect.top, bodyRect.top);
-                const bottom = Math.min(previewRect.bottom, bodyRect.bottom);
+                const left = Math.max(dayRect.left, visibleRect.left);
+                const right = Math.min(dayRect.right, visibleRect.right);
+                const top = Math.max(previewRect.top, visibleRect.top);
+                const bottom = Math.min(previewRect.bottom, visibleRect.bottom);
                 if (right > left && bottom > top) {
                     append(left, top, right, bottom);
                 }
