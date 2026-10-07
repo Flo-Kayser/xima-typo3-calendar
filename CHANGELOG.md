@@ -8,6 +8,11 @@ All notable changes to this extension are documented here. The format follows
 
 ### Added
 
+- **Event Calendar v5 migration.** The backend calendar now uses `@event-calendar/core` v5
+  with `createCalendar()` and the bundled `DayGrid`, `TimeGrid`, `List`, and `Interaction`
+  plugins. The frontend follows the v5 CSS Grid/DOM structure; custom integrations that relied
+  on the old v2 plugin packages or selectors such as `.ec-days` need to be reviewed. The JSON
+  feed contract remains unchanged.
 - **Calendar export.** Appointments and whole events can be taken into a visitor's own
   calendar as an RFC 5545 `.ics` download; Google and Outlook deep links accompany it wherever
   the export covers a single appointment, since those services compose one entry. New
