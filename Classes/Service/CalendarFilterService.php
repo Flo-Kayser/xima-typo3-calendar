@@ -182,16 +182,35 @@ final class CalendarFilterService
      */
     private function getStatuses(): array
     {
-        $statuses = array_map(static fn (EventStatus $status): array => [
-            'value' => $status->value,
-            'label' => ucfirst(strtolower($status->name)),
-        ], EventStatus::cases());
+        $statusOrder = [
+            EventStatus::DRAFT->value => 0,
+            EventStatus::REVIEW->value => 1,
+            EventStatus::REJECTED->value => 2,
+            EventStatus::LIVE->value => 3,
+        ];
+        $eventStatuses = EventStatus::cases();
+        usort(
+            $eventStatuses,
+            static fn (EventStatus $left, EventStatus $right): int
+                => ($statusOrder[$left->value] ?? PHP_INT_MAX) <=> ($statusOrder[$right->value] ?? PHP_INT_MAX),
+        );
+
+        $statuses = [];
+        foreach ($eventStatuses as $status) {
+            $statuses[] = [
+                'value' => $status->value,
+                'label' => $this->translate(
+                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.' . $status->value . '.label',
+                    ucfirst(strtolower($status->name)),
+                ),
+            ];
+        }
 
         $statuses[] = [
             'value' => 'canceled',
             'label' => $this->translate(
-                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event-appointment/labels.xlf:canceled.label',
-                'Canceled',
+                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
+                'Canceled [C]',
             ),
         ];
 
