@@ -2,8 +2,6 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
-    container-type: size;
-    container-name: module-body;
 }
 
 .xima-calendar-module,
@@ -25,6 +23,8 @@
     display: grid;
     flex: 1 1 auto;
     grid-template-rows: minmax(0, 1fr) 0;
+    container-type: size;
+    container-name: calendar-content;
 }
 
 .xima-calendar-event-detail {
@@ -78,10 +78,12 @@
 #xima-calendar-mount {
     height: 100%;
     min-height: 0;
-    container-type: size;
-    container-name: calendar-mount;
+    display: flex;
+    flex-direction: column;
 
     .ec {
+        flex: 1 1 auto;
+        min-height: 0;
         color-scheme: inherit;
         font-family: inherit;
         font-size: inherit;
@@ -150,7 +152,7 @@
                         line-height: 1.5;
                     }
 
-                    &.active {
+                    &.ec-today {
                         background-color: var(--typo3-state-default-bg);
                         color: var(--typo3-state-default-color);
                         box-shadow: var(--xima-calendar-active-shadow);
@@ -207,7 +209,8 @@
 
         &.ec-time-grid {
             .ec-day.ec-today {
-                background-color: var(--typo3-state-default-bg);
+                --ec-day-bg-color: var(--typo3-state-default-bg);
+                background-color: var(--ec-day-bg-color);
                 box-shadow: var(--xima-calendar-active-shadow);
             }
         }
@@ -243,7 +246,7 @@
     }
 }
 
-@container calendar-mount (min-height: 501px) {
+@container calendar-content (min-height: 501px) {
     #xima-calendar-mount .ec.ec-day-grid .ec-day {
         padding: 0.5rem;
     }
@@ -253,7 +256,7 @@
     }
 }
 
-@container calendar-mount (min-height: 800px) {
+@container calendar-content (min-height: 800px) {
     #xima-calendar-mount .ec.ec-day-grid .ec-day-head {
         font-size: 1.2rem;
     }
@@ -263,7 +266,7 @@
     z-index: 2;
 }
 
-#xima-calendar-mount .ec.ec-selecting.ec-day-grid .ec-events.ec-preview {
+#xima-calendar-mount .ec.ec-selecting.ec-day-grid .ec-events > .ec-event.ec-preview {
     visibility: hidden;
     pointer-events: none;
 }
@@ -274,12 +277,12 @@
 }
 
 #xima-calendar-mount.xima-calendar-selection-cancelled .ec-event.ec-preview,
-#xima-calendar-mount.xima-calendar-selection-cancelled .ec-events.ec-preview {
+#xima-calendar-mount.xima-calendar-selection-cancelled .ec-events > .ec-event.ec-preview {
     display: none !important;
 }
 
 #xima-calendar-mount.xima-calendar-selection-dialog-open .ec-event.ec-preview,
-#xima-calendar-mount.xima-calendar-selection-dialog-open .ec-events.ec-preview {
+#xima-calendar-mount.xima-calendar-selection-dialog-open .ec-events > .ec-event.ec-preview {
     display: none !important;
 }
 

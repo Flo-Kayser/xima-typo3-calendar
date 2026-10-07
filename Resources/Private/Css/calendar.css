@@ -3,9 +3,17 @@
 @import './calendar-event-appointment.css';
 
 #xima-calendar-mount {
+    .ec-day-grid {
+        .ec-events {
+            transform: translateY(4px);
+        }
+    }
+
     .ec-day-grid,
     .ec-time-grid {
         .ec-event {
+            margin-inline-start: calc(var(--ec-event-col-gap) - 1px);
+            inline-size: calc(100% - var(--ec-event-col-gap) - var(--ec-event-col-gap) + 1px);
             box-sizing: border-box;
             box-shadow: none !important;
         }
@@ -36,4 +44,18 @@
         }
     }
 
+}
+
+#xima-calendar-mount .ec-popup .ec-event {
+    margin-inline-start: 0;
+    inline-size: 100%;
+}
+
+@container calendar-content (max-height: 800px) {
+    #xima-calendar-mount {
+        .ec-day-grid .ec-event .ec-event-body,
+        .ec-time-grid .ec-event {
+            font-size: .7rem;
+        }
+    }
 }

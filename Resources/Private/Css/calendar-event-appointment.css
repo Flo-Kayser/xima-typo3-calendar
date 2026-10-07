@@ -1,13 +1,8 @@
 #xima-calendar-mount {
-    container-type: size;
-    container-name: calendar-mount;
-}
-
-
-#xima-calendar-mount {
     .ec-event {
         --xima-category-color: var(--ec-event-bg-color);
         --xima-category-text-color: var(--ec-event-text-color);
+        font-size: .9rem;
     }
 
     .ec-event.xima-calendar-event--draft {
@@ -43,15 +38,15 @@
     }
 
     .ec-event.xima-calendar-event--categorized {
-        background-color: var(--xima-category-color);
-        color: var(--xima-category-text-color);
+        background-color: var(--xima-category-color) !important;
+        color: var(--xima-category-text-color) !important;
     }
 
     .ec-event.xima-calendar-event--draft {
         opacity: 0.8;
         border: 2px solid transparent;
-        background-color: color-mix(in srgb, var(--xima-category-color) 80%, transparent);
-        color: var(--typo3-component-color);
+        background-color: color-mix(in srgb, var(--xima-category-color) 80%, transparent) !important;
+        color: var(--typo3-component-color) !important;
     }
 
     .ec-event.xima-calendar-event--live {
@@ -59,8 +54,8 @@
     }
 
     .ec-event.xima-calendar-event--review {
-        background-color: color-mix(in srgb, var(--xima-category-color) 40%, transparent);
-        color: var(--typo3-component-color);
+        background-color: color-mix(in srgb, var(--xima-category-color) 40%, transparent) !important;
+        color: var(--typo3-component-color) !important;
         border: 2px dashed light-dark(
             color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #000 30%),
             color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #fff 30%)
@@ -69,12 +64,5 @@
 
     .ec-event.xima-calendar-event--canceled {
         opacity: 0.3;
-    }
-}
-
-@container calendar-mount (max-height: 800px) {
-    #xima-calendar-mount .ec-day-grid .ec-event .ec-event-body,
-    #xima-calendar-mount .ec-time-grid .ec-event {
-        font-size: 0.7rem;
     }
 }
