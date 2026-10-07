@@ -20,6 +20,14 @@
 			<trans-unit id="filter.search" resname="filter.search">
 				<source>Enter search term</source>
 			</trans-unit>
+			<trans-unit id="filter.type" resname="filter.type"><source>Type</source></trans-unit>
+			<trans-unit id="filter.categories" resname="filter.categories"><source>Categories</source></trans-unit>
+			<trans-unit id="filter.status" resname="filter.status"><source>Status</source></trans-unit>
+			<trans-unit id="filter.canceled" resname="filter.canceled"><source>Canceled [C]</source></trans-unit>
+			<trans-unit id="filter.loading" resname="filter.loading"><source>Loading filters …</source></trans-unit>
+			<trans-unit id="filter.error" resname="filter.error"><source>Filters could not be loaded.</source></trans-unit>
+			<trans-unit id="filter.hideSubcategories" resname="filter.hideSubcategories"><source>Hide subcategories</source></trans-unit>
+			<trans-unit id="filter.showSubcategories" resname="filter.showSubcategories"><source>Show subcategories</source></trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source>What do you want to create?</source>
 			</trans-unit>

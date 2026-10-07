@@ -92,9 +92,10 @@ const applyCategoryColor = (
 const applyCategoryColorsToEvents = (
     events: CalendarEventData[],
     categoryColors: Record<string, string>,
+    locale: string,
 ): CalendarEventData[] => events.map((event) => {
     const title = isCanceledEvent(event)
-        ? (event.title ? `Abgesagt · ${event.title}` : 'Abgesagt')
+        ? (event.title ? `${getCanceledLabel(locale)} · ${event.title}` : getCanceledLabel(locale))
         : event.title;
     const categoryUid = Number(event.extendedProps?.eventCategoryId);
     if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
@@ -118,6 +119,8 @@ const applyCategoryColorsToEvents = (
         ],
     };
 });
+
+const getCanceledLabel = (locale: string): string => locale.startsWith('de') ? 'Abgesagt' : 'Canceled';
 
 const getEventStatusClass = (event: CalendarEventData): string[] => {
     const categoryUid = Number(event.extendedProps?.eventCategoryId);
@@ -188,13 +191,14 @@ DocumentService.ready().then(async () => {
         [DayGrid, TimeGrid, List, Interaction],
         {
             ...calendarOptions,
+            locale: calendarConfig.locale,
             eventGap: 3,
             height: '100%',
             nowIndicator: true,
             selectable: enableDragNewEvent,
             scrollTime: '08:00:00',
             dayMaxEvents: true,
-            moreLinkContent: ({num}: {num: number}) => `+${num} weitere`,
+            moreLinkContent: ({num}: {num: number}) => `+${num} ${calendarConfig.locale.startsWith('de') ? 'weitere' : 'more'}`,
             view: calendarConfig.initialView,
             views: {
                 timeGridWeek: {
@@ -214,10 +218,10 @@ DocumentService.ready().then(async () => {
             }),
             buttonText: (buttonText: EventCalendarButtonText) => ({
                 ...buttonText,
-                dayGridMonth: 'Month',
-                timeGridWeek: 'Week',
-                listMonth: 'List',
-                today: 'Today',
+                dayGridMonth: calendarConfig.locale.startsWith('de') ? 'Monat' : 'Month',
+                timeGridWeek: calendarConfig.locale.startsWith('de') ? 'Woche' : 'Week',
+                listMonth: calendarConfig.locale.startsWith('de') ? 'Liste' : 'List',
+                today: calendarConfig.locale.startsWith('de') ? 'Heute' : 'Today',
             }),
             headerToolbar: {
                 start: 'prev next today',
@@ -246,7 +250,7 @@ DocumentService.ready().then(async () => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.categoryColors);
+                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.categoryColors, calendarConfig.locale);
                         return currentEvents;
                     },
                 },
@@ -261,7 +265,12 @@ DocumentService.ready().then(async () => {
                 if (isCanceledEvent(event) && hasConcurrentEvent(event, currentEvents)) {
                     const titleElement = el.querySelector<HTMLElement>('.ec-event-title');
                     if (titleElement) {
-                        titleElement.textContent = titleElement.textContent?.replace(/^Abgesagt\s*·\s*/, '[A] ') ?? '[A]';
+                        const canceledLabel = getCanceledLabel(calendarConfig.locale);
+                        const canceledMarker = calendarConfig.locale.startsWith('de') ? '[A]' : '[C]';
+                        titleElement.textContent = titleElement.textContent?.replace(
+                            new RegExp(`^${canceledLabel}\\s*·\\s*`),
+                            `${canceledMarker} `,
+                        ) ?? canceledMarker;
                     }
                 }
             },

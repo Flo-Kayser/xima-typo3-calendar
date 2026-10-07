@@ -14,6 +14,7 @@ import type {
 type Typo3TopWindow = Window & {
   ximaCalendarFilterState?: CalendarFilterSelection;
   TYPO3?: {
+    lang?: Record<string, string>;
     settings?: {
       ajaxUrls?: {
         xima_calendar_filter_options?: string;
@@ -23,6 +24,7 @@ type Typo3TopWindow = Window & {
         filterOptionsUrl?: string;
         filterStateUrl?: string;
         categoryColors?: CategoryColors;
+        locale?: string;
       };
     };
   };
@@ -39,6 +41,18 @@ export class CalendarFilterElement extends LitElement {
   private filterLoadError = false;
 
   private filterStateSaveQueue: Promise<void> = Promise.resolve();
+
+  private getLanguageLabel(key: string, englishFallback: string, germanFallback: string): string {
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const locale = typo3Top.TYPO3?.settings?.ximaCalendar?.locale
+      ?? document.documentElement.lang
+      ?? navigator.language;
+    if (locale?.startsWith('de')) {
+      return germanFallback;
+    }
+
+    return typo3Top.TYPO3?.lang?.[`filter.${key}`] ?? englishFallback;
+  }
 
   public connectedCallback(): void {
     super.connectedCallback();
@@ -186,8 +200,8 @@ export class CalendarFilterElement extends LitElement {
     if (this.filterLoadError) {
       return html`
         <section class="xima-calendar-filter__section">
-          <h3>Typ</h3>
-          <p>Filter konnten nicht geladen werden.</p>
+          <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
+          <p>${this.getLanguageLabel('error', 'Filters could not be loaded.', 'Filter konnten nicht geladen werden.')}</p>
         </section>
       `;
     }
@@ -195,8 +209,8 @@ export class CalendarFilterElement extends LitElement {
     if (this.filterOptions === null) {
       return html`
         <section class="xima-calendar-filter__section">
-          <h3>Typ</h3>
-          <p>Filter werden geladen …</p>
+          <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
+          <p>${this.getLanguageLabel('loading', 'Loading filters …', 'Filter werden geladen …')}</p>
         </section>
       `;
     }
@@ -207,7 +221,7 @@ export class CalendarFilterElement extends LitElement {
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>Typ</h3>
+        <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
         <div class="xima-calendar-filter__type-list">
           ${this.filterOptions.types.map((type) => html`
             <label class="form-check">
@@ -233,7 +247,7 @@ export class CalendarFilterElement extends LitElement {
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>Kategorien</h3>
+        <h3>${this.getLanguageLabel('categories', 'Categories', 'Kategorien')}</h3>
         <div class="xima-calendar-filter__tree">
           ${this.renderCategoryNodes(null)}
         </div>
@@ -262,7 +276,9 @@ export class CalendarFilterElement extends LitElement {
             <button
               type="button"
               class="xima-calendar-filter__tree-toggle ${hasChildren ? '' : 'xima-calendar-filter__tree-toggle--empty'}"
-              aria-label=${isExpanded ? 'Unterkategorien ausblenden' : 'Unterkategorien anzeigen'}
+              aria-label=${isExpanded
+                ? this.getLanguageLabel('hideSubcategories', 'Hide subcategories', 'Unterkategorien ausblenden')
+                : this.getLanguageLabel('showSubcategories', 'Show subcategories', 'Unterkategorien anzeigen')}
               aria-expanded=${isExpanded}
               @click=${() => this.toggleCategory(category)}
             >
@@ -297,7 +313,7 @@ export class CalendarFilterElement extends LitElement {
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>Status</h3>
+        <h3>${this.getLanguageLabel('status', 'Status', 'Status')}</h3>
         <div class="xima-calendar-filter__status-list">
           ${this.filterOptions.statuses.map((status) => html`
             <label class="form-check">

@@ -58,6 +58,7 @@ class CalendarController extends ActionController
         $viewStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_view_state');
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
+        $locale = $GLOBALS['LANG']->getLocale()?->getName() ?? 'en';
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
         $calendars = $this->calendarSelectionService->getAvailableCalendars();
         $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
@@ -92,6 +93,11 @@ class CalendarController extends ActionController
             'categoryColors',
             $categoryColors,
         );
+        $this->pageRenderer->addInlineSetting(
+            'ximaCalendar',
+            'locale',
+            $locale,
+        );
         $this->pageRenderer->addInlineLanguageLabelFile(
             'EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf',
             'filter',
@@ -104,6 +110,7 @@ class CalendarController extends ActionController
             'cleanupEventUrl' => $cleanupEventUrl,
             'viewStateUrl' => $viewStateUrl,
             'initialView' => $this->filterService->getView(),
+            'locale' => $locale,
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
             'calendars' => $calendars,
