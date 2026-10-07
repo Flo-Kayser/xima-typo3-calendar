@@ -23,6 +23,7 @@ type CalendarFilterWindow = Window & {
 };
 
 type CalendarEventData = {
+    id?: string | number;
     title?: string;
     start?: string | Date;
     end?: string | Date;
@@ -38,6 +39,36 @@ const calendarCleanups = new WeakMap<HTMLElement, () => Promise<void>>();
 const isCanceledEvent = (event: CalendarEventData): boolean => {
     const canceled = event.extendedProps?.appointmentCanceled;
     return canceled === true || canceled === 1 || canceled === '1';
+};
+
+const eventTime = (value: string | Date | undefined): number | null => {
+    if (!value) {
+        return null;
+    }
+
+    const timestamp = value instanceof Date ? value.getTime() : Date.parse(value);
+    return Number.isFinite(timestamp) ? timestamp : null;
+};
+
+const hasConcurrentEvent = (
+    event: CalendarEventData,
+    events: CalendarEventData[],
+): boolean => {
+    const start = eventTime(event.start);
+    const end = eventTime(event.end);
+    if (start === null || end === null) {
+        return false;
+    }
+
+    return events.some((other) => {
+        if (other === event || (other.id !== undefined && event.id !== undefined && other.id === event.id)) {
+            return false;
+        }
+
+        const otherStart = eventTime(other.start);
+        const otherEnd = eventTime(other.end);
+        return otherStart !== null && otherEnd !== null && start < otherEnd && end > otherStart;
+    });
 };
 
 const applyCategoryColor = (
@@ -136,6 +167,7 @@ DocumentService.ready().then(async () => {
         categories: [],
         statuses: [],
     };
+    let currentEvents: CalendarEventData[] = [];
     const detailsController = createCalendarDetailsController(container, typo3Top);
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
     let currentView = calendarConfig.initialView;
@@ -214,7 +246,8 @@ DocumentService.ready().then(async () => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        return applyCategoryColorsToEvents(events, calendarConfig.categoryColors);
+                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.categoryColors);
+                        return currentEvents;
                     },
                 },
             ],
@@ -224,6 +257,13 @@ DocumentService.ready().then(async () => {
                 el: HTMLElement;
             }) => {
                 applyCategoryColor(event, el, calendarConfig.categoryColors);
+
+                if (isCanceledEvent(event) && hasConcurrentEvent(event, currentEvents)) {
+                    const titleElement = el.querySelector<HTMLElement>('.ec-event-title');
+                    if (titleElement) {
+                        titleElement.textContent = titleElement.textContent?.replace(/^Abgesagt\s*·\s*/, '[A] ') ?? '[A]';
+                    }
+                }
             },
             eventClick: detailsController.eventClick,
         },

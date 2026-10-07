@@ -12,8 +12,8 @@
     .ec-day-grid,
     .ec-time-grid {
         .ec-event {
-            margin-inline-start: calc(var(--ec-event-col-gap) - 1px);
-            inline-size: calc(100% - var(--ec-event-col-gap) - var(--ec-event-col-gap) + 1px);
+            margin-inline: calc(var(--ec-event-col-gap) / 2);
+            inline-size: calc(100% - var(--ec-event-col-gap));
             box-sizing: border-box;
             box-shadow: none !important;
         }
@@ -22,7 +22,8 @@
             position: relative;
             z-index: 1;
             flex-direction: row;
-            align-items: baseline;
+            align-items: center;
+            justify-content: center;
             gap: 0.35rem;
             min-width: 0;
         }
@@ -46,9 +47,41 @@
 
 }
 
+#xima-calendar-mount .ec-time-grid .ec-event {
+    margin-inline-start: 0;
+    margin-inline-end: var(--ec-event-col-gap);
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .ec-event {
+    margin-inline: calc(var(--ec-event-col-gap) / 2);
+}
+
 #xima-calendar-mount .ec-popup .ec-event {
     margin-inline-start: 0;
     inline-size: 100%;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-event-time {
+    display: none;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-event-body {
+    align-self: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-body {
+    justify-content: flex-start;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-title {
+    position: static;
+    inset-inline-start: auto;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .ec-events {
+    padding-block-start: 3px;
 }
 
 @container calendar-content (max-height: 800px) {
