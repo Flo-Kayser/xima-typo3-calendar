@@ -36,6 +36,8 @@ export type CalendarConfig = {
     defaultStartTime: string;
     defaultEndTime: string;
     defaultAllDay: boolean;
+    timeSlotMinutes: number;
+    scrollStartTime: string;
     calendars: CalendarOption[];
     categoryColors: Record<string, string>;
     labels: CalendarModalLabels;
@@ -94,6 +96,8 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
             isBoolean,
         )
         && hasValues(config, ['defaultStartTime', 'defaultEndTime'], isString)
+        && hasValues(config, ['timeSlotMinutes'], isNumber)
+        && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
         && isCategoryColors(config.categoryColors)
         && isCalendarModalLabels(config.labels);

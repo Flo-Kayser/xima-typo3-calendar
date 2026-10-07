@@ -18,7 +18,12 @@ TCEMAIN.preview {
 }
 
 mod.tx_ximatypo3calendar {
-    enableEventPreview = 0
+    enableEventPreview = 1
+
+    weekViewGrid {
+        timeSlotMinutes = 15 # Supported values: 15, 30 or 60
+        scrollStartTime = 07:00
+    }
 
     categoryColors {
     }

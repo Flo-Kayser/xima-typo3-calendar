@@ -160,6 +160,7 @@ DocumentService.ready().then(async () => {
 
     const enableDragNewEvent = calendarConfig.enableDragNewEvent;
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
+    const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
     const calendarOptions = {
         firstDay: 0,
     };
@@ -197,17 +198,17 @@ DocumentService.ready().then(async () => {
             height: '100%',
             nowIndicator: true,
             selectable: enableDragNewEvent,
-            scrollTime: '08:00:00',
             dayMaxEvents: true,
             moreLinkContent: ({num}: {num: number}) => `+${num} ${calendarConfig.locale.startsWith('de') ? 'weitere' : 'more'}`,
             view: calendarConfig.initialView,
             views: {
                 timeGridWeek: {
+            scrollTime: calendarConfig.scrollStartTime,
                     slotMinTime: '00:00:00',
                     slotMaxTime: '24:00:00',
-                    slotDuration: '00:15:00',
+                    slotDuration: timeSlotDuration,
                     slotLabelInterval: '01:00:00',
-                    snapDuration: '00:15:00',
+                    snapDuration: timeSlotDuration,
                     slotEventOverlap: false,
                 },
             },

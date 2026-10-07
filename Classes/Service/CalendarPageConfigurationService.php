@@ -14,6 +14,8 @@ final class CalendarPageConfigurationService
     private const DEFAULT_ALL_DAY = false;
     private const DEFAULT_ENABLE_DRAG = true;
     private const DEFAULT_ENABLE_CLICK = true;
+    private const DEFAULT_TIME_SLOT_MINUTES = 15;
+    private const DEFAULT_SCROLL_TIME = '08:00:00';
 
     /** @var array<int, array<string, mixed>> */
     private array $pageTsConfig = [];
@@ -26,10 +28,11 @@ final class CalendarPageConfigurationService
         );
     }
 
-    /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool} */
+    /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool, timeSlotMinutes: int, scrollStartTime: string} */
     public function getNewEventConfiguration(RequestInterface $request): array
     {
         $config = $this->getCalendarPageTsConfig($request);
+        $weekViewGrid = $this->asArray($config['weekViewGrid.'] ?? $config['weekViewGrid'] ?? []);
         $newEvent = $this->asArray($config['newEvent.'] ?? $config['newEvent'] ?? []);
         $interaction = $this->asArray($newEvent['interaction.'] ?? $newEvent['interaction'] ?? []);
         $defaults = $this->asArray($newEvent['defaults.'] ?? $newEvent['defaults'] ?? []);
@@ -54,6 +57,17 @@ final class CalendarPageConfigurationService
             'defaultAllDay' => $this->isEnabled(
                 $defaults['allDay'] ?? null,
                 self::DEFAULT_ALL_DAY,
+            ),
+            'timeSlotMinutes' => $this->getValidTimeSlotMinutes(
+                $weekViewGrid['timeSlotMinutes'] ?? $config['timeSlotMinutes'] ?? null,
+            ),
+            'scrollStartTime' => $this->getValidTimeWithSeconds(
+                $weekViewGrid['scrollStartTime']
+                    ?? $weekViewGrid['scrollTime']
+                    ?? $config['scrollStartTime']
+                    ?? $config['scrollTime']
+                    ?? null,
+                self::DEFAULT_SCROLL_TIME,
             ),
         ];
     }
@@ -83,6 +97,39 @@ final class CalendarPageConfigurationService
         }
 
         return $value;
+    }
+
+    private function getValidTimeWithSeconds(mixed $value, string $default): string
+    {
+        if (!is_string($value)) {
+            return $default;
+        }
+
+        if (preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $value)) {
+            return $value . ':00';
+        }
+
+        if (preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/', $value)) {
+            return $value;
+        }
+
+        return $default;
+    }
+
+    private function getValidTimeSlotMinutes(mixed $value): int
+    {
+        $minutes = null;
+        if (is_int($value)) {
+            $minutes = $value;
+        } elseif (is_string($value) && preg_match('/^\s*(15|30|60)(?:\s|$)/', $value, $matches)) {
+            $minutes = (int)$matches[1];
+        }
+
+        if ($minutes === 15 || $minutes === 30 || $minutes === 60) {
+            return $minutes;
+        }
+
+        return self::DEFAULT_TIME_SLOT_MINUTES;
     }
 
     private function isEnabled(mixed $value, bool $default): bool

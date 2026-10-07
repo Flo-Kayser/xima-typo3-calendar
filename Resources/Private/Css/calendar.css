@@ -94,5 +94,9 @@
         .ec-time-grid .ec-event {
             font-size: .7rem;
         }
+
+        .ec-day-grid .ec-event-time {
+            display: none;
+        }
     }
 }
