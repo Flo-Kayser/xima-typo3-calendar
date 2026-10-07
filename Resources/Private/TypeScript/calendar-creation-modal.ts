@@ -52,7 +52,7 @@ export function chooseCalendarCreationType(
                     ${calendars.length > 0 ? html`
                         <div class="form-group">
                             <label class="form-label" for="xima-calendar-creation-calendar">${labels.calendar}</label>
-                            <select id="xima-calendar-creation-calendar" class="form-select">
+                            <select id="xima-calendar-creation-calendar" class="form-select" ?disabled=${calendars.length === 1}>
                                 ${calendars.length > 1 ? html`<option value="">${labels.selectCalendar}</option>` : ''}
                                 ${calendars.map(calendar => html`
                                     <option value=${calendar.uid} ?selected=${calendars.length === 1}>${calendar.title}</option>

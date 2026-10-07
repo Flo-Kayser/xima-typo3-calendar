@@ -59,7 +59,7 @@ ${o}
                     ${t.length>0?Ao`
                         <div class="form-group">
                             <label class="form-label" for="xima-calendar-creation-calendar">${e.calendar}</label>
-                            <select id="xima-calendar-creation-calendar" class="form-select">
+                            <select id="xima-calendar-creation-calendar" class="form-select" ?disabled=${t.length===1}>
                                 ${t.length>1?Ao`<option value="">${e.selectCalendar}</option>`:""}
                                 ${t.map(l=>Ao`
                                     <option value=${l.uid} ?selected=${t.length===1}>${l.title}</option>
