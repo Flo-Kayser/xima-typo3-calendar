@@ -20,7 +20,7 @@ final class CalendarFilterController
     {
         return new JsonResponse([
             'success' => true,
-            'options' => $this->filterService->getOptions(),
+            'options' => $this->filterService->getFilters(),
             'state' => $this->filterService->getState(),
         ]);
     }

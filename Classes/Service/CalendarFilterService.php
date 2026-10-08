@@ -5,31 +5,52 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3Calendar\Service;
 
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
+use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final class CalendarFilterService
 {
     private const MODULE_IDENTIFIER = 'calendar_calendar';
 
-    private ?array $options = null;
+    private ?array $filters = null;
 
     public function __construct(
         private readonly ConnectionPool $connectionPool,
+        private readonly EventDispatcher $eventDispatcher,
     ) {
     }
 
     /**
-     * @return array{types: list<array{value: string, label: string}>, categories: list<array{value: int, label: string, parentUid: int|null}>, statuses: list<array{value: int|string, label: string}>}
+     * @return array{
+     *     types: list<array{value: string, label: string}>,
+     *     categories: list<array<string,mixed>>,
+     *     statuses: list<array{value: int|string, label: string}>,
+     * }
      */
-    public function getOptions(): array
+    public function getFilters(): array
     {
-        return $this->options ??= [
+        if ($this->filters !== null) {
+            return $this->filters;
+        }
+
+        $filters = [
             'types' => $this->getTypes(),
-            'categories' => $this->getCategories(),
             'statuses' => $this->getStatuses(),
         ];
+
+        $event = new ConfigureCalendarFilterEvent();
+
+        $this->eventDispatcher->dispatch($event);
+
+        foreach ($event->getFilters() as $filter) {
+            $serializedFilter = $filter->jsonSerialize();
+
+            $filters[$filter->getIdentifier()] =
+                $serializedFilter['items'] ?? [];
+        }
+        return $this->filters = $filters;
     }
 
     private const DEFAULT_VIEW = 'dayGridMonth';
@@ -74,11 +95,11 @@ final class CalendarFilterService
 
     private function normalizeState(array $state): array
     {
-        $options = $this->getOptions();
+        $filters = $this->getFilters();
         $expanded = is_array($state['expanded'] ?? null) ? $state['expanded'] : [];
-        $types = array_fill_keys(array_column($options['types'], 'value'), true);
-        $categories = array_fill_keys(array_column($options['categories'], 'value'), true);
-        $statuses = array_fill_keys(array_map('strval', array_column($options['statuses'], 'value')), true);
+        $types = array_fill_keys(array_column($filters['types'], 'value'), true);
+        $categories = array_fill_keys(array_column($filters['categories'], 'value'), true);
+        $statuses = array_fill_keys(array_map('strval', array_column($filters['statuses'], 'value')), true);
         $activeTypes = array_values(array_filter(
             $this->getStringList($state['activeTypes'] ?? null),
             static fn (string $type): bool => isset($types[$type]),
@@ -145,32 +166,6 @@ final class CalendarFilterService
         return array_values($types);
     }
 
-    /**
-     * @return list<array{value: int, label: string, parentUid: int|null}>
-     */
-    private function getCategories(): array
-    {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category');
-        $rows = $queryBuilder
-            ->select('uid', 'title', 'parent')
-            ->from('sys_category')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'sys_language_uid',
-                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
-                )
-            )
-            ->orderBy('sorting')
-            ->addOrderBy('title')
-            ->executeQuery()
-            ->fetchAllAssociative();
-
-        return array_map(static fn (array $row): array => [
-            'value' => (int)$row['uid'],
-            'label' => (string)$row['title'],
-            'parentUid' => (int)$row['parent'] > 0 ? (int)$row['parent'] : null,
-        ], $rows);
-    }
 
     /**
      * @return list<array{value: int|string, label: string}>
