@@ -166,7 +166,6 @@ final class CalendarFilterService
         return array_values($types);
     }
 
-
     /**
      * @return list<array{value: int|string, label: string}>
      */

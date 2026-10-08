@@ -14,7 +14,6 @@ use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterCategory
 {
-
     public function __construct(
         private ConnectionPool $connectionPool,
     ) {
@@ -27,22 +26,24 @@ final readonly class CalendarFilterCategory
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category');
 
-
         $rows = $queryBuilder
             ->select('uid', 'title', 'parent')
             ->from('sys_category')
             ->where(
                 $queryBuilder->expr()->eq(
                     'deleted',
-                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT,
+                    $queryBuilder->createNamedParameter(
+                        0,
+                        Connection::PARAM_INT,
                     ),
                 ),
                 $queryBuilder->expr()->eq(
                     'sys_language_uid',
-                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT,
+                    $queryBuilder->createNamedParameter(
+                        0,
+                        Connection::PARAM_INT,
                     ),
                 ),
-
             )
             ->orderBy('sorting')
             ->addOrderBy('title')
@@ -142,7 +143,6 @@ final readonly class CalendarFilterCategory
             $rows,
         );
     }
-
 
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-calendar-filter',

@@ -13,7 +13,8 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
 
     public function __construct(
         private readonly string $identifier,
-    ){}
+    ) {
+    }
 
     public function getIdentifier(): string
     {

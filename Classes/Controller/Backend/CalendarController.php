@@ -18,12 +18,12 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use Xima\XimaTypo3Calendar\Domain\Repository\EntryRepository;
 use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
+use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
-use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
