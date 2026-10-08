@@ -240,13 +240,13 @@ export class CalendarFilterElement extends LitElement {
   }
 
   private renderCategoryFilter() {
-    if (this.filterOptions === null || this.filterOptions.categories.length === 0) {
+    if (this.filterOptions === null || this.filterOptions.categories.items.length === 0) {
       return nothing;
     }
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>${this.getLanguageLabel('categories', 'Categories', 'Kategorien')}</h3>
+        <h3>${this.filterOptions.categories.title}</h3>
         <div class="xima-calendar-filter__tree">
           ${this.renderCategoryNodes(null)}
         </div>
@@ -259,12 +259,12 @@ export class CalendarFilterElement extends LitElement {
       return [];
     }
 
-    const nodes = this.filterOptions.categories.filter(
+    const nodes = this.filterOptions.categories.items.filter(
       (category) => category.parentUid === parentUid,
     );
 
     return nodes.map((category) => {
-      const hasChildren = this.filterOptions?.categories.some(
+      const hasChildren = this.filterOptions?.categories.items.some(
         (child) => child.parentUid === category.value,
       ) ?? false;
       const isExpanded = this.filterState?.expanded.categoryNodes[category.value] === true;
@@ -486,7 +486,7 @@ export class CalendarFilterElement extends LitElement {
     let changed = true;
     while (changed) {
       changed = false;
-      for (const category of this.filterOptions.categories) {
+      for (const category of this.filterOptions.categories.items) {
         if (category.parentUid !== null && result.has(category.parentUid) && !result.has(category.value)) {
           result.add(category.value);
           changed = true;

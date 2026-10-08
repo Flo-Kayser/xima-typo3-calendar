@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
@@ -27,7 +28,15 @@ final readonly class CalendarFilterCategory
     )]
     public function build(ConfigureCalendarFilterEvent $event): void
     {
-        $filter = new TreeCalendarFilter('categories');
+        $filter = new TreeCalendarFilter(
+            identifier: 'categories',
+            title: LocalizationUtility::translate(
+            'filter.categories.title',
+            'xima_typo3_calendar',
+        ) ?? 'Categories',
+            colorCoded: true,
+        );
+
 
         foreach ($this->getCategories() as $item) {
             $filter->addItem($item);

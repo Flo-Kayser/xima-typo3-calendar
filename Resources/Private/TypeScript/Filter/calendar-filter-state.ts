@@ -8,9 +8,16 @@ export type CalendarCategoryOption = CalendarFilterOption & {
   parentUid: number | null;
 };
 
+export type TreeCalendarFilter = {
+  identifier: string;
+  title: string;
+  colorCoded: boolean;
+  items: CalendarCategoryOption[];
+};
+
 export type CalendarFilterOptions = {
   types: CalendarFilterOption[];
-  categories: CalendarCategoryOption[];
+  categories: TreeCalendarFilter;
   statuses: CalendarFilterOption[];
 };
 

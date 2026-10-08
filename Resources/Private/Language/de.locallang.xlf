@@ -210,6 +210,10 @@
 				<source>Add to Outlook 365</source>
 				<target>Zu Outlook 365 hinzufügen</target>
 			</trans-unit>
+			<trans-unit id="filter.categories.title" resname="filter.categories">
+                <source />
+                <target>Kategorien</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

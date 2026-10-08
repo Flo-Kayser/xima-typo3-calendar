@@ -6,16 +6,18 @@ namespace Xima\XimaTypo3Calendar\Domain\Model\Dto;
 
 final class TreeCalendarFilter extends AbstractCalendarFilter
 {
+
+    public function __construct(
+        private readonly string $identifier,
+        private readonly string $title = '',
+        private readonly bool $colorCoded = false,
+    ) {
+    }
+
     /**
      * @var list<TreeCalendarFilterItem>
      */
     public array $items = [];
-
-    public function __construct(
-        private readonly string $identifier,
-    ) {
-    }
-
     public function getIdentifier(): string
     {
         return $this->identifier;
@@ -29,6 +31,8 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
     /**
      * @return array{
      *     identifier: string,
+     *     title: string,
+     *     colorCoded: bool,
      *     items: list<TreeCalendarFilterItem>
      *         }
      */
@@ -36,6 +40,8 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
     {
         return [
             'identifier' => $this->identifier,
+            'title' => $this->title,
+            'colorCoded' => $this->colorCoded,
             'items' => $this->items,
         ];
     }

@@ -25,7 +25,12 @@ final class CalendarFilterService
     /**
      * @return array{
      *     types: list<array{value: string, label: string}>,
-     *     categories: list<array<string,mixed>>,
+     *     categories: array{
+     *         identifier: string,
+     *         title: string,
+     *         colorCoded: bool,
+     *         items: list<array<string, mixed>>,
+     *     },
      *     statuses: list<array{value: int|string, label: string}>,
      * }
      */
@@ -47,8 +52,7 @@ final class CalendarFilterService
         foreach ($event->getFilters() as $filter) {
             $serializedFilter = $filter->jsonSerialize();
 
-            $filters[$filter->getIdentifier()] =
-                $serializedFilter['items'] ?? [];
+            $filters[$filter->getIdentifier()] = $serializedFilter;
         }
         return $this->filters = $filters;
     }
@@ -98,7 +102,7 @@ final class CalendarFilterService
         $filters = $this->getFilters();
         $expanded = is_array($state['expanded'] ?? null) ? $state['expanded'] : [];
         $types = array_fill_keys(array_column($filters['types'], 'value'), true);
-        $categories = array_fill_keys(array_column($filters['categories'], 'value'), true);
+        $categories = array_fill_keys(array_column($filters['categories']['items'], 'value'), true);
         $statuses = array_fill_keys(array_map('strval', array_column($filters['statuses'], 'value')), true);
         $activeTypes = array_values(array_filter(
             $this->getStringList($state['activeTypes'] ?? null),
