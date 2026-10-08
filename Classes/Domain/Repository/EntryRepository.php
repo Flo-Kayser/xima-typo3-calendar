@@ -125,6 +125,15 @@ class EntryRepository extends Repository
             );
         }
 
+        $event = new ApplyCalendarFilterEvent(
+            queryBuilder: $queryBuilder,
+            filters: $filters,
+        );
+
+        $this->eventDispatcher->dispatch($event);
+
+        $queryBuilder = $event->getQueryBuilder();
+
         $types = array_values(array_filter($filters['types'] ?? [], static fn (mixed $type): bool => is_string($type) && $type !== ''));
         if ($types !== []) {
             $typeParameter = $queryBuilder->createNamedParameter($types, Connection::PARAM_STR_ARRAY);
@@ -158,31 +167,9 @@ class EntryRepository extends Repository
                 $queryBuilder->andWhere($canceledCondition);
             }
         }
-        $categories = array_values(array_filter($filters['categories'] ?? [], static fn (mixed $category): bool => is_int($category) || is_numeric($category)));
-        if ($categories !== []) {
-            $categoryParameter = $queryBuilder->createNamedParameter(
-                array_map('intval', $categories),
-                Connection::PARAM_INT_ARRAY,
-            );
-            $queryBuilder->andWhere(
-                'EXISTS (SELECT 1 FROM sys_category_record_mm mm'
-                . ' INNER JOIN sys_category cat ON cat.uid = mm.uid_local'
-                . ' WHERE mm.uid_foreign = v.uid'
-                . ' AND mm.uid_local IN (' . $categoryParameter . ')'
-                . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
-                . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
-                . ' AND cat.deleted = 0)'
-            );
-        }
 
-        $event = new ApplyCalendarFilterEvent(
-            queryBuilder: $queryBuilder,
-            filters: $filters,
-        );
 
-        $this->eventDispatcher->dispatch($event);
 
-        $queryBuilder = $event->getQueryBuilder();
         return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 }

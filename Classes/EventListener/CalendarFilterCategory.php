@@ -7,6 +7,7 @@ namespace Xima\XimaTypo3Calendar\EventListener;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
@@ -17,6 +18,42 @@ final readonly class CalendarFilterCategory
     public function __construct(
         private ConnectionPool $connectionPool,
     ) {
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/configure-calendar-filter',
+        event: ConfigureCalendarFilterEvent::class,
+        method: 'build',
+    )]
+    public function build(ConfigureCalendarFilterEvent $event): void
+    {
+        $filter = new TreeCalendarFilter('categories');
+
+        foreach ($this->getCategories() as $item) {
+            $filter->addItem($item);
+        }
+
+        $event->addFilter($filter);
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/apply-category-filter',
+        event: ApplyCalendarFilterEvent::class,
+        method: 'apply',
+    )]
+    public function apply(ApplyCalendarFilterEvent $event): void
+    {
+        $categories = $this->getSelectedCategories($event);
+
+        if ($categories === []) {
+            return;
+        }
+
+        $queryBuilder = $event->getQueryBuilder();
+
+        $this->joinCategoryTable($queryBuilder);
+        $this->addCategoryFilterCondition($queryBuilder, $categories);
+
     }
 
     /**
@@ -139,34 +176,85 @@ final readonly class CalendarFilterCategory
             ->fetchFirstColumn();
 
         return array_map(
-            static fn (mixed $value): int => (int)$value,
+            static fn(mixed $value): int => (int)$value,
             $rows,
         );
     }
 
-    #[AsEventListener(
-        identifier: 'xima-typo3-calendar/configure-calendar-filter',
-        event: ConfigureCalendarFilterEvent::class,
-        method: 'build',
-    )]
-    public function build(ConfigureCalendarFilterEvent $event): void
+    /**
+     * @return list<int>
+     */
+    private function getSelectedCategories(ApplyCalendarFilterEvent $event): array
     {
-        $filter = new TreeCalendarFilter('categories');
+        $categories = $event->getFilters()['categories'] ?? [];
 
-        foreach ($this->getCategories() as $item) {
-            $filter->addItem($item);
+        if (!is_array($categories)) {
+            return [];
         }
 
-        $event->addFilter($filter);
+        return array_values(array_unique(array_filter(
+            array_map(
+                'intval',
+                array_filter($categories, 'is_numeric'),
+            ),
+            static fn(int $category): bool => $category > 0,
+        )));
     }
 
-    #[AsEventListener(
-        identifier: 'xima-typo3-calendar/apply-category-filter',
-        event: ApplyCalendarFilterEvent::class,
-        method: 'apply',
-    )]
-    public function apply(ApplyCalendarFilterEvent $event): void
+    private function joinCategoryTable(QueryBuilder $queryBuilder): void
     {
-        //
+        $queryBuilder
+            ->distinct()
+            ->innerJoin(
+                'v',
+                'sys_category_record_mm',
+                'categoryRelation',
+                'categoryRelation.uid_foreign = v.uid',
+            )
+            ->innerJoin(
+                'categoryRelation',
+                'sys_category',
+                'category',
+                'category.uid = categoryRelation.uid_local',
+            );
     }
+
+    private function addCategoryFilterCondition(QueryBuilder $queryBuilder, array $categories): void
+    {
+        $categoryParameter = $queryBuilder->createNamedParameter(
+            array_map('intval', $categories),
+            Connection::PARAM_INT_ARRAY,
+        );
+
+        $queryBuilder->andWhere(
+            $queryBuilder->expr()->eq(
+                'categoryRelation.tablenames',
+                $queryBuilder->createNamedParameter(
+                    'tx_ximatypo3calendar_domain_model_event',
+                    Connection::PARAM_STR,
+                ),
+            ),
+            $queryBuilder->expr()->eq(
+                'categoryRelation.fieldname',
+                $queryBuilder->createNamedParameter(
+                    'categories',
+                    Connection::PARAM_STR,
+                ),
+            ),
+            $queryBuilder->expr()->in(
+                'categoryRelation.uid_local',
+                $categoryParameter,
+            ),
+            $queryBuilder->expr()->eq(
+                'category.deleted',
+                $queryBuilder->createNamedParameter(
+                    0,
+                    Connection::PARAM_INT,
+                ),
+            ),
+
+        );
+    }
+
+
 }
