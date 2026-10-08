@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
 
 class EntryRepository extends Repository
 {
@@ -174,6 +175,14 @@ class EntryRepository extends Repository
             );
         }
 
+        $event = new ApplyCalendarFilterEvent(
+            queryBuilder: $queryBuilder,
+            filters: $filters,
+        );
+
+        $this->eventDispatcher->dispatch($event);
+
+        $queryBuilder = $event->getQueryBuilder();
         return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 }
