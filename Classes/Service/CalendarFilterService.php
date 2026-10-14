@@ -167,17 +167,17 @@ final class CalendarFilterService
                 continue;
             }
 
-            $allowedValues = array_fill_keys(
-                array_map(
-                    'strval',
-                    array_column($filter['items'] ?? [], 'value'),
-                ),
-                true,
-            );
-            $checkboxLists[$identifier] = array_values(array_filter(
+            $allowedValues = [];
+            foreach ($filter['items'] ?? [] as $item) {
+                if (is_array($item) && (is_int($item['value'] ?? null) || is_string($item['value'] ?? null))) {
+                    $allowedValues[(string)$item['value']] = $item['value'];
+                }
+            }
+
+            $checkboxLists[$identifier] = array_values(array_filter(array_map(
+                static fn (int|string $value): int|string|null => $allowedValues[(string)$value] ?? null,
                 $this->getTreeValueList($state['checkboxLists'][$identifier] ?? null),
-                static fn (int|string $value): bool => isset($allowedValues[(string)$value]),
-            ));
+            ), static fn (int|string|null $value): bool => $value !== null));
         }
         $trees = $this->normalizeTreeStates($state['trees'] ?? null, $categories);
 

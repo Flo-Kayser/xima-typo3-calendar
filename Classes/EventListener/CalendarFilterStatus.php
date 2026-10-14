@@ -41,12 +41,18 @@ final readonly class CalendarFilterStatus
             $filter->addItem(
                 new CheckboxCalendarFilterItem(
                     label: LocalizationUtility::translate(
-                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items'
+                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.'
                     . $status->value
                     . '.label',
                     'xima_typo3_calendar',
                     ) ?? (string)$status->value,
                     value: $status->value,
+                    appearance: match ($status) {
+                        EventStatus::DRAFT => 'hatched',
+                        EventStatus::REVIEW => 'dashed',
+                        EventStatus::REJECTED => 'outlined',
+                        default => '',
+                    },
                 ),
             );
         }
@@ -54,7 +60,7 @@ final readonly class CalendarFilterStatus
         $filter->addItem(
             new CheckboxCalendarFilterItem(
                 label: LocalizationUtility::translate(
-                'filter.canceled',
+                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
                 'xima_typo3_calendar',
             ) ?? 'Canceled [C]',
                 value: 'canceled',

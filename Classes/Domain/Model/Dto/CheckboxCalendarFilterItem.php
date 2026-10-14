@@ -10,11 +10,12 @@ final class CheckboxCalendarFilterItem implements \JsonSerializable
         public string $label = '',
         public int|string $value = '',
         public bool $selected = false,
+        public string $appearance = '',
     ) {
     }
 
     /**
-     * @return array{label: string, value: int|string, selected: bool}
+     * @return array{label: string, value: int|string, selected: bool, appearance: string}
      */
     public function jsonSerialize(): array
     {
@@ -22,6 +23,7 @@ final class CheckboxCalendarFilterItem implements \JsonSerializable
             'label' => $this->label,
             'value' => $this->value,
             'selected' => $this->selected,
+            'appearance' => $this->appearance,
         ];
     }
 }
