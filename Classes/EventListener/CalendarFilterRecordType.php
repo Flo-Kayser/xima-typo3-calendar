@@ -21,13 +21,6 @@ final readonly class CalendarFilterRecordType
     )]
     public function build(ConfigureCalendarFilterEvent $event): void
     {
-        $filter = new CheckboxCalendarFilter(
-            identifier: 'recordTypes',
-            title: LocalizationUtility::translate(
-                'filter.type.title',
-                'xima_typo3_calendar',
-            ) ?? 'Type',
-        );
 
         $items = $GLOBALS['TCA']
             ['tx_ximatypo3calendar_domain_model_event']
@@ -37,6 +30,34 @@ final readonly class CalendarFilterRecordType
             ['items']
             ?? [];
 
+        $recordTypeValues = array_values(array_unique(array_filter(
+            array_map(
+                static fn (mixed $item): string => is_array($item)
+                    ? (string)($item['value'] ?? '')
+                    : '',
+                $items
+            ),
+            static fn (string $value): bool => $value !== ''
+        )));
+
+        $defaultRecordTypes = ['event','event-appointment'];
+
+        $isDefaultRecordTypeFilter =
+            count($recordTypeValues) === 2
+            && count(array_diff($recordTypeValues, $defaultRecordTypes)) === 0
+            && count(array_diff($defaultRecordTypes, $recordTypeValues)) === 0;
+
+        if (count($recordTypeValues) <= 1 || $isDefaultRecordTypeFilter) {
+            return;
+        }
+
+        $filter = new CheckboxCalendarFilter(
+            identifier: 'recordTypes',
+            title: LocalizationUtility::translate(
+                'filter.type.title',
+                'xima_typo3_calendar',
+            ) ?? 'Type',
+        );
         foreach ($items as $item) {
             if (!is_array($item)) {
                 continue;
