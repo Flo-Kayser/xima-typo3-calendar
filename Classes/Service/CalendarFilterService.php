@@ -7,7 +7,6 @@ namespace Xima\XimaTypo3Calendar\Service;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
-use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final class CalendarFilterService
@@ -25,8 +24,7 @@ final class CalendarFilterService
     /**
      * @return array{
      *     types: list<array{value: string, label: string}>,
-     *     trees: array<string, array<string, mixed>>,
-     *     statuses: list<array{value: int|string, label: string}>,
+     *     filters: array<string, array<string, mixed>>,
      * }
      */
     public function getFilters(): array
@@ -37,8 +35,7 @@ final class CalendarFilterService
 
         $filters = [
             'types' => $this->getTypes(),
-            'trees' => [],
-            'statuses' => $this->getStatuses(),
+            'filters' => [],
         ];
 
         $event = new ConfigureCalendarFilterEvent();
@@ -48,7 +45,7 @@ final class CalendarFilterService
         foreach ($event->getFilters() as $filter) {
             $serializedFilter = $filter->jsonSerialize();
 
-            $filters['trees'][$filter->getIdentifier()] = $serializedFilter;
+            $filters['filters'][$filter->getIdentifier()] = $serializedFilter;
         }
         return $this->filters = $filters;
     }
@@ -103,10 +100,16 @@ final class CalendarFilterService
         $filters = $this->getFilters();
         $types = array_fill_keys(array_column($filters['types'], 'value'), true);
         $categories = array_fill_keys(
-            array_column($filters['trees']['categories']['items'] ?? [], 'value'),
+            array_column($filters['filters']['categories']['items'] ?? [], 'value'),
             true,
         );
-        $statuses = array_fill_keys(array_map('strval', array_column($filters['statuses'], 'value')), true);
+        $statuses = array_fill_keys(
+            array_map(
+                'strval',
+                array_column($filters['filters']['statuses']['items'] ?? [], 'value'),
+            ),
+            true,
+        );
         $activeTypes = array_values(array_filter(
             $this->getStringList($state['activeTypes'] ?? null),
             static fn (string $type): bool => isset($types[$type]),
@@ -177,46 +180,6 @@ final class CalendarFilterService
         }
 
         return array_values($types);
-    }
-
-    /**
-     * @return list<array{value: int|string, label: string}>
-     */
-    private function getStatuses(): array
-    {
-        $statusOrder = [
-            EventStatus::DRAFT->value => 0,
-            EventStatus::REVIEW->value => 1,
-            EventStatus::REJECTED->value => 2,
-            EventStatus::LIVE->value => 3,
-        ];
-        $eventStatuses = EventStatus::cases();
-        usort(
-            $eventStatuses,
-            static fn (EventStatus $left, EventStatus $right): int
-                => ($statusOrder[$left->value] ?? PHP_INT_MAX) <=> ($statusOrder[$right->value] ?? PHP_INT_MAX),
-        );
-
-        $statuses = [];
-        foreach ($eventStatuses as $status) {
-            $statuses[] = [
-                'value' => $status->value,
-                'label' => $this->translate(
-                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.' . $status->value . '.label',
-                    ucfirst(strtolower($status->name)),
-                ),
-            ];
-        }
-
-        $statuses[] = [
-            'value' => 'canceled',
-            'label' => $this->translate(
-                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
-                'Canceled [C]',
-            ),
-        ];
-
-        return $statuses;
     }
 
     private function translate(string $label, string $fallback): string

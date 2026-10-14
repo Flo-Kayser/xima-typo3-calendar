@@ -198,7 +198,8 @@ final readonly class CalendarFilterCategory
     private function getSelectedCategories(ApplyCalendarFilterEvent $event): array
     {
         $filters = $event->getFilters();
-        $categories = $filters['trees']['categories']
+        $categories = $filters['filters']['categories']
+            ?? $filters['trees']['categories']
             ?? $filters['categories']
             ?? [];
 
