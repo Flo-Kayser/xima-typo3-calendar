@@ -1,5 +1,5 @@
 import {html, LitElement, nothing} from 'lit';
-import {getColor, type ColorOverrides} from '../color-utils';
+import {type ColorOverrides, getColor} from '../color-utils';
 
 import './components/calendar-filter-toolbar';
 import './components/calendar-filter-tree';
@@ -7,14 +7,13 @@ import './components/calendar-filter-checkbox-list';
 import type {TreeStateChangePayload} from './components/calendar-filter-tree';
 import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
-import {
-  isCalendarFilterResponse,
-  requestCalendarFilterOptions,
-} from './services/calendar-filter-options';
+import {isCalendarFilterResponse, requestCalendarFilterOptions,} from './services/calendar-filter-options';
+
+import {updateCheckboxListState, updateTreeState} from "./services/calendar-filter-state-manager";
 
 import type {
-  CalendarFilterConfiguration,
   CalendarFilter,
+  CalendarFilterConfiguration,
   CalendarFilterSelection,
   CalendarFilterState,
   TreeCalendarFilter,
@@ -126,16 +125,13 @@ export class CalendarFilterElement extends LitElement {
   private handleTreeStateChange(
     event: CustomEvent<TreeStateChangePayload>,
   ): void {
-    this.updateFilterState((state) => ({
-      ...state,
-      trees: {
-        ...state.trees,
-        [event.detail.identifier]: {
-          activeItems: [...event.detail.activeItems],
-          expandedItems: {...event.detail.expandedItems},
-        },
-      },
-    }));
+    if (this.filterState === null) {
+      return;
+    }
+
+    this.updateFilterState((state) =>
+      updateTreeState(state, event.detail),
+    );
   }
 
   private renderCheckboxListFilter(filter: Extract<CalendarFilter, {type: 'checkbox-list'}>) {
@@ -192,24 +188,8 @@ export class CalendarFilterElement extends LitElement {
     if (this.filterState === null) {
       return;
     }
-
-    const {identifier, value, selected} = event.detail;
-
-    this.updateFilterState((state) => ({
-      ...state,
-      checkboxLists: {
-        ...state.checkboxLists,
-        [identifier]: selected
-          ? [
-              ...new Set([
-                ...(state.checkboxLists[identifier] ?? []),
-                value,
-              ]),
-            ]
-          : (state.checkboxLists[identifier] ?? [])
-            .filter((item) => item !== value),
-      },
-    }));
+    this.updateFilterState((state) =>
+      updateCheckboxListState(state, event.detail));
   }
 
   private publishFilterState(): void {
