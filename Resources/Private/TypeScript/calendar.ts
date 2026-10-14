@@ -1,11 +1,4 @@
-import {
-    createCalendar,
-    DayGrid,
-    destroyCalendar,
-    Interaction,
-    List,
-    TimeGrid,
-} from '@event-calendar/core';
+import {createCalendar, DayGrid, destroyCalendar, Interaction, List, TimeGrid,} from '@event-calendar/core';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
@@ -13,13 +6,14 @@ import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
-import {getColor, getTextColor, type ColorOverrides} from './color-utils';
-import type {CalendarFilterSelection} from './Filter/calendar-filter-state';
+import {type ColorOverrides, getColor, getTextColor} from './color-utils';
+import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
 type CalendarFilterWindow = Window & {
     ximaCalendarFilterState?: CalendarFilterSelection;
+  ximaCalendarFilterConfiguration?: CalendarFilterConfiguration;
 };
 
 type CalendarEventData = {
@@ -170,6 +164,9 @@ DocumentService.ready().then(async () => {
     let activeFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
         filters: {},
     };
+    let filterConfiguration: CalendarFilterConfiguration =
+        filterWindow.ximaCalendarFilterConfiguration ?? {};
+
     let currentEvents: CalendarEventData[] = [];
     const detailsController = createCalendarDetailsController(container, typo3Top);
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
@@ -274,6 +271,22 @@ DocumentService.ready().then(async () => {
             },
             eventClick: detailsController.eventClick,
         },
+    );
+
+    const handleFilterConfigurationLoaded = (
+        event: Event,
+    ): void => {
+        const configurationEvent =
+            event as CustomEvent<CalendarFilterConfiguration>;
+
+        filterConfiguration = configurationEvent.detail;
+        ec.refetchEvents();
+    };
+
+    filterWindow.addEventListener(
+        'xima-calendar-filter-configuration-loaded',
+        handleFilterConfigurationLoaded,
+        {once: true},
     );
 
     const interactionController = createCalendarInteractionController(container, ec, creationController, {
