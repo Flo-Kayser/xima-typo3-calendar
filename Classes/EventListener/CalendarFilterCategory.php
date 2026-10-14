@@ -52,7 +52,9 @@ final readonly class CalendarFilterCategory
     )]
     public function apply(ApplyCalendarFilterEvent $event): void
     {
-        $categories = $this->getSelectedCategories($event);
+        $categories = $this->includeChildCategories(
+            $this->getSelectedCategories($event),
+        );
 
         if ($categories === []) {
             return;
@@ -208,6 +210,51 @@ final readonly class CalendarFilterCategory
             ),
             static fn(int $category): bool => $category > 0,
         )));
+    }
+
+    /**
+     * @param list<int> $categoryUids
+     * @return list<int>
+     */
+    private function includeChildCategories(array $categoryUids): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_category');
+        $rows = $queryBuilder
+            ->select('uid', 'parent')
+            ->from('sys_category')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'deleted',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+                $queryBuilder->expr()->eq(
+                    'sys_language_uid',
+                    $queryBuilder->createNamedParameter(0, Connection::PARAM_INT),
+                ),
+            )
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $parentByUid = [];
+        foreach ($rows as $row) {
+            $parentByUid[(int)$row['uid']] = (int)$row['parent'];
+        }
+
+        $result = array_fill_keys($categoryUids, true);
+        $changed = true;
+
+        while ($changed) {
+            $changed = false;
+
+            foreach ($parentByUid as $uid => $parentUid) {
+                if ($parentUid > 0 && isset($result[$parentUid]) && !isset($result[$uid])) {
+                    $result[$uid] = true;
+                    $changed = true;
+                }
+            }
+        }
+
+        return array_map('intval', array_keys($result));
     }
 
     private function joinCategoryTable(QueryBuilder $queryBuilder): void
