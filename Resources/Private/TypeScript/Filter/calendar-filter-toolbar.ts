@@ -12,7 +12,7 @@ type Typo3TopWindow = Window & {
 };
 
 export class CalendarFilterToolbar extends LitElement {
-  public createRenderRoot(): Element {
+  public createRenderRoot(): HTMLElement {
     return this;
   }
 

@@ -19,9 +19,12 @@ const javascriptConfig = {
 
 const cssConfig = {
     ...commonConfig,
-    entryPoints: ['./Resources/Private/Css/calendar.css'],
+    entryPoints: [
+        './Resources/Private/Css/calendar.css',
+        './Resources/Private/Css/Filter/calendar-filter.css',
+    ],
     outdir: 'Resources/Public/Css/',
-    entryNames: 'calendar',
+    entryNames: '[name]',
 };
 
 if (process.argv.includes('--build')) {

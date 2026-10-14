@@ -1,4 +1,4 @@
-import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/core/ajax/ajax-request.js";var d=(l,e={})=>{let r=e[String(l)];return r||`hsl(${Math.round(l*137.508%360)} 68% 46%)`};import{html as g,LitElement as h}from"lit";var o=class extends h{createRenderRoot(){return this}render(){let e=window.top,t=(e.TYPO3?.settings?.ximaCalendar?.locale??document.documentElement.lang??navigator.language)?.startsWith("de")?"Suchbegriff eingeben":e.TYPO3?.lang?.["filter.search"]??"Enter search term";return g`
+import{html as o,LitElement as _,nothing as c}from"lit";import v from"@typo3/core/ajax/ajax-request.js";var f=(l,n,e={})=>{let t=e[l]?.[String(n)];if(t)return t;let a=[...`${l}:${n}`].reduce((i,s)=>i*31+s.charCodeAt(0)>>>0,0);return`hsl(${Math.round(a*137.508%360)} 68% 46%)`};import{html as x,LitElement as y}from"lit";var p=class extends y{createRenderRoot(){return this}render(){let n=window.top,t=(n.TYPO3?.settings?.ximaCalendar?.locale??document.documentElement.lang??navigator.language)?.startsWith("de")?"Suchbegriff eingeben":n.TYPO3?.lang?.["filter.search"]??"Enter search term";return x`
       <div class="tree-toolbar">
         <div class="tree-toolbar__menu">
           <div class="tree-toolbar__search">
@@ -18,7 +18,50 @@ import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/cor
           </div>
         </div>
       </div>
-    `}};customElements.define("xima-calendar-filter-toolbar",o);var f="xima-calendar-filter-element",c=class extends m{filterOptions=null;filterState=null;filterLoadError=!1;filterStateSaveQueue=Promise.resolve();getLanguageLabel(e,r,t){let a=window.top;return(a.TYPO3?.settings?.ximaCalendar?.locale??document.documentElement.lang??navigator.language)?.startsWith("de")?t:a.TYPO3?.lang?.[`filter.${e}`]??r}connectedCallback(){super.connectedCallback(),this.loadFilterOptions()}createRenderRoot(){return this}render(){return i`
+    `}};customElements.define("xima-calendar-filter-toolbar",p);import{html as u,LitElement as T,nothing as S}from"lit";function g(l,n,e){return e?[...new Set([...l,n])]:l.filter(t=>t!==n)}function b(l,n,e){return{...l,[n]:e}}var m=class extends T{constructor(){super(...arguments);this.identifier="";this.items=[];this.activeItems=[];this.expandedItems={}}static{this.properties={identifier:{attribute:!1},items:{attribute:!1},activeItems:{attribute:!1},expandedItems:{attribute:!1}}}createRenderRoot(){return this}render(){return u`
+      <div class="xima-calendar-filter__tree">
+        ${this.renderTreeNodes(null)}
+      </div>
+    `}renderTreeNodes(e){return this.items.filter(a=>a.parentUid===e).map(a=>{let r=this.items.some(d=>d.parentUid===a.value),i=this.expandedItems[String(a.value)]??!1,s=this.activeItems.includes(a.value);return u`
+        <div class="xima-calendar-filter__tree-item">
+          <div class="xima-calendar-filter__tree-node">
+            <button
+              type="button"
+              class=${r?"xima-calendar-filter__tree-toggle":"xima-calendar-filter__tree-toggle xima-calendar-filter__tree-toggle--empty"}
+              aria-expanded=${i}
+              aria-hidden=${!r}
+              tabindex=${r?"0":"-1"}
+              @click=${()=>this.handleExpansionChange(a.value,!i)}
+            >
+              <typo3-backend-icon
+                identifier=${i?"actions-chevron-down":"actions-chevron-end"}
+                size="small"
+              ></typo3-backend-icon>
+            </button>
+
+            <label class="form-check">
+              <input
+                class="xima-calendar-filter__tree-checkbox"
+                type="checkbox"
+                .checked=${s}
+                style=${a.color?`--xima-tree-item-color: ${a.color}`:""}
+                @change=${d=>this.handleSelectionChange(a.value,d.target.checked)}
+              />
+
+              <span class="form-check-label">
+        ${a.label}
+      </span>
+            </label>
+          </div>
+
+          ${r&&i?u`
+              <div class="xima-calendar-filter__tree-children">
+                ${this.renderTreeNodes(a.value)}
+              </div>
+            `:S}
+        </div>
+      `})}handleSelectionChange(e,t){this.activeItems=g(this.activeItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}handleExpansionChange(e,t){this.expandedItems=b(this.expandedItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}};customElements.define("xima-calendar-filter-tree",m);var C="xima-calendar-filter-element",h=class extends _{constructor(){super(...arguments);this.filterOptions=null;this.filterState=null;this.treeStates={};this.filterLoadError=!1;this.filterStateSaveQueue=Promise.resolve()}getLanguageLabel(e,t,a){let r=window.top;return(r.TYPO3?.settings?.ximaCalendar?.locale??document.documentElement.lang??navigator.language)?.startsWith("de")?a:r.TYPO3?.lang?.[`filter.${e}`]??t}connectedCallback(){super.connectedCallback(),this.loadFilterOptions()}createRenderRoot(){return this}render(){return o`
+      <link rel="stylesheet" href="${new URL("../../Css/calendar-filter.css",import.meta.url).href}">
       <style>
         xima-calendar-filter-element {
           display: flex;
@@ -89,50 +132,6 @@ import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/cor
           border: 2px solid var(--typo3-component-color);
         }
 
-        .xima-calendar-filter__tree {
-          margin-top: 0.5rem;
-        }
-
-        .xima-calendar-filter__tree-node {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          min-height: 1.75rem;
-        }
-
-        .xima-calendar-filter__category-checkbox {
-          appearance: none;
-          width: 1rem;
-          height: 1rem;
-          flex: 0 0 1rem;
-          margin: 0;
-          border: 2px solid var(--xima-category-color);
-          border-radius: 50%;
-          background: transparent;
-          cursor: pointer;
-        }
-
-        .xima-calendar-filter__category-checkbox:checked {
-          background: var(--xima-category-color);
-          box-shadow: inset 0 0 0 2px var(--typo3-component-bg);
-        }
-
-        .xima-calendar-filter__tree-toggle {
-          width: 1.25rem;
-          padding: 0;
-          border: 0;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-        }
-
-        .xima-calendar-filter__tree-toggle--empty {
-          visibility: hidden;
-        }
-
-        .xima-calendar-filter__tree-children {
-          margin-inline-start: 1rem;
-        }
       </style>
 
       <div class="xima-calendar-filter">
@@ -141,26 +140,26 @@ import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/cor
         <div class="xima-calendar-filter__body">
           ${this.renderTypeFilter()}
 
-          ${this.renderCategoryFilter()}
+          ${this.filterOptions===null?c:this.renderTreeFilter(this.filterOptions.categories)}
 
           ${this.renderStatusFilter()}
         </div>
       </div>
-    `}renderTypeFilter(){return this.filterLoadError?i`
+    `}renderTypeFilter(){return this.filterLoadError?o`
         <section class="xima-calendar-filter__section">
           <h3>${this.getLanguageLabel("type","Type","Typ")}</h3>
           <p>${this.getLanguageLabel("error","Filters could not be loaded.","Filter konnten nicht geladen werden.")}</p>
         </section>
-      `:this.filterOptions===null?i`
+      `:this.filterOptions===null?o`
         <section class="xima-calendar-filter__section">
           <h3>${this.getLanguageLabel("type","Type","Typ")}</h3>
           <p>${this.getLanguageLabel("loading","Loading filters \u2026","Filter werden geladen \u2026")}</p>
         </section>
-      `:this.filterOptions.types.length<2?s:i`
+      `:this.filterOptions.types.length<2?c:o`
       <section class="xima-calendar-filter__section">
         <h3>${this.getLanguageLabel("type","Type","Typ")}</h3>
         <div class="xima-calendar-filter__type-list">
-          ${this.filterOptions.types.map(e=>i`
+          ${this.filterOptions.types.map(e=>o`
             <label class="form-check">
               <input
                 class="form-check-input"
@@ -174,46 +173,23 @@ import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/cor
           `)}
         </div>
       </section>
-    `}renderCategoryFilter(){return this.filterOptions===null||this.filterOptions.categories.length===0?s:i`
+    `}renderTreeFilter(e){if(this.filterOptions===null||this.filterOptions.categories.items.length===0)return c;let t=this.treeStates[e.identifier]??{activeItems:[],expandedItems:{}},r=window.top.TYPO3?.settings?.ximaCalendar?.filterColors??{},i=e.items.map(s=>({...s,color:e.colorCoded?f(e.identifier,s.value,r):void 0}));return o`
       <section class="xima-calendar-filter__section">
-        <h3>${this.getLanguageLabel("categories","Categories","Kategorien")}</h3>
-        <div class="xima-calendar-filter__tree">
-          ${this.renderCategoryNodes(null)}
-        </div>
+        <h3>${e.title}</h3>
+
+        <xima-calendar-filter-tree
+          .identifier=${e.identifier}
+          .items=${i}
+          .activeItems=${t.activeItems}
+          .expandedItems=${t.expandedItems}
+          @tree-state-change=${this.handleTreeStateChange}
+        ></xima-calendar-filter-tree>
       </section>
-    `}renderCategoryNodes(e){return this.filterOptions===null?[]:this.filterOptions.categories.filter(t=>t.parentUid===e).map(t=>{let a=this.filterOptions?.categories.some(u=>u.parentUid===t.value)??!1,n=this.filterState?.expanded.categoryNodes[t.value]===!0;return i`
-        <div class="xima-calendar-filter__tree-item">
-          <div class="xima-calendar-filter__tree-node">
-            <button
-              type="button"
-              class="xima-calendar-filter__tree-toggle ${a?"":"xima-calendar-filter__tree-toggle--empty"}"
-              aria-label=${n?this.getLanguageLabel("hideSubcategories","Hide subcategories","Unterkategorien ausblenden"):this.getLanguageLabel("showSubcategories","Show subcategories","Unterkategorien anzeigen")}
-              aria-expanded=${n}
-              @click=${()=>this.toggleCategory(t)}
-            >
-              ${n?"\u25BE":"\u25B8"}
-            </button>
-            <label class="form-check">
-              <input
-                class="xima-calendar-filter__category-checkbox"
-                type="checkbox"
-                value=${t.value}
-                style=${`--xima-category-color: ${this.getCategoryColor(t.value)}`}
-                ?checked=${this.filterState?.activeCategories.includes(t.value)??!1}
-                @change=${()=>this.handleCategoryChange(t.value)}
-              />
-              <span class="form-check-label">${t.label}</span>
-            </label>
-          </div>
-          ${a&&n?i`<div class="xima-calendar-filter__tree-children">
-                ${this.renderCategoryNodes(t.value)}
-              </div>`:s}
-        </div>
-      `})}renderStatusFilter(){return this.filterOptions===null||this.filterOptions.statuses.length===0?s:i`
+    `}handleTreeStateChange(e){let t=e.detail.activeItems.filter(r=>typeof r=="number"),a=Object.fromEntries(Object.entries(e.detail.expandedItems).filter(([r])=>Number.isInteger(Number(r))));if(this.treeStates={...this.treeStates,[e.detail.identifier]:{activeItems:t,expandedItems:a}},e.detail.identifier==="categories"&&this.filterState!==null){this.updateFilterState(r=>({...r,activeCategories:t,expanded:{...r.expanded,categoryNodes:a}}));return}this.requestUpdate()}renderStatusFilter(){return this.filterOptions===null||this.filterOptions.statuses.length===0?c:o`
       <section class="xima-calendar-filter__section">
         <h3>${this.getLanguageLabel("status","Status","Status")}</h3>
         <div class="xima-calendar-filter__status-list">
-          ${this.filterOptions.statuses.map(e=>i`
+          ${this.filterOptions.statuses.map(e=>o`
             <label class="form-check">
               <input
                 class="form-check-input"
@@ -227,4 +203,4 @@ import{html as i,LitElement as m,nothing as s}from"lit";import p from"@typo3/cor
           `)}
         </div>
       </section>
-    `}getStatusPreviewClass(e){switch(String(e)){case"0":return"xima-calendar-filter__status-label--draft";case"1":return"xima-calendar-filter__status-label--review";case"3":return"xima-calendar-filter__status-label--rejected";case"canceled":return"xima-calendar-filter__status-label--canceled";default:return""}}async loadFilterOptions(){let e=window.top,r=e.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_options??e.TYPO3?.settings?.ximaCalendar?.filterOptionsUrl;if(!r){console.error("Calendar filter URL is not available"),this.filterLoadError=!0,this.requestUpdate();return}try{let a=await(await new p(r).get()).resolve();if(!a.success)throw new Error("Filter options could not be loaded");this.filterOptions=a.options,this.filterState=a.state,this.publishFilterState()}catch(t){console.error("Calendar filter options could not be loaded",t),this.filterLoadError=!0}this.requestUpdate()}handleTypeChange(e){this.filterState!==null&&(this.filterState.activeTypes=this.toggleValue(this.filterState.activeTypes,e),this.dispatchFilterChange())}toggleCategory(e){this.filterState!==null&&(this.filterState.expanded.categoryNodes[e.value]=!this.filterState.expanded.categoryNodes[e.value],this.requestUpdate(),this.persistFilterState())}handleCategoryChange(e){this.filterState!==null&&(this.filterState.activeCategories=this.toggleValue(this.filterState.activeCategories,e),this.dispatchFilterChange())}handleStatusChange(e){this.filterState!==null&&(this.filterState.activeStatuses=this.toggleValue(this.filterState.activeStatuses,e),this.dispatchFilterChange())}toggleValue(e,r){return e.includes(r)?e.filter(t=>t!==r):[...e,r]}publishFilterState(){if(this.filterState===null)return;let e={types:[...this.filterState.activeTypes],categories:this.getCategoryFilterUids(this.filterState.activeCategories),statuses:[...this.filterState.activeStatuses]},r=window.top;r.ximaCalendarFilterState=e,r.dispatchEvent(new CustomEvent("xima-calendar-filter-changed",{bubbles:!0,composed:!0,detail:e}))}dispatchFilterChange(){this.publishFilterState(),this.requestUpdate(),this.persistFilterState()}persistFilterState(){if(this.filterState===null)return;let e=window.top,r=e.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_state??e.TYPO3?.settings?.ximaCalendar?.filterStateUrl;if(!r)return;let t={activeTypes:[...this.filterState.activeTypes],activeCategories:[...this.filterState.activeCategories],activeStatuses:[...this.filterState.activeStatuses],expanded:{categoryNodes:{...this.filterState.expanded.categoryNodes}}};this.filterStateSaveQueue=this.filterStateSaveQueue.catch(()=>{}).then(async()=>{try{await(await new p(r).post(t)).resolve()}catch(a){console.error("Calendar filter state could not be saved",a)}})}getCategoryFilterUids(e){if(this.filterOptions===null)return[...e];let r=new Set(e),t=!0;for(;t;){t=!1;for(let a of this.filterOptions.categories)a.parentUid!==null&&r.has(a.parentUid)&&!r.has(a.value)&&(r.add(a.value),t=!0)}return[...r]}getCategoryColor(e){let t=window.top.TYPO3?.settings?.ximaCalendar?.categoryColors??{};return d(e,t)}};customElements.define(f,c);export{c as CalendarFilterElement,f as navigationComponentName};
+    `}getStatusPreviewClass(e){switch(String(e)){case"0":return"xima-calendar-filter__status-label--draft";case"1":return"xima-calendar-filter__status-label--review";case"3":return"xima-calendar-filter__status-label--rejected";case"canceled":return"xima-calendar-filter__status-label--canceled";default:return""}}async loadFilterOptions(){let e=window.top,t=e.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_options??e.TYPO3?.settings?.ximaCalendar?.filterOptionsUrl;if(!t){console.error("Calendar filter URL is not available"),this.filterLoadError=!0,this.requestUpdate();return}try{let r=await(await new v(t).get()).resolve();if(!this.isCalendarFilterResponse(r))throw new Error("Filter options could not be loaded");this.filterOptions=r.options,this.filterState=r.state,this.treeStates={[r.options.categories.identifier]:{activeItems:r.state.activeCategories,expandedItems:r.state.expanded.categoryNodes}},this.publishFilterState()}catch(a){console.error("Calendar filter options could not be loaded",a),this.filterLoadError=!0}this.requestUpdate()}handleTypeChange(e){this.filterState!==null&&this.updateFilterState(t=>({...t,activeTypes:this.toggleValue(t.activeTypes,e)}))}handleStatusChange(e){this.filterState!==null&&this.updateFilterState(t=>({...t,activeStatuses:this.toggleValue(t.activeStatuses,e)}))}toggleValue(e,t){return e.includes(t)?e.filter(a=>a!==t):[...e,t]}publishFilterState(){if(this.filterState===null)return;let e={types:[...this.filterState.activeTypes],categories:[...this.filterState.activeCategories],statuses:[...this.filterState.activeStatuses]},t=window.top;t.ximaCalendarFilterState=e,t.dispatchEvent(new CustomEvent("xima-calendar-filter-changed",{bubbles:!0,composed:!0,detail:e}))}dispatchFilterChange(){this.publishFilterState(),this.requestUpdate(),this.persistFilterState()}updateFilterState(e){this.filterState!==null&&(this.filterState=e(this.filterState),this.dispatchFilterChange())}isCalendarFilterResponse(e){if(!e||typeof e!="object")return!1;let t=e,a=t.options,r=t.state;if(t.success!==!0||!a||typeof a!="object"||!r||typeof r!="object")return!1;let i=a,s=r;return Array.isArray(i.types)&&Array.isArray(i.statuses)&&!!i.categories&&Array.isArray(i.categories.items)&&Array.isArray(s.activeTypes)&&Array.isArray(s.activeCategories)&&Array.isArray(s.activeStatuses)&&!!s.expanded&&typeof s.expanded=="object"}persistFilterState(){if(this.filterState===null)return;let e=window.top,t=e.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_state??e.TYPO3?.settings?.ximaCalendar?.filterStateUrl;if(!t)return;let a={activeTypes:[...this.filterState.activeTypes],activeCategories:[...this.filterState.activeCategories],activeStatuses:[...this.filterState.activeStatuses],expanded:{categoryNodes:{...this.filterState.expanded.categoryNodes}}};this.filterStateSaveQueue=this.filterStateSaveQueue.catch(()=>{}).then(async()=>{try{await(await new v(t).post(a)).resolve()}catch(r){console.error("Calendar filter state could not be saved",r)}})}};customElements.define(C,h);export{h as CalendarFilterElement,C as navigationComponentName};

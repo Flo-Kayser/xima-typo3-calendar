@@ -1,10 +1,12 @@
 import {html, LitElement, nothing} from 'lit';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
-import {getCategoryColor, type CategoryColors} from '../calendar-category-color';
+import {getColor, type ColorOverrides} from '../color-utils';
 
 import './calendar-filter-toolbar';
+import './calendar-filter-tree';
+import type {TreeStateChangePayload, TreeValue} from './calendar-filter-tree';
+
 import type {
-  CalendarCategoryOption,
   CalendarFilterOptions,
   CalendarFilterResponse,
   CalendarFilterSelection,
@@ -23,11 +25,16 @@ type Typo3TopWindow = Window & {
       ximaCalendar?: {
         filterOptionsUrl?: string;
         filterStateUrl?: string;
-        categoryColors?: CategoryColors;
+        filterColors?: ColorOverrides;
         locale?: string;
       };
     };
   };
+};
+
+type TreeState = {
+  activeItems: TreeValue[];
+  expandedItems: Record<TreeValue, boolean>;
 };
 
 export const navigationComponentName =
@@ -37,6 +44,8 @@ export class CalendarFilterElement extends LitElement {
   private filterOptions: CalendarFilterOptions | null = null;
 
   private filterState: CalendarFilterState | null = null;
+
+  private treeStates: Record<string, TreeState> = {};
 
   private filterLoadError = false;
 
@@ -59,12 +68,13 @@ export class CalendarFilterElement extends LitElement {
     void this.loadFilterOptions();
   }
 
-  public createRenderRoot(): Element {
+  public createRenderRoot(): HTMLElement {
     return this;
   }
 
   public render() {
     return html`
+      <link rel="stylesheet" href="${new URL('../../Css/calendar-filter.css', import.meta.url).href}">
       <style>
         xima-calendar-filter-element {
           display: flex;
@@ -135,50 +145,6 @@ export class CalendarFilterElement extends LitElement {
           border: 2px solid var(--typo3-component-color);
         }
 
-        .xima-calendar-filter__tree {
-          margin-top: 0.5rem;
-        }
-
-        .xima-calendar-filter__tree-node {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          min-height: 1.75rem;
-        }
-
-        .xima-calendar-filter__category-checkbox {
-          appearance: none;
-          width: 1rem;
-          height: 1rem;
-          flex: 0 0 1rem;
-          margin: 0;
-          border: 2px solid var(--xima-category-color);
-          border-radius: 50%;
-          background: transparent;
-          cursor: pointer;
-        }
-
-        .xima-calendar-filter__category-checkbox:checked {
-          background: var(--xima-category-color);
-          box-shadow: inset 0 0 0 2px var(--typo3-component-bg);
-        }
-
-        .xima-calendar-filter__tree-toggle {
-          width: 1.25rem;
-          padding: 0;
-          border: 0;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-        }
-
-        .xima-calendar-filter__tree-toggle--empty {
-          visibility: hidden;
-        }
-
-        .xima-calendar-filter__tree-children {
-          margin-inline-start: 1rem;
-        }
       </style>
 
       <div class="xima-calendar-filter">
@@ -187,7 +153,9 @@ export class CalendarFilterElement extends LitElement {
         <div class="xima-calendar-filter__body">
           ${this.renderTypeFilter()}
 
-          ${this.renderCategoryFilter()}
+          ${this.filterOptions === null
+            ? nothing
+            : this.renderTreeFilter(this.filterOptions.categories)}
 
           ${this.renderStatusFilter()}
         </div>
@@ -239,70 +207,75 @@ export class CalendarFilterElement extends LitElement {
     `;
   }
 
-  private renderCategoryFilter() {
-    if (this.filterOptions === null || this.filterOptions.categories.items.length === 0) {
+  private renderTreeFilter(tree: CalendarFilterOptions['categories']) {
+    if (
+      this.filterOptions === null
+      || this.filterOptions.categories.items.length === 0
+    ) {
       return nothing;
     }
 
+    const treeState = this.treeStates[tree.identifier] ?? {
+      activeItems: [],
+      expandedItems: {},
+    };
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const filterColors = typo3Top.TYPO3?.settings?.ximaCalendar?.filterColors ?? {};
+    const items = tree.items.map((item) => ({
+      ...item,
+      color: tree.colorCoded
+        ? getColor(tree.identifier, item.value, filterColors)
+        : undefined,
+    }));
+
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>${this.filterOptions.categories.title}</h3>
-        <div class="xima-calendar-filter__tree">
-          ${this.renderCategoryNodes(null)}
-        </div>
+        <h3>${tree.title}</h3>
+
+        <xima-calendar-filter-tree
+          .identifier=${tree.identifier}
+          .items=${items}
+          .activeItems=${treeState.activeItems}
+          .expandedItems=${treeState.expandedItems}
+          @tree-state-change=${this.handleTreeStateChange}
+        ></xima-calendar-filter-tree>
       </section>
     `;
   }
 
-  private renderCategoryNodes(parentUid: number | null): unknown[] {
-    if (this.filterOptions === null) {
-      return [];
+  private handleTreeStateChange(
+    event: CustomEvent<TreeStateChangePayload>,
+  ): void {
+    const activeItems = event.detail.activeItems.filter(
+      (value): value is number => typeof value === 'number',
+    );
+    const expandedItems = Object.fromEntries(
+      Object.entries(event.detail.expandedItems).filter(
+        ([value]) => Number.isInteger(Number(value)),
+      ),
+    ) as Record<TreeValue, boolean>;
+
+    this.treeStates = {
+      ...this.treeStates,
+      [event.detail.identifier]: {
+        activeItems,
+        expandedItems,
+      },
+    };
+
+    if (event.detail.identifier === 'categories' && this.filterState !== null) {
+      this.updateFilterState((state) => ({
+        ...state,
+        activeCategories: activeItems,
+        expanded: {
+          ...state.expanded,
+          categoryNodes: expandedItems,
+        },
+      }));
+      return;
     }
 
-    const nodes = this.filterOptions.categories.items.filter(
-      (category) => category.parentUid === parentUid,
-    );
-
-    return nodes.map((category) => {
-      const hasChildren = this.filterOptions?.categories.items.some(
-        (child) => child.parentUid === category.value,
-      ) ?? false;
-      const isExpanded = this.filterState?.expanded.categoryNodes[category.value] === true;
-
-      return html`
-        <div class="xima-calendar-filter__tree-item">
-          <div class="xima-calendar-filter__tree-node">
-            <button
-              type="button"
-              class="xima-calendar-filter__tree-toggle ${hasChildren ? '' : 'xima-calendar-filter__tree-toggle--empty'}"
-              aria-label=${isExpanded
-                ? this.getLanguageLabel('hideSubcategories', 'Hide subcategories', 'Unterkategorien ausblenden')
-                : this.getLanguageLabel('showSubcategories', 'Show subcategories', 'Unterkategorien anzeigen')}
-              aria-expanded=${isExpanded}
-              @click=${() => this.toggleCategory(category)}
-            >
-              ${isExpanded ? '▾' : '▸'}
-            </button>
-            <label class="form-check">
-              <input
-                class="xima-calendar-filter__category-checkbox"
-                type="checkbox"
-                value=${category.value}
-                style=${`--xima-category-color: ${this.getCategoryColor(category.value)}`}
-                ?checked=${this.filterState?.activeCategories.includes(category.value) ?? false}
-                @change=${() => this.handleCategoryChange(category.value)}
-              />
-              <span class="form-check-label">${category.label}</span>
-            </label>
-          </div>
-          ${hasChildren && isExpanded
-            ? html`<div class="xima-calendar-filter__tree-children">
-                ${this.renderCategoryNodes(category.value)}
-              </div>`
-            : nothing}
-        </div>
-      `;
-    });
+    this.requestUpdate();
   }
 
   private renderStatusFilter() {
@@ -359,13 +332,19 @@ export class CalendarFilterElement extends LitElement {
 
     try {
       const response = await new AjaxRequest(url).get();
-      const data = await response.resolve() as CalendarFilterResponse;
-      if (!data.success) {
+      const data: unknown = await response.resolve();
+      if (!this.isCalendarFilterResponse(data)) {
         throw new Error('Filter options could not be loaded');
       }
 
       this.filterOptions = data.options;
       this.filterState = data.state;
+      this.treeStates = {
+        [data.options.categories.identifier]: {
+          activeItems: data.state.activeCategories,
+          expandedItems: data.state.expanded.categoryNodes,
+        },
+      };
       this.publishFilterState();
     } catch (error) {
       console.error('Calendar filter options could not be loaded', error);
@@ -380,28 +359,10 @@ export class CalendarFilterElement extends LitElement {
       return;
     }
 
-    this.filterState.activeTypes = this.toggleValue(this.filterState.activeTypes, type);
-    this.dispatchFilterChange();
-  }
-
-  private toggleCategory(category: CalendarCategoryOption): void {
-    if (this.filterState === null) {
-      return;
-    }
-
-    this.filterState.expanded.categoryNodes[category.value] =
-      !this.filterState.expanded.categoryNodes[category.value];
-    this.requestUpdate();
-    this.persistFilterState();
-  }
-
-  private handleCategoryChange(categoryUid: number): void {
-    if (this.filterState === null) {
-      return;
-    }
-
-    this.filterState.activeCategories = this.toggleValue(this.filterState.activeCategories, categoryUid);
-    this.dispatchFilterChange();
+    this.updateFilterState((state) => ({
+      ...state,
+      activeTypes: this.toggleValue(state.activeTypes, type),
+    }));
   }
 
   private handleStatusChange(status: number | string): void {
@@ -409,8 +370,10 @@ export class CalendarFilterElement extends LitElement {
       return;
     }
 
-    this.filterState.activeStatuses = this.toggleValue(this.filterState.activeStatuses, status);
-    this.dispatchFilterChange();
+    this.updateFilterState((state) => ({
+      ...state,
+      activeStatuses: this.toggleValue(state.activeStatuses, status),
+    }));
   }
 
   private toggleValue<T extends string | number>(values: T[], value: T): T[] {
@@ -426,7 +389,7 @@ export class CalendarFilterElement extends LitElement {
 
     const selection: CalendarFilterSelection = {
       types: [...this.filterState.activeTypes],
-      categories: this.getCategoryFilterUids(this.filterState.activeCategories),
+      categories: [...this.filterState.activeCategories],
       statuses: [...this.filterState.activeStatuses],
     };
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -442,6 +405,52 @@ export class CalendarFilterElement extends LitElement {
     this.publishFilterState();
     this.requestUpdate();
     this.persistFilterState();
+  }
+
+  private updateFilterState(
+    update: (state: CalendarFilterState) => CalendarFilterState,
+  ): void {
+    if (this.filterState === null) {
+      return;
+    }
+
+    this.filterState = update(this.filterState);
+    this.dispatchFilterChange();
+  }
+
+  private isCalendarFilterResponse(
+    value: unknown,
+  ): value is CalendarFilterResponse {
+    if (!value || typeof value !== 'object') {
+      return false;
+    }
+
+    const response = value as Record<string, unknown>;
+    const options = response.options;
+    const state = response.state;
+
+    if (
+      response.success !== true
+      || !options
+      || typeof options !== 'object'
+      || !state
+      || typeof state !== 'object'
+    ) {
+      return false;
+    }
+
+    const filterOptions = options as Record<string, unknown>;
+    const filterState = state as Record<string, unknown>;
+
+    return Array.isArray(filterOptions.types)
+      && Array.isArray(filterOptions.statuses)
+      && Boolean(filterOptions.categories)
+      && Array.isArray((filterOptions.categories as Record<string, unknown>).items)
+      && Array.isArray(filterState.activeTypes)
+      && Array.isArray(filterState.activeCategories)
+      && Array.isArray(filterState.activeStatuses)
+      && Boolean(filterState.expanded)
+      && typeof filterState.expanded === 'object';
   }
 
   private persistFilterState(): void {
@@ -477,31 +486,6 @@ export class CalendarFilterElement extends LitElement {
       });
   }
 
-  private getCategoryFilterUids(categoryUids: number[]): number[] {
-    if (this.filterOptions === null) {
-      return [...categoryUids];
-    }
-
-    const result = new Set(categoryUids);
-    let changed = true;
-    while (changed) {
-      changed = false;
-      for (const category of this.filterOptions.categories.items) {
-        if (category.parentUid !== null && result.has(category.parentUid) && !result.has(category.value)) {
-          result.add(category.value);
-          changed = true;
-        }
-      }
-    }
-
-    return [...result];
-  }
-
-  private getCategoryColor(categoryUid: number): string {
-    const typo3Top = window.top as unknown as Typo3TopWindow;
-    const overrides = typo3Top.TYPO3?.settings?.ximaCalendar?.categoryColors ?? {};
-    return getCategoryColor(categoryUid, overrides);
-  }
 }
 
 customElements.define(
