@@ -134,14 +134,6 @@ class EntryRepository extends Repository
 
         $queryBuilder = $event->getQueryBuilder();
 
-        $types = array_values(array_filter($filters['types'] ?? [], static fn (mixed $type): bool => is_string($type) && $type !== ''));
-        if ($types !== []) {
-            $typeParameter = $queryBuilder->createNamedParameter($types, Connection::PARAM_STR_ARRAY);
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->in('v.record_type', $typeParameter)
-            );
-        }
-
         return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 }

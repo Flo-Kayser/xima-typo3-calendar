@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3Calendar\EventListener;
 
 use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
+use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterRecordType
 {
     #[AsEventListener(
-        identifier: 'xima-typo3-calendar/calendar-filter-record-type',
+        identifier: 'xima-typo3-calendar/configure-filter-record-type',
         event: ConfigureCalendarFilterEvent::class,
         method: 'build',
     )]
@@ -63,5 +65,42 @@ final readonly class CalendarFilterRecordType
         if ($filter->items !== []) {
             $event->addFilter($filter);
         }
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/apply-filter-record-type',
+        event: ApplyCalendarFilterEvent::class,
+        method: 'apply',
+    )]
+    public function apply(ApplyCalendarFilterEvent $event): void
+    {
+        $filters = $event->getFilters();
+
+        $recordTypes = $filters['filters']['recordTypes'] ?? [];
+
+        if (!is_array($recordTypes) || $recordTypes === []) {
+            return;
+        }
+
+        $recordTypes = array_values(array_filter(
+            $recordTypes,
+            static fn(mixed $recordType): bool => is_string($recordType) && $recordType !== '',
+        ));
+
+        if ($recordTypes === []) {
+            return;
+        }
+
+        $queryBuilder = $event->getQueryBuilder();
+
+        $queryBuilder->andWhere(
+            $queryBuilder->expr()->in(
+                'v.record_type',
+                $queryBuilder->createNamedParameter(
+                    $recordTypes,
+                    Connection::PARAM_STR_ARRAY
+                ),
+            ),
+        );
     }
 }
