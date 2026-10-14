@@ -18,7 +18,7 @@ TCEMAIN.preview {
 }
 
 mod.tx_ximatypo3calendar {
-    filterOrder = types, categories, statuses
+    filterOrder = recordTypes, categories, statuses
 
     enableEventPreview = 1
 
