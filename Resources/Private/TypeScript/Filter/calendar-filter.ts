@@ -9,8 +9,8 @@ import type {CheckboxListChangePayload} from './components/calendar-filter-check
 import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
 import {
   isCalendarFilterResponse,
-  requestCalendarFilterOptions,
-} from './services/calendar-filter-options';
+  requestCalendarFilterConfiguration,
+} from './services/calendar-filter-configuration';
 import {
   createFilterSelection,
   updateCheckboxListState,
@@ -66,7 +66,7 @@ export class CalendarFilterElement extends LitElement {
       this.filterStatePersistence = new CalendarFilterStatePersistence(stateUrl);
     }
 
-    void this.loadFilterOptions();
+    void this.loadFilterConfiguration();
   }
 
   public createRenderRoot(): HTMLElement {
@@ -160,7 +160,7 @@ export class CalendarFilterElement extends LitElement {
     `;
   }
 
-  private async loadFilterOptions(): Promise<void> {
+  private async loadFilterConfiguration(): Promise<void> {
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const url = typo3Top.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_options
       ?? typo3Top.TYPO3?.settings?.ximaCalendar?.filterOptionsUrl;
@@ -172,16 +172,16 @@ export class CalendarFilterElement extends LitElement {
     }
 
     try {
-      const data: unknown = await requestCalendarFilterOptions(url);
+      const data: unknown = await requestCalendarFilterConfiguration(url);
       if (!isCalendarFilterResponse(data)) {
-        throw new Error('Filter options could not be loaded');
+        throw new Error('Filter configuration could not be loaded');
       }
 
       this.filterConfiguration = data.filters;
       this.filterState = data.state;
       this.publishFilterState();
     } catch (error) {
-      console.error('Calendar filter options could not be loaded', error);
+      console.error('Calendar filter configuration could not be loaded', error);
       this.filterLoadError = true;
     }
 

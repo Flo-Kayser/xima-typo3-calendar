@@ -4,7 +4,7 @@ import {
   CalendarFilterState,
 } from '../calendar-filter-state';
 
-export async function requestCalendarFilterOptions(
+export async function requestCalendarFilterConfiguration(
   url: string,
 ): Promise<unknown> {
   const response = await new AjaxRequest(url).get();
