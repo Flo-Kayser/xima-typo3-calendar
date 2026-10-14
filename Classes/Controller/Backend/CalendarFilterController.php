@@ -30,7 +30,7 @@ final class CalendarFilterController
     public function saveStateAction(ServerRequestInterface $request): ResponseInterface
     {
         $state = $request->getParsedBody();
-        if (!is_array($state)) {
+        if (!is_array($state) || $state === []) {
             $state = json_decode((string)$request->getBody(), true);
         }
 

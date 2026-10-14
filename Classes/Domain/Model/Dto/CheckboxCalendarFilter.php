@@ -32,7 +32,7 @@ final class CheckboxCalendarFilter extends AbstractCalendarFilter
      *     type: 'checkbox-list',
      *     identifier: string,
      *     title: string,
-     *     items: list<CheckboxCalendarFilterItem>,
+     *     items: list<array{label: string, value: int|string, selected: bool, appearance: string, icon: ?string}>,
      * }
      */
     public function jsonSerialize(): array
@@ -41,7 +41,10 @@ final class CheckboxCalendarFilter extends AbstractCalendarFilter
             'type' => 'checkbox-list',
             'identifier' => $this->identifier,
             'title' => $this->title,
-            'items' => $this->items,
+            'items' => array_map(
+                static fn (CheckboxCalendarFilterItem $item): array => $item->jsonSerialize(),
+                $this->items,
+            ),
         ];
     }
 }
