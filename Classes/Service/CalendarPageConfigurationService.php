@@ -72,19 +72,29 @@ final class CalendarPageConfigurationService
         ];
     }
 
-    /** @return array<string, string> */
-    public function getCategoryColors(RequestInterface $request): array
+    /** @return array<string, array<string, string>> */
+    public function getFilterColors(RequestInterface $request): array
     {
         $config = $this->getCalendarPageTsConfig($request);
-        $colors = $this->asArray($config['categoryColors.'] ?? $config['categoryColors'] ?? []);
+        $filterColors = $this->asArray($config['filterColors.'] ?? $config['filterColors'] ?? []);
         $result = [];
 
-        foreach ($colors as $categoryUid => $color) {
-            if (!is_numeric($categoryUid) || !is_string($color) || !preg_match('/^#[0-9a-fA-F]{6}$/', $color)) {
-                continue;
+        foreach ($filterColors as $identifier => $colors) {
+            $identifier = rtrim((string)$identifier, '.');
+            $colors = $this->asArray($colors);
+            $validatedColors = [];
+
+            foreach ($colors as $itemValue => $color) {
+                if (!is_numeric($itemValue) || !is_string($color) || !preg_match('/^#[0-9a-fA-F]{6}$/', $color)) {
+                    continue;
+                }
+
+                $validatedColors[(string)(int)$itemValue] = $color;
             }
 
-            $result[(string)(int)$categoryUid] = $color;
+            if ($identifier !== '' && $validatedColors !== []) {
+                $result[$identifier] = $validatedColors;
+            }
         }
 
         return $result;

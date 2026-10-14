@@ -39,7 +39,7 @@ export type CalendarConfig = {
     timeSlotMinutes: number;
     scrollStartTime: string;
     calendars: CalendarOption[];
-    categoryColors: Record<string, string>;
+    filterColors: Record<string, Record<string, string>>;
     labels: CalendarModalLabels;
 };
 
@@ -75,11 +75,16 @@ const isCalendarOptions = (value: unknown): value is CalendarOption[] => (
     ))
 );
 
-const isCategoryColors = (value: unknown): value is Record<string, string> => (
+const isFilterColors = (value: unknown): value is Record<string, Record<string, string>> => (
     Boolean(value)
     && typeof value === 'object'
     && !Array.isArray(value)
-    && Object.values(value as Record<string, unknown>).every(isString)
+    && Object.values(value as Record<string, unknown>).every(scope => (
+        Boolean(scope)
+        && typeof scope === 'object'
+        && !Array.isArray(scope)
+        && Object.values(scope as Record<string, unknown>).every(isString)
+    ))
 );
 
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
@@ -99,7 +104,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         && hasValues(config, ['timeSlotMinutes'], isNumber)
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
-        && isCategoryColors(config.categoryColors)
+        && isFilterColors(config.filterColors)
         && isCalendarModalLabels(config.labels);
 };
 

@@ -25,7 +25,9 @@ mod.tx_ximatypo3calendar {
         scrollStartTime = 07:00
     }
 
-    categoryColors {
+    filterColors {
+        categories {
+        }
     }
 
     newEvent {

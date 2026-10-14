@@ -13,7 +13,7 @@ import {createCalendarCreationController} from './calendar-event-creation';
 import {createCalendarDetailsController} from './calendar-details';
 import {createCalendarInteractionController} from './interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
-import {getCategoryColor, getCategoryTextColor} from './calendar-category-color';
+import {getColor, getTextColor, type ColorOverrides} from './color-utils';
 import type {CalendarFilterSelection} from './Filter/calendar-filter-state';
 
 type EventCalendarTheme = Record<string, string | string[]>;
@@ -74,15 +74,15 @@ const hasConcurrentEvent = (
 const applyCategoryColor = (
     event: CalendarEventData,
     element: HTMLElement,
-    categoryColors: Record<string, string>,
+    filterColors: ColorOverrides,
 ): void => {
     const categoryUid = Number(event.extendedProps?.eventCategoryId);
     if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
         return;
     }
 
-    const categoryColor = getCategoryColor(categoryUid, categoryColors);
-    const categoryTextColor = getCategoryTextColor(categoryUid, categoryColors);
+    const categoryColor = getColor('categories', categoryUid, filterColors);
+    const categoryTextColor = getTextColor('categories', categoryUid, filterColors);
     element.dataset.ximaCategoryColor = categoryColor;
     element.dataset.ximaCategoryTextColor = categoryTextColor;
     element.style.setProperty('--xima-category-color', categoryColor);
@@ -91,7 +91,7 @@ const applyCategoryColor = (
 
 const applyCategoryColorsToEvents = (
     events: CalendarEventData[],
-    categoryColors: Record<string, string>,
+    filterColors: ColorOverrides,
     locale: string,
 ): CalendarEventData[] => events.map((event) => {
     const title = isCanceledEvent(event)
@@ -102,8 +102,8 @@ const applyCategoryColorsToEvents = (
         return {...event, title};
     }
 
-    const categoryColor = getCategoryColor(categoryUid, categoryColors);
-    const categoryTextColor = getCategoryTextColor(categoryUid, categoryColors);
+    const categoryColor = getColor('categories', categoryUid, filterColors);
+    const categoryTextColor = getTextColor('categories', categoryUid, filterColors);
     const existingStyles = event.styles ?? event.style ?? [];
     const styles = Array.isArray(existingStyles) ? existingStyles : [existingStyles];
 
@@ -252,7 +252,7 @@ DocumentService.ready().then(async () => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.categoryColors, calendarConfig.locale);
+                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.filterColors, calendarConfig.locale);
                         return currentEvents;
                     },
                 },
@@ -262,7 +262,7 @@ DocumentService.ready().then(async () => {
                 event: CalendarEventData;
                 el: HTMLElement;
             }) => {
-                applyCategoryColor(event, el, calendarConfig.categoryColors);
+                applyCategoryColor(event, el, calendarConfig.filterColors);
 
                 if (isCanceledEvent(event) && hasConcurrentEvent(event, currentEvents)) {
                     const titleElement = el.querySelector<HTMLElement>('.ec-event-title');

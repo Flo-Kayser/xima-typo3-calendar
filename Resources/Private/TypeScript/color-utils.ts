@@ -1,17 +1,29 @@
-export type CategoryColors = Record<string, string>;
+export type ColorOverrides = Record<string, Record<string, string>>;
 
-export const getCategoryColor = (categoryUid: number, overrides: CategoryColors = {}): string => {
-    const override = overrides[String(categoryUid)];
+export const getColor = (
+    identifier: string,
+    value: string | number,
+    overrides: ColorOverrides = {},
+): string => {
+    const override = overrides[identifier]?.[String(value)];
     if (override) {
         return override;
     }
 
-    const hue = Math.round((categoryUid * 137.508) % 360);
+    const seed = [...`${identifier}:${value}`].reduce(
+        (hash, character) => ((hash * 31) + character.charCodeAt(0)) >>> 0,
+        0,
+    );
+    const hue = Math.round((seed * 137.508) % 360);
     return `hsl(${hue} 68% 46%)`;
 };
 
-export const getCategoryTextColor = (categoryUid: number, overrides: CategoryColors = {}): string => {
-    const background = getCategoryColor(categoryUid, overrides);
+export const getTextColor = (
+    identifier: string,
+    value: string | number,
+    overrides: ColorOverrides = {},
+): string => {
+    const background = getColor(identifier, value, overrides);
     const rgb = parseColor(background);
     if (rgb === null) {
         return '#ffffff';
