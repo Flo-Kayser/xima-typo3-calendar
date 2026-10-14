@@ -34,16 +34,6 @@ final class CalendarFeedRequestUtility
         return array_map('intval', (array)($queryParams['calendars'] ?? []));
     }
 
-    public static function getRecordTypes(array $queryParams): array
-    {
-        $values = self::getListValues($queryParams['types'] ?? []);
-
-        return array_values(array_unique(array_filter(
-            array_map(static fn (string $value): string => trim($value), $values),
-            static fn (string $value): bool => $value !== '',
-        )));
-    }
-
     public static function getCategoryUids(array $queryParams): array
     {
         return self::getIntegerList($queryParams['categories'] ?? []);

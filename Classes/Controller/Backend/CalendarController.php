@@ -172,7 +172,6 @@ class CalendarController extends ActionController
         $calendarUids = CalendarFeedRequestUtility::getCalendarUids($params);
         $activeFilters = CalendarFeedRequestUtility::getTreeFilters($params);
         $filters = [
-            'types' => CalendarFeedRequestUtility::getRecordTypes($params),
             'categories' => $activeFilters['categories']
                 ?? CalendarFeedRequestUtility::getCategoryUids($params),
             'statuses' => $activeFilters['statuses']

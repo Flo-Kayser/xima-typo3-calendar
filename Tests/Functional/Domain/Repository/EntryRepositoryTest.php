@@ -76,7 +76,11 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['types' => ['event']],
+            [
+                'filters' => [
+                    'recordTypes' => ['event'],
+                ],
+            ],
         );
 
         self::assertCount(2, $rows);
@@ -85,7 +89,11 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['types' => ['event-appointment']],
+            [
+                'filters' => [
+                    'recordTypes' => ['event-appointment'],
+                ],
+            ],
         );
 
         self::assertSame([], $rows);

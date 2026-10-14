@@ -240,10 +240,6 @@ DocumentService.ready().then(async () => {
                         const url = new URL(calendarConfig.ajaxUrl, document.location.origin);
                         url.searchParams.set('start', fetchInfo.startStr);
                         url.searchParams.set('end', fetchInfo.endStr);
-                        url.searchParams.set(
-                            'types',
-                            (activeFilters.filters.recordTypes ?? []).join(','),
-                        );
                         url.searchParams.set('filters', JSON.stringify(activeFilters.filters));
 
                         const response = await fetch(url, {credentials: 'same-origin'});
