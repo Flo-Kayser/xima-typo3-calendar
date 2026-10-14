@@ -4,7 +4,9 @@ import {getColor, type ColorOverrides} from '../color-utils';
 
 import './calendar-filter-toolbar';
 import './calendar-filter-tree';
+import './calendar-filter-checkbox-list';
 import type {TreeStateChangePayload} from './calendar-filter-tree';
+import type {CheckboxListChangePayload} from './calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './calendar-filter-state-persistence';
 
 import type {
@@ -78,77 +80,6 @@ export class CalendarFilterElement extends LitElement {
   public render() {
     return html`
       <link rel="stylesheet" href="${new URL('../../Css/calendar-filter.css', import.meta.url).href}">
-      <style>
-        xima-calendar-filter-element {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          min-height: 0;
-        }
-
-        .xima-calendar-filter {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          min-height: 0;
-        }
-
-        .xima-calendar-filter__body {
-          flex: 1 1 auto;
-          min-height: 0;
-          overflow-y: auto;
-          padding: 0.75rem;
-        }
-
-        .xima-calendar-filter__section {
-          padding: 0.75rem 0;
-          border-bottom: 1px solid var(--typo3-component-border-color);
-        }
-
-        .xima-calendar-filter__section h3 {
-          margin: 0;
-          font-size: 0.9rem;
-          font-weight: 600;
-        }
-
-        .xima-calendar-filter__type-list,
-        .xima-calendar-filter__status-list {
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
-          margin-top: 0.5rem;
-        }
-
-        .xima-calendar-filter .form-check {
-          margin: 0;
-        }
-
-        .xima-calendar-filter__status-label {
-          display: inline-block;
-          padding: 0.05rem 0.25rem;
-          border-radius: 0.2rem;
-        }
-
-        .xima-calendar-filter__status-label--draft {
-          background:
-            repeating-linear-gradient(135deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px),
-            repeating-linear-gradient(45deg, transparent 0, transparent 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px, color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px);
-        }
-
-        .xima-calendar-filter__status-label--review {
-          border: 2px dashed var(--typo3-component-color);
-        }
-
-        .xima-calendar-filter__status-label--canceled {
-          background: none;
-        }
-
-        .xima-calendar-filter__status-label--rejected {
-          background: none;
-          border: 2px solid var(--typo3-component-color);
-        }
-
-      </style>
 
       <div class="xima-calendar-filter">
         <xima-calendar-filter-toolbar></xima-calendar-filter-toolbar>
@@ -267,46 +198,19 @@ export class CalendarFilterElement extends LitElement {
       return nothing;
     }
 
-    const activeItems =
-      this.filterState?.checkboxLists[filter.identifier] ?? [];
+    const activeItems = this.filterState?.checkboxLists[filter.identifier] ?? [];
 
     return html`
       <section class="xima-calendar-filter__section">
         <h3>${filter.title}</h3>
-        <div class="xima-calendar-filter__status-list">
-          ${filter.items.map((item) => html`
-            <label class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=${item.value}
-                ?checked=${activeItems.includes(item.value)}
-                @change=${() => this.handleCheckboxListChange(
-                  filter.identifier,
-                  item.value,
-                )}
-              />
-              <span class="form-check-label xima-calendar-filter__status-label ${this.getStatusPreviewClass(item.value)}">${item.label}</span>
-            </label>
-          `)}
-        </div>
+        <xima-calendar-filter-checkbox-list
+          .identifier=${filter.identifier}
+          .items=${filter.items}
+          .activeItems=${activeItems}
+          @checkbox-list-change=${this.handleCheckboxListChange}
+        ></xima-calendar-filter-checkbox-list>
       </section>
     `;
-  }
-
-  private getStatusPreviewClass(status: number | string): string {
-    switch (String(status)) {
-      case '0':
-        return 'xima-calendar-filter__status-label--draft';
-      case '1':
-        return 'xima-calendar-filter__status-label--review';
-      case '3':
-        return 'xima-calendar-filter__status-label--rejected';
-      case 'canceled':
-        return 'xima-calendar-filter__status-label--canceled';
-      default:
-        return '';
-    }
   }
 
   private async loadFilterOptions(): Promise<void> {
@@ -350,21 +254,27 @@ export class CalendarFilterElement extends LitElement {
   }
 
   private handleCheckboxListChange(
-    identifier: string,
-    value: number | string,
+    event: CustomEvent<CheckboxListChangePayload>,
   ): void {
     if (this.filterState === null) {
       return;
     }
 
+    const {identifier, value, selected} = event.detail;
+
     this.updateFilterState((state) => ({
       ...state,
       checkboxLists: {
         ...state.checkboxLists,
-        [identifier]: this.toggleValue(
-          state.checkboxLists[identifier] ?? [],
-          value,
-        ),
+        [identifier]: selected
+          ? [
+              ...new Set([
+                ...(state.checkboxLists[identifier] ?? []),
+                value,
+              ]),
+            ]
+          : (state.checkboxLists[identifier] ?? [])
+            .filter((item) => item !== value),
       },
     }));
   }

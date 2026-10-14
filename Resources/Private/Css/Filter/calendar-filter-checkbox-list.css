@@ -1,0 +1,52 @@
+.xima-calendar-filter__checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.xima-calendar-filter__checkbox-list .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+}
+
+.xima-calendar-filter__checkbox-list .form-check-input {
+    flex: 0 0 auto;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0;
+}
+
+.xima-calendar-filter__checkbox-label {
+    display: inline-block;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.2rem;
+}
+
+.xima-calendar-filter__checkbox-label--hatched {
+    background:
+        repeating-linear-gradient(
+            135deg,
+            transparent 0,
+            transparent 7px,
+            color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px,
+            color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px
+        ),
+        repeating-linear-gradient(
+            45deg,
+            transparent 0,
+            transparent 7px,
+            color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 7px,
+            color-mix(in srgb, var(--typo3-component-color) 24%, transparent) 8px
+        );
+}
+
+.xima-calendar-filter__checkbox-label--dashed {
+    border: 2px dashed var(--typo3-component-color);
+}
+
+.xima-calendar-filter__checkbox-label--outlined {
+    border: 2px solid var(--typo3-component-color);
+}

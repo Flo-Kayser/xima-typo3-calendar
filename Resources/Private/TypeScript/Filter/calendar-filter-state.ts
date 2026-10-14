@@ -1,6 +1,7 @@
 export type CalendarFilterOption = {
   value: string | number;
   label: string;
+  appearance?: string;
 };
 
 export type TreeFilterItem = CalendarFilterOption & {

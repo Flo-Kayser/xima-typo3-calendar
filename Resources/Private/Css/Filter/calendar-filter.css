@@ -1,1 +1,45 @@
 @import "./calendar-filter-tree.css";
+@import "./calendar-filter-checkbox-list.css";
+
+xima-calendar-filter-element {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.xima-calendar-filter {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.xima-calendar-filter__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0.75rem;
+}
+
+.xima-calendar-filter__section {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--typo3-component-border-color);
+}
+
+.xima-calendar-filter__section h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.xima-calendar-filter__type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.xima-calendar-filter .form-check {
+  margin: 0;
+}
