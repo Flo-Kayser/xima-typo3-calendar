@@ -7,10 +7,7 @@ import './components/calendar-filter-checkbox-list';
 import type {TreeStateChangePayload} from './components/calendar-filter-tree';
 import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
-import {
-  isCalendarFilterResponse,
-  requestCalendarFilterConfiguration,
-} from './services/calendar-filter-configuration';
+import {isCalendarFilterResponse, requestCalendarFilterConfiguration,} from './services/calendar-filter-configuration';
 import {
   createFilterSelection,
   updateCheckboxListState,
@@ -27,6 +24,7 @@ import type {
 
 type Typo3TopWindow = Window & {
   ximaCalendarFilterState?: CalendarFilterSelection;
+  ximaCalendarFilterConfiguration?: CalendarFilterConfiguration;
   TYPO3?: {
     lang?: Record<string, string>;
     settings?: {
@@ -179,6 +177,7 @@ export class CalendarFilterElement extends LitElement {
 
       this.filterConfiguration = data.filters;
       this.filterState = data.state;
+      this.publishFilterConfiguration();
       this.publishFilterState();
     } catch (error) {
       console.error('Calendar filter configuration could not be loaded', error);
@@ -198,6 +197,22 @@ export class CalendarFilterElement extends LitElement {
       updateCheckboxListState(state, event.detail));
   }
 
+  private publishFilterConfiguration(): void {
+    if (this.filterConfiguration === null) {
+      return;
+    }
+
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+
+    typo3Top.ximaCalendarFilterConfiguration = this.filterConfiguration;
+
+    typo3Top.dispatchEvent(new CustomEvent(
+      'xima-calendar-filter-configuration-loaded', {
+        bubbles: true,
+        composed: true,
+        detail: this.filterConfiguration,
+      }));
+  }
   private publishFilterState(): void {
     if (this.filterState === null) {
       return;
