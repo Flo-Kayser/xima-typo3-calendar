@@ -169,6 +169,7 @@ DocumentService.ready().then(async () => {
     const filterWindow = window.top as unknown as CalendarFilterWindow;
     let activeFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
         types: [],
+        trees: {},
         categories: [],
         statuses: [],
     };
@@ -243,6 +244,7 @@ DocumentService.ready().then(async () => {
                         url.searchParams.set('start', fetchInfo.startStr);
                         url.searchParams.set('end', fetchInfo.endStr);
                         url.searchParams.set('types', activeFilters.types.join(','));
+                        url.searchParams.set('filters', JSON.stringify(activeFilters.trees));
                         url.searchParams.set('categories', activeFilters.categories.join(','));
                         url.searchParams.set('statuses', activeFilters.statuses.join(','));
 

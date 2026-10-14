@@ -3,35 +3,37 @@ export type CalendarFilterOption = {
   label: string;
 };
 
-export type CalendarCategoryOption = CalendarFilterOption & {
-  value: number;
-  parentUid: number | null;
+export type TreeFilterItem = CalendarFilterOption & {
+  parentUid: string | number | null;
 };
 
 export type TreeCalendarFilter = {
   identifier: string;
   title: string;
   colorCoded: boolean;
-  items: CalendarCategoryOption[];
+  items: TreeFilterItem[];
 };
 
 export type CalendarFilterOptions = {
   types: CalendarFilterOption[];
-  categories: TreeCalendarFilter;
+  trees: Record<string, TreeCalendarFilter>;
   statuses: CalendarFilterOption[];
 };
 
 export type CalendarFilterState = {
   activeTypes: string[];
-  activeCategories: number[];
   activeStatuses: Array<number | string>;
-  expanded: {
-    categoryNodes: Record<number, boolean>;
-  };
+  trees: Record<string, CalendarFilterTreeState>;
+};
+
+export type CalendarFilterTreeState = {
+  activeItems: Array<string | number>;
+  expandedItems: Record<string, boolean>;
 };
 
 export type CalendarFilterSelection = {
   types: string[];
+  trees: Record<string, Array<string | number>>;
   categories: number[];
   statuses: Array<number | string>;
 };

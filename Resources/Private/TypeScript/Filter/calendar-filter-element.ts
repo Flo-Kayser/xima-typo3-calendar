@@ -4,13 +4,15 @@ import {getColor, type ColorOverrides} from '../color-utils';
 
 import './calendar-filter-toolbar';
 import './calendar-filter-tree';
-import type {TreeStateChangePayload, TreeValue} from './calendar-filter-tree';
+import type {TreeStateChangePayload} from './calendar-filter-tree';
+import {CalendarFilterStatePersistence} from './calendar-filter-state-persistence';
 
 import type {
   CalendarFilterOptions,
   CalendarFilterResponse,
   CalendarFilterSelection,
   CalendarFilterState,
+  TreeCalendarFilter,
 } from './calendar-filter-state';
 
 type Typo3TopWindow = Window & {
@@ -32,11 +34,6 @@ type Typo3TopWindow = Window & {
   };
 };
 
-type TreeState = {
-  activeItems: TreeValue[];
-  expandedItems: Record<TreeValue, boolean>;
-};
-
 export const navigationComponentName =
   'xima-calendar-filter-element';
 
@@ -45,11 +42,9 @@ export class CalendarFilterElement extends LitElement {
 
   private filterState: CalendarFilterState | null = null;
 
-  private treeStates: Record<string, TreeState> = {};
-
   private filterLoadError = false;
 
-  private filterStateSaveQueue: Promise<void> = Promise.resolve();
+  private filterStatePersistence: CalendarFilterStatePersistence | null = null;
 
   private getLanguageLabel(key: string, englishFallback: string, germanFallback: string): string {
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -65,6 +60,13 @@ export class CalendarFilterElement extends LitElement {
 
   public connectedCallback(): void {
     super.connectedCallback();
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const stateUrl = typo3Top.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_state
+      ?? typo3Top.TYPO3?.settings?.ximaCalendar?.filterStateUrl;
+    if (stateUrl) {
+      this.filterStatePersistence = new CalendarFilterStatePersistence(stateUrl);
+    }
+
     void this.loadFilterOptions();
   }
 
@@ -155,7 +157,7 @@ export class CalendarFilterElement extends LitElement {
 
           ${this.filterOptions === null
             ? nothing
-            : this.renderTreeFilter(this.filterOptions.categories)}
+            : Object.values(this.filterOptions.trees).map((tree) => this.renderTreeFilter(tree))}
 
           ${this.renderStatusFilter()}
         </div>
@@ -207,15 +209,12 @@ export class CalendarFilterElement extends LitElement {
     `;
   }
 
-  private renderTreeFilter(tree: CalendarFilterOptions['categories']) {
-    if (
-      this.filterOptions === null
-      || this.filterOptions.categories.items.length === 0
-    ) {
+  private renderTreeFilter(tree: TreeCalendarFilter) {
+    if (tree.items.length === 0) {
       return nothing;
     }
 
-    const treeState = this.treeStates[tree.identifier] ?? {
+    const treeState = this.filterState?.trees[tree.identifier] ?? {
       activeItems: [],
       expandedItems: {},
     };
@@ -246,36 +245,16 @@ export class CalendarFilterElement extends LitElement {
   private handleTreeStateChange(
     event: CustomEvent<TreeStateChangePayload>,
   ): void {
-    const activeItems = event.detail.activeItems.filter(
-      (value): value is number => typeof value === 'number',
-    );
-    const expandedItems = Object.fromEntries(
-      Object.entries(event.detail.expandedItems).filter(
-        ([value]) => Number.isInteger(Number(value)),
-      ),
-    ) as Record<TreeValue, boolean>;
-
-    this.treeStates = {
-      ...this.treeStates,
-      [event.detail.identifier]: {
-        activeItems,
-        expandedItems,
-      },
-    };
-
-    if (event.detail.identifier === 'categories' && this.filterState !== null) {
-      this.updateFilterState((state) => ({
-        ...state,
-        activeCategories: activeItems,
-        expanded: {
-          ...state.expanded,
-          categoryNodes: expandedItems,
+    this.updateFilterState((state) => ({
+      ...state,
+      trees: {
+        ...state.trees,
+        [event.detail.identifier]: {
+          activeItems: [...event.detail.activeItems],
+          expandedItems: {...event.detail.expandedItems},
         },
-      }));
-      return;
-    }
-
-    this.requestUpdate();
+      },
+    }));
   }
 
   private renderStatusFilter() {
@@ -339,12 +318,6 @@ export class CalendarFilterElement extends LitElement {
 
       this.filterOptions = data.options;
       this.filterState = data.state;
-      this.treeStates = {
-        [data.options.categories.identifier]: {
-          activeItems: data.state.activeCategories,
-          expandedItems: data.state.expanded.categoryNodes,
-        },
-      };
       this.publishFilterState();
     } catch (error) {
       console.error('Calendar filter options could not be loaded', error);
@@ -389,7 +362,14 @@ export class CalendarFilterElement extends LitElement {
 
     const selection: CalendarFilterSelection = {
       types: [...this.filterState.activeTypes],
-      categories: [...this.filterState.activeCategories],
+      trees: Object.fromEntries(
+        Object.entries(this.filterState.trees).map(([identifier, tree]) => [
+          identifier,
+          [...tree.activeItems],
+        ]),
+      ),
+      categories: (this.filterState.trees.categories?.activeItems ?? [])
+        .filter((value): value is number => typeof value === 'number'),
       statuses: [...this.filterState.activeStatuses],
     };
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -404,7 +384,9 @@ export class CalendarFilterElement extends LitElement {
   private dispatchFilterChange(): void {
     this.publishFilterState();
     this.requestUpdate();
-    this.persistFilterState();
+    if (this.filterState !== null) {
+      this.filterStatePersistence?.save(this.filterState);
+    }
   }
 
   private updateFilterState(
@@ -444,46 +426,12 @@ export class CalendarFilterElement extends LitElement {
 
     return Array.isArray(filterOptions.types)
       && Array.isArray(filterOptions.statuses)
-      && Boolean(filterOptions.categories)
-      && Array.isArray((filterOptions.categories as Record<string, unknown>).items)
+      && Boolean(filterOptions.trees)
+      && typeof filterOptions.trees === 'object'
       && Array.isArray(filterState.activeTypes)
-      && Array.isArray(filterState.activeCategories)
       && Array.isArray(filterState.activeStatuses)
-      && Boolean(filterState.expanded)
-      && typeof filterState.expanded === 'object';
-  }
-
-  private persistFilterState(): void {
-    if (this.filterState === null) {
-      return;
-    }
-
-    const typo3Top = window.top as unknown as Typo3TopWindow;
-    const url = typo3Top.TYPO3?.settings?.ajaxUrls?.xima_calendar_filter_state
-      ?? typo3Top.TYPO3?.settings?.ximaCalendar?.filterStateUrl;
-    if (!url) {
-      return;
-    }
-
-    const state = {
-      activeTypes: [...this.filterState.activeTypes],
-      activeCategories: [...this.filterState.activeCategories],
-      activeStatuses: [...this.filterState.activeStatuses],
-      expanded: {
-        categoryNodes: {...this.filterState.expanded.categoryNodes},
-      },
-    };
-
-    this.filterStateSaveQueue = this.filterStateSaveQueue
-      .catch(() => undefined)
-      .then(async () => {
-        try {
-          const response = await new AjaxRequest(url).post(state);
-          await response.resolve();
-        } catch (error) {
-          console.error('Calendar filter state could not be saved', error);
-        }
-      });
+      && Boolean(filterState.trees)
+      && typeof filterState.trees === 'object';
   }
 
 }
