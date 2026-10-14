@@ -32,7 +32,14 @@ export class CalendarFilterStatePersistence {
       .catch(() => undefined)
       .then(async () => {
         try {
-          const response = await new AjaxRequest(this.url).post(payload);
+          const response = await new AjaxRequest(this.url).post(
+            JSON.stringify(payload),
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          );
           await response.resolve();
         } catch (error) {
           console.error('Calendar filter state could not be saved', error);

@@ -31,6 +31,10 @@ final class CalendarFilterController
     {
         $state = $request->getParsedBody();
         if (!is_array($state)) {
+            $state = json_decode((string)$request->getBody(), true);
+        }
+
+        if (!is_array($state)) {
             return new JsonResponse(['success' => false], 400);
         }
 
