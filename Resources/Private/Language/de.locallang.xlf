@@ -214,6 +214,10 @@
                 <source />
                 <target>Kategorien</target>
             </trans-unit>
+            <trans-unit id="filter.status.title" resname="filter.status">
+                <source />
+                <target>Status</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

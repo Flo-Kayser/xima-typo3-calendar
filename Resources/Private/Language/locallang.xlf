@@ -161,6 +161,9 @@
 			<trans-unit id="filter.categories.title" resname="filter.categories">
                 <source>Categories</source>
             </trans-unit>
+            <trans-unit id="filter.status.title" resname="filter.status">
+                <source>Status</source>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>
