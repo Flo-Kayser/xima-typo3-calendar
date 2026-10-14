@@ -1,0 +1,44 @@
+import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
+import {
+  CalendarFilterResponse,
+  CalendarFilterState,
+} from '../calendar-filter-state';
+
+export async function requestCalendarFilterOptions(
+  url: string,
+): Promise<unknown> {
+  const response = await new AjaxRequest(url).get();
+
+  return response.resolve();
+}
+
+export function isCalendarFilterResponse(
+  value: unknown,
+): value is CalendarFilterResponse {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const response = value as Record<string, unknown>;
+  const filters = response.filters;
+  const state = response.state;
+
+  if (
+    response.success !== true
+    || !filters
+    || typeof filters !== 'object'
+    || !state
+    || typeof state !== 'object'
+  ) {
+    return false;
+  }
+
+  const filterState = state as CalendarFilterState;
+
+  return Boolean(filters)
+    && typeof filters === 'object'
+    && Boolean(filterState.checkboxLists)
+    && typeof filterState.checkboxLists === 'object'
+    && Boolean(filterState.trees)
+    && typeof filterState.trees === 'object';
+}

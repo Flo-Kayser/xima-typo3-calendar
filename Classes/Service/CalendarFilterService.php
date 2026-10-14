@@ -22,18 +22,14 @@ final class CalendarFilterService
     ) {
     }
 
-    /**
-     * @return array{filters: array<string, array<string, mixed>>}
-     */
+    /** @return array<string, array<string, mixed>> */
     public function getFilters(int $pageId = 0): array
     {
         if ($this->filters !== null) {
             return $this->filters;
         }
 
-        $filters = [
-            'filters' => [],
-        ];
+        $filters = [];
 
         $event = new ConfigureCalendarFilterEvent();
 
@@ -42,15 +38,13 @@ final class CalendarFilterService
         foreach ($event->getFilters() as $filter) {
             $serializedFilter = $filter->jsonSerialize();
 
-            $filters['filters'][$filter->getIdentifier()] = $serializedFilter;
+            $filters[$filter->getIdentifier()] = $serializedFilter;
         }
 
-        $filters['filters'] = $this->sortFilters(
-            $filters['filters'],
+        return $this->filters = $this->sortFilters(
+            $filters,
             $this->getFilterOrder($pageId),
         );
-
-        return $this->filters = $filters;
     }
 
     /**
@@ -148,11 +142,11 @@ final class CalendarFilterService
     {
         $filters = $this->getFilters($pageId);
         $categories = array_fill_keys(
-            array_column($filters['filters']['categories']['items'] ?? [], 'value'),
+            array_column($filters['categories']['items'] ?? [], 'value'),
             true,
         );
         $checkboxLists = [];
-        foreach ($filters['filters'] as $identifier => $filter) {
+        foreach ($filters as $identifier => $filter) {
             if (!is_string($identifier) || !is_array($filter) || ($filter['type'] ?? null) !== 'checkbox-list') {
                 continue;
             }

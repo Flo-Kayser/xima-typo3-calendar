@@ -1,11 +1,11 @@
-export type CalendarFilterOption = {
+export type CalendarFilterItem = {
   value: string | number;
   label: string;
   appearance?: string;
   icon?: string;
 };
 
-export type TreeFilterItem = CalendarFilterOption & {
+export type TreeFilterItem = CalendarFilterItem & {
   parentUid: string | number | null;
 };
 
@@ -21,13 +21,13 @@ export type CheckboxCalendarFilter = {
   type: 'checkbox-list';
   identifier: string;
   title: string;
-  items: CalendarFilterOption[];
+  items: CalendarFilterItem[];
 };
 
 export type CalendarFilter = TreeCalendarFilter | CheckboxCalendarFilter;
 
-export type CalendarFilterOptions = {
-  filters: Record<string, CalendarFilter>;
+export type CalendarFilterConfiguration = {
+  [identifier: string]: CalendarFilter;
 };
 
 export type CalendarFilterState = {
@@ -46,6 +46,6 @@ export type CalendarFilterSelection = {
 
 export type CalendarFilterResponse = {
   success: boolean;
-  options: CalendarFilterOptions;
+  filters: CalendarFilterConfiguration;
   state: CalendarFilterState;
 };

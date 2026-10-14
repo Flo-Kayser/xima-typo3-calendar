@@ -1,5 +1,4 @@
 import {html, LitElement, nothing} from 'lit';
-import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import {getColor, type ColorOverrides} from '../color-utils';
 
 import './components/calendar-filter-toolbar';
@@ -8,11 +7,14 @@ import './components/calendar-filter-checkbox-list';
 import type {TreeStateChangePayload} from './components/calendar-filter-tree';
 import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
+import {
+  isCalendarFilterResponse,
+  requestCalendarFilterOptions,
+} from './services/calendar-filter-options';
 
 import type {
-  CalendarFilterOptions,
+  CalendarFilterConfiguration,
   CalendarFilter,
-  CalendarFilterResponse,
   CalendarFilterSelection,
   CalendarFilterState,
   TreeCalendarFilter,
@@ -41,7 +43,7 @@ export const navigationComponentName =
   'xima-calendar-filter-element';
 
 export class CalendarFilterElement extends LitElement {
-  private filterOptions: CalendarFilterOptions | null = null;
+  private filterConfiguration: CalendarFilterConfiguration | null = null;
 
   private filterState: CalendarFilterState | null = null;
 
@@ -49,17 +51,6 @@ export class CalendarFilterElement extends LitElement {
 
   private filterStatePersistence: CalendarFilterStatePersistence | null = null;
 
-  private getLanguageLabel(key: string, englishFallback: string, germanFallback: string): string {
-    const typo3Top = window.top as unknown as Typo3TopWindow;
-    const locale = typo3Top.TYPO3?.settings?.ximaCalendar?.locale
-      ?? document.documentElement.lang
-      ?? navigator.language;
-    if (locale?.startsWith('de')) {
-      return germanFallback;
-    }
-
-    return typo3Top.TYPO3?.lang?.[`filter.${key}`] ?? englishFallback;
-  }
 
   public connectedCallback(): void {
     super.connectedCallback();
@@ -85,9 +76,9 @@ export class CalendarFilterElement extends LitElement {
         <xima-calendar-filter-toolbar></xima-calendar-filter-toolbar>
 
         <div class="xima-calendar-filter__body">
-          ${this.filterOptions === null
+          ${this.filterConfiguration === null
             ? nothing
-            : Object.values(this.filterOptions.filters).map((filter) => this.renderFilter(filter))}
+            : Object.values(this.filterConfiguration).map((filter) => this.renderFilter(filter))}
         </div>
       </div>
     `;
@@ -179,13 +170,12 @@ export class CalendarFilterElement extends LitElement {
     }
 
     try {
-      const response = await new AjaxRequest(url).get();
-      const data: unknown = await response.resolve();
-      if (!this.isCalendarFilterResponse(data)) {
+      const data: unknown = await requestCalendarFilterOptions(url);
+      if (!isCalendarFilterResponse(data)) {
         throw new Error('Filter options could not be loaded');
       }
 
-      this.filterOptions = data.options;
+      this.filterConfiguration = data.filters;
       this.filterState = data.state;
       this.publishFilterState();
     } catch (error) {
@@ -264,38 +254,6 @@ export class CalendarFilterElement extends LitElement {
 
     this.filterState = update(this.filterState);
     this.dispatchFilterChange();
-  }
-
-  private isCalendarFilterResponse(
-    value: unknown,
-  ): value is CalendarFilterResponse {
-    if (!value || typeof value !== 'object') {
-      return false;
-    }
-
-    const response = value as Record<string, unknown>;
-    const options = response.options;
-    const state = response.state;
-
-    if (
-      response.success !== true
-      || !options
-      || typeof options !== 'object'
-      || !state
-      || typeof state !== 'object'
-    ) {
-      return false;
-    }
-
-    const filterOptions = options as Record<string, unknown>;
-    const filterState = state as Record<string, unknown>;
-
-    return Boolean(filterOptions.filters)
-      && typeof filterOptions.filters === 'object'
-      && Boolean(filterState.checkboxLists)
-      && typeof filterState.checkboxLists === 'object'
-      && Boolean(filterState.trees)
-      && typeof filterState.trees === 'object';
   }
 
 }

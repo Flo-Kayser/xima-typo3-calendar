@@ -1,5 +1,5 @@
 import {html, LitElement, nothing} from 'lit';
-import type {CalendarFilterOption} from '../calendar-filter-state';
+import type {CalendarFilterItem} from '../calendar-filter-state';
 
 export type CheckboxListValue = string | number;
 
@@ -17,7 +17,7 @@ export class CalendarFilterCheckboxList extends LitElement {
   };
 
   public identifier = '';
-  public items: CalendarFilterOption[] = [];
+  public items: CalendarFilterItem[] = [];
   public activeItems: CheckboxListValue[] = [];
 
   public createRenderRoot(): HTMLElement {
