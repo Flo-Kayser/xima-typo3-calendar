@@ -18,6 +18,8 @@ TCEMAIN.preview {
 }
 
 mod.tx_ximatypo3calendar {
+    filterOrder = types, categories, statuses
+
     enableEventPreview = 1
 
     weekViewGrid {

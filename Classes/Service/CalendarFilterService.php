@@ -7,6 +7,7 @@ namespace Xima\XimaTypo3Calendar\Service;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final class CalendarFilterService
@@ -27,7 +28,7 @@ final class CalendarFilterService
      *     filters: array<string, array<string, mixed>>,
      * }
      */
-    public function getFilters(): array
+    public function getFilters(int $pageId = 0): array
     {
         if ($this->filters !== null) {
             return $this->filters;
@@ -47,7 +48,57 @@ final class CalendarFilterService
 
             $filters['filters'][$filter->getIdentifier()] = $serializedFilter;
         }
+
+        $filters['filters'] = $this->sortFilters(
+            $filters['filters'],
+            $this->getFilterOrder($pageId),
+        );
+
         return $this->filters = $filters;
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $filters
+     * @param list<string> $filterOrder
+     * @return array<string, array<string, mixed>>
+     */
+    private function sortFilters(
+        array $filters,
+        array $filterOrder,
+    ): array {
+        $sortedFilters = [];
+
+        foreach ($filterOrder as $identifier) {
+            if (isset($filters[$identifier])) {
+                $sortedFilters[$identifier] = $filters[$identifier];
+            }
+        }
+
+        foreach ($filters as $identifier => $filter) {
+            if (!isset($sortedFilters[$identifier])) {
+                $sortedFilters[$identifier] = $filter;
+            }
+        }
+
+        return $sortedFilters;
+    }
+
+    /** @return list<string> */
+    private function getFilterOrder(int $pageId): array
+    {
+        $tsConfig = BackendUtility::getPagesTSconfig($pageId);
+        $configuredOrder = $tsConfig['mod.']['tx_ximatypo3calendar.']['filterOrder'] ?? '';
+        $values = is_array($configuredOrder)
+            ? $configuredOrder
+            : explode(',', (string)$configuredOrder);
+
+        return array_values(array_filter(
+            array_map(
+                static fn (mixed $value): string => is_scalar($value) ? trim((string)$value) : '',
+                $values,
+            ),
+            static fn (string $value): bool => $value !== '',
+        ));
     }
 
     private const DEFAULT_VIEW = 'dayGridMonth';
@@ -55,17 +106,17 @@ final class CalendarFilterService
     /**
      * @return array{
      *     activeTypes: list<string>,
-     *     activeStatuses: list<int|string>,
+     *     checkboxLists: array<string, list<int|string>>,
      *     trees: array<string, array{activeItems: list<int|string>, expandedItems: array<string, bool>}>,
      *     view: string,
      * }
      */
-    public function getState(): array
+    public function getState(int $pageId = 0): array
     {
-        return $this->normalizeState($this->getStoredState());
+        return $this->normalizeState($this->getStoredState(), $pageId);
     }
 
-    public function saveState(array $state): void
+    public function saveState(array $state, int $pageId = 0): void
     {
         $backendUser = $GLOBALS['BE_USER'] ?? null;
         if (!$backendUser instanceof BackendUserAuthentication) {
@@ -74,7 +125,7 @@ final class CalendarFilterService
 
         $backendUser->pushModuleData(
             self::MODULE_IDENTIFIER,
-            $this->normalizeState(array_merge($this->getStoredState(), $state)),
+            $this->normalizeState(array_merge($this->getStoredState(), $state), $pageId),
         );
     }
 
@@ -83,7 +134,7 @@ final class CalendarFilterService
         return $this->normalizeView($this->getStoredState()['view'] ?? null);
     }
 
-    public function saveView(string $view): void
+    public function saveView(string $view, int $pageId = 0): void
     {
         $backendUser = $GLOBALS['BE_USER'] ?? null;
         if (!$backendUser instanceof BackendUserAuthentication) {
@@ -92,32 +143,42 @@ final class CalendarFilterService
 
         $state = $this->getStoredState();
         $state['view'] = $view;
-        $backendUser->pushModuleData(self::MODULE_IDENTIFIER, $this->normalizeState($state));
+        $backendUser->pushModuleData(
+            self::MODULE_IDENTIFIER,
+            $this->normalizeState($state, $pageId),
+        );
     }
 
-    private function normalizeState(array $state): array
+    private function normalizeState(array $state, int $pageId): array
     {
-        $filters = $this->getFilters();
+        $filters = $this->getFilters($pageId);
         $types = array_fill_keys(array_column($filters['types'], 'value'), true);
         $categories = array_fill_keys(
             array_column($filters['filters']['categories']['items'] ?? [], 'value'),
-            true,
-        );
-        $statuses = array_fill_keys(
-            array_map(
-                'strval',
-                array_column($filters['filters']['statuses']['items'] ?? [], 'value'),
-            ),
             true,
         );
         $activeTypes = array_values(array_filter(
             $this->getStringList($state['activeTypes'] ?? null),
             static fn (string $type): bool => isset($types[$type]),
         ));
-        $activeStatuses = array_values(array_filter(
-            $this->getStatusList($state['activeStatuses'] ?? null),
-            static fn (int|string $status): bool => isset($statuses[(string)$status]),
-        ));
+        $checkboxLists = [];
+        foreach ($filters['filters'] as $identifier => $filter) {
+            if (!is_string($identifier) || !is_array($filter) || ($filter['type'] ?? null) !== 'checkbox-list') {
+                continue;
+            }
+
+            $allowedValues = array_fill_keys(
+                array_map(
+                    'strval',
+                    array_column($filter['items'] ?? [], 'value'),
+                ),
+                true,
+            );
+            $checkboxLists[$identifier] = array_values(array_filter(
+                $this->getTreeValueList($state['checkboxLists'][$identifier] ?? null),
+                static fn (int|string $value): bool => isset($allowedValues[(string)$value]),
+            ));
+        }
         $trees = $this->normalizeTreeStates($state['trees'] ?? null, $categories);
 
         if (!array_key_exists('trees', $state)) {
@@ -138,7 +199,7 @@ final class CalendarFilterService
 
         return [
             'activeTypes' => $activeTypes,
-            'activeStatuses' => $activeStatuses,
+            'checkboxLists' => $checkboxLists,
             'trees' => $trees,
             'view' => $this->normalizeView($state['view'] ?? null),
         ];
@@ -211,16 +272,6 @@ final class CalendarFilterService
             static fn (mixed $item): int => is_numeric($item) ? (int)$item : -1,
             $values,
         ), static fn (int $item): bool => $item >= $minimum));
-    }
-
-    private function getStatusList(mixed $value): array
-    {
-        $values = is_array($value) ? $value : [$value];
-
-        return array_values(array_filter(array_map(
-            static fn (mixed $item): int|string => is_numeric($item) ? (int)$item : (string)$item,
-            $values,
-        ), static fn (int|string $item): bool => is_int($item) ? $item >= 0 : $item !== ''));
     }
 
     /**

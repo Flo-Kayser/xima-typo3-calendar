@@ -16,12 +16,14 @@ final class CalendarFilterController
     ) {
     }
 
-    public function optionsAction(): ResponseInterface
+    public function optionsAction(ServerRequestInterface $request): ResponseInterface
     {
+        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+
         return new JsonResponse([
             'success' => true,
-            'options' => $this->filterService->getFilters(),
-            'state' => $this->filterService->getState(),
+            'options' => $this->filterService->getFilters($pageId),
+            'state' => $this->filterService->getState($pageId),
         ]);
     }
 
@@ -32,7 +34,8 @@ final class CalendarFilterController
             return new JsonResponse(['success' => false], 400);
         }
 
-        $this->filterService->saveState($state);
+        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        $this->filterService->saveState($state, $pageId);
 
         return new JsonResponse(['success' => true]);
     }
@@ -44,7 +47,8 @@ final class CalendarFilterController
             return new JsonResponse(['success' => false], 400);
         }
 
-        $this->filterService->saveView($body['view']);
+        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        $this->filterService->saveView($body['view'], $pageId);
 
         return new JsonResponse(['success' => true]);
     }

@@ -51,11 +51,21 @@ class CalendarController extends ActionController
     {
         $this->cleanupPendingCreation($request);
         $moduleTemplate = $this->moduleTemplateFactory->create($request);
+        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
 
         $ajaxUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_events');
-        $filterOptionsUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_options');
-        $filterStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_filter_state');
-        $viewStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_view_state');
+        $filterOptionsUrl = (string)$this->backendUriBuilder->buildUriFromRoute(
+            'ajax_xima_calendar_filter_options',
+            ['id' => $pageId],
+        );
+        $filterStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute(
+            'ajax_xima_calendar_filter_state',
+            ['id' => $pageId],
+        );
+        $viewStateUrl = (string)$this->backendUriBuilder->buildUriFromRoute(
+            'ajax_xima_calendar_view_state',
+            ['id' => $pageId],
+        );
         $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
         $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
         $locale = $GLOBALS['LANG']->getLocale()?->getName() ?? 'en';
