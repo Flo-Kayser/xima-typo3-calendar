@@ -1,5 +1,5 @@
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
-import type {CalendarFilterState} from './calendar-filter-state';
+import type {CalendarFilterState} from '../calendar-filter-state';
 
 export class CalendarFilterStatePersistence {
   private saveQueue: Promise<void> = Promise.resolve();

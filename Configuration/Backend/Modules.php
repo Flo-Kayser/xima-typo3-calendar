@@ -35,6 +35,6 @@ return [
             ],
         ],
         'inheritNavigationComponentFromMainModule' => false,
-        'navigationComponent' => '@xima/xima-typo3-calendar/Filter/calendar-filter-element',
+        'navigationComponent' => '@xima/xima-typo3-calendar/Filter/calendar-filter',
     ],
 ];

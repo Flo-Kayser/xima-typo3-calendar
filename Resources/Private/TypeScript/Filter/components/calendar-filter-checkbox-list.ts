@@ -1,5 +1,5 @@
 import {html, LitElement, nothing} from 'lit';
-import type {CalendarFilterOption} from './calendar-filter-state';
+import type {CalendarFilterOption} from '../calendar-filter-state';
 
 export type CheckboxListValue = string | number;
 

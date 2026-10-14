@@ -2,12 +2,12 @@ import {html, LitElement, nothing} from 'lit';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import {getColor, type ColorOverrides} from '../color-utils';
 
-import './calendar-filter-toolbar';
-import './calendar-filter-tree';
-import './calendar-filter-checkbox-list';
-import type {TreeStateChangePayload} from './calendar-filter-tree';
-import type {CheckboxListChangePayload} from './calendar-filter-checkbox-list';
-import {CalendarFilterStatePersistence} from './calendar-filter-state-persistence';
+import './components/calendar-filter-toolbar';
+import './components/calendar-filter-tree';
+import './components/calendar-filter-checkbox-list';
+import type {TreeStateChangePayload} from './components/calendar-filter-tree';
+import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
+import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
 
 import type {
   CalendarFilterOptions,

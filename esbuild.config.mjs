@@ -12,7 +12,7 @@ const javascriptConfig = {
     ...commonConfig,
     entryPoints: [
         './Resources/Private/TypeScript/calendar.ts',
-        './Resources/Private/TypeScript/Filter/calendar-filter-element.ts',
+        './Resources/Private/TypeScript/Filter/calendar-filter.ts',
     ],
     outdir: 'Resources/Public/JavaScript/',
 };

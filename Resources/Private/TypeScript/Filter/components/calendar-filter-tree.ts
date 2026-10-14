@@ -3,9 +3,9 @@ import {
   updateTreeExpansion,
   updateTreeSelection,
   type TreeValue,
-} from './calendar-filter-tree-utils';
+} from './tree-utils';
 
-export type {TreeValue} from './calendar-filter-tree-utils';
+export type {TreeValue} from './tree-utils';
 
 export type TreeStateChangePayload = {
   identifier: string;
