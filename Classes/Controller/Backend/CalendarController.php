@@ -160,10 +160,13 @@ class CalendarController extends ActionController
         $startDatetime = CalendarFeedRequestUtility::getStartTimestamp($params);
         $endDatetime = CalendarFeedRequestUtility::getEndTimestamp($params);
         $calendarUids = CalendarFeedRequestUtility::getCalendarUids($params);
+        $treeFilters = CalendarFeedRequestUtility::getTreeFilters($params);
         $filters = [
             'types' => CalendarFeedRequestUtility::getRecordTypes($params),
-            'categories' => CalendarFeedRequestUtility::getCategoryUids($params),
+            'categories' => $treeFilters['categories']
+                ?? CalendarFeedRequestUtility::getCategoryUids($params),
             'statuses' => CalendarFeedRequestUtility::getStatuses($params),
+            'trees' => $treeFilters,
         ];
 
         $rows = $this->entryRepository->getBackendCalendarEntries(

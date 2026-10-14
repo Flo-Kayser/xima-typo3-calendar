@@ -59,6 +59,41 @@ final class CalendarFeedRequestUtility
         )));
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     * @return array<string, list<int|string>>
+     */
+    public static function getTreeFilters(array $queryParams): array
+    {
+        $filters = $queryParams['filters'] ?? [];
+        if (is_string($filters)) {
+            $filters = json_decode($filters, true);
+        }
+
+        if (!is_array($filters)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($filters as $identifier => $values) {
+            if (!is_string($identifier) || !is_array($values)) {
+                continue;
+            }
+
+            $result[$identifier] = array_values(array_unique(array_filter(
+                array_map(
+                    static fn (mixed $value): int|string => is_numeric($value)
+                        ? (int)$value
+                        : (is_string($value) ? trim($value) : ''),
+                    $values,
+                ),
+                static fn (int|string $value): bool => $value !== '',
+            ), SORT_REGULAR));
+        }
+
+        return $result;
+    }
+
     private static function getListValues(mixed $value): array
     {
         $values = is_array($value) ? $value : [$value];
