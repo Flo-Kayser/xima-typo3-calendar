@@ -31,7 +31,7 @@ export type CalendarFilterOptions = {
 
 export type CalendarFilterState = {
   activeTypes: string[];
-  activeStatuses: Array<number | string>;
+  checkboxLists: Record<string, Array<string | number>>;
   trees: Record<string, CalendarFilterTreeState>;
 };
 
@@ -43,8 +43,6 @@ export type CalendarFilterTreeState = {
 export type CalendarFilterSelection = {
   types: string[];
   filters: Record<string, Array<string | number>>;
-  categories: number[];
-  statuses: Array<number | string>;
 };
 
 export type CalendarFilterResponse = {

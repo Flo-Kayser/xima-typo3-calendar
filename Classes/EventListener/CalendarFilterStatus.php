@@ -45,7 +45,7 @@ final readonly class CalendarFilterStatus
                     . $status->value
                     . '.label',
                     'xima_typo3_calendar',
-                ) ?? $status->value,
+                    ) ?? (string)$status->value,
                     value: $status->value,
                 ),
             );

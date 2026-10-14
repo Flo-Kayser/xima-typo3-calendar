@@ -244,7 +244,7 @@ export class CalendarFilterElement extends LitElement {
   private renderFilter(filter: CalendarFilter) {
     return filter.type === 'tree'
       ? this.renderTreeFilter(filter)
-      : this.renderCheckboxFilter(filter);
+      : this.renderCheckboxListFilter(filter);
   }
 
   private handleTreeStateChange(
@@ -262,14 +262,13 @@ export class CalendarFilterElement extends LitElement {
     }));
   }
 
-  private renderCheckboxFilter(filter: Extract<CalendarFilter, {type: 'checkbox-list'}>) {
+  private renderCheckboxListFilter(filter: Extract<CalendarFilter, {type: 'checkbox-list'}>) {
     if (filter.items.length === 0) {
       return nothing;
     }
 
-    const activeItems = filter.identifier === 'statuses'
-      ? this.filterState?.activeStatuses ?? []
-      : [];
+    const activeItems =
+      this.filterState?.checkboxLists[filter.identifier] ?? [];
 
     return html`
       <section class="xima-calendar-filter__section">
@@ -282,7 +281,10 @@ export class CalendarFilterElement extends LitElement {
                 type="checkbox"
                 value=${item.value}
                 ?checked=${activeItems.includes(item.value)}
-                @change=${() => this.handleStatusChange(item.value)}
+                @change=${() => this.handleCheckboxListChange(
+                  filter.identifier,
+                  item.value,
+                )}
               />
               <span class="form-check-label xima-calendar-filter__status-label ${this.getStatusPreviewClass(item.value)}">${item.label}</span>
             </label>
@@ -347,14 +349,23 @@ export class CalendarFilterElement extends LitElement {
     }));
   }
 
-  private handleStatusChange(status: number | string): void {
+  private handleCheckboxListChange(
+    identifier: string,
+    value: number | string,
+  ): void {
     if (this.filterState === null) {
       return;
     }
 
     this.updateFilterState((state) => ({
       ...state,
-      activeStatuses: this.toggleValue(state.activeStatuses, status),
+      checkboxLists: {
+        ...state.checkboxLists,
+        [identifier]: this.toggleValue(
+          state.checkboxLists[identifier] ?? [],
+          value,
+        ),
+      },
     }));
   }
 
@@ -378,10 +389,9 @@ export class CalendarFilterElement extends LitElement {
         ]),
       ),
     };
-    selection.filters.statuses = [...this.filterState.activeStatuses];
-    selection.categories = (this.filterState.trees.categories?.activeItems ?? [])
-      .filter((value): value is number => typeof value === 'number');
-    selection.statuses = [...this.filterState.activeStatuses];
+    Object.entries(this.filterState.checkboxLists).forEach(([identifier, values]) => {
+      selection.filters[identifier] = [...values];
+    });
     const typo3Top = window.top as unknown as Typo3TopWindow;
     typo3Top.ximaCalendarFilterState = selection;
     typo3Top.dispatchEvent(new CustomEvent('xima-calendar-filter-changed', {
@@ -438,7 +448,8 @@ export class CalendarFilterElement extends LitElement {
       && Boolean(filterOptions.filters)
       && typeof filterOptions.filters === 'object'
       && Array.isArray(filterState.activeTypes)
-      && Array.isArray(filterState.activeStatuses)
+      && Boolean(filterState.checkboxLists)
+      && typeof filterState.checkboxLists === 'object'
       && Boolean(filterState.trees)
       && typeof filterState.trees === 'object';
   }
