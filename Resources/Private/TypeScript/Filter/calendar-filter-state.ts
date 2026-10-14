@@ -8,16 +8,25 @@ export type TreeFilterItem = CalendarFilterOption & {
 };
 
 export type TreeCalendarFilter = {
+  type: 'tree';
   identifier: string;
   title: string;
   colorCoded: boolean;
   items: TreeFilterItem[];
 };
 
+export type CheckboxCalendarFilter = {
+  type: 'checkbox-list';
+  identifier: string;
+  title: string;
+  items: CalendarFilterOption[];
+};
+
+export type CalendarFilter = TreeCalendarFilter | CheckboxCalendarFilter;
+
 export type CalendarFilterOptions = {
   types: CalendarFilterOption[];
-  trees: Record<string, TreeCalendarFilter>;
-  statuses: CalendarFilterOption[];
+  filters: Record<string, CalendarFilter>;
 };
 
 export type CalendarFilterState = {
@@ -33,7 +42,7 @@ export type CalendarFilterTreeState = {
 
 export type CalendarFilterSelection = {
   types: string[];
-  trees: Record<string, Array<string | number>>;
+  filters: Record<string, Array<string | number>>;
   categories: number[];
   statuses: Array<number | string>;
 };

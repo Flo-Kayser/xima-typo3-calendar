@@ -30,6 +30,7 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
 
     /**
      * @return array{
+     *     type: 'tree',
      *     identifier: string,
      *     title: string,
      *     colorCoded: bool,
@@ -39,6 +40,7 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
     public function jsonSerialize(): array
     {
         return [
+            'type' => 'tree',
             'identifier' => $this->identifier,
             'title' => $this->title,
             'colorCoded' => $this->colorCoded,

@@ -9,6 +9,7 @@ import {CalendarFilterStatePersistence} from './calendar-filter-state-persistenc
 
 import type {
   CalendarFilterOptions,
+  CalendarFilter,
   CalendarFilterResponse,
   CalendarFilterSelection,
   CalendarFilterState,
@@ -157,9 +158,7 @@ export class CalendarFilterElement extends LitElement {
 
           ${this.filterOptions === null
             ? nothing
-            : Object.values(this.filterOptions.trees).map((tree) => this.renderTreeFilter(tree))}
-
-          ${this.renderStatusFilter()}
+            : Object.values(this.filterOptions.filters).map((filter) => this.renderFilter(filter))}
         </div>
       </div>
     `;
@@ -242,6 +241,12 @@ export class CalendarFilterElement extends LitElement {
     `;
   }
 
+  private renderFilter(filter: CalendarFilter) {
+    return filter.type === 'tree'
+      ? this.renderTreeFilter(filter)
+      : this.renderCheckboxFilter(filter);
+  }
+
   private handleTreeStateChange(
     event: CustomEvent<TreeStateChangePayload>,
   ): void {
@@ -257,25 +262,29 @@ export class CalendarFilterElement extends LitElement {
     }));
   }
 
-  private renderStatusFilter() {
-    if (this.filterOptions === null || this.filterOptions.statuses.length === 0) {
+  private renderCheckboxFilter(filter: Extract<CalendarFilter, {type: 'checkbox-list'}>) {
+    if (filter.items.length === 0) {
       return nothing;
     }
 
+    const activeItems = filter.identifier === 'statuses'
+      ? this.filterState?.activeStatuses ?? []
+      : [];
+
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>${this.getLanguageLabel('status', 'Status', 'Status')}</h3>
+        <h3>${filter.title}</h3>
         <div class="xima-calendar-filter__status-list">
-          ${this.filterOptions.statuses.map((status) => html`
+          ${filter.items.map((item) => html`
             <label class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
-                value=${status.value}
-                ?checked=${this.filterState?.activeStatuses.includes(status.value) ?? false}
-                @change=${() => this.handleStatusChange(status.value)}
+                value=${item.value}
+                ?checked=${activeItems.includes(item.value)}
+                @change=${() => this.handleStatusChange(item.value)}
               />
-              <span class="form-check-label xima-calendar-filter__status-label ${this.getStatusPreviewClass(status.value)}">${status.label}</span>
+              <span class="form-check-label xima-calendar-filter__status-label ${this.getStatusPreviewClass(item.value)}">${item.label}</span>
             </label>
           `)}
         </div>
@@ -362,16 +371,17 @@ export class CalendarFilterElement extends LitElement {
 
     const selection: CalendarFilterSelection = {
       types: [...this.filterState.activeTypes],
-      trees: Object.fromEntries(
+      filters: Object.fromEntries(
         Object.entries(this.filterState.trees).map(([identifier, tree]) => [
           identifier,
           [...tree.activeItems],
         ]),
       ),
-      categories: (this.filterState.trees.categories?.activeItems ?? [])
-        .filter((value): value is number => typeof value === 'number'),
-      statuses: [...this.filterState.activeStatuses],
     };
+    selection.filters.statuses = [...this.filterState.activeStatuses];
+    selection.categories = (this.filterState.trees.categories?.activeItems ?? [])
+      .filter((value): value is number => typeof value === 'number');
+    selection.statuses = [...this.filterState.activeStatuses];
     const typo3Top = window.top as unknown as Typo3TopWindow;
     typo3Top.ximaCalendarFilterState = selection;
     typo3Top.dispatchEvent(new CustomEvent('xima-calendar-filter-changed', {
@@ -425,9 +435,8 @@ export class CalendarFilterElement extends LitElement {
     const filterState = state as Record<string, unknown>;
 
     return Array.isArray(filterOptions.types)
-      && Array.isArray(filterOptions.statuses)
-      && Boolean(filterOptions.trees)
-      && typeof filterOptions.trees === 'object'
+      && Boolean(filterOptions.filters)
+      && typeof filterOptions.filters === 'object'
       && Array.isArray(filterState.activeTypes)
       && Array.isArray(filterState.activeStatuses)
       && Boolean(filterState.trees)
