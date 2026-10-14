@@ -32,6 +32,12 @@ mod.tx_ximatypo3calendar {
         }
     }
 
+    eventAppearance {
+        iconSource = recordTypes
+        appearanceSource = statuses
+        colorSource = categories
+    }
+
     newEvent {
         interaction {
             enableDrag = 1

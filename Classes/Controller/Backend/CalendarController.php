@@ -98,6 +98,8 @@ class CalendarController extends ActionController
             $filterStateUrl,
         );
         $filterColors = (object)$this->pageConfigurationService->getFilterColors($request);
+        $eventAppearance = $this->pageConfigurationService
+            ->getEventAppearanceConfiguration($request);
         $this->pageRenderer->addInlineSetting(
             'ximaCalendar',
             'filterColors',
@@ -125,6 +127,7 @@ class CalendarController extends ActionController
             'canCreateAppointment' => $canCreateAppointment,
             'calendars' => $calendars,
             'filterColors' => $filterColors,
+            'eventAppearance' => $eventAppearance,
             ...$newEventConfiguration,
             'labels' => [
                 'title' => $this->getLanguageLabel('newEventType.title', 'Create new record'),

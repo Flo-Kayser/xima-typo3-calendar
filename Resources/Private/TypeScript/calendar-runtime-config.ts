@@ -15,6 +15,10 @@ export type CalendarOption = {
     title: string;
 };
 
+export type EventAppearanceConfiguration = {
+  iconSource: string; appearanceSource: string; colorSource: string;
+};
+
 export type Typo3TopWindow = Window & {
     TYPO3: {
         settings: { FormEngine: { moduleUrl: string } };
@@ -39,7 +43,7 @@ export type CalendarConfig = {
     timeSlotMinutes: number;
     scrollStartTime: string;
     calendars: CalendarOption[];
-    filterColors: Record<string, Record<string, string>>;
+  filterColors: Record<string, Record<string, string>>; eventAppearance: EventAppearanceConfiguration;
     labels: CalendarModalLabels;
 };
 
@@ -87,6 +91,18 @@ const isFilterColors = (value: unknown): value is Record<string, Record<string, 
     ))
 );
 
+const isEventAppearanceConfiguration = (
+  value: unknown,
+): value is EventAppearanceConfiguration => (
+  Boolean(value)
+  && typeof value === 'object'
+  && !Array.isArray(value)
+  && hasValues(
+    value as Record<string, unknown>,
+    ['iconSource', 'appearanceSource', 'colorSource'],
+    isString,
+  )
+);
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     if (!value || typeof value !== 'object') {
         return false;
@@ -105,6 +121,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
         && isFilterColors(config.filterColors)
+        && isEventAppearanceConfiguration(config.eventAppearance)
         && isCalendarModalLabels(config.labels);
 };
 

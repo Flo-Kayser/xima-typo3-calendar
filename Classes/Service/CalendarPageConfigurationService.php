@@ -100,6 +100,48 @@ final class CalendarPageConfigurationService
         return $result;
     }
 
+    /**
+     * @return array{
+     *     iconSource: string,
+     *     appearanceSource: string,
+     *     colorSource: string
+     * }
+     */
+    public function getEventAppearanceConfiguration(
+        RequestInterface $request,
+    ): array {
+        $config = $this->getCalendarPageTsConfig($request);
+        $eventAppearance = $this->asArray(
+            $config['eventAppearance.'] ?? $config['eventAppearance'] ?? [],
+        );
+
+        return [
+            'iconSource' => $this->getFilterIdentifier(
+                $eventAppearance['iconSource'] ?? null,
+                'recordTypes',
+            ),
+            'appearanceSource' => $this->getFilterIdentifier(
+                $eventAppearance['appearanceSource'] ?? null,
+                'statuses',
+            ),
+            'colorSource' => $this->getFilterIdentifier(
+                $eventAppearance['colorSource'] ?? null,
+                'categories',
+            ),
+        ];
+    }
+
+    private function getFilterIdentifier(
+        mixed $value,
+        string $default,
+    ): string {
+        if (!is_string($value) || trim($value) === '') {
+            return $default;
+        }
+
+        return trim($value);
+    }
+
     private function getValidTime(mixed $value, string $default): string
     {
         if (!is_string($value) || !preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d$/', $value)) {
