@@ -1,4 +1,4 @@
-import {html, LitElement} from 'lit';
+import {html, LitElement, nothing} from 'lit';
 import type {CalendarFilterOption} from './calendar-filter-state';
 
 export type CheckboxListValue = string | number;
@@ -40,6 +40,14 @@ export class CalendarFilterCheckboxList extends LitElement {
               )}
             />
             <span class="form-check-label xima-calendar-filter__checkbox-label ${this.getItemClass(item.appearance)}">
+              ${item.icon
+                ? html`
+                    <typo3-backend-icon
+                      identifier=${item.icon}
+                      size="small"
+                    ></typo3-backend-icon>
+                  `
+                : nothing}
               ${item.label}
             </span>
           </label>

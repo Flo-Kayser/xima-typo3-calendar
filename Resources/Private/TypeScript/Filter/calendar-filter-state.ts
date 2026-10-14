@@ -2,6 +2,7 @@ export type CalendarFilterOption = {
   value: string | number;
   label: string;
   appearance?: string;
+  icon?: string;
 };
 
 export type TreeFilterItem = CalendarFilterOption & {

@@ -218,6 +218,10 @@
                 <source />
                 <target>Status</target>
             </trans-unit>
+           	<trans-unit id="filter.type.title" resname="filter.type">
+                <source />
+                <target>Typ</target>
+            </trans-unit>
 		</body>
 	</file>
 </xliff>

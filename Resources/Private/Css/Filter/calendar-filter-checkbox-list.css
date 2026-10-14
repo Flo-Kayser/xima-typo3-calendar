@@ -20,9 +20,16 @@
 }
 
 .xima-calendar-filter__checkbox-label {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
     padding: 0.1rem 0.35rem;
     border-radius: 0.2rem;
+}
+
+.xima-calendar-filter__checkbox-label typo3-backend-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
 }
 
 .xima-calendar-filter__checkbox-label--hatched {
