@@ -10,7 +10,6 @@ export class CalendarFilterStatePersistence {
 
   public save(state: CalendarFilterState): void {
     const payload = {
-      activeTypes: [...state.activeTypes],
       checkboxLists: Object.fromEntries(
         Object.entries(state.checkboxLists).map(([identifier, values]) => [
           identifier,

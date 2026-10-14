@@ -85,57 +85,11 @@ export class CalendarFilterElement extends LitElement {
         <xima-calendar-filter-toolbar></xima-calendar-filter-toolbar>
 
         <div class="xima-calendar-filter__body">
-          ${this.renderTypeFilter()}
-
           ${this.filterOptions === null
             ? nothing
             : Object.values(this.filterOptions.filters).map((filter) => this.renderFilter(filter))}
         </div>
       </div>
-    `;
-  }
-
-  private renderTypeFilter() {
-    if (this.filterLoadError) {
-      return html`
-        <section class="xima-calendar-filter__section">
-          <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
-          <p>${this.getLanguageLabel('error', 'Filters could not be loaded.', 'Filter konnten nicht geladen werden.')}</p>
-        </section>
-      `;
-    }
-
-    if (this.filterOptions === null) {
-      return html`
-        <section class="xima-calendar-filter__section">
-          <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
-          <p>${this.getLanguageLabel('loading', 'Loading filters …', 'Filter werden geladen …')}</p>
-        </section>
-      `;
-    }
-
-    if (this.filterOptions.types.length < 2) {
-      return nothing;
-    }
-
-    return html`
-      <section class="xima-calendar-filter__section">
-        <h3>${this.getLanguageLabel('type', 'Type', 'Typ')}</h3>
-        <div class="xima-calendar-filter__type-list">
-          ${this.filterOptions.types.map((type) => html`
-            <label class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=${type.value}
-                ?checked=${this.filterState?.activeTypes.includes(String(type.value)) ?? false}
-                @change=${() => this.handleTypeChange(String(type.value))}
-              />
-              <span class="form-check-label">${type.label}</span>
-            </label>
-          `)}
-        </div>
-      </section>
     `;
   }
 
@@ -242,17 +196,6 @@ export class CalendarFilterElement extends LitElement {
     this.requestUpdate();
   }
 
-  private handleTypeChange(type: string): void {
-    if (this.filterState === null) {
-      return;
-    }
-
-    this.updateFilterState((state) => ({
-      ...state,
-      activeTypes: this.toggleValue(state.activeTypes, type),
-    }));
-  }
-
   private handleCheckboxListChange(
     event: CustomEvent<CheckboxListChangePayload>,
   ): void {
@@ -279,19 +222,12 @@ export class CalendarFilterElement extends LitElement {
     }));
   }
 
-  private toggleValue<T extends string | number>(values: T[], value: T): T[] {
-    return values.includes(value)
-      ? values.filter((item) => item !== value)
-      : [...values, value];
-  }
-
   private publishFilterState(): void {
     if (this.filterState === null) {
       return;
     }
 
     const selection: CalendarFilterSelection = {
-      types: [...this.filterState.activeTypes],
       filters: Object.fromEntries(
         Object.entries(this.filterState.trees).map(([identifier, tree]) => [
           identifier,
@@ -354,10 +290,8 @@ export class CalendarFilterElement extends LitElement {
     const filterOptions = options as Record<string, unknown>;
     const filterState = state as Record<string, unknown>;
 
-    return Array.isArray(filterOptions.types)
-      && Boolean(filterOptions.filters)
+    return Boolean(filterOptions.filters)
       && typeof filterOptions.filters === 'object'
-      && Array.isArray(filterState.activeTypes)
       && Boolean(filterState.checkboxLists)
       && typeof filterState.checkboxLists === 'object'
       && Boolean(filterState.trees)

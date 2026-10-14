@@ -23,10 +23,7 @@ final class CalendarFilterService
     }
 
     /**
-     * @return array{
-     *     types: list<array{value: string, label: string}>,
-     *     filters: array<string, array<string, mixed>>,
-     * }
+     * @return array{filters: array<string, array<string, mixed>>}
      */
     public function getFilters(int $pageId = 0): array
     {
@@ -35,7 +32,6 @@ final class CalendarFilterService
         }
 
         $filters = [
-            'types' => $this->getTypes(),
             'filters' => [],
         ];
 
@@ -105,7 +101,6 @@ final class CalendarFilterService
 
     /**
      * @return array{
-     *     activeTypes: list<string>,
      *     checkboxLists: array<string, list<int|string>>,
      *     trees: array<string, array{activeItems: list<int|string>, expandedItems: array<string, bool>}>,
      *     view: string,
@@ -152,15 +147,10 @@ final class CalendarFilterService
     private function normalizeState(array $state, int $pageId): array
     {
         $filters = $this->getFilters($pageId);
-        $types = array_fill_keys(array_column($filters['types'], 'value'), true);
         $categories = array_fill_keys(
             array_column($filters['filters']['categories']['items'] ?? [], 'value'),
             true,
         );
-        $activeTypes = array_values(array_filter(
-            $this->getStringList($state['activeTypes'] ?? null),
-            static fn (string $type): bool => isset($types[$type]),
-        ));
         $checkboxLists = [];
         foreach ($filters['filters'] as $identifier => $filter) {
             if (!is_string($identifier) || !is_array($filter) || ($filter['type'] ?? null) !== 'checkbox-list') {
@@ -198,7 +188,6 @@ final class CalendarFilterService
         }
 
         return [
-            'activeTypes' => $activeTypes,
             'checkboxLists' => $checkboxLists,
             'trees' => $trees,
             'view' => $this->normalizeView($state['view'] ?? null),
@@ -220,37 +209,6 @@ final class CalendarFilterService
         return in_array($view, ['dayGridMonth', 'timeGridWeek', 'listMonth'], true)
             ? $view
             : self::DEFAULT_VIEW;
-    }
-
-    /**
-     * @return list<array{value: string, label: string}>
-     */
-    private function getTypes(): array
-    {
-        $types = [];
-        foreach ($GLOBALS['TCA']['tx_ximatypo3calendar_domain_model_event']['columns']['record_type']['config']['items'] ?? [] as $item) {
-            $value = (string)($item['value'] ?? '');
-            if ($value === '') {
-                continue;
-            }
-
-            $types[$value] = [
-                'value' => $value,
-                'label' => $this->translate((string)($item['label'] ?? $value), $value),
-            ];
-        }
-
-        return array_values($types);
-    }
-
-    private function translate(string $label, string $fallback): string
-    {
-        if (str_starts_with($label, 'LLL:') && isset($GLOBALS['LANG'])) {
-            $translated = $GLOBALS['LANG']->sL($label);
-            return $translated !== '' && !str_starts_with($translated, 'LLL:') ? $translated : $fallback;
-        }
-
-        return $label !== '' ? $label : $fallback;
     }
 
     private function getStringList(mixed $value): array

@@ -27,12 +27,10 @@ export type CheckboxCalendarFilter = {
 export type CalendarFilter = TreeCalendarFilter | CheckboxCalendarFilter;
 
 export type CalendarFilterOptions = {
-  types: CalendarFilterOption[];
   filters: Record<string, CalendarFilter>;
 };
 
 export type CalendarFilterState = {
-  activeTypes: string[];
   checkboxLists: Record<string, Array<string | number>>;
   trees: Record<string, CalendarFilterTreeState>;
 };
@@ -43,7 +41,6 @@ export type CalendarFilterTreeState = {
 };
 
 export type CalendarFilterSelection = {
-  types: string[];
   filters: Record<string, Array<string | number>>;
 };
 

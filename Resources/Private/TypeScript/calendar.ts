@@ -168,7 +168,6 @@ DocumentService.ready().then(async () => {
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const filterWindow = window.top as unknown as CalendarFilterWindow;
     let activeFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
-        types: [],
         filters: {},
     };
     let currentEvents: CalendarEventData[] = [];
@@ -241,7 +240,10 @@ DocumentService.ready().then(async () => {
                         const url = new URL(calendarConfig.ajaxUrl, document.location.origin);
                         url.searchParams.set('start', fetchInfo.startStr);
                         url.searchParams.set('end', fetchInfo.endStr);
-                        url.searchParams.set('types', activeFilters.types.join(','));
+                        url.searchParams.set(
+                            'types',
+                            (activeFilters.filters.recordTypes ?? []).join(','),
+                        );
                         url.searchParams.set('filters', JSON.stringify(activeFilters.filters));
 
                         const response = await fetch(url, {credentials: 'same-origin'});
