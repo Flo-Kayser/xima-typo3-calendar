@@ -13,7 +13,7 @@ export type TreeCalendarFilter = {
   type: 'tree';
   identifier: string;
   title: string;
-  colorCoded: boolean;
+  supportsColorCoding: boolean;
   items: TreeFilterItem[];
 };
 

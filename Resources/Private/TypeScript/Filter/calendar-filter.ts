@@ -102,7 +102,7 @@ export class CalendarFilterElement extends LitElement {
     const filterColors = typo3Top.TYPO3?.settings?.ximaCalendar?.filterColors ?? {};
     const items = tree.items.map((item) => ({
       ...item,
-      color: tree.colorCoded
+      color: tree.supportsColorCoding
         ? getColor(tree.identifier, item.value, filterColors)
         : undefined,
     }));

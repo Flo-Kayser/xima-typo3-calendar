@@ -18,7 +18,7 @@ import{html as f,LitElement as R,nothing as b}from"lit";var C=(i,a,e={})=>{let t
           </div>
         </div>
       </div>
-    `}};customElements.define("xima-calendar-filter-toolbar",d);import{html as u,LitElement as _,nothing as L}from"lit";function v(i,a,e){return e?[...new Set([...i,a])]:i.filter(t=>t!==a)}function g(i,a,e){return{...i,[a]:e}}var p=class extends _{constructor(){super(...arguments);this.identifier="";this.items=[];this.activeItems=[];this.expandedItems={}}static{this.properties={identifier:{attribute:!1},items:{attribute:!1},activeItems:{attribute:!1},expandedItems:{attribute:!1}}}createRenderRoot(){return this}render(){return u`
+    `}};customElements.define("xima-calendar-filter-toolbar",d);import{html as u,LitElement as _,nothing as L}from"lit";function g(i,a,e){return e?[...new Set([...i,a])]:i.filter(t=>t!==a)}function v(i,a,e){return{...i,[a]:e}}var p=class extends _{constructor(){super(...arguments);this.identifier="";this.items=[];this.activeItems=[];this.expandedItems={}}static{this.properties={identifier:{attribute:!1},items:{attribute:!1},activeItems:{attribute:!1},expandedItems:{attribute:!1}}}createRenderRoot(){return this}render(){return u`
       <div class="xima-calendar-filter__tree">
         ${this.renderTreeNodes(null)}
       </div>
@@ -60,7 +60,7 @@ import{html as f,LitElement as R,nothing as b}from"lit";var C=(i,a,e={})=>{let t
               </div>
             `:L}
         </div>
-      `})}handleSelectionChange(e,t){this.activeItems=v(this.activeItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}handleExpansionChange(e,t){this.expandedItems=g(this.expandedItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}};customElements.define("xima-calendar-filter-tree",p);import{html as m,LitElement as $,nothing as E}from"lit";var h=class extends ${constructor(){super(...arguments);this.identifier="";this.items=[];this.activeItems=[]}static{this.properties={identifier:{attribute:!1},items:{attribute:!1},activeItems:{attribute:!1}}}createRenderRoot(){return this}render(){return m`
+      `})}handleSelectionChange(e,t){this.activeItems=g(this.activeItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}handleExpansionChange(e,t){this.expandedItems=v(this.expandedItems,e,t),this.dispatchEvent(new CustomEvent("tree-state-change",{detail:{identifier:this.identifier,activeItems:this.activeItems,expandedItems:this.expandedItems},bubbles:!0}))}};customElements.define("xima-calendar-filter-tree",p);import{html as m,LitElement as $,nothing as E}from"lit";var h=class extends ${constructor(){super(...arguments);this.identifier="";this.items=[];this.activeItems=[]}static{this.properties={identifier:{attribute:!1},items:{attribute:!1},activeItems:{attribute:!1}}}createRenderRoot(){return this}render(){return m`
       <div class="xima-calendar-filter__checkbox-list">
           ${this.items.map(e=>m`
           <label class="form-check">
@@ -93,7 +93,7 @@ import{html as f,LitElement as R,nothing as b}from"lit";var C=(i,a,e={})=>{let t
           ${this.filterConfiguration===null?b:Object.values(this.filterConfiguration).map(e=>this.renderFilter(e))}
         </div>
       </div>
-    `}renderTreeFilter(e){if(e.items.length===0)return b;let t=this.filterState?.trees[e.identifier]??{activeItems:[],expandedItems:{}},n=window.top.TYPO3?.settings?.ximaCalendar?.filterColors??{},s=e.items.map(l=>({...l,color:e.colorCoded?C(e.identifier,l.value,n):void 0}));return f`
+    `}renderTreeFilter(e){if(e.items.length===0)return b;let t=this.filterState?.trees[e.identifier]??{activeItems:[],expandedItems:{}},n=window.top.TYPO3?.settings?.ximaCalendar?.filterColors??{},s=e.items.map(l=>({...l,color:e.supportsColorCoding?C(e.identifier,l.value,n):void 0}));return f`
       <section class="xima-calendar-filter__section">
         <h3>${e.title}</h3>
 

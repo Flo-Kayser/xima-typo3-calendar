@@ -34,7 +34,7 @@ final readonly class CalendarFilterCategory
             'filter.categories.title',
             'xima_typo3_calendar',
         ) ?? 'Categories',
-            colorCoded: true,
+            supportsColorCoding: true,
         );
 
 

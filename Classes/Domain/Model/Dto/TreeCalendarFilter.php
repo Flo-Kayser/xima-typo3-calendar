@@ -10,7 +10,7 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
     public function __construct(
         private readonly string $identifier,
         private readonly string $title = '',
-        private readonly bool $colorCoded = false,
+        private readonly bool $supportsColorCoding = false,
     ) {
     }
 
@@ -33,7 +33,7 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
      *     type: 'tree',
      *     identifier: string,
      *     title: string,
-     *     colorCoded: bool,
+     *     supportsColorCoding: bool,
      *     items: list<TreeCalendarFilterItem>
      *         }
      */
@@ -43,7 +43,7 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
             'type' => 'tree',
             'identifier' => $this->identifier,
             'title' => $this->title,
-            'colorCoded' => $this->colorCoded,
+            'supportsColorCoding' => $this->supportsColorCoding,
             'items' => $this->items,
         ];
     }
