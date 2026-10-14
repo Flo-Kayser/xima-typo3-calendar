@@ -1,12 +1,11 @@
-import {CheckboxListChangePayload} from "../components/calendar-filter-checkbox-list";
-import {CalendarFilterState} from "../calendar-filter-state";
-import {TreeStateChangePayload} from "../components/calendar-filter-tree";
+import type {CheckboxListChangePayload} from '../components/calendar-filter-checkbox-list';
+import type {CalendarFilterSelection, CalendarFilterState} from '../calendar-filter-state';
+import type {TreeStateChangePayload} from '../components/calendar-filter-tree';
 
 export function updateCheckboxListState(
   state: CalendarFilterState,
   change: CheckboxListChangePayload,
 ): CalendarFilterState {
-
   const {identifier, value, selected} = change;
 
   return {
@@ -23,7 +22,7 @@ export function updateCheckboxListState(
         : (state.checkboxLists[identifier] ?? [])
           .filter((item) => item !== value),
     },
-  }
+  };
 }
 
 export function updateTreeState(
@@ -39,6 +38,22 @@ export function updateTreeState(
         expandedItems: {...change.expandedItems},
       },
     },
-  }
+  };
 }
 
+export function createFilterSelection(
+  state: CalendarFilterState,
+): CalendarFilterSelection {
+  const filters = Object.fromEntries(
+    Object.entries(state.trees).map(([identifier, tree]) => [
+      identifier,
+      [...tree.activeItems],
+    ]),
+  );
+
+  Object.entries(state.checkboxLists).forEach(([identifier, values]) => {
+    filters[identifier] = [...values];
+  });
+
+  return {filters};
+}

@@ -7,9 +7,15 @@ import './components/calendar-filter-checkbox-list';
 import type {TreeStateChangePayload} from './components/calendar-filter-tree';
 import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
-import {isCalendarFilterResponse, requestCalendarFilterOptions,} from './services/calendar-filter-options';
-
-import {updateCheckboxListState, updateTreeState} from "./services/calendar-filter-state-manager";
+import {
+  isCalendarFilterResponse,
+  requestCalendarFilterOptions,
+} from './services/calendar-filter-options';
+import {
+  createFilterSelection,
+  updateCheckboxListState,
+  updateTreeState,
+} from './services/calendar-filter-state-manager';
 
 import type {
   CalendarFilter,
@@ -134,7 +140,7 @@ export class CalendarFilterElement extends LitElement {
     );
   }
 
-  private renderCheckboxListFilter(filter: Extract<CalendarFilter, {type: 'checkbox-list'}>) {
+  private renderCheckboxListFilter(filter: Extract<CalendarFilter, { type: 'checkbox-list' }>) {
     if (filter.items.length === 0) {
       return nothing;
     }
@@ -197,19 +203,11 @@ export class CalendarFilterElement extends LitElement {
       return;
     }
 
-    const selection: CalendarFilterSelection = {
-      filters: Object.fromEntries(
-        Object.entries(this.filterState.trees).map(([identifier, tree]) => [
-          identifier,
-          [...tree.activeItems],
-        ]),
-      ),
-    };
-    Object.entries(this.filterState.checkboxLists).forEach(([identifier, values]) => {
-      selection.filters[identifier] = [...values];
-    });
+    const selection = createFilterSelection(this.filterState);
     const typo3Top = window.top as unknown as Typo3TopWindow;
+
     typo3Top.ximaCalendarFilterState = selection;
+
     typo3Top.dispatchEvent(new CustomEvent('xima-calendar-filter-changed', {
       bubbles: true,
       composed: true,
