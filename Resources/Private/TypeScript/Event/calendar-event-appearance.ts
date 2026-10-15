@@ -1,5 +1,5 @@
 import type {CalendarFilterConfiguration} from '../Filter/calendar-filter-state';
-import {findFilterItem} from '../Rendering/calendar-event-filter-item';
+import {findFilterItem} from '../Utils/calendar-filter-utils';
 
 export function getAppearanceClass(
     configuration: CalendarFilterConfiguration,
