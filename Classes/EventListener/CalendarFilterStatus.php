@@ -144,14 +144,22 @@ final readonly class CalendarFilterStatus
         CalendarEntrySerializationEvent $event,
     ): void {
         $status = $event->getSourceRow()['event_status'] ?? null;
+        $statusValue = is_int($status) || is_numeric($status)
+            ? (int)$status
+            : null;
 
-        if (!is_int($status) && !is_numeric($status)) {
+        $event->addExtendedProperty(
+            'eventStatus',
+            $statusValue,
+        );
+
+        if ($statusValue === null) {
             return;
         }
 
         $event->addFilterValue(
             'statuses',
-            (int)$status,
+            $statusValue,
         );
     }
 }

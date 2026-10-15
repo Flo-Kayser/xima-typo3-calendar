@@ -131,19 +131,21 @@ final readonly class CalendarFilterRecordType
     public function serialize(
         CalendarEntrySerializationEvent $event,
     ): void {
-        if (!$this->hasRelevantRecordTypes()) {
-            return;
-        }
-
         $recordType = $event->getSourceRow()['record_type'] ?? null;
+        $recordTypeValue = is_string($recordType) ? $recordType : '';
 
-        if (!is_string($recordType) || $recordType === '') {
+        $event->addExtendedProperty(
+            'recordType',
+            $recordTypeValue,
+        );
+
+        if (!$this->hasRelevantRecordTypes() || $recordTypeValue === '') {
             return;
         }
 
         $event->addFilterValue(
             'recordTypes',
-            $recordType,
+            $recordTypeValue,
         );
     }
 

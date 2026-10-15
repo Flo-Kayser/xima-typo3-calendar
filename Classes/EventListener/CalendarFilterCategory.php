@@ -106,15 +106,28 @@ final readonly class CalendarFilterCategory
     public function serialize(
         CalendarEntrySerializationEvent $event,
     ): void {
-        $categoryUid = $event->getSourceRow()['event_category_id'] ?? null;
+        $categoryValue = $event->getSourceRow()['event_category_id'] ?? null;
+        $categoryUid = is_int($categoryValue) || is_numeric($categoryValue)
+            ? (int)$categoryValue
+            : null;
 
-        if (!is_int($categoryUid) && !is_numeric($categoryUid)) {
+        $event->addExtendedProperty(
+            'eventCategoryId',
+            $categoryUid,
+        );
+
+        $event->addExtendedProperty(
+            'eventCategoryTitle',
+            $event->getSourceRow()['event_category_title'] ?? null,
+        );
+
+        if ($categoryUid === null) {
             return;
         }
 
         $event->addFilterValue(
             'categories',
-            (int)$categoryUid,
+            $categoryUid,
         );
     }
 

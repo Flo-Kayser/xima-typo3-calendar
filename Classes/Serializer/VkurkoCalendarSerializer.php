@@ -66,17 +66,9 @@ class VkurkoCalendarSerializer
                     'url' => self::buildEventSingleUrl($row),
                     'calendarUid' => (int)$row['calendar'],
                     'calendarTitle' => $row['calendar_title'] ?? '',
-                    'recordType' => $row['record_type'] ?? '',
                     'eventUid' => $row['event_uid'] ?? null,
                     'eventTitle' => $row['event_title'] ?? null,
                     'eventDescription' => $row['event_description'] ?? null,
-                    'eventCategoryTitle' => $row['event_category_title'] ?? null,
-                    'eventCategoryId' => isset($row['event_category_id'])
-                        ? (int)$row['event_category_id']
-                        : null,
-                    'eventStatus' => isset($row['event_status'])
-                        ? (int)$row['event_status']
-                        : null,
                     'eventLanguage' => $row['event_language'] ?? null,
                     'eventOwner' => $row['event_owner'] ?? null,
                     'appointmentDescription' => $row['description'] ?? null,
