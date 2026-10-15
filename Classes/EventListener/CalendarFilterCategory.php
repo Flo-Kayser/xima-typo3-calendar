@@ -12,9 +12,12 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterCategory
+    implements CalendarFilterListenerInterface
 {
     public function __construct(
         private ConnectionPool $connectionPool,
@@ -31,18 +34,48 @@ final readonly class CalendarFilterCategory
         $filter = new TreeCalendarFilter(
             identifier: 'categories',
             title: LocalizationUtility::translate(
-            'filter.categories.title',
-            'xima_typo3_calendar',
-        ) ?? 'Categories',
+                'filter.categories.title',
+                'xima_typo3_calendar',
+            ) ?? 'Categories',
             supportsColorCoding: true,
         );
-
 
         foreach ($this->getCategories() as $item) {
             $filter->addItem($item);
         }
 
         $event->addFilter($filter);
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-category',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void {
+        $queryBuilder = $event->getQueryBuilder();
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT cat.title FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_title'
+        );
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT cat.uid FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_id'
+        );
     }
 
     #[AsEventListener(
@@ -64,7 +97,39 @@ final readonly class CalendarFilterCategory
 
         $this->joinCategoryTable($queryBuilder);
         $this->addCategoryFilterCondition($queryBuilder, $categories);
+    }
 
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-category',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void {
+        $categoryValue = $event->getSourceRow()['event_category_id'] ?? null;
+        $categoryUid = is_int($categoryValue) || is_numeric($categoryValue)
+            ? (int)$categoryValue
+            : null;
+
+        $event->addExtendedProperty(
+            'eventCategoryId',
+            $categoryUid,
+        );
+
+        $event->addExtendedProperty(
+            'eventCategoryTitle',
+            $event->getSourceRow()['event_category_title'] ?? null,
+        );
+
+        if ($categoryUid === null) {
+            return;
+        }
+
+        $event->addFilterValue(
+            'categories',
+            $categoryUid,
+        );
     }
 
     /**
@@ -187,7 +252,7 @@ final readonly class CalendarFilterCategory
             ->fetchFirstColumn();
 
         return array_map(
-            static fn(mixed $value): int => (int)$value,
+            static fn (mixed $value): int => (int)$value,
             $rows,
         );
     }
@@ -212,7 +277,7 @@ final readonly class CalendarFilterCategory
                 'intval',
                 array_filter($categories, 'is_numeric'),
             ),
-            static fn(int $category): bool => $category > 0,
+            static fn (int $category): bool => $category > 0,
         )));
     }
 
@@ -312,9 +377,6 @@ final readonly class CalendarFilterCategory
                     Connection::PARAM_INT,
                 ),
             ),
-
         );
     }
-
-
 }

@@ -11,9 +11,12 @@ use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterStatus
+    implements CalendarFilterListenerInterface
 {
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-status-filter',
@@ -25,9 +28,9 @@ final readonly class CalendarFilterStatus
         $filter = new CheckboxCalendarFilter(
             identifier: 'statuses',
             title: LocalizationUtility::translate(
-            'filter.status.title',
-            'xima_typo3_calendar',
-        ) ?? 'Status',
+                'filter.status.title',
+                'xima_typo3_calendar',
+            ) ?? 'Status',
         );
 
         $statuses = [
@@ -41,10 +44,10 @@ final readonly class CalendarFilterStatus
             $filter->addItem(
                 new CheckboxCalendarFilterItem(
                     label: LocalizationUtility::translate(
-                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.'
-                    . $status->value
-                    . '.label',
-                    'xima_typo3_calendar',
+                        'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.'
+                        . $status->value
+                        . '.label',
+                        'xima_typo3_calendar',
                     ) ?? (string)$status->value,
                     value: $status->value,
                     appearance: match ($status) {
@@ -60,14 +63,27 @@ final readonly class CalendarFilterStatus
         $filter->addItem(
             new CheckboxCalendarFilterItem(
                 label: LocalizationUtility::translate(
-                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
-                'xima_typo3_calendar',
-            ) ?? 'Canceled [C]',
+                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
+                    'xima_typo3_calendar',
+                ) ?? 'Canceled [C]',
                 value: 'canceled',
             ),
         );
 
         $event->addFilter($filter);
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-status',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void {
+        $event->getQueryBuilder()->addSelectLiteral(
+            'v.status AS event_status',
+        );
     }
 
     #[AsEventListener(
@@ -90,7 +106,7 @@ final readonly class CalendarFilterStatus
 
         $eventStatuses = array_values(array_filter(
             $statuses,
-            static fn(mixed $status): bool => is_int($status) || is_numeric($status),
+            static fn (mixed $status): bool => is_int($status) || is_numeric($status),
         ));
 
         $includeCanceled = in_array('canceled', $statuses, true);
@@ -118,5 +134,33 @@ final readonly class CalendarFilterStatus
                 )
             );
         }
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-status',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void {
+        $status = $event->getSourceRow()['event_status'] ?? null;
+        $statusValue = is_int($status) || is_numeric($status)
+            ? (int)$status
+            : null;
+
+        $event->addExtendedProperty(
+            'eventStatus',
+            $statusValue,
+        );
+
+        if ($statusValue === null) {
+            return;
+        }
+
+        $event->addFilterValue(
+            'statuses',
+            $statusValue,
+        );
     }
 }

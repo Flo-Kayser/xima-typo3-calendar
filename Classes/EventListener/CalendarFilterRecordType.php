@@ -10,9 +10,12 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterRecordType
+    implements CalendarFilterListenerInterface
 {
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-filter-record-type',
@@ -21,7 +24,6 @@ final readonly class CalendarFilterRecordType
     )]
     public function build(ConfigureCalendarFilterEvent $event): void
     {
-
         $items = $GLOBALS['TCA']
             ['tx_ximatypo3calendar_domain_model_event']
             ['columns']
@@ -30,24 +32,7 @@ final readonly class CalendarFilterRecordType
             ['items']
             ?? [];
 
-        $recordTypeValues = array_values(array_unique(array_filter(
-            array_map(
-                static fn (mixed $item): string => is_array($item)
-                    ? (string)($item['value'] ?? '')
-                    : '',
-                $items
-            ),
-            static fn (string $value): bool => $value !== ''
-        )));
-
-        $defaultRecordTypes = ['event','event-appointment'];
-
-        $isDefaultRecordTypeFilter =
-            count($recordTypeValues) === 2
-            && count(array_diff($recordTypeValues, $defaultRecordTypes)) === 0
-            && count(array_diff($defaultRecordTypes, $recordTypeValues)) === 0;
-
-        if (count($recordTypeValues) <= 1 || $isDefaultRecordTypeFilter) {
+        if (!$this->hasRelevantRecordTypes()) {
             return;
         }
 
@@ -89,6 +74,20 @@ final readonly class CalendarFilterRecordType
     }
 
     #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-record-type',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void
+    {
+        $event->getQueryBuilder()->addSelectLiteral(
+            'v.record_type AS record_type',
+        );
+    }
+
+    #[AsEventListener(
         identifier: 'xima-typo3-calendar/apply-filter-record-type',
         event: ApplyCalendarFilterEvent::class,
         method: 'apply',
@@ -105,7 +104,7 @@ final readonly class CalendarFilterRecordType
 
         $recordTypes = array_values(array_filter(
             $recordTypes,
-            static fn(mixed $recordType): bool => is_string($recordType) && $recordType !== '',
+            static fn (mixed $recordType): bool => is_string($recordType) && $recordType !== '',
         ));
 
         if ($recordTypes === []) {
@@ -123,5 +122,61 @@ final readonly class CalendarFilterRecordType
                 ),
             ),
         );
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-record-type',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void {
+        $recordType = $event->getSourceRow()['record_type'] ?? null;
+        $recordTypeValue = is_string($recordType) ? $recordType : '';
+
+        $event->addExtendedProperty(
+            'recordType',
+            $recordTypeValue,
+        );
+
+        if (!$this->hasRelevantRecordTypes() || $recordTypeValue === '') {
+            return;
+        }
+
+        $event->addFilterValue(
+            'recordTypes',
+            $recordTypeValue,
+        );
+    }
+
+    private function hasRelevantRecordTypes(): bool
+    {
+        $items = $GLOBALS['TCA']
+            ['tx_ximatypo3calendar_domain_model_event']
+            ['columns']
+            ['record_type']
+            ['config']
+            ['items']
+            ?? [];
+
+        $recordTypeValues = array_values(array_unique(array_filter(
+            array_map(
+                static fn (mixed $item): string => is_array($item)
+                    ? (string)($item['value'] ?? '')
+                    : '',
+                $items,
+            ),
+            static fn (string $value): bool => $value !== '',
+        )));
+
+        $defaultRecordTypes = ['event', 'event-appointment'];
+
+        return count($recordTypeValues) > 1
+            && !(
+                count($recordTypeValues) === 2
+                && count(array_diff($recordTypeValues, $defaultRecordTypes)) === 0
+                && count(array_diff($defaultRecordTypes, $recordTypeValues)) === 0
+            );
     }
 }

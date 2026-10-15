@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Serializer;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Utility\AppointmentDateUtility;
 
 /**
@@ -54,7 +56,7 @@ class VkurkoCalendarSerializer
                 $title = $row['event_title'];
             }
 
-            return [
+            $eventData = [
                 'id' => 'entry-' . $row['uid'],
                 'title' => $title,
                 'start' => $start,
@@ -64,13 +66,9 @@ class VkurkoCalendarSerializer
                     'url' => self::buildEventSingleUrl($row),
                     'calendarUid' => (int)$row['calendar'],
                     'calendarTitle' => $row['calendar_title'] ?? '',
-                    'recordType' => $row['record_type'] ?? '',
                     'eventUid' => $row['event_uid'] ?? null,
                     'eventTitle' => $row['event_title'] ?? null,
                     'eventDescription' => $row['event_description'] ?? null,
-                    'eventCategoryTitle' => $row['event_category_title'] ?? null,
-                    'eventCategoryId' => isset($row['event_category_id']) ? (int)$row['event_category_id'] : null,
-                    'eventStatus' => isset($row['event_status']) ? (int)$row['event_status'] : null,
                     'eventLanguage' => $row['event_language'] ?? null,
                     'eventOwner' => $row['event_owner'] ?? null,
                     'appointmentDescription' => $row['description'] ?? null,
@@ -79,6 +77,16 @@ class VkurkoCalendarSerializer
                     'appointmentSpeakers' => $row['speakers'] ?? null,
                 ],
             ];
+
+            $serializationEvent = new CalendarEntrySerializationEvent(
+                $eventData,
+                $row,
+            );
+
+            GeneralUtility::makeInstance(EventDispatcherInterface::class)
+                ->dispatch($serializationEvent);
+
+            return $serializationEvent->getEventData();
         }, $backendEntries);
 
         return $events;

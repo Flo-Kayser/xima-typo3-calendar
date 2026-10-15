@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final class CalendarFilterService
