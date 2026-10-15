@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 
 class EntryRepository extends Repository
 {
@@ -74,7 +75,6 @@ class EntryRepository extends Repository
                 'e.end_date',
                 'e.all_day',
                 'e.calendar',
-                'v.record_type as record_type',
                 'e.description',
                 'e.canceled',
                 'e.speakers',
@@ -124,6 +124,14 @@ class EntryRepository extends Repository
                 )
             );
         }
+
+        $buildEvent = new BuildCalendarEntriesQueryEvent(
+            queryBuilder: $queryBuilder,
+        );
+
+        $this->eventDispatcher->dispatch($buildEvent);
+
+        $queryBuilder = $buildEvent->getQueryBuilder();
 
         $event = new ApplyCalendarFilterEvent(
             queryBuilder: $queryBuilder,
