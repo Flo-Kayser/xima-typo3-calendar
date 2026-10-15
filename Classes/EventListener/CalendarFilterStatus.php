@@ -11,6 +11,7 @@ use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
@@ -69,6 +70,19 @@ final readonly class CalendarFilterStatus
         );
 
         $event->addFilter($filter);
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-status',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void {
+        $event->getQueryBuilder()->addSelectLiteral(
+            'v.status AS event_status',
+        );
     }
 
     #[AsEventListener(
