@@ -3,6 +3,18 @@
 * These declarations provide the local TypeScript/IDE information without
 * adding TYPO3 runtime packages or Lit as npm dependencies.
 */
+declare module '@typo3/core/ajax/ajax-request.js' {
+  interface AjaxResponse {
+    resolve(): Promise<unknown>;
+  }
+
+  export default class AjaxRequest {
+    constructor(url: string | URL);
+    get(init?: RequestInit): Promise<AjaxResponse>;
+    post(payload?: unknown, init?: RequestInit): Promise<AjaxResponse>;
+  }
+}
+
 declare module '@typo3/*';
 
 declare module 'lit/decorators.js';
