@@ -11,6 +11,7 @@ use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterStatus
@@ -118,5 +119,26 @@ final readonly class CalendarFilterStatus
                 )
             );
         }
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-status',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void
+    {
+        $status = $event->getSourceRow()['event_status'] ?? null;
+
+        if (!is_int($status) && !is_numeric($status)) {
+            return;
+        }
+
+        $event->addFilterValue(
+            'statuses',
+            (int)$status,
+        );
     }
 }

@@ -12,6 +12,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterCategory
@@ -65,6 +66,26 @@ final readonly class CalendarFilterCategory
         $this->joinCategoryTable($queryBuilder);
         $this->addCategoryFilterCondition($queryBuilder, $categories);
 
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-category',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void {
+        $categoryUid = $event->getSourceRow()['event_category_id'] ?? null;
+
+        if (!is_int($categoryUid) && !is_numeric($categoryUid)) {
+            return;
+        }
+
+        $event->addFilterValue(
+            'categories',
+            (int)$categoryUid,
+        );
     }
 
     /**
