@@ -14,8 +14,7 @@ use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
-final readonly class CalendarFilterRecordType
-    implements CalendarFilterListenerInterface
+final readonly class CalendarFilterRecordType implements CalendarFilterListenerInterface
 {
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-filter-record-type',
@@ -80,8 +79,7 @@ final readonly class CalendarFilterRecordType
     )]
     public function buildQuery(
         BuildCalendarEntriesQueryEvent $event,
-    ): void
-    {
+    ): void {
         $event->getQueryBuilder()->addSelectLiteral(
             'v.record_type AS record_type',
         );

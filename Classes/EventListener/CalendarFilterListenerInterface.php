@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\EventListener;
 
-
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
 use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
