@@ -1,5 +1,5 @@
 import type {CalendarFilterConfiguration} from '../Filter/calendar-filter-state';
-import {getAppearanceClass} from '../Event/calendar-event-appearance';
+import {getAppearanceClass} from './calendar-event-appearance';
 import {
     applyEventColorsToEvents,
 } from './calendar-event-colors';
