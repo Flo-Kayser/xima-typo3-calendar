@@ -74,7 +74,7 @@ class EntryRepository extends Repository
                 'e.end_date',
                 'e.all_day',
                 'e.calendar',
-                'e.record_type',
+                'v.record_type as record_type',
                 'e.description',
                 'e.canceled',
                 'e.speakers',

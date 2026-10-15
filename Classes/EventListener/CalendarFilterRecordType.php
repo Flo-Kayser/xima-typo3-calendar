@@ -10,6 +10,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterRecordType
@@ -30,24 +31,7 @@ final readonly class CalendarFilterRecordType
             ['items']
             ?? [];
 
-        $recordTypeValues = array_values(array_unique(array_filter(
-            array_map(
-                static fn (mixed $item): string => is_array($item)
-                    ? (string)($item['value'] ?? '')
-                    : '',
-                $items
-            ),
-            static fn (string $value): bool => $value !== ''
-        )));
-
-        $defaultRecordTypes = ['event','event-appointment'];
-
-        $isDefaultRecordTypeFilter =
-            count($recordTypeValues) === 2
-            && count(array_diff($recordTypeValues, $defaultRecordTypes)) === 0
-            && count(array_diff($defaultRecordTypes, $recordTypeValues)) === 0;
-
-        if (count($recordTypeValues) <= 1 || $isDefaultRecordTypeFilter) {
+        if (!$this->hasRelevantRecordTypes()) {
             return;
         }
 
@@ -123,5 +107,59 @@ final readonly class CalendarFilterRecordType
                 ),
             ),
         );
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/serialize-event-record-type',
+        event: CalendarEntrySerializationEvent::class,
+        method: 'serialize',
+    )]
+    public function serialize(
+        CalendarEntrySerializationEvent $event,
+    ): void {
+        if (!$this->hasRelevantRecordTypes()) {
+            return;
+        }
+
+        $recordType = $event->getSourceRow()['record_type'] ?? null;
+
+        if (!is_string($recordType) || $recordType === '') {
+            return;
+        }
+
+        $event->addFilterValue(
+            'recordType',
+            $recordType,
+        );
+    }
+
+    private function hasRelevantRecordTypes(): bool
+    {
+        $items = $GLOBALS['TCA']
+            ['tx_ximatypo3calendar_domain_model_event']
+            ['columns']
+            ['record_type']
+            ['config']
+            ['items']
+            ?? [];
+
+        $recordTypeValues = array_values(array_unique(array_filter(
+            array_map(
+                static fn (mixed $item): string => is_array($item)
+                    ? (string)($item['value'] ?? '')
+                    : '',
+                $items,
+            ),
+            static fn (string $value): bool => $value !== '',
+        )));
+
+        $defaultRecordTypes = ['event', 'event-appointment'];
+
+        return count($recordTypeValues) > 1
+            && !(
+                count($recordTypeValues) === 2
+                && count(array_diff($recordTypeValues, $defaultRecordTypes)) === 0
+                && count(array_diff($defaultRecordTypes, $recordTypeValues)) === 0
+            );
     }
 }
