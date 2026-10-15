@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
@@ -73,7 +74,7 @@ final class CalendarPageConfigurationService
     }
 
     /** @return array<string, array<string, string>> */
-    public function getFilterColors(RequestInterface $request): array
+    public function getFilterColors(RequestInterface|ServerRequestInterface $request): array
     {
         $config = $this->getCalendarPageTsConfig($request);
         $filterColors = $this->asArray($config['filterColors.'] ?? $config['filterColors'] ?? []);
@@ -196,7 +197,7 @@ final class CalendarPageConfigurationService
     }
 
     /** @return array<string, mixed> */
-    private function getCalendarPageTsConfig(RequestInterface $request): array
+    private function getCalendarPageTsConfig(RequestInterface|ServerRequestInterface $request): array
     {
         $pageId = (int)($request->getQueryParams()['id'] ?? 0);
         if (!array_key_exists($pageId, $this->pageTsConfig)) {

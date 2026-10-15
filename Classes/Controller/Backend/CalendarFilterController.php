@@ -8,11 +8,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
+use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 
 final class CalendarFilterController
 {
     public function __construct(
         private readonly CalendarFilterService $filterService,
+        private readonly CalendarPageConfigurationService $pageConfigurationService,
     ) {
     }
 
@@ -23,6 +25,7 @@ final class CalendarFilterController
         return new JsonResponse([
             'success' => true,
             'filters' => $this->filterService->getFilters($pageId),
+            'filterColors' => $this->pageConfigurationService->getFilterColors($request),
             'state' => $this->filterService->getState($pageId),
         ]);
     }

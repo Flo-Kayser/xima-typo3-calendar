@@ -21,12 +21,15 @@ export function isCalendarFilterResponse(
 
   const response = value as Record<string, unknown>;
   const filters = response.filters;
+  const filterColors = response.filterColors;
   const state = response.state;
 
   if (
     response.success !== true
     || !filters
     || typeof filters !== 'object'
+    || !filterColors
+    || typeof filterColors !== 'object'
     || !state
     || typeof state !== 'object'
   ) {
@@ -37,6 +40,8 @@ export function isCalendarFilterResponse(
 
   return Boolean(filters)
     && typeof filters === 'object'
+    && Boolean(filterColors)
+    && typeof filterColors === 'object'
     && Boolean(filterState.checkboxLists)
     && typeof filterState.checkboxLists === 'object'
     && Boolean(filterState.trees)

@@ -48,6 +48,8 @@ export const navigationComponentName =
 export class CalendarFilterElement extends LitElement {
   private filterConfiguration: CalendarFilterConfiguration | null = null;
 
+  private filterColors: ColorOverrides = {};
+
   private filterState: CalendarFilterState | null = null;
 
   private filterLoadError = false;
@@ -96,12 +98,10 @@ export class CalendarFilterElement extends LitElement {
       activeItems: [],
       expandedItems: {},
     };
-    const typo3Window = window as unknown as Typo3TopWindow;
-    const filterColors = typo3Window.TYPO3?.settings?.ximaCalendar?.filterColors ?? {};
     const items = tree.items.map((item) => ({
       ...item,
       color: tree.supportsColorCoding
-        ? getColor(tree.identifier, item.value, filterColors)
+        ? getColor(tree.identifier, item.value, this.filterColors)
         : undefined,
     }));
 
@@ -176,6 +176,7 @@ export class CalendarFilterElement extends LitElement {
       }
 
       this.filterConfiguration = data.filters;
+      this.filterColors = data.filterColors;
       this.filterState = data.state;
       this.publishFilterConfiguration();
       this.publishFilterState();

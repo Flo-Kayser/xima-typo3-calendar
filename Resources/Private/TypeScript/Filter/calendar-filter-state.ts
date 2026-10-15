@@ -47,5 +47,6 @@ export type CalendarFilterSelection = {
 export type CalendarFilterResponse = {
   success: boolean;
   filters: CalendarFilterConfiguration;
+  filterColors: Record<string, Record<string, string>>;
   state: CalendarFilterState;
 };
