@@ -93,7 +93,7 @@ import{html as f,LitElement as R,nothing as b}from"lit";var C=(a,i,e={})=>{let t
           ${this.filterConfiguration===null?b:Object.values(this.filterConfiguration).map(e=>this.renderFilter(e))}
         </div>
       </div>
-    `}renderTreeFilter(e){if(e.items.length===0)return b;let t=this.filterState?.trees[e.identifier]??{activeItems:[],expandedItems:{}},n=window.top.TYPO3?.settings?.ximaCalendar?.filterColors??{},s=e.items.map(l=>({...l,color:e.supportsColorCoding?C(e.identifier,l.value,n):void 0}));return f`
+    `}renderTreeFilter(e){if(e.items.length===0)return b;let t=this.filterState?.trees[e.identifier]??{activeItems:[],expandedItems:{}},n=window.TYPO3?.settings?.ximaCalendar?.filterColors??{},s=e.items.map(l=>({...l,color:e.supportsColorCoding?C(e.identifier,l.value,n):void 0}));return f`
       <section class="xima-calendar-filter__section">
         <h3>${e.title}</h3>
 
