@@ -7,6 +7,7 @@ import {createCalendarDetailsController} from './Event/calendar-details';
 import {createCalendarInteractionController} from './Interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
+import {createCalendarFilterSync} from './Filter/calendar-filter-sync';
 import {createCalendarEventSource} from './Data/calendar-event-source';
 
 import type {CalendarEventData} from './Rendering/calendar-event-data';
@@ -49,20 +50,28 @@ DocumentService.ready().then(async () => {
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const filterWindow = window.top as unknown as CalendarFilterWindow;
-    let activeFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
+    const initialFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
         filters: {},
     };
-    let filterConfiguration: CalendarFilterConfiguration =
+    const initialFilterConfiguration: CalendarFilterConfiguration =
         filterWindow.ximaCalendarFilterConfiguration ?? {};
 
     let currentEvents: CalendarEventData[] = [];
+    let refetchEvents = (): void => undefined;
+    const filterSync = createCalendarFilterSync({
+        filterWindow,
+        initialSelection: initialFilters,
+        initialConfiguration: initialFilterConfiguration,
+        refetchEvents: () => refetchEvents(),
+    });
+
     const eventRenderer = createCalendarEventRenderer({
         locale: calendarConfig.locale,
         filterColors: calendarConfig.filterColors,
         appearanceSource: calendarConfig.eventAppearance.appearanceSource,
         colorSource: calendarConfig.eventAppearance.colorSource,
         iconSource: calendarConfig.eventAppearance.iconSource,
-        getFilterConfiguration: () => filterConfiguration,
+        getFilterConfiguration: filterSync.getFilterConfiguration,
     });
 
     const detailsController = createCalendarDetailsController(container, typo3Top);
@@ -130,7 +139,7 @@ DocumentService.ready().then(async () => {
             dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
             eventSources: [createCalendarEventSource({
                 ajaxUrl: calendarConfig.ajaxUrl,
-                getActiveFilters: () => activeFilters,
+                getActiveFilters: filterSync.getActiveFilters,
                 renderer: eventRenderer,
                 onEventsLoaded: (events) => {
                     currentEvents = events;
@@ -147,21 +156,8 @@ DocumentService.ready().then(async () => {
         },
     );
 
-    const handleFilterConfigurationLoaded = (
-        event: Event,
-    ): void => {
-        const configurationEvent =
-            event as CustomEvent<CalendarFilterConfiguration>;
-
-        filterConfiguration = configurationEvent.detail;
-        ec.refetchEvents();
-    };
-
-    filterWindow.addEventListener(
-        'xima-calendar-filter-configuration-loaded',
-        handleFilterConfigurationLoaded,
-        {once: true},
-    );
+    refetchEvents = () => ec.refetchEvents();
+    filterSync.start();
 
     const interactionController = createCalendarInteractionController(container, ec, creationController, {
         enableDragNewEvent,
@@ -177,21 +173,10 @@ DocumentService.ready().then(async () => {
         });
     };
 
-    const onFilterChanged = (event: Event): void => {
-        const selection = (event as CustomEvent<CalendarFilterSelection>).detail;
-        if (!selection) {
-            return;
-        }
-
-        activeFilters = selection;
-        ec.refetchEvents();
-    };
-
     cleanupPendingCreation();
     window.addEventListener('pageshow', cleanupPendingCreation);
     window.addEventListener('popstate', cleanupPendingCreation);
     filterWindow.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
-    filterWindow.addEventListener('xima-calendar-filter-changed', onFilterChanged);
 
     const cleanup = async (): Promise<void> => {
         if (destroyed) {
@@ -202,7 +187,7 @@ DocumentService.ready().then(async () => {
         window.removeEventListener('pageshow', cleanupPendingCreation);
         window.removeEventListener('popstate', cleanupPendingCreation);
         filterWindow.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
-        filterWindow.removeEventListener('xima-calendar-filter-changed', onFilterChanged);
+        filterSync.destroy();
         interactionController.destroy();
         calendarCleanups.delete(container);
         await destroyCalendar(ec);
