@@ -1,7 +1,7 @@
 #xima-calendar-mount {
     .ec-event {
-        --xima-category-color: var(--ec-event-bg-color);
-        --xima-category-text-color: var(--ec-event-text-color);
+        --xima-event-color: var(--ec-event-bg-color);
+        --xima-event-text-color: var(--ec-event-text-color);
         font-size: .9rem;
     }
 
@@ -37,36 +37,36 @@
             );
     }
 
-    .ec-event.xima-calendar-event--categorized {
-        background-color: var(--xima-category-color) !important;
-        color: var(--xima-category-text-color) !important;
+    .ec-event.xima-calendar-event--color-coded {
+        background-color: var(--xima-event-color) !important;
+        color: var(--xima-event-text-color) !important;
     }
 
     .ec-event.xima-calendar-event--hatched {
         opacity: 0.8;
         border: 2px solid transparent;
-        background-color: color-mix(in srgb, var(--xima-category-color) 80%, transparent) !important;
+        background-color: color-mix(in srgb, var(--xima-event-color) 80%, transparent) !important;
         color: var(--typo3-component-color) !important;
     }
 
     .ec-event.xima-calendar-event--default {
-        border: 2px solid var(--xima-category-color, currentColor);
+        border: 2px solid var(--xima-event-color, currentColor);
     }
 
     .ec-event.xima-calendar-event--dashed {
-        background-color: color-mix(in srgb, var(--xima-category-color) 40%, transparent) !important;
+        background-color: color-mix(in srgb, var(--xima-event-color) 40%, transparent) !important;
         color: var(--typo3-component-color) !important;
         border: 2px dashed light-dark(
-            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #000 30%),
-            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #fff 30%)
+            color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #000 30%),
+            color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #fff 30%)
         );
     }
 
     .ec-event.xima-calendar-event--outlined {
-        background-color: color-mix(in srgb, var(--xima-category-color) 30%, transparent) !important;
+        background-color: color-mix(in srgb, var(--xima-event-color) 30%, transparent) !important;
         border: 2px solid light-dark(
-            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #000 30%),
-            color-mix(in srgb, var(--xima-category-color, currentColor) 70%, #fff 30%)
+            color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #000 30%),
+            color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #fff 30%)
         );
     }
 

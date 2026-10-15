@@ -29,6 +29,24 @@ type CalendarEventData = {
     styles?: string | string[];
 };
 
+type FilterValue = string |number;
+
+const getFilterValue = (
+  event: CalendarEventData,
+  identifier: string,
+): FilterValue | undefined => {
+    const filterValues  = event.extendedProps?.filterValues;
+
+    if(!filterValues || typeof filterValues !== 'object') {
+      return undefined;
+    }
+
+    const value = (filterValues as Record<string, unknown>)[identifier];
+
+    return typeof value === 'string' || typeof value === 'number' ? value : undefined;
+
+};
+
 const calendarCleanups = new WeakMap<HTMLElement, () => Promise<void>>();
 
 const isCanceledEvent = (event: CalendarEventData): boolean => {
@@ -66,51 +84,56 @@ const hasConcurrentEvent = (
     });
 };
 
-const applyCategoryColor = (
+const applyEventColor = (
     event: CalendarEventData,
     element: HTMLElement,
     filterColors: ColorOverrides,
+    colorSource: string,
 ): void => {
-    const categoryUid = Number(event.extendedProps?.eventCategoryId);
-    if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
+
+    const value = getFilterValue(event, colorSource);
+    if (value === undefined) {
         return;
     }
 
-    const categoryColor = getColor('categories', categoryUid, filterColors);
-    const categoryTextColor = getTextColor('categories', categoryUid, filterColors);
-    element.dataset.ximaCategoryColor = categoryColor;
-    element.dataset.ximaCategoryTextColor = categoryTextColor;
-    element.style.setProperty('--xima-category-color', categoryColor);
-    element.style.setProperty('--xima-category-text-color', categoryTextColor);
+    const eventColor = getColor(colorSource, value, filterColors);
+    const eventTextColor = getTextColor(colorSource, value, filterColors);
+
+    element.dataset.ximaEventColor = eventColor;
+    element.dataset.ximaEventTextColor = eventTextColor;
+
+    element.style.setProperty('--xima-event-color', eventColor);
+    element.style.setProperty('--xima-event-text-color', eventTextColor);
 };
 
-const applyCategoryColorsToEvents = (
+const applyEventColorsToEvents = (
     events: CalendarEventData[],
-    filterColors: ColorOverrides,
     locale: string,
+    filterColors: ColorOverrides,
+    colorSource: string,
 ): CalendarEventData[] => events.map((event) => {
     const title = isCanceledEvent(event)
         ? (event.title ? `${getCanceledLabel(locale)} · ${event.title}` : getCanceledLabel(locale))
         : event.title;
-    const categoryUid = Number(event.extendedProps?.eventCategoryId);
-    if (!Number.isInteger(categoryUid) || categoryUid <= 0) {
+    const value = getFilterValue(event, colorSource);
+    if (value === undefined) {
         return {...event, title};
     }
 
-    const categoryColor = getColor('categories', categoryUid, filterColors);
-    const categoryTextColor = getTextColor('categories', categoryUid, filterColors);
+    const eventColor = getColor(colorSource, value, filterColors);
+    const eventTextColor = getTextColor(colorSource, value, filterColors);
     const existingStyles = event.styles ?? event.style ?? [];
     const styles = Array.isArray(existingStyles) ? existingStyles : [existingStyles];
 
     return {
         ...event,
         title,
-        backgroundColor: categoryColor,
-        textColor: categoryTextColor,
+        backgroundColor: eventColor,
+        textColor: eventTextColor,
         styles: [
             ...styles,
-            `--xima-category-color:${categoryColor}`,
-            `--xima-category-text-color:${categoryTextColor}`,
+            `--xima-event-color:${eventColor}`,
+            `--xima-event-text-color:${eventTextColor}`,
         ],
     };
 });
@@ -121,17 +144,17 @@ const getEventStatusClass = (
     event: CalendarEventData,
     filterConfiguration: CalendarFilterConfiguration,
     appearanceSource: string,
+    colorSource: string,
 ): string[] => {
-    const categoryUid = Number(event.extendedProps?.eventCategoryId);
-    const status = Number(event.extendedProps?.eventStatus);
-    const appearanceClass = getAppearanceClass(
-        filterConfiguration,
-        appearanceSource,
-        status,
-    );
+    const colorValue = getFilterValue(event, colorSource);
+    const appearanceValue = getFilterValue(event, appearanceSource);
+    const appearanceClass = appearanceValue === undefined
+        ? ''
+        : getAppearanceClass(filterConfiguration, appearanceSource, appearanceValue);
+
     return [
-        ...(Number.isInteger(categoryUid) && categoryUid > 0
-            ? ['xima-calendar-event--categorized']
+        ...(colorValue !== undefined
+            ? ['xima-calendar-event--color-coded']
             : []),
         ...(isCanceledEvent(event) ? ['xima-calendar-event--canceled'] : []),
         ...(appearanceClass ? [appearanceClass] : []),
@@ -248,7 +271,12 @@ DocumentService.ready().then(async () => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        currentEvents = applyCategoryColorsToEvents(events, calendarConfig.filterColors, calendarConfig.locale);
+                        currentEvents = applyEventColorsToEvents(
+                            events,
+                            calendarConfig.locale,
+                            calendarConfig.filterColors,
+                            calendarConfig.eventAppearance.colorSource,
+                        );
                         return currentEvents;
                     },
                 },
@@ -257,12 +285,13 @@ DocumentService.ready().then(async () => {
                 event,
                 filterConfiguration,
                 calendarConfig.eventAppearance.appearanceSource,
+                calendarConfig.eventAppearance.colorSource,
             ),
             eventDidMount: ({event, el}: {
                 event: CalendarEventData;
                 el: HTMLElement;
             }) => {
-                applyCategoryColor(event, el, calendarConfig.filterColors);
+                applyEventColor(event, el, calendarConfig.filterColors, calendarConfig.eventAppearance.colorSource);
 
                 if (isCanceledEvent(event) && hasConcurrentEvent(event, currentEvents)) {
                     const titleElement = el.querySelector<HTMLElement>('.ec-event-title');
