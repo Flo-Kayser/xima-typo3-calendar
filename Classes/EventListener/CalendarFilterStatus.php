@@ -16,6 +16,7 @@ use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterStatus
+    implements CalendarFilterListenerInterface
 {
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-status-filter',

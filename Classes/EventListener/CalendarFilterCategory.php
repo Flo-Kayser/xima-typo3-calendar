@@ -17,6 +17,7 @@ use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
 final readonly class CalendarFilterCategory
+    implements CalendarFilterListenerInterface
 {
     public function __construct(
         private ConnectionPool $connectionPool,
