@@ -7,44 +7,21 @@ import {createCalendarDetailsController} from './Event/calendar-details';
 import {getAppearanceClass} from './Event/calendar-event-appearance';
 import {createCalendarInteractionController} from './Interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
-import {type ColorOverrides, getColor, getTextColor} from './Utils/color-utils';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
+
+import {
+  type CalendarEventData,
+  getFilterValue} from './Rendering/calendar-event-data';
+import {
+    applyEventColor,
+    applyEventColorsToEvents,
+} from './Rendering/calendar-event-colors';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
 type CalendarFilterWindow = Window & {
     ximaCalendarFilterState?: CalendarFilterSelection;
     ximaCalendarFilterConfiguration?: CalendarFilterConfiguration;
-};
-
-type CalendarEventData = {
-    id?: string | number;
-    title?: string;
-    start?: string | Date;
-    end?: string | Date;
-    extendedProps?: Record<string, unknown>;
-    backgroundColor?: string;
-    textColor?: string;
-    style?: string | string[];
-    styles?: string | string[];
-};
-
-type FilterValue = string |number;
-
-const getFilterValue = (
-  event: CalendarEventData,
-  identifier: string,
-): FilterValue | undefined => {
-    const filterValues  = event.extendedProps?.filterValues;
-
-    if(!filterValues || typeof filterValues !== 'object') {
-      return undefined;
-    }
-
-    const value = (filterValues as Record<string, unknown>)[identifier];
-
-    return typeof value === 'string' || typeof value === 'number' ? value : undefined;
-
 };
 
 const calendarCleanups = new WeakMap<HTMLElement, () => Promise<void>>();
@@ -83,60 +60,6 @@ const hasConcurrentEvent = (
         return otherStart !== null && otherEnd !== null && start < otherEnd && end > otherStart;
     });
 };
-
-const applyEventColor = (
-    event: CalendarEventData,
-    element: HTMLElement,
-    filterColors: ColorOverrides,
-    colorSource: string,
-): void => {
-
-    const value = getFilterValue(event, colorSource);
-    if (value === undefined) {
-        return;
-    }
-
-    const eventColor = getColor(colorSource, value, filterColors);
-    const eventTextColor = getTextColor(colorSource, value, filterColors);
-
-    element.dataset.ximaEventColor = eventColor;
-    element.dataset.ximaEventTextColor = eventTextColor;
-
-    element.style.setProperty('--xima-event-color', eventColor);
-    element.style.setProperty('--xima-event-text-color', eventTextColor);
-};
-
-const applyEventColorsToEvents = (
-    events: CalendarEventData[],
-    locale: string,
-    filterColors: ColorOverrides,
-    colorSource: string,
-): CalendarEventData[] => events.map((event) => {
-    const title = isCanceledEvent(event)
-        ? (event.title ? `${getCanceledLabel(locale)} · ${event.title}` : getCanceledLabel(locale))
-        : event.title;
-    const value = getFilterValue(event, colorSource);
-    if (value === undefined) {
-        return {...event, title};
-    }
-
-    const eventColor = getColor(colorSource, value, filterColors);
-    const eventTextColor = getTextColor(colorSource, value, filterColors);
-    const existingStyles = event.styles ?? event.style ?? [];
-    const styles = Array.isArray(existingStyles) ? existingStyles : [existingStyles];
-
-    return {
-        ...event,
-        title,
-        backgroundColor: eventColor,
-        textColor: eventTextColor,
-        styles: [
-            ...styles,
-            `--xima-event-color:${eventColor}`,
-            `--xima-event-text-color:${eventTextColor}`,
-        ],
-    };
-});
 
 const getCanceledLabel = (locale: string): string => locale.startsWith('de') ? 'Abgesagt' : 'Canceled';
 
@@ -182,7 +105,7 @@ DocumentService.ready().then(async () => {
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
     const calendarOptions = {
-        firstDay: 0,
+        firstDay: 0 as const,
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -273,7 +196,6 @@ DocumentService.ready().then(async () => {
                         const events = await response.json() as CalendarEventData[];
                         currentEvents = applyEventColorsToEvents(
                             events,
-                            calendarConfig.locale,
                             calendarConfig.filterColors,
                             calendarConfig.eventAppearance.colorSource,
                         );
@@ -352,7 +274,7 @@ DocumentService.ready().then(async () => {
     cleanupPendingCreation();
     window.addEventListener('pageshow', cleanupPendingCreation);
     window.addEventListener('popstate', cleanupPendingCreation);
-    window.top.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
+    filterWindow.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
     filterWindow.addEventListener('xima-calendar-filter-changed', onFilterChanged);
 
     const cleanup = async (): Promise<void> => {
@@ -363,7 +285,7 @@ DocumentService.ready().then(async () => {
         destroyed = true;
         window.removeEventListener('pageshow', cleanupPendingCreation);
         window.removeEventListener('popstate', cleanupPendingCreation);
-        window.top.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
+        filterWindow.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
         filterWindow.removeEventListener('xima-calendar-filter-changed', onFilterChanged);
         interactionController.destroy();
         calendarCleanups.delete(container);

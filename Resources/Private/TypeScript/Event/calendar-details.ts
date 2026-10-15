@@ -1,10 +1,11 @@
 import Viewport from '@typo3/backend/viewport.js';
+import {type CalendarEventContent, contentToText} from '../Rendering/calendar-event-data';
 import type {Typo3TopWindow} from '../Configuration/calendar-runtime-config';
 
 type EventCalendarEventClickInfo = {
     event: {
         id?: string | number;
-        title?: string | null;
+        title?: CalendarEventContent | null;
         extendedProps: Record<string, unknown>;
     };
     el: HTMLElement;
@@ -66,14 +67,14 @@ export function createCalendarDetailsController(
             if (info.view?.type?.startsWith('list')) {
                 inlineDetail = document.createElement('div');
                 inlineDetail.className = 'xima-calendar-inline-event-detail';
-                inlineDetail.textContent = info.event.title ?? '';
+                inlineDetail.textContent = contentToText(info.event.title);
                 info.el.insertAdjacentElement('afterend', inlineDetail);
                 inlineDetailEventId = eventId;
                 return;
             }
 
             if (detailTitle && detailPanel?.offsetParent !== null && window.innerHeight >= 930) {
-                detailTitle.textContent = info.event.title ?? '';
+                detailTitle.textContent = contentToText(info.event.title);
                 return;
             }
 

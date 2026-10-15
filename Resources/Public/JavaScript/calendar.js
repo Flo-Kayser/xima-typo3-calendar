@@ -1,89 +1,12600 @@
-var Ea=globalThis.process?.env?.NODE_ENV,w=Ea&&!Ea.toLowerCase().startsWith("prod");var Ur=Array.isArray,Ca=Array.prototype.indexOf,Vr=Array.prototype.includes,On=Array.from,Uo=Object.keys,dt=Object.defineProperty,Vt=Object.getOwnPropertyDescriptor,Vo=Object.getOwnPropertyDescriptors,Bo=Object.prototype,Ta=Array.prototype,In=Object.getPrototypeOf,Yo=Object.isExtensible;var Me=()=>{};function Bi(e){for(var t=0;t<e.length;t++)e[t]()}function Yi(){var e,t,r=new Promise((n,o)=>{e=n,t=o});return{promise:r,resolve:e,reject:t}}var Ot=Symbol("$state"),qi=Symbol("component"),ui=Symbol("legacy props"),ka=Symbol(""),zi=Symbol("proxy path"),Gi=Symbol("attributes"),pi=Symbol("class"),vi=Symbol("style"),hi=Symbol("text"),qo=Symbol("form reset"),zo=Symbol("hmr anchor"),Br=new class extends Error{name="StaleReactionError";message="The reaction that called `getAbortSignal()` was re-run or destroyed"},Go=!!globalThis.document?.contentType&&globalThis.document.contentType.includes("xml");var Pn=3,lr=8;var Kt={};var De=Symbol("uninitialized"),dr=Symbol("filename"),Da=Symbol("hmr"),Wi="http://www.w3.org/1999/xhtml";var rn="font-weight: bold",nn="font-weight: normal";function Sa(e){w?console.warn(`%c[svelte] await_reactivity_loss
-%cDetected reactivity loss when reading \`${e}\`. This happens when state is read in an async function after an earlier \`await\`
-https://svelte.dev/e/await_reactivity_loss`,rn,nn):console.warn("https://svelte.dev/e/await_reactivity_loss")}function Ra(e,t){w?console.warn(`%c[svelte] await_waterfall
-%cAn async derived, \`${e}\` (${t}) was not read immediately after it resolved. This often indicates an unnecessary waterfall, which can slow down your app
-https://svelte.dev/e/await_waterfall`,rn,nn):console.warn("https://svelte.dev/e/await_waterfall")}function Aa(){w?console.warn(`%c[svelte] derived_inert
+// node_modules/esm-env/dev-fallback.js
+var node_env = globalThis.process?.env?.NODE_ENV;
+var dev_fallback_default = node_env && !node_env.toLowerCase().startsWith("prod");
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/shared/utils.js
+var is_array = Array.isArray;
+var index_of = Array.prototype.indexOf;
+var includes = Array.prototype.includes;
+var array_from = Array.from;
+var object_keys = Object.keys;
+var define_property = Object.defineProperty;
+var get_descriptor = Object.getOwnPropertyDescriptor;
+var get_descriptors = Object.getOwnPropertyDescriptors;
+var object_prototype = Object.prototype;
+var array_prototype = Array.prototype;
+var get_prototype_of = Object.getPrototypeOf;
+var is_extensible = Object.isExtensible;
+var noop = () => {
+};
+function run_all(arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i]();
+  }
+}
+function deferred() {
+  var resolve;
+  var reject;
+  var promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/constants.js
+var DERIVED = 1 << 1;
+var EFFECT = 1 << 2;
+var RENDER_EFFECT = 1 << 3;
+var MANAGED_EFFECT = 1 << 24;
+var BLOCK_EFFECT = 1 << 4;
+var BRANCH_EFFECT = 1 << 5;
+var ROOT_EFFECT = 1 << 6;
+var BOUNDARY_EFFECT = 1 << 7;
+var PAUSED = 1 << 8;
+var CONNECTED = 1 << 9;
+var CLEAN = 1 << 10;
+var DIRTY = 1 << 11;
+var MAYBE_DIRTY = 1 << 12;
+var INERT = 1 << 13;
+var DESTROYED = 1 << 14;
+var REACTION_RAN = 1 << 15;
+var DESTROYING = 1 << 25;
+var EFFECT_TRANSPARENT = 1 << 16;
+var EAGER_EFFECT = 1 << 17;
+var HEAD_EFFECT = 1 << 18;
+var EFFECT_PRESERVED = 1 << 19;
+var USER_EFFECT = 1 << 20;
+var EFFECT_OFFSCREEN = 1 << 25;
+var REACTION_IS_UPDATING = 1 << 21;
+var ASYNC = 1 << 22;
+var ERROR_VALUE = 1 << 23;
+var STATE_SYMBOL = Symbol("$state");
+var COMPONENT_SYMBOL = Symbol("component");
+var LEGACY_PROPS = Symbol("legacy props");
+var LOADING_ATTR_SYMBOL = Symbol("");
+var PROXY_PATH_SYMBOL = Symbol("proxy path");
+var ATTRIBUTES_CACHE = Symbol("attributes");
+var CLASS_CACHE = Symbol("class");
+var STYLE_CACHE = Symbol("style");
+var TEXT_CACHE = Symbol("text");
+var FORM_RESET_HANDLER = Symbol("form reset");
+var HMR_ANCHOR = Symbol("hmr anchor");
+var STALE_REACTION = new class StaleReactionError extends Error {
+  name = "StaleReactionError";
+  message = "The reaction that called `getAbortSignal()` was re-run or destroyed";
+}();
+var IS_XHTML = (
+  // We gotta write it like this because after downleveling the pure comment may end up in the wrong location
+  !!globalThis.document?.contentType && /* @__PURE__ */ globalThis.document.contentType.includes("xml")
+);
+var TEXT_NODE = 3;
+var COMMENT_NODE = 8;
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/constants.js
+var EACH_ITEM_REACTIVE = 1;
+var EACH_INDEX_REACTIVE = 1 << 1;
+var EACH_IS_CONTROLLED = 1 << 2;
+var EACH_IS_ANIMATED = 1 << 3;
+var EACH_ITEM_IMMUTABLE = 1 << 4;
+var PROPS_IS_IMMUTABLE = 1;
+var PROPS_IS_RUNES = 1 << 1;
+var PROPS_IS_UPDATED = 1 << 2;
+var PROPS_IS_BINDABLE = 1 << 3;
+var PROPS_IS_LAZY_INITIAL = 1 << 4;
+var TRANSITION_OUT = 1 << 1;
+var TRANSITION_GLOBAL = 1 << 2;
+var TEMPLATE_FRAGMENT = 1;
+var TEMPLATE_USE_IMPORT_NODE = 1 << 1;
+var TEMPLATE_USE_SVG = 1 << 2;
+var TEMPLATE_USE_MATHML = 1 << 3;
+var HYDRATION_START = "[";
+var HYDRATION_START_ELSE = "[!";
+var HYDRATION_START_FAILED = "[?";
+var HYDRATION_END = "]";
+var HYDRATION_ERROR = {};
+var ELEMENT_PRESERVE_ATTRIBUTE_CASE = 1 << 1;
+var ELEMENT_IS_INPUT = 1 << 2;
+var UNINITIALIZED = Symbol("uninitialized");
+var FILENAME = Symbol("filename");
+var HMR = Symbol("hmr");
+var NAMESPACE_HTML = "http://www.w3.org/1999/xhtml";
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/warnings.js
+var bold = "font-weight: bold";
+var normal = "font-weight: normal";
+function await_reactivity_loss(name) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] await_reactivity_loss
+%cDetected reactivity loss when reading \`${name}\`. This happens when state is read in an async function after an earlier \`await\`
+https://svelte.dev/e/await_reactivity_loss`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/await_reactivity_loss`);
+  }
+}
+function await_waterfall(name, location) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] await_waterfall
+%cAn async derived, \`${name}\` (${location}) was not read immediately after it resolved. This often indicates an unnecessary waterfall, which can slow down your app
+https://svelte.dev/e/await_waterfall`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/await_waterfall`);
+  }
+}
+function derived_inert() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] derived_inert
 %cReading a derived belonging to a now-destroyed effect may result in stale values
-https://svelte.dev/e/derived_inert`,rn,nn):console.warn("https://svelte.dev/e/derived_inert")}function Na(e,t,r){w?console.warn(`%c[svelte] hydration_attribute_changed
-%cThe \`${e}\` attribute on \`${t}\` changed its value between server and client renders. The client value, \`${r}\`, will be ignored in favour of the server value
-https://svelte.dev/e/hydration_attribute_changed`,rn,nn):console.warn("https://svelte.dev/e/hydration_attribute_changed")}function vn(e){w?console.warn(`%c[svelte] hydration_mismatch
-%c${e?`Hydration failed because the initial UI does not match what was rendered on the server. The error occurred near ${e}`:"Hydration failed because the initial UI does not match what was rendered on the server"}
-https://svelte.dev/e/hydration_mismatch`,rn,nn):console.warn("https://svelte.dev/e/hydration_mismatch")}function Ma(){w?console.warn(`%c[svelte] lifecycle_double_unmount
+https://svelte.dev/e/derived_inert`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/derived_inert`);
+  }
+}
+function hydration_attribute_changed(attribute, html3, value) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] hydration_attribute_changed
+%cThe \`${attribute}\` attribute on \`${html3}\` changed its value between server and client renders. The client value, \`${value}\`, will be ignored in favour of the server value
+https://svelte.dev/e/hydration_attribute_changed`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/hydration_attribute_changed`);
+  }
+}
+function hydration_mismatch(location) {
+  if (dev_fallback_default) {
+    console.warn(
+      `%c[svelte] hydration_mismatch
+%c${location ? `Hydration failed because the initial UI does not match what was rendered on the server. The error occurred near ${location}` : "Hydration failed because the initial UI does not match what was rendered on the server"}
+https://svelte.dev/e/hydration_mismatch`,
+      bold,
+      normal
+    );
+  } else {
+    console.warn(`https://svelte.dev/e/hydration_mismatch`);
+  }
+}
+function lifecycle_double_unmount() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] lifecycle_double_unmount
 %cTried to unmount a component that was not mounted
-https://svelte.dev/e/lifecycle_double_unmount`,rn,nn):console.warn("https://svelte.dev/e/lifecycle_double_unmount")}function ji(e){w?console.warn(`%c[svelte] state_proxy_equality_mismatch
-%cReactive \`$state(...)\` proxies and the values they proxy have different identities. Because of this, comparisons with \`${e}\` will produce unexpected results
-https://svelte.dev/e/state_proxy_equality_mismatch`,rn,nn):console.warn("https://svelte.dev/e/state_proxy_equality_mismatch")}function La(){w?console.warn("%c[svelte] svelte_boundary_reset_noop\n%cA `<svelte:boundary>` `reset` function only resets the boundary the first time it is called\nhttps://svelte.dev/e/svelte_boundary_reset_noop",rn,nn):console.warn("https://svelte.dev/e/svelte_boundary_reset_noop")}var P=!1;function Ge(e){P=e}var K;function be(e){if(e===null)throw vn(),Kt;return K=e}function $t(){return be(yt(K))}function J(e){if(P){if(yt(K)!==null)throw vn(),Kt;K=e}}function Wo(e=1){if(P){for(var t=e,r=K;t--;)r=yt(r);K=r}}function wr(e=!0){for(var t=0,r=K;;){if(r.nodeType===lr){var n=r.data;if(n==="]"){if(t===0)return r;t-=1}else(n==="["||n==="[!"||n[0]==="["&&!isNaN(Number(n.slice(1))))&&(t+=1)}var o=yt(r);e&&r.remove(),r=o}}function on(e){if(!e||e.nodeType!==lr)throw vn(),Kt;return e.data}function Xi(e){return e===this.v}function jo(e,t){return e!=e?t==t:e!==t||e!==null&&typeof e=="object"||typeof e=="function"}function Ki(e){return!jo(e,this.v)}function Oa(e){if(w){let t=new Error(`invariant_violation
-An invariant violation occurred, meaning Svelte's internal assumptions were flawed. This is a bug in Svelte, not your app \u2014 please open an issue at https://github.com/sveltejs/svelte, citing the following message: "${e}"
-https://svelte.dev/e/invariant_violation`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/invariant_violation")}function mi(e){if(w){let t=new Error(`lifecycle_outside_component
-\`${e}(...)\` can only be used during component initialisation
-https://svelte.dev/e/lifecycle_outside_component`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/lifecycle_outside_component")}function Ia(){if(w){let e=new Error("set_context_after_init\n`setContext` must be called when a component first initializes, not in a subsequent effect or after an `await` expression\nhttps://svelte.dev/e/set_context_after_init");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/set_context_after_init")}function Fa(){if(w){let e=new Error("async_derived_orphan\nCannot create a `$derived(...)` with an `await` expression outside of an effect tree\nhttps://svelte.dev/e/async_derived_orphan");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/async_derived_orphan")}function Ha(){if(w){let e=new Error(`derived_references_self
+https://svelte.dev/e/lifecycle_double_unmount`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/lifecycle_double_unmount`);
+  }
+}
+function state_proxy_equality_mismatch(operator) {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] state_proxy_equality_mismatch
+%cReactive \`$state(...)\` proxies and the values they proxy have different identities. Because of this, comparisons with \`${operator}\` will produce unexpected results
+https://svelte.dev/e/state_proxy_equality_mismatch`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/state_proxy_equality_mismatch`);
+  }
+}
+function svelte_boundary_reset_noop() {
+  if (dev_fallback_default) {
+    console.warn(`%c[svelte] svelte_boundary_reset_noop
+%cA \`<svelte:boundary>\` \`reset\` function only resets the boundary the first time it is called
+https://svelte.dev/e/svelte_boundary_reset_noop`, bold, normal);
+  } else {
+    console.warn(`https://svelte.dev/e/svelte_boundary_reset_noop`);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/hydration.js
+var hydrating = false;
+function set_hydrating(value) {
+  hydrating = value;
+}
+var hydrate_node;
+function set_hydrate_node(node) {
+  if (node === null) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
+  }
+  return hydrate_node = node;
+}
+function hydrate_next() {
+  return set_hydrate_node(get_next_sibling(hydrate_node));
+}
+function reset(node) {
+  if (!hydrating) return;
+  if (get_next_sibling(hydrate_node) !== null) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
+  }
+  hydrate_node = node;
+}
+function next(count = 1) {
+  if (hydrating) {
+    var i = count;
+    var node = hydrate_node;
+    while (i--) {
+      node = /** @type {TemplateNode} */
+      get_next_sibling(node);
+    }
+    hydrate_node = node;
+  }
+}
+function skip_nodes(remove = true) {
+  var depth = 0;
+  var node = hydrate_node;
+  while (true) {
+    if (node.nodeType === COMMENT_NODE) {
+      var data = (
+        /** @type {Comment} */
+        node.data
+      );
+      if (data === HYDRATION_END) {
+        if (depth === 0) return node;
+        depth -= 1;
+      } else if (data === HYDRATION_START || data === HYDRATION_START_ELSE || // "[1", "[2", etc. for if blocks
+      data[0] === "[" && !isNaN(Number(data.slice(1)))) {
+        depth += 1;
+      }
+    }
+    var next2 = (
+      /** @type {TemplateNode} */
+      get_next_sibling(node)
+    );
+    if (remove) node.remove();
+    node = next2;
+  }
+}
+function read_hydration_instruction(node) {
+  if (!node || node.nodeType !== COMMENT_NODE) {
+    hydration_mismatch();
+    throw HYDRATION_ERROR;
+  }
+  return (
+    /** @type {Comment} */
+    node.data
+  );
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/equality.js
+function equals(value) {
+  return value === this.v;
+}
+function safe_not_equal(a, b) {
+  return a != a ? b == b : a !== b || a !== null && typeof a === "object" || typeof a === "function";
+}
+function safe_equals(value) {
+  return !safe_not_equal(value, this.v);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/shared/errors.js
+function invariant_violation(message) {
+  if (dev_fallback_default) {
+    const error = new Error(`invariant_violation
+An invariant violation occurred, meaning Svelte's internal assumptions were flawed. This is a bug in Svelte, not your app \u2014 please open an issue at https://github.com/sveltejs/svelte, citing the following message: "${message}"
+https://svelte.dev/e/invariant_violation`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/invariant_violation`);
+  }
+}
+function lifecycle_outside_component(name) {
+  if (dev_fallback_default) {
+    const error = new Error(`lifecycle_outside_component
+\`${name}(...)\` can only be used during component initialisation
+https://svelte.dev/e/lifecycle_outside_component`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/lifecycle_outside_component`);
+  }
+}
+function set_context_after_init() {
+  if (dev_fallback_default) {
+    const error = new Error(`set_context_after_init
+\`setContext\` must be called when a component first initializes, not in a subsequent effect or after an \`await\` expression
+https://svelte.dev/e/set_context_after_init`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/set_context_after_init`);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/errors.js
+function async_derived_orphan() {
+  if (dev_fallback_default) {
+    const error = new Error(`async_derived_orphan
+Cannot create a \`$derived(...)\` with an \`await\` expression outside of an effect tree
+https://svelte.dev/e/async_derived_orphan`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/async_derived_orphan`);
+  }
+}
+function derived_references_self() {
+  if (dev_fallback_default) {
+    const error = new Error(`derived_references_self
 A derived value cannot reference itself recursively
-https://svelte.dev/e/derived_references_self`);throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/derived_references_self")}function Xo(e,t,r){if(w){let n=new Error(`each_key_duplicate
-${r?`Keyed each block has duplicate key \`${r}\` at indexes ${e} and ${t}`:`Keyed each block has duplicate key at indexes ${e} and ${t}`}
-https://svelte.dev/e/each_key_duplicate`);throw n.name="Svelte error",n}else throw new Error("https://svelte.dev/e/each_key_duplicate")}function Ua(e,t,r){if(w){let n=new Error(`each_key_volatile
-Keyed each block has key that is not idempotent \u2014 the key for item at index ${e} was \`${t}\` but is now \`${r}\`. Keys must be the same each time for a given item
-https://svelte.dev/e/each_key_volatile`);throw n.name="Svelte error",n}else throw new Error("https://svelte.dev/e/each_key_volatile")}function Va(e){if(w){let t=new Error(`effect_in_teardown
-\`${e}\` cannot be used inside an effect cleanup function
-https://svelte.dev/e/effect_in_teardown`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/effect_in_teardown")}function Ba(){if(w){let e=new Error("effect_in_unowned_derived\nEffect cannot be created inside a `$derived` value that was not itself created inside an effect\nhttps://svelte.dev/e/effect_in_unowned_derived");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/effect_in_unowned_derived")}function Ya(e){if(w){let t=new Error(`effect_orphan
-\`${e}\` can only be used inside an effect (e.g. during component initialisation)
-https://svelte.dev/e/effect_orphan`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/effect_orphan")}function qa(){if(w){let e=new Error(`effect_update_depth_exceeded
+https://svelte.dev/e/derived_references_self`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/derived_references_self`);
+  }
+}
+function each_key_duplicate(a, b, value) {
+  if (dev_fallback_default) {
+    const error = new Error(`each_key_duplicate
+${value ? `Keyed each block has duplicate key \`${value}\` at indexes ${a} and ${b}` : `Keyed each block has duplicate key at indexes ${a} and ${b}`}
+https://svelte.dev/e/each_key_duplicate`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/each_key_duplicate`);
+  }
+}
+function each_key_volatile(index2, a, b) {
+  if (dev_fallback_default) {
+    const error = new Error(`each_key_volatile
+Keyed each block has key that is not idempotent \u2014 the key for item at index ${index2} was \`${a}\` but is now \`${b}\`. Keys must be the same each time for a given item
+https://svelte.dev/e/each_key_volatile`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/each_key_volatile`);
+  }
+}
+function effect_in_teardown(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_in_teardown
+\`${rune}\` cannot be used inside an effect cleanup function
+https://svelte.dev/e/effect_in_teardown`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_in_teardown`);
+  }
+}
+function effect_in_unowned_derived() {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_in_unowned_derived
+Effect cannot be created inside a \`$derived\` value that was not itself created inside an effect
+https://svelte.dev/e/effect_in_unowned_derived`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_in_unowned_derived`);
+  }
+}
+function effect_orphan(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_orphan
+\`${rune}\` can only be used inside an effect (e.g. during component initialisation)
+https://svelte.dev/e/effect_orphan`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_orphan`);
+  }
+}
+function effect_update_depth_exceeded() {
+  if (dev_fallback_default) {
+    const error = new Error(`effect_update_depth_exceeded
 Maximum update depth exceeded. This typically indicates that an effect reads and writes the same piece of state
-https://svelte.dev/e/effect_update_depth_exceeded`);throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/effect_update_depth_exceeded")}function za(){if(w){let e=new Error("get_abort_signal_outside_reaction\n`getAbortSignal()` can only be called inside an effect or derived\nhttps://svelte.dev/e/get_abort_signal_outside_reaction");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/get_abort_signal_outside_reaction")}function Ga(){if(w){let e=new Error(`hydration_failed
+https://svelte.dev/e/effect_update_depth_exceeded`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/effect_update_depth_exceeded`);
+  }
+}
+function get_abort_signal_outside_reaction() {
+  if (dev_fallback_default) {
+    const error = new Error(`get_abort_signal_outside_reaction
+\`getAbortSignal()\` can only be called inside an effect or derived
+https://svelte.dev/e/get_abort_signal_outside_reaction`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/get_abort_signal_outside_reaction`);
+  }
+}
+function hydration_failed() {
+  if (dev_fallback_default) {
+    const error = new Error(`hydration_failed
 Failed to hydrate the application
-https://svelte.dev/e/hydration_failed`);throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/hydration_failed")}function Wa(){if(w){let e=new Error("invalid_snippet\nCould not `{@render}` snippet due to the expression being `null` or `undefined`. Consider using optional chaining `{@render snippet?.()}`\nhttps://svelte.dev/e/invalid_snippet");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/invalid_snippet")}function ja(e){if(w){let t=new Error(`props_invalid_value
-Cannot do \`bind:${e}={undefined}\` when \`${e}\` has a fallback value
-https://svelte.dev/e/props_invalid_value`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/props_invalid_value")}function Xa(e){if(w){let t=new Error(`props_rest_readonly
-Rest element properties of \`$props()\` such as \`${e}\` are readonly
-https://svelte.dev/e/props_rest_readonly`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/props_rest_readonly")}function Ka(e){if(w){let t=new Error(`rune_outside_svelte
-The \`${e}\` rune is only available inside \`.svelte\` and \`.svelte.js/ts\` files
-https://svelte.dev/e/rune_outside_svelte`);throw t.name="Svelte error",t}else throw new Error("https://svelte.dev/e/rune_outside_svelte")}function Za(){if(w){let e=new Error("state_descriptors_fixed\nProperty descriptors defined on `$state` objects must contain `value` and always be `enumerable`, `configurable` and `writable`.\nhttps://svelte.dev/e/state_descriptors_fixed");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/state_descriptors_fixed")}function Ja(){if(w){let e=new Error("state_prototype_fixed\nCannot set prototype of `$state` object\nhttps://svelte.dev/e/state_prototype_fixed");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/state_prototype_fixed")}function Qa(){if(w){let e=new Error("state_unsafe_mutation\nUpdating state inside `$derived(...)`, `$inspect(...)` or a template expression is forbidden. If the value should not be reactive, declare it without `$state`\nhttps://svelte.dev/e/state_unsafe_mutation");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/state_unsafe_mutation")}function el(){if(w){let e=new Error("svelte_boundary_reset_onerror\nA `<svelte:boundary>` `reset` function cannot be called while an error is still being handled\nhttps://svelte.dev/e/svelte_boundary_reset_onerror");throw e.name="Svelte error",e}else throw new Error("https://svelte.dev/e/svelte_boundary_reset_onerror")}var ct=!1,Yr=!1,xr=!1;var gi=null;function Ee(e,t){return e.label=t,Ji(e.v,t),e}function Ji(e,t){return e?.[zi]?.(t),e}function Vn(e){return typeof e=="symbol"?`Symbol(${e.description})`:typeof e=="function"?"<function>":typeof e=="object"&&e?"<object>":String(e)}function Er(e){let t=new Error,r=Uc();return r.length===0?null:(r.unshift(`
-`),dt(t,"stack",{value:r.join(`
-`)}),dt(t,"name",{value:e}),t)}function Uc(){let e=Error.stackTraceLimit;Error.stackTraceLimit=1/0;let t=new Error().stack;if(Error.stackTraceLimit=e,!t)return[];let r=t.split(`
-`),n=[];for(let o=0;o<r.length;o++){let s=r[o],a=s.replaceAll("\\","/");if(s.trim()!=="Error"){if(s.includes("validate_each_keys"))return[];a.includes("svelte/src/internal")||a.includes("node_modules/.vite")||n.push(s)}}return n}function rl(e,t){if(!w)throw new Error("invariant(...) was not guarded by if (DEV)");e||Oa(t)}function Vc(e){let t=e.p;for(;t!==null&&t.c===null;)t=t.p;return t?.c??null}function Ko(e,t){return e===null&&mi(t),e.c??=new Map(Vc(e)||void 0)}var re=null;function qr(e){re=e}var Cr=null;function Bn(e){Cr=e}var Tr=null;function Qi(e){Tr=e}function he(e){return Ko(re,"getContext").get(e)}function Yn(e,t){let r=Ko(re,"setContext");if(ct){var n=O.f,o=!U&&(n&32)!==0&&!re.i;o||Ia()}return r.set(e,t),t}function Ce(e,t=!1,r){re={p:re,i:!1,c:null,e:null,s:e,x:null,r:O,l:Yr&&!t?{s:null,u:null,$:[]}:null},w&&(re.function=r,Tr=r)}function Te(e){var t=re,r=t.e;if(r!==null){t.e=null;for(var n of r)Zo(n)}return e!==void 0&&(t.x=e),t.i=!0,re=t.p,w&&(Tr=re?.function??null),_i(e)}function _i(e={}){return dt(e,qi,{value:!0}),e}function Lr(){return!Yr||re!==null&&re.l===null}var hn=[];function nl(){var e=hn;hn=[],Bi(e)}function Ze(e){if(hn.length===0&&!mn){var t=hn;queueMicrotask(()=>{t===hn&&nl()})}hn.push(e)}function il(){for(;hn.length>0;)nl()}var Bc=-7169;function we(e,t){e.f=e.f&Bc|t}function qn(e){(e.f&512)!==0||e.deps===null?we(e,1024):we(e,4096)}function eo(e,t,r){(e.f&2048)!==0?t.add(e):(e.f&4096)!==0&&r.add(e),we(e,1024)}function to(e,t){if(t){let r=document.body;e.autofocus=!0,Ze(()=>{document.activeElement===r&&e.focus()})}}function fr(e){var t=U,r=O;Qe(null),ut(null);try{return e()}finally{Qe(t),ut(r)}}function ro(e,t,r,n){let o=Lr()?ln:_n;var s=e.filter(p=>!p.settled),a=t.map(o);if(w&&a.forEach((p,g)=>{p.label=t[g].toString().replace("() => ","").replaceAll("$.eager(() => ","$state.eager(").replace(/\$\.get\((.+?)\)/g,(_,m)=>m)}),r.length===0&&s.length===0){n(a);return}var l=O,d=ol(),f=s.length===1?s[0].promise:s.length>1?Promise.all(s.map(p=>p.promise)):null;function v(p){if((l.f&16384)===0){d();try{n([...a,...p])}catch(g){Yt(g,l)}zn()}}var h=Jo();if(r.length===0){f.then(()=>v([])).finally(h);return}function u(){Promise.all(r.map(p=>es(p))).then(v).catch(p=>Yt(p,l)).finally(h)}f?f.then(()=>{if((l.f&16384)!==0){h();return}d(),u(),zn()}):u()}function ol(){var e=O,t=U,r=re,n=Z;if(w)var o=Cr;return function(a=!0){ut(e),Qe(t),qr(r),a&&(e.f&16384)===0&&(n?.activate(),n?.apply()),w&&(Qo(null),Bn(o))}}var qc=!1;function zn(e=!0){qc=!1,ut(null),Qe(null),qr(null),e&&Z?.deactivate(),w&&(Qo(null),Bn(null))}function Jo(){var e=O,t=e.b,r=Z,n=!!t?.is_rendered();return t?.update_pending_count(1,r),r.increment(n,e),()=>{t?.update_pending_count(-1,r),r.decrement(n,e)}}var qt=null;function Qo(e){qt=e}var bi=new Set;function ln(e){var t=2050;O!==null&&(O.f|=524288);let r={ctx:re,deps:null,effects:null,equals:Xi,f:t,fn:e,reactions:null,rv:0,v:De,wv:0,parent:O,ac:null};return w&&xr&&(r.created=Er("created at")),r}var Gn=Symbol("obsolete");function es(e,t,r){let n=O;n===null&&Fa();var o=void 0,s=pt(De);w&&(s.label=t??e.toString());var a=!U,l=new Set;return ll(()=>{var d=O;w&&(qt={effect:d,effect_deps:new Set,warned:!1});var f=Yi();o=f.promise;try{Promise.resolve(e()).then(f.resolve,p=>{p!==Br&&f.reject(p)}).finally(zn)}catch(p){f.reject(p),zn()}if(w){if(qt){if(d.deps!==null)for(let p=0;p<It;p+=1)qt.effect_deps.add(d.deps[p]);if(ht!==null)for(let p=0;p<ht.length;p+=1)qt.effect_deps.add(ht[p])}qt=null}var v=Z;if(a){if((d.f&32768)!==0)var h=Jo();if(n.b?.is_rendered())v.async_deriveds.get(d)?.reject(Gn);else for(let p of l.values())p.reject(Gn);l.add(f),v.async_deriveds.set(d,f)}let u=(p,g=void 0)=>{w&&(qt=null),h?.(),l.delete(f),g!==Gn&&(v.activate(),g?(s.f|=8388608,Dr(s,g)):((s.f&8388608)!==0&&(s.f^=8388608),w&&r!==void 0&&!s.equals(p)&&(bi.add(s),setTimeout(()=>{bi.has(s)&&(d.f&16384)===0&&(Ra(s.label,r),bi.delete(s))})),Dr(s,p)),v.deactivate())};f.promise.then(u,p=>u(null,p||"unknown"))}),xt(()=>{for(let d of l)d.reject(Gn)}),w&&(s.f|=4194304),new Promise(d=>{function f(v){function h(){v===o?d(s):f(o)}v.then(h,h)}f(o)})}function c(e){let t=ln(e);return ct||oo(t),t}function _n(e){let t=ln(e);return t.equals=Ki,t}function sl(e){var t=e.effects;if(t!==null){e.effects=null;for(var r=0;r<t.length;r+=1)Ue(t[r])}}var ts=[];function wi(e){var t,r=O,n=e.parent;if(!Jt&&n!==null&&e.v!==De&&(n.f&24576)!==0)return Aa(),e.v;if(ut(n),w){let o=$n;no(new Set);try{Vr.call(ts,e)&&Ha(),ts.push(e),sl(e),t=io(e)}finally{ut(r),no(o),ts.pop()}}else try{sl(e),t=io(e)}finally{ut(r)}return t}function rs(e){var t=wi(e);if(!e.equals(t)&&(e.wv=Wn(),(!Z?.is_fork||e.deps===null)&&(Z!==null?(Z.capture(e,t,!0),Sr?.capture(e,t,!0)):e.v=t,e.deps===null))){we(e,1024);return}Jt||(mt!==null?(sn()||Z?.is_fork)&&mt.set(e,t):qn(e))}function al(e){if(e.effects!==null)for(let t of e.effects)(t.teardown||t.ac)&&(t.teardown?.(),t.ac!==null&&fr(()=>{t.ac.abort(Br),t.ac=null}),t.fn!==null&&(t.teardown=Me),yn(t,0),xi(t))}function ns(e){if(e.effects!==null)for(let t of e.effects)t.teardown&&t.fn!==null&&Or(t)}var so=null,jn=null,Z=null,Sr=null,mt=null,ss=null,mn=!1,is=!1,Xn=null,Ei=null,dl=0,os=new Set,Wc=1,Qt=class e{id=Wc++;#e=!1;linked=!0;#t=null;#r=null;async_deriveds=new Map;current=new Map;previous=new Map;#n=new Set;#i=new Set;#o=0;#s=new Map;#l=null;#a=[];#u=[];#c=new Set;#f=new Set;#p=new Map;#g=new Set;is_fork=!1;#d=!1;constructor(){jn===null?so=jn=this:(jn.#r=this,this.#t=jn),jn=this}#b(){if(this.is_fork)return!0;for(let n of this.#s.keys()){for(var t=n,r=!1;t.parent!==null;){if(this.#p.has(t)){r=!0;break}t=t.parent}if(!r)return!0}return!1}skip_effect(t){this.#p.has(t)||this.#p.set(t,{d:[],m:[]}),this.#g.delete(t)}unskip_effect(t,r=n=>this.schedule(n)){var n=this.#p.get(t);if(n){this.#p.delete(t);for(var o of n.d)we(o,2048),r(o);for(o of n.m)we(o,4096),r(o)}this.#g.add(t)}#w(){var t=[];for(let s of this.#a)if(!((s.f&16384)!==0||(s.f&6144)===0)){for(var r=s,n=!1;r.parent!==null;){r=r.parent;var o=r.f;if((o&96)!==0){if((o&1024)===0){n=!0;break}r.f^=1024}}n||t.push(r)}return this.#a=[],t}#_(){if(this.#e=!0,w)for(let l of this.current.keys())os.add(l);for(let l of this.#c)this.#f.delete(l),we(l,2048),this.schedule(l);for(let l of this.#f)we(l,4096),this.schedule(l);this.apply();for(var t=Xn=[],r=[],n=Ei=[];this.#a.length>0;){dl++>1e3&&(this.#m(),jc());for(let l of this.#w())try{this.#y(l,t,r)}catch(d){throw pl(l),this.#b()||this.discard(),d}}if(Z=null,n.length>0){var o=e.ensure();for(let l of n)o.schedule(l)}if(Xn=null,Ei=null,this.#b()){this.#h(r),this.#h(t);for(let[l,d]of this.#p)ul(l,d);n.length>0&&Z.#_();return}let s=this.#v();if(s){this.#h(r),this.#h(t),s.#x(this);return}this.#c.clear(),this.#f.clear();for(let l of this.#n)l(this);this.#n.clear(),Sr=this,cl(r),cl(t),Sr=null,this.#l?.resolve();var a=Z;if(this.#o===0&&(this.#a.length===0||a!==null)&&(this.#m(),ct&&(this.#$(),Z=a)),this.#a.length>0)if(a!==null){for(let l of this.#a)a.#a.push(l);this.#a=[]}else a=this;a!==null&&(pr.clear(),a.#_())}#y(t,r,n){t.f^=1024;for(var o=t.first;o!==null;){var s=o.f,a=(s&96)!==0,l=a&&(s&1024)!==0,d=l||(s&8192)!==0||this.#p.has(o);if(!d&&o.fn!==null){a?o.f^=1024:(s&4)!==0?r.push(o):ct&&(s&16777224)!==0?n.push(o):cn(o)&&((s&16)!==0&&this.#f.add(o),Or(o));var f=o.first;if(f!==null){o=f;continue}}for(;o!==null;){var v=o.next;if(v!==null){o=v;break}o=o.parent}}}#v(){for(var t=this.#t;t!==null;){if(!t.is_fork){for(let[r,[,n]]of this.current)if(t.current.has(r)&&!n)return t}t=t.#t}return null}#x(t){for(let[n,o]of t.current)!this.previous.has(n)&&t.previous.has(n)&&this.previous.set(n,t.previous.get(n)),this.current.set(n,o);for(let[n,o]of t.async_deriveds){let s=this.async_deriveds.get(n);s&&o.promise.then(s.resolve).catch(s.reject)}t.async_deriveds.clear(),this.transfer_effects(t.#c,t.#f);let r=n=>{var o=n.reactions;if(o!==null&&!((n.f&2)!==0&&(n.f&6144)===0))for(let l of o){var s=l.f;if((s&2)!==0)r(l);else{var a=l;s&4194320&&!this.async_deriveds.has(a)&&(this.#f.delete(a),we(a,2048),this.schedule(a))}}};for(let n of this.current.keys())r(n);this.oncommit(()=>t.discard()),t.#m(),Z=this,this.#_()}#h(t){for(var r=0;r<t.length;r+=1)eo(t[r],this.#c,this.#f)}capture(t,r,n=!1){t.v!==De&&!this.previous.has(t)&&this.previous.set(t,t.v),(t.f&8388608)===0&&(this.current.set(t,[r,n]),mt?.set(t,r)),this.is_fork||(t.v=r)}activate(){Z=this}deactivate(){Z=null,mt=null}flush(){try{w&&os.clear(),is=!0,Z=this,this.#_()}finally{if(dl=0,ss=null,Xn=null,Ei=null,is=!1,Z=null,mt=null,pr.clear(),w)for(let t of os)t.updated=null}}discard(){for(let t of this.#i)t(this);this.#i.clear();for(let t of this.async_deriveds.values())t.reject(Gn);this.#m(),this.#l?.resolve()}register_created_effect(t){this.#u.push(t)}#$(){for(let h=so;h!==null;h=h.#r){var t=h.id<this.id,r=[];for(let[u,[p,g]]of this.current){if(h.current.has(u)){var n=h.current.get(u)[0];if(t&&p!==n)h.current.set(u,[p,g]);else continue}r.push(u)}if(t)for(let[u,p]of this.async_deriveds){let g=h.async_deriveds.get(u);g&&p.promise.then(g.resolve).catch(g.reject)}var o=[...h.current.keys()].filter(u=>!h.current.get(u)[1]);if(!(!h.#e||o.length===0)){var s=o.filter(u=>!this.current.has(u));if(s.length===0)t&&h.discard();else if(r.length>0){if(w&&!h.#d&&rl(h.#a.length===0,"Batch has scheduled effects"),t)for(let u of this.#g)h.unskip_effect(u,p=>{(p.f&4194320)!==0?h.schedule(p):h.#h([p])});h.activate();var a=new Set,l=new Map;for(var d of r)fl(d,s,a,l);l=new Map;var f=[...h.current].filter(([u,p])=>{let g=this.current.get(u);return g?g[0]!==p[0]||g[1]!==p[1]:!0}).map(([u])=>u);if(f.length>0)for(let u of this.#u)(u.f&155648)===0&&as(u,f,l)&&((u.f&4194320)!==0?(we(u,2048),h.schedule(u)):h.#c.add(u));if(h.#a.length>0&&!h.#d){h.apply();for(var v of h.#w())h.#y(v,[],[])}h.deactivate()}}}}increment(t,r){if(this.#o+=1,t){let n=this.#s.get(r)??0;this.#s.set(r,n+1)}}decrement(t,r){if(this.#o-=1,t){let n=this.#s.get(r)??0;n===1?this.#s.delete(r):this.#s.set(r,n-1)}this.#d||(this.#d=!0,Ze(()=>{this.#d=!1,this.linked&&this.flush()}))}transfer_effects(t,r){for(let n of t)this.#c.add(n);for(let n of r)this.#f.add(n);t.clear(),r.clear()}oncommit(t){this.#n.add(t)}ondiscard(t){this.#i.add(t)}settled(){return(this.#l??=Yi()).promise}static ensure(){if(Z===null){let t=Z=new e;!is&&!mn&&Ze(()=>{t.#e||t.flush()})}return Z}apply(){if(!ct||!this.is_fork&&this.#t===null&&this.#r===null){mt=null;return}mt=new Map;for(let[r,[n]]of this.current)mt.set(r,n);for(let r=so;r!==null;r=r.#r)if(!(r===this||r.is_fork)){var t=!1;if(r.id<this.id){for(let[n,[,o]]of r.current)if(!o&&this.current.has(n)){t=!0;break}}if(!t)for(let[n,o]of r.previous)mt.has(n)||mt.set(n,o)}}schedule(t){if(ss=t,t.b?.is_pending&&(t.f&16777228)!==0&&(t.f&32768)===0){t.b.defer_effect(t);return}this.#a.push(t)}#m(){if(this.linked){var t=this.#t,r=this.#r;t===null?so=r:t.#r=r,r===null?jn=t:r.#t=t,this.linked=!1}}};function dn(e){var t=mn,r=Sr;Sr=null,mn=!0;try{var n;for(e&&(dn(),n=e());;){if(il(),Z===null)return n;Z.flush()}}finally{mn=t,Sr=r}}function jc(){if(w){var e=new Map;for(let r of Z.current.keys())for(let[n,o]of r.updated??[]){var t=e.get(n);t||(t={error:o.error,count:0},e.set(n,t)),t.count+=o.count}for(let r of e.values())r.error&&console.error(r.error)}try{qa()}catch(r){w&&dt(r,"stack",{value:""}),Yt(r,ss)}}var ur=null;function cl(e){var t=e.length;if(t!==0){for(var r=0;r<t;){var n=e[r++];if((n.f&24576)===0&&cn(n)&&(ur=new Set,Or(n),n.deps===null&&n.first===null&&n.nodes===null&&n.teardown===null&&n.ac===null&&ls(n),ur?.size>0)){pr.clear();for(let o of ur){if((o.f&24576)!==0)continue;let s=[o],a=o.parent;for(;a!==null;)ur.has(a)&&(ur.delete(a),s.push(a)),a=a.parent;for(let l=s.length-1;l>=0;l--){let d=s[l];(d.f&24576)===0&&Or(d)}}ur.clear()}}ur=null}}function fl(e,t,r,n){if(!r.has(e)&&(r.add(e),e.reactions!==null))for(let o of e.reactions){let s=o.f;(s&2)!==0?fl(o,t,r,n):(s&4194320)!==0&&(s&2048)===0&&as(o,t,n)&&(we(o,2048),Ci(o))}}function as(e,t,r){let n=r.get(e);if(n!==void 0)return n;if(e.deps!==null)for(let o of e.deps){if(Vr.call(t,o))return!0;if((o.f&2)!==0&&as(o,t,r))return r.set(o,!0),!0}return r.set(e,!1),!1}function Ci(e){Z.schedule(e)}function ul(e,t){if(!((e.f&32)!==0&&(e.f&1024)!==0)){(e.f&2048)!==0?t.d.push(e):(e.f&4096)!==0&&t.m.push(e),we(e,1024);for(var r=e.first;r!==null;)ul(r,t),r=r.next}}function pl(e){we(e,1024);for(var t=e.first;t!==null;)pl(t),t=t.next}var $n=new Set,pr=new Map;function no(e){$n=e}var cs=!1;function hl(){cs=!0}function pt(e,t){var r={f:0,v:e,reactions:null,equals:Xi,rv:0,wv:0};return w&&xr&&(r.created=t??Er("created at"),r.updated=null,r.set_during_effect=!1,r.trace=null),r}function z(e,t){let r=pt(e,t);return oo(r),r}function xn(e,t=!1,r=!0){let n=pt(e);return t||(n.equals=Ki),Yr&&r&&re!==null&&re.l!==null&&(re.l.s??=[]).push(n),n}function C(e,t,r=!1){U!==null&&(!Pt||(U.f&131072)!==0)&&Lr()&&(U.f&4325394)!==0&&(Rr===null||!Rr.has(e))&&Qa();let n=r?tt(t):t;return w&&Ji(n,e.label),Dr(e,n,Ei)}var wn=null,ds=0;function Dr(e,t,r=null){if(!e.equals(t)){Jt?pr.set(e,t):pr.has(e)||pr.set(e,e.v);var n=Qt.ensure();if(n.capture(e,t),w){if(xr||O!==null){e.updated??=new Map;let o=(e.updated.get("")?.count??0)+1;if(e.updated.set("",{error:null,count:o}),xr||o>5){let s=Er("updated at");if(s!==null){let a=e.updated.get(s.stack);a||(a={error:s,count:0},e.updated.set(s.stack,a)),a.count++}}}O!==null&&(e.set_during_effect=!0)}if((e.f&2)!==0){let o=e;(e.f&2048)!==0&&wi(o),mt===null&&qn(o)}e.wv=Wn(),wn=null,ds=0,ml(e,2048,r),wn=null,Lr()&&O!==null&&(O.f&1024)!==0&&(O.f&96)===0&&(er===null?gl([e]):er.push(e)),!n.is_fork&&$n.size>0&&!cs&&ao()}return t}function ao(){cs=!1;for(let e of $n){(e.f&1024)!==0&&we(e,4096);let t;try{t=cn(e)}catch{t=!0}t&&Or(e)}$n.clear()}function et(e){C(e,e.v+1)}function ml(e,t,r){var n=e.reactions;if(n!==null){var o=Lr(),s=n.length;if(ds+=s,ds>1e5&&wn===null&&(wn=new Set),wn!==null){if(wn.has(e))return;wn.add(e)}for(var a=0;a<s;a++){var l=n[a],d=l.f;if(!(!o&&l===O)){var f=(d&2048)===0;if(f&&we(l,t),(d&131072)!==0)$n.add(l);else if((d&2)!==0){var v=l;mt?.delete(v),ml(v,4096,r)}else if(f){var h=l;(d&16)!==0&&ur!==null&&ur.add(h),r!==null?r.push(h):Ci(h)}}}}}var Kc=/^[a-zA-Z_$][a-zA-Z_$0-9]*$/;function tt(e){if(typeof e!="object"||e===null||Ot in e||qi in e)return e;let t=In(e);if(t!==Bo&&t!==Ta)return e;var r=new Map,n=Ur(e),o=z(0),s=w&&xr?Er("created at"):null,a=vr,l=h=>{if(vr===a)return h();var u=U,p=vr;Qe(null),fs(a);var g=h();return Qe(u),fs(p),g};n&&(r.set("length",z(e.length,s)),w&&(e=Jc(e)));var d="";let f=!1;function v(h){if(!f){f=!0,d=h,Ee(o,`${d} version`);for(let[u,p]of r)Ee(p,En(d,u));f=!1}}return new Proxy(e,{defineProperty(h,u,p){(!("value"in p)||p.configurable===!1||p.enumerable===!1||p.writable===!1)&&Za();var g=r.get(u);return g===void 0?l(()=>{var _=z(p.value,s);return r.set(u,_),w&&typeof u=="string"&&Ee(_,En(d,u)),_}):C(g,p.value,!0),!0},deleteProperty(h,u){var p=r.get(u);if(p===void 0){if(u in h){let g=l(()=>z(De,s));r.set(u,g),et(o),w&&Ee(g,En(d,u))}}else C(p,De),et(o);return!0},get(h,u,p){if(u===Ot)return e;if(w&&u===zi)return v;var g=r.get(u),_=u in h;if(g===void 0&&(!_||Vt(h,u)?.writable)&&(g=l(()=>{var y=tt(_?h[u]:De),b=z(y,s);return w&&Ee(b,En(d,u)),b}),r.set(u,g)),g!==void 0){var m=i(g);return m===De?void 0:m}return Reflect.get(h,u,p)},getOwnPropertyDescriptor(h,u){this.has?.(h,u);var p=Reflect.getOwnPropertyDescriptor(h,u),g=r.get(u);if(g!==void 0){var _=i(g);if(_===De)return;if(p&&"value"in p)p.value=_;else return{enumerable:!0,configurable:!0,value:_,writable:!0}}return p},has(h,u){if(u===Ot)return!0;var p=r.get(u),g=p!==void 0&&p.v!==De||Reflect.has(h,u);if(p!==void 0||O!==null&&(!g||Vt(h,u)?.writable)){p===void 0&&(p=l(()=>{var m=g?tt(h[u]):De,y=z(m,s);return w&&Ee(y,En(d,u)),y}),r.set(u,p));var _=i(p);if(_===De)return!1}return g},set(h,u,p,g){var _=r.get(u),m=u in h;if(n&&u==="length")for(var y=p;y<_.v;y+=1){var b=r.get(y+"");b!==void 0?C(b,De):y in h&&(b=l(()=>z(De,s)),r.set(y+"",b),w&&Ee(b,En(d,y)))}if(_===void 0)(!m||Vt(h,u)?.writable)&&(_=l(()=>z(void 0,s)),w&&Ee(_,En(d,u)),C(_,tt(p)),r.set(u,_));else{m=_.v!==De;var x=l(()=>tt(p));C(_,x)}var E=Reflect.getOwnPropertyDescriptor(h,u);if(E?.set&&E.set.call(g,p),!m){if(n&&typeof u=="string"){var D=r.get("length"),$=Number(u);Number.isInteger($)&&$>=D.v&&C(D,$+1)}et(o)}return!0},ownKeys(h){i(o);var u=Reflect.ownKeys(h).filter(_=>{var m=r.get(_);return m===void 0||m.v!==De});for(var[p,g]of r)g.v!==De&&!(p in h)&&u.push(p);return u},setPrototypeOf(){Ja()}})}function En(e,t){return typeof t=="symbol"?`${e}[Symbol(${t.description??""})]`:Kc.test(t)?`${e}.${t}`:/^\d+$/.test(t)?`${e}[${t}]`:`${e}['${t}']`}function lo(e){try{if(e!==null&&typeof e=="object"&&Ot in e)return e[Ot]}catch{}return e}var Zc=new Set(["copyWithin","fill","pop","push","reverse","shift","sort","splice","unshift"]);function Jc(e){return new Proxy(e,{get(t,r,n){var o=Reflect.get(t,r,n);return Zc.has(r)?function(...s){hl();var a=o.apply(this,s);return ao(),a}:o}})}function _l(){let e=Array.prototype,t=Array.__svelte_cleanup;t&&t();let{indexOf:r,lastIndexOf:n,includes:o}=e;e.indexOf=function(s,a){let l=r.call(this,s,a);if(l===-1){for(let d=a??0;d<this.length;d+=1)if(lo(this[d])===s){ji("array.indexOf(...)");break}}return l},e.lastIndexOf=function(s,a){let l=n.call(this,s,a??this.length-1);if(l===-1){for(let d=0;d<=(a??this.length-1);d+=1)if(lo(this[d])===s){ji("array.lastIndexOf(...)");break}}return l},e.includes=function(s,a){let l=o.call(this,s,a);if(!l){for(let d=0;d<this.length;d+=1)if(lo(this[d])===s){ji("array.includes(...)");break}}return l},Array.__svelte_cleanup=()=>{e.indexOf=r,e.lastIndexOf=n,e.includes=o}}var tr,$l,Ti,yl,bl;function co(){if(tr===void 0){tr=window,$l=document,Ti=/Firefox/.test(navigator.userAgent);var e=Element.prototype,t=Node.prototype,r=Text.prototype;yl=Vt(t,"firstChild").get,bl=Vt(t,"nextSibling").get,Yo(e)&&(e[pi]=void 0,e[Gi]=null,e[vi]=void 0,e.__e=void 0),Yo(r)&&(r[hi]=void 0),w&&(e.__svelte_meta=null,_l())}}function rt(e=""){return document.createTextNode(e)}function wt(e){return yl.call(e)}function yt(e){return bl.call(e)}function ue(e,t){if(!P)return wt(e);var r=wt(K);if(r===null)r=K.appendChild(rt());else if(t&&r.nodeType!==Pn){var n=rt();return r?.before(n),be(n),n}return t&&uo(r),be(r),r}function ye(e,t=!1){if(!P){var r=wt(e);return r instanceof Comment&&r.data===""?yt(r):r}if(t){if(K?.nodeType!==Pn){var n=rt();return K?.before(n),be(n),n}uo(K)}return K}function Kn(e,t=!1){if(!P)return wt(e);var r=ue(e,t);return J(e),r}function _e(e,t=1,r=!1){let n=P?K:e;for(var o;t--;)o=n,n=yt(n);if(!P)return n;if(r){if(n?.nodeType!==Pn){var s=rt();return n===null?o?.after(s):n.before(s),be(s),s}uo(n)}return be(n),n}function yi(e){e.textContent=""}function fo(){if(!ct||ur!==null)return!1;var e=O.f;return(e&32768)!==0}function Ir(e,t,r){return t==null||t===Wi?r?document.createElement(e,{is:r}):document.createElement(e):r?document.createElementNS(t,e,{is:r}):document.createElementNS(t,e)}function uo(e){if(e.nodeValue.length<65536)return;let t=e.nextSibling;for(;t!==null&&t.nodeType===Pn;)t.remove(),e.nodeValue+=t.nodeValue,t=e.nextSibling}var us=new WeakMap;function wl(e){var t=O;if(t===null)return U.f|=8388608,e;if(w&&e instanceof Error&&!us.has(e)&&us.set(e,Qc(e,t)),(t.f&32768)===0&&(t.f&4)===0)throw w&&!t.parent&&e instanceof Error&&xl(e),e;Yt(e,t)}function Yt(e,t){if(e===Kt)throw e;if(!(t!==null&&(t.f&16384)!==0)){for(;t!==null;){if((t.f&128)!==0&&(t.f&33570816)===0){if((t.f&32768)===0)throw e;try{t.b.error(e);return}catch(r){e=r}}t=t.parent}throw w&&e instanceof Error&&xl(e),e}}function Qc(e,t){let r=Vt(e,"message");if(!(r&&!r.configurable)){for(var n=Ti?"  ":"	",o=`
-${n}in ${t.fn?.name||"<unknown>"}`,s=t.ctx;s!==null;)o+=`
-${n}in ${s.function?.[dr].split("/").pop()}`,s=s.p;return{message:e.message+`
-${o}
-`,stack:e.stack?.split(`
-`).filter(a=>!a.includes("svelte/src/internal")).join(`
-`)}}}function xl(e){let t=us.get(e);t&&(dt(e,"message",{value:t.message}),dt(e,"stack",{value:t.stack}))}function hs(e){O===null&&(U===null&&Ya(e),Ba()),Jt&&Va(e)}function ef(e,t){var r=t.last;r===null?t.last=t.first=e:(r.next=e,e.prev=r,t.last=e)}function hr(e,t){var r=O;if(w)for(;r!==null&&(r.f&131072)!==0;)r=r.parent;r!==null&&(r.f&8192)!==0&&(e|=8192);var n={ctx:re,deps:null,nodes:null,f:e|2048|512,first:null,fn:t,last:null,next:null,parent:r,b:r&&r.b,prev:null,teardown:null,wv:0,ac:null};w&&(n.component_function=Tr),Z?.register_created_effect(n);var o=n;if((e&4)!==0)Xn!==null?Xn.push(n):Qt.ensure().schedule(n);else if(t!==null){try{Or(n)}catch(a){throw Ue(n),a}o.deps===null&&o.teardown===null&&o.nodes===null&&o.first===o.last&&(o.f&524288)===0&&(o=o.first,(e&16)!==0&&(e&65536)!==0&&o!==null&&(o.f|=65536))}if(o!==null&&(o.parent=r,r!==null&&ef(o,r),U!==null&&(U.f&2)!==0&&(e&64)===0)){var s=U;(s.effects??=[]).push(o)}return n}function sn(){return U!==null&&!Pt}function xt(e){let t=hr(8,null);return we(t,1024),t.teardown=e,t}function Et(e){hs("$effect"),w&&dt(e,"name",{value:"$effect"});var t=O.f,r=!U&&(t&32)!==0&&re!==null&&!re.i;if(r){var n=re;(n.e??=[]).push(e)}else return Zo(e)}function Zo(e){return hr(1048580,e)}function mr(e){return hs("$effect.pre"),w&&dt(e,"name",{value:"$effect.pre"}),hr(1048584,e)}function ms(e){Qt.ensure();let t=hr(524352,e);return()=>{Ue(t)}}function Tl(e){Qt.ensure();let t=hr(524352,e);return(r={})=>new Promise(n=>{r.outro?Pr(t,()=>{Ue(t),n(void 0)}):(Ue(t),n(void 0))})}function Gt(e){return hr(4,e)}function ll(e){return hr(4718592,e)}function Nt(e,t=0){return hr(8|t,e)}function me(e,t=[],r=[],n=[]){ro(n,t,r,o=>{hr(8,()=>{e(...o.map(i))})})}function Ht(e,t=0){var r=hr(16|t,e);return w&&(r.dev_stack=Cr),r}function gs(e,t=0){var r=hr(16777216|t,e);return w&&(r.dev_stack=Cr),r}function nt(e){return hr(524320,e)}function _s(e){var t=e.teardown;if(t!==null){let r=Jt,n=U;ps(!0),Qe(null);try{t.call(null)}catch(o){Yt(o,e.parent)}finally{ps(r),Qe(n)}}}function xi(e,t=!1){var r=e.first;for(e.first=e.last=null;r!==null;){let o=r.ac;o!==null&&fr(()=>{o.abort(Br)});var n=r.next;(r.f&64)!==0?r.parent=null:Ue(r,t),r=n}}function kl(e){for(var t=e.first;t!==null;){var r=t.next;(t.f&32)===0&&Ue(t),t=r}}function Ue(e,t=!0){var r=!1;(t||(e.f&262144)!==0)&&e.nodes!==null&&e.nodes.end!==null&&(Dl(e.nodes.start,e.nodes.end),r=!0),e.f|=33554432,xi(e,t&&!r),yn(e,0);var n=e.nodes&&e.nodes.t;if(n!==null)for(let s of n)s.stop();_s(e),e.f^=33554432,e.f|=16384;var o=e.parent;o!==null&&o.first!==null&&ls(e),w&&(e.component_function=null),e.next=e.prev=e.teardown=e.ctx=e.deps=e.fn=e.nodes=e.ac=e.b=null}function Dl(e,t){for(;e!==null;){var r=e===t?null:yt(e);e.remove(),e=r}}function ls(e){var t=e.parent,r=e.prev,n=e.next;r!==null&&(r.next=n),n!==null&&(n.prev=r),t!==null&&(t.first===e&&(t.first=n),t.last===e&&(t.last=r))}function Pr(e,t,r=!0){var n=[];e.f|=256,Sl(e,n,!0);var o=()=>{r&&Ue(e),t&&t()},s=n.length;if(s>0){var a=()=>--s||o();for(var l of n)l.out(a)}else o()}function Sl(e,t,r){if((e.f&8192)===0){e.f^=8192;var n=e.nodes&&e.nodes.t;if(n!==null)for(let l of n)(l.is_global||r)&&t.push(l);for(var o=e.first;o!==null;){var s=o.next;if((o.f&64)===0){var a=(o.f&65536)!==0||(o.f&32)!==0&&(e.f&16)!==0;Sl(o,t,a?r:!1)}o=s}}}function Zn(e){e.f&=-257,Rl(e,!0)}function Rl(e,t){if((e.f&256)===0&&(e.f&8192)!==0){e.f^=8192,(e.f&1024)===0&&(we(e,2048),Qt.ensure().schedule(e));for(var r=e.first;r!==null;){var n=r.next,o=(r.f&65536)!==0||(r.f&32)!==0;Rl(r,o?t:!1),r=n}var s=e.nodes&&e.nodes.t;if(s!==null)for(let a of s)(a.is_global||t)&&a.in()}}function Jn(e,t){if(e.nodes)for(var r=e.nodes.start,n=e.nodes.end;r!==null;){var o=r===n?null:yt(r);t.append(r),r=o}}var Al=null;var Jt=!1;function ps(e){Jt=e}var U=null,Pt=!1;function Qe(e){U=e}var O=null;function ut(e){O=e}var Rr=null;function oo(e){U!==null&&(!ct&&(U.f&2097152)!==0||(U.f&2)!==0)&&(Rr??=new Set).add(e)}var ht=null,It=0,er=null;function gl(e){er=e}var Ml=1,Cn=0,vr=Cn;function fs(e){vr=e}function Wn(){return++Ml}function cn(e){var t=e.f;if((t&2048)!==0)return!0;if((t&4096)!==0){for(var r=e.deps,n=r.length,o=0;o<n;o++){var s=r[o];if(cn(s)&&rs(s),s.wv>e.wv)return!0}(t&512)!==0&&mt===null&&we(e,1024)}return!1}function Ll(e,t,r=!0){var n=e.reactions;if(n!==null&&!(!ct&&Rr!==null&&Rr.has(e)))for(var o=0;o<n.length;o++){var s=n[o];(s.f&2)!==0?Ll(s,t,!1):t===s&&(r?we(s,2048):(s.f&1024)!==0&&we(s,4096),Ci(s))}}function io(e){var t=ht,r=It,n=er,o=U,s=Rr,a=re,l=Pt,d=vr,f=e.f;ht=null,It=0,er=null,U=(f&96)===0?e:null,Rr=null,qr(e.ctx),Pt=!1,vr=++Cn,e.ac!==null&&(fr(()=>{e.ac.abort(Br)}),e.ac=null);try{e.f|=2097152;var v=e.fn,h=v();e.f|=32768;var u=Nl(e);if(Lr()&&er!==null&&!Pt&&u!==null&&(e.f&6146)===0)for(var p=0;p<er.length;p++)Ll(er[p],e);if(o!==null&&o!==e){if(Cn++,o.deps!==null)for(let g=0;g<r;g+=1)o.deps[g].rv=Cn;if(t!==null)for(let g of t)g.rv=Cn;er!==null&&(n===null?n=er:n.push(...er))}return(e.f&8388608)!==0&&(e.f^=8388608),h}catch(g){return Nl(e),wl(g)}finally{e.f^=2097152,ht=t,It=r,er=n,U=o,Rr=s,qr(a),Pt=l,vr=d}}function Nl(e){var t=e.deps,r=Z?.is_fork;if(ht!==null){var n;if(r||yn(e,It),t!==null&&It>0)for(t.length=It+ht.length,n=0;n<ht.length;n++)t[It+n]=ht[n];else e.deps=t=ht;if(sn()&&(e.f&512)!==0)for(n=It;n<t.length;n++)(t[n].reactions??=[]).push(e)}else!r&&t!==null&&It<t.length&&(yn(e,It),t.length=It);return t}function tf(e,t){let r=t.reactions;if(r!==null){var n=Ca.call(r,e);if(n!==-1){var o=r.length-1;o===0?r=t.reactions=null:(r[n]=r[o],r.pop())}}if(r===null&&(t.f&2)!==0&&(ht===null||!Vr.call(ht,t))){var s=t;(s.f&512)!==0&&(s.f^=512),s.v!==De&&qn(s),s.ac!==null&&fr(()=>{s.ac.abort(Br),s.ac=null,we(s,2048)}),al(s),yn(s,0)}}function yn(e,t){var r=e.deps;if(r!==null)for(var n=t;n<r.length;n++)tf(e,r[n])}function Or(e){var t=e.f;if((t&16384)===0){we(e,1024);var r=O;if(O=e,w){var n=Tr;Qi(e.component_function);var o=Cr;Bn(e.dev_stack??Cr)}try{(t&16777232)!==0?kl(e):xi(e),_s(e);var s=io(e);if(e.teardown=typeof s=="function"?s:null,e.wv=Ml,w&&xr&&(e.f&2048)!==0&&e.deps!==null)for(var a of e.deps)a.set_during_effect&&(a.wv=Wn(),a.set_during_effect=!1)}finally{O=r,w&&(Qi(n),Bn(o))}}}async function jr(){if(ct)return new Promise(e=>{requestAnimationFrame(()=>e()),setTimeout(()=>e())});await Promise.resolve(),dn()}function i(e){var t=e.f,r=(t&2)!==0;if(Al?.add(e),U!==null&&!Pt){var n=O!==null&&(O.f&16384)!==0;if(!n&&(Rr===null||!Rr.has(e))){var o=U.deps;if((U.f&2097152)!==0)e.rv<Cn&&(e.rv=Cn,ht===null&&o!==null&&o[It]===e?It++:ht===null?ht=[e]:ht.push(e));else{U.deps??=[],Vr.call(U.deps,e)||U.deps.push(e);var s=e.reactions;s===null?e.reactions=[U]:Vr.call(s,U)||s.push(U)}}}if(w){if(!Pt&&qt&&Z===null&&Sr===null&&!qt.warned&&(qt.effect.f&2097152)===0&&!qt.effect_deps.has(e)){qt.warned=!0,Sa(e.label);var a=Er("traced at");a&&console.warn(a)}if(bi.delete(e),xr&&!Pt&&gi!==null&&U!==null&&gi.reaction===U){if(e.trace)e.trace();else if(a=Er("traced at"),a){var l=gi.entries.get(e);l===void 0&&(l={traces:[]},gi.entries.set(e,l));var d=l.traces[l.traces.length-1];a.stack!==d?.stack&&l.traces.push(a)}}}if(Jt&&pr.has(e))return pr.get(e);if(r){var f=e;if(Jt){var v=f.v;return((f.f&1024)===0&&f.reactions!==null||Il(f))&&(v=wi(f)),pr.set(f,v),v}var h=(f.f&512)===0&&!Pt&&U!==null&&(U.f&512)!==0,u=(f.f&32768)===0;cn(f)&&(h&&(f.f|=512),rs(f)),h&&!u&&(ns(f),Ol(f))}if(mt?.has(e))return mt.get(e);if((e.f&8388608)!==0)throw e.v;return e.v}function Ol(e){if(e.f|=512,e.deps!==null)for(let r of e.deps){var t=r.reactions;t===null?r.reactions=[e]:Vr.call(t,e)||t.push(e),(r.f&2)!==0&&(r.f&512)===0&&(ns(r),Ol(r))}}function Il(e){if(e.v===De)return!0;if(e.deps===null)return!1;for(let t of e.deps)if(pr.has(t)||(t.f&2)!==0&&Il(t))return!0;return!1}function L(e){var t=Pt;try{return Pt=!0,e()}finally{Pt=t}}var nf=["allowfullscreen","async","autofocus","autoplay","checked","controls","default","disabled","formnovalidate","indeterminate","inert","ismap","loop","multiple","muted","nomodule","novalidate","open","playsinline","readonly","required","reversed","seamless","selected","webkitdirectory","defer","disablepictureinpicture","disableremoteplayback"];var L_=[...nf,"formNoValidate","isMap","noModule","playsInline","readOnly","value","volume","defaultValue","defaultChecked","srcObject","noValidate","allowFullscreen","disablePictureInPicture","disableRemotePlayback"];var of=["touchstart","touchmove"];function Pl(e){return of.includes(e)}var sf=["$state","$state.raw","$derived","$derived.by"],O_=[...sf,"$state.eager","$state.snapshot","$props","$props.id","$bindable","$effect","$effect.pre","$effect.tracking","$effect.root","$effect.pending","$inspect","$inspect().with","$inspect.trace","$host"];var Di=Symbol("events"),bs=new Set,po=new Set;function Ul(e,t,r,n={}){function o(s){if(n.capture||vo.call(t,s),!s.cancelBubble)return fr(()=>r?.call(this,s))}return e.startsWith("pointer")||e.startsWith("touch")||e==="wheel"?(o.__removed=!1,Ze(()=>{o.__removed||t.addEventListener(e,o,n)})):t.addEventListener(e,o,n),o}function Ut(e,t,r,n,o){var s={capture:n,passive:o},a=Ul(e,t,r,s);(t===document.body||t===window||t===document||t instanceof HTMLMediaElement)&&xt(()=>{a.__removed=!0,t.removeEventListener(e,a,s)})}function it(e,t,r){(t[Di]??={})[e]=r}function Ar(e){for(var t=0;t<e.length;t++)bs.add(e[t]);for(var r of po)r(e)}var $s=null,ys=!1;function vo(e){var t=this,r=t.ownerDocument,n=e.type,o=e.composedPath?.()||[],s=o[0]||e.target;$s=e,ys||(ys=!0,setTimeout(()=>{ys=!1,$s=null}));var a=0,l=$s===e&&e[Di];if(l){var d=o.indexOf(l);if(d!==-1&&(t===document||t===window)){e[Di]=t;return}var f=o.indexOf(t);if(f===-1)return;d<=f&&(a=d)}if(s=o[a]||e.target,s!==t){dt(e,"currentTarget",{configurable:!0,get(){return s||r}});var v=U,h=O;Qe(null),ut(null);try{for(var u,p=[];s!==null&&s!==t;){try{var g=s[Di]?.[n];g!=null&&(!s.disabled||e.target===s)&&g.call(s,e)}catch(_){u?p.push(_):u=_}if(e.cancelBubble)break;a++,s=a<o.length?o[a]:null}if(u){for(let _ of p)queueMicrotask(()=>{throw _});throw u}}finally{e[Di]=t,delete e.currentTarget,Qe(v),ut(h)}}}var lf=globalThis?.window?.trustedTypes&&globalThis.window.trustedTypes.createPolicy("svelte-trusted-html",{createHTML:e=>e});function Vl(e){return lf?.createHTML(e)??e}function ws(e){var t=Ir("template");return t.innerHTML=Vl(e.replaceAll("<!>","<!---->")),t.content}function Nr(e,t){var r=O;r.nodes===null&&(r.nodes={start:e,end:t,a:null,t:null})}function ee(e,t){var r=(t&1)!==0,n=(t&2)!==0,o,s=!e.startsWith("<!>");return()=>{if(P)return Nr(K,null),K;o===void 0&&(o=ws(s?e:"<!>"+e),r||(o=wt(o)));var a=n||Ti?document.importNode(o,!0):o.cloneNode(!0);if(r){var l=wt(a),d=a.lastChild;Nr(l,d)}else Nr(a,a);return a}}function Oe(){if(P)return Nr(K,null),K;var e=document.createDocumentFragment(),t=document.createComment(""),r=rt();return e.append(t,r),Nr(t,r),e}function I(e,t){if(P){var r=O;((r.f&32768)===0||r.nodes.end===null)&&(r.nodes.end=K),$t();return}e!==null&&e.before(t)}function ho(e){let t=0,r=pt(0),n;return w&&Ee(r,"createSubscriber version"),()=>{sn()&&(i(r),Nt(()=>(t===0&&(n=L(()=>e(()=>et(r)))),t+=1,()=>{Ze(()=>{t-=1,t===0&&(n?.(),n=void 0,et(r))})})))}}var pf=589824;function Cs(e,t,r,n){new Es(e,t,r,n)}var Es=class{parent;is_pending=!1;transform_error;#e;#t=P?K:null;#r;#n;#i;#o=null;#s=null;#l=null;#a=null;#u=0;#c=0;#f=!1;#p=new Set;#g=new Set;#d=null;#b=ho(()=>(this.#d=pt(this.#u),w&&Ee(this.#d,"$effect.pending()"),()=>{this.#d=null}));constructor(t,r,n,o){this.#e=t,this.#r=r,this.#n=s=>{var a=O;a.b=this,a.f|=128,n(s)},this.parent=O.b,this.transform_error=o??this.parent?.transform_error??(s=>s),this.#i=Ht(()=>{if(P){let s=on(this.#t);$t();let a=s==="[!";if(s.startsWith("[?")){let d=JSON.parse(s.slice("[?".length));this.#_(d)}else a?this.#x():this.#w()}else this.#h()},pf),P&&(this.#e=K)}#w(){try{this.#o=nt(()=>this.#n(this.#e))}catch(t){this.error(t)}}#_(t){let r=this.#r.failed,{reset:n,invoke_onerror:o}=this.#y(t);Ze(o),r&&(this.#l=nt(()=>{r(this.#e,()=>t,()=>n)}))}#y(t){var r=!1,n=!1;let o=()=>{if(!this.#v()){if(r){La();return}r=!0,n&&el(),this.#l!==null&&Pr(this.#l,()=>{this.#l=null}),this.#m(()=>{this.#h()})}};return{reset:o,invoke_onerror:()=>{if(!this.#v())try{n=!0,this.#r.onerror?.(t,o),n=!1}catch(a){Yt(a,this.#i&&this.#i.parent)}}}}#v(){return(this.#i.f&33570816)!==0}#x(){let t=this.#r.pending;t&&(this.is_pending=!0,this.#s=nt(()=>t(this.#e)),Ze(()=>{if(!this.#v()){var r=this.#a=document.createDocumentFragment(),n=rt(),o=!1;if(r.append(n),this.#o=this.#m(()=>{try{return nt(()=>this.#n(n))}catch(s){try{this.error(s),o=!0}catch(a){Yt(a,this.#i.parent)}return null}}),this.#o===null){this.#a=null,o&&this.#$(Z);return}this.#c===0&&(this.#e.before(r),this.#a=null,Pr(this.#s,()=>{this.#s=null}),this.#$(Z))}}))}#h(){try{if(this.is_pending=this.has_pending_snippet(),this.#c=0,this.#u=0,this.#o=nt(()=>{this.#n(this.#e)}),this.#c>0){var t=this.#a=document.createDocumentFragment();Jn(this.#o,t);let r=this.#r.pending;this.#s=nt(()=>r(this.#e))}else this.#$(Z)}catch(r){this.error(r)}}#$(t){this.is_pending=!1,t.transfer_effects(this.#p,this.#g)}defer_effect(t){eo(t,this.#p,this.#g)}is_rendered(){return!this.is_pending&&(!this.parent||this.parent.is_rendered())}has_pending_snippet(){return!!this.#r.pending}#m(t){var r=O,n=U,o=re;ut(this.#i),Qe(this.#i),qr(this.#i.ctx);try{return Qt.ensure(),t()}finally{ut(r),Qe(n),qr(o)}}#E(t,r){if(!this.has_pending_snippet()){this.parent&&this.parent.#E(t,r);return}this.#c+=t,this.#c===0&&(this.#$(r),this.#s&&Pr(this.#s,()=>{this.#s=null}),this.#a&&(this.#e.before(this.#a),this.#a=null))}update_pending_count(t,r){this.#E(t,r),this.#u+=t,!(!this.#d||this.#f)&&(this.#f=!0,Ze(()=>{this.#f=!1,this.#d&&Dr(this.#d,this.#u)}))}get_effect_pending(){return this.#b(),i(this.#d)}error(t){if(t===Kt||!this.#r.onerror&&!this.#r.failed)throw t;Z?.is_fork?(this.#o&&Z.skip_effect(this.#o),this.#s&&Z.skip_effect(this.#s),this.#l&&Z.skip_effect(this.#l),Z.oncommit(()=>{this.#v()||this.#C(t)})):this.#C(t)}#C(t){this.#o&&(Ue(this.#o),this.#o=null),this.#s&&(Ue(this.#s),this.#s=null),this.#l&&(Ue(this.#l),this.#l=null),P&&(be(this.#t),Wo(),be(wr()));let r=this.#r.failed,n=o=>{if(this.#v())return;let{reset:s,invoke_onerror:a}=this.#y(o);a(),r&&!this.#v()&&(this.#l=this.#m(()=>{try{return nt(()=>{var l=O;l.b=this,l.f|=128,r(this.#e,()=>o,()=>s)})}catch(l){return Yt(l,this.#i.parent),null}}))};Ze(()=>{if(!this.#v()){var o;try{o=this.transform_error(t)}catch(s){Yt(s,this.#i&&this.#i.parent);return}o!==null&&typeof o=="object"&&typeof o.then=="function"?o.then(n,s=>Yt(s,this.#i&&this.#i.parent)):n(o)}})}};var Ts=!0;function go(e,t){var r=t==null?"":typeof t=="object"?`${t}`:t;r!==(e[hi]??=e.nodeValue)&&(e[hi]=r,e.nodeValue=`${r}`)}function Qn(e,t){return Yl(e,t)}function Ds(e,t){co(),t.intro=t.intro??!1;let r=t.target,n=P,o=K;try{for(var s=wt(r);s&&(s.nodeType!==lr||s.data!=="[");)s=yt(s);if(!s)throw Kt;Ge(!0),be(s);let a=Yl(e,{...t,anchor:s});return Ge(!1),a}catch(a){if(a instanceof Error&&a.message.split(`
-`).some(l=>l.startsWith("https://svelte.dev/e/")))throw a;return a!==Kt&&console.warn("Failed to hydrate: ",a),t.recover===!1&&Ga(),co(),yi(r),Ge(!1),Qn(e,t)}finally{Ge(n),be(o)}}var mo=new Map;function Yl(e,{target:t,anchor:r,props:n={},events:o,context:s,intro:a=!0,transformError:l}){co();var d=void 0,f=Tl(()=>{var v=r??t.appendChild(rt());Cs(v,{pending:()=>{}},p=>{Ce({});var g=re;if(s&&(g.c=s),o&&(n.$$events=o),P&&Nr(p,null),Ts=a,d=e(p,n)||_i(),Ts=!0,P&&(O.nodes.end=K,K===null||K.nodeType!==lr||K.data!=="]"))throw vn(),Kt;Te()},l);var h=new Set,u=p=>{for(var g=0;g<p.length;g++){var _=p[g];if(!h.has(_)){h.add(_);var m=Pl(_);for(let x of[t,document]){var y=mo.get(x);y===void 0&&(y=new Map,mo.set(x,y));var b=y.get(_);b===void 0?(x.addEventListener(_,vo,{passive:m}),y.set(_,1)):y.set(_,b+1)}}}};return u(On(bs)),po.add(u),()=>{for(var p of h)for(let m of[t,document]){var g=mo.get(m),_=g.get(p);--_==0?(m.removeEventListener(p,vo),g.delete(p),g.size===0&&mo.delete(m)):g.set(p,_)}po.delete(u),v!==r&&v.parentNode?.removeChild(v)}});return ks.set(d,f),d}var ks=new WeakMap;function Si(e,t){let r=ks.get(e);return r?(ks.delete(e),r(t)):(w&&Ma(),Promise.resolve())}var Mr=class{anchor;#e=new Map;#t=new Map;#r=new Map;#n=new Set;#i=!0;constructor(t,r=!0){this.anchor=t,this.#i=r}#o=t=>{if(this.#e.has(t)){var r=this.#e.get(t),n=this.#t.get(r);if(n)Zn(n),this.#n.delete(r);else{var o=this.#r.get(r);o&&(Zn(o.effect),this.#t.set(r,o.effect),this.#r.delete(r),w&&(o.fragment.lastChild[zo]=this.anchor),o.fragment.lastChild.remove(),this.anchor.before(o.fragment),n=o.effect)}for(let[s,a]of this.#e){if(this.#e.delete(s),s===t)break;let l=this.#r.get(a);l&&(Ue(l.effect),this.#r.delete(a))}for(let[s,a]of this.#t){if(s===r||this.#n.has(s))continue;let l=()=>{if(Array.from(this.#e.values()).includes(s)){var f=document.createDocumentFragment();Jn(a,f),f.append(rt()),this.#r.set(s,{effect:a,fragment:f})}else Ue(a);this.#n.delete(s),this.#t.delete(s)};this.#i||!n?(this.#n.add(s),Pr(a,l,!1)):l()}}};#s=t=>{this.#e.delete(t);let r=Array.from(this.#e.values());for(let[n,o]of this.#r)r.includes(n)||(Ue(o.effect),this.#r.delete(n))};ensure(t,r){var n=Z,o=fo();if(r&&!this.#t.has(t)&&!this.#r.has(t))if(o){var s=document.createDocumentFragment(),a=rt();s.append(a),this.#r.set(t,{effect:nt(()=>r(a)),fragment:s})}else this.#t.set(t,nt(()=>r(this.anchor)));if(this.#e.set(n,t),o){for(let[l,d]of this.#t)l===t?n.unskip_effect(d):n.skip_effect(d);for(let[l,d]of this.#r)l===t?n.unskip_effect(d.effect):n.skip_effect(d.effect);n.oncommit(this.#o),n.ondiscard(this.#s)}else P&&(this.anchor=K),this.#o(n)}};function Ye(e,t,r=!1){var n;P&&(n=K,$t());var o=new Mr(e),s=r?65536:0;function a(l,d){if(P){var f=on(n);if(l!==parseInt(f.substring(1))){var v=wr();be(v),o.anchor=v,Ge(!1),o.ensure(l,d),Ge(!0);return}}o.ensure(l,d)}Ht(()=>{var l=!1;t((d,f=0)=>{l=!0,a(f,d)}),l||a(-1,null)},s)}var pb=Symbol("NaN");function ot(e,t){return t}function $f(e,t,r){for(var n=[],o=t.length,s,a=t.length,l=0;l<o;l++){let h=t[l];Pr(h,()=>{if(s){if(s.pending.delete(h),s.done.add(h),s.pending.size===0){var u=e.outrogroups;Ss(e,On(s.done)),u.delete(s),u.size===0&&(e.outrogroups=null)}}else a-=1},!1)}if(a===0){var d=n.length===0&&r!==null&&e.pending.size===0;if(d){var f=r,v=f.parentNode;yi(v),v.append(f),e.items.clear()}Ss(e,t,!d)}else s={pending:new Set(t),done:new Set},(e.outrogroups??=new Set).add(s)}function Ss(e,t,r=!0){var n;if(e.pending.size>0){n=new Set;for(let a of e.pending.values())for(let l of a)n.add(e.items.get(l).e)}for(var o=0;o<t.length;o++){var s=t[o];if(n?.has(s)){s.f|=33554432;let a=document.createDocumentFragment();Jn(s,a)}else Ue(t[o],r)}}var ql;function Ae(e,t,r,n,o,s=null){var a=e,l=new Map,d=(t&4)!==0;if(d){var f=e;a=P?be(wt(f)):f.appendChild(rt())}P&&$t();var v=null,h=_n(()=>{var b=r();return Ur(b)?b:b==null?[]:On(b)});w&&Ee(h,"{#each ...}");var u=new Map,p=!0;function g(b){if((y.effect.f&16384)===0){y.pending.delete(b);var x=i(h);y.fallback=v,yf(y,x,a,t,n),v!==null&&(x.length===0?(v.f&33554432)===0?Zn(v):(v.f^=33554432,Ai(v,null,a)):Pr(v,()=>{v=null}))}}function _(b){y.pending.delete(b)}var m=Ht(()=>{var b=i(h),x=b.length;let E=!1;if(P){var D=on(a)==="[!";D!==(x===0)&&(a=wr(),be(a),Ge(!1),E=!0)}for(var $=new Set,k=Z,A=fo(),N=0;N<x;N+=1){P&&K.nodeType===lr&&K.data==="]"&&(a=K,E=!0,Ge(!1));var G=b[N],se=n(G,N);if(w){var X=n(G,N);se!==X&&Ua(String(N),String(se),String(X))}var R=p?null:l.get(se);R?(R.v&&Dr(R.v,G),R.i&&Dr(R.i,N),A&&k.unskip_effect(R.e)):(R=bf(l,p?a:ql??=rt(),G,se,N,o,t,r),p||(R.e.f|=33554432),l.set(se,R)),$.add(se)}if(x===0&&s&&!v&&(p?v=nt(()=>s(a)):(v=nt(()=>s(ql??=rt())),v.f|=33554432)),x>$.size&&(w?wf(b,n):Xo("","","")),P&&x>0&&be(wr()),!p)if(u.set(k,$),A){for(let[W,Q]of l)$.has(W)||k.skip_effect(Q.e);k.oncommit(g),k.ondiscard(_)}else g(k);E&&Ge(!0),i(h)}),y={effect:m,flags:t,items:l,pending:u,outrogroups:null,fallback:v};p=!1,P&&(a=K)}function Ri(e){for(;e!==null&&(e.f&32)===0;)e=e.next;return e}function yf(e,t,r,n,o){var s=(n&8)!==0,a=t.length,l=e.items,d=Ri(e.effect.first),f,v=null,h,u=[],p=[],g,_,m,y;if(s)for(y=0;y<a;y+=1)g=t[y],_=o(g,y),m=l.get(_).e,(m.f&33554432)===0&&(m.nodes?.a?.measure(),(h??=new Set).add(m));for(y=0;y<a;y+=1){if(g=t[y],_=o(g,y),m=l.get(_).e,e.outrogroups!==null)for(let G of e.outrogroups)G.pending.delete(m),G.done.delete(m);if((m.f&8192)!==0&&(Zn(m),s&&(m.nodes?.a?.unfix(),(h??=new Set).delete(m))),(m.f&33554432)!==0)if(m.f^=33554432,m===d)Ai(m,null,r);else{var b=v?v.next:d;m===e.effect.last&&(e.effect.last=m.prev),m.prev&&(m.prev.next=m.next),m.next&&(m.next.prev=m.prev),fn(e,v,m),fn(e,m,b),Ai(m,b,r),v=m,u=[],p=[],d=Ri(v.next);continue}if(m!==d){if(f!==void 0&&f.has(m)){if(u.length<p.length){var x=p[0],E;v=x.prev;var D=u[0],$=u[u.length-1];for(E=0;E<u.length;E+=1)Ai(u[E],x,r);for(E=0;E<p.length;E+=1)f.delete(p[E]);fn(e,D.prev,$.next),fn(e,v,D),fn(e,$,x),d=x,v=$,y-=1,u=[],p=[]}else f.delete(m),Ai(m,d,r),fn(e,m.prev,m.next),fn(e,m,v===null?e.effect.first:v.next),fn(e,v,m),v=m;continue}for(u=[],p=[];d!==null&&d!==m;)(f??=new Set).add(d),p.push(d),d=Ri(d.next);if(d===null)continue}(m.f&33554432)===0&&u.push(m),v=m,d=Ri(m.next)}if(e.outrogroups!==null){for(let G of e.outrogroups)G.pending.size===0&&(Ss(e,On(G.done)),e.outrogroups?.delete(G));e.outrogroups.size===0&&(e.outrogroups=null)}if(d!==null||f!==void 0){var k=[];if(f!==void 0)for(m of f)(m.f&8192)===0&&k.push(m);for(;d!==null;)(d.f&8192)===0&&d!==e.fallback&&k.push(d),d=Ri(d.next);var A=k.length;if(A>0){var N=(n&4)!==0&&a===0?r:null;if(s){for(y=0;y<A;y+=1)k[y].nodes?.a?.measure();for(y=0;y<A;y+=1)k[y].nodes?.a?.fix()}$f(e,k,N)}}s&&Ze(()=>{if(h!==void 0)for(m of h)m.nodes?.a?.apply()})}function bf(e,t,r,n,o,s,a,l){var d=(a&1)!==0?(a&16)===0?xn(r,!1,!1):pt(r):null,f=(a&2)!==0?pt(o):null;return w&&d&&(d.trace=()=>{l()[f?.v??o]}),{v:d,i:f,e:nt(()=>(s(t,d??r,f??o,l),()=>{e.delete(n)}))}}function Ai(e,t,r){if(e.nodes)for(var n=e.nodes.start,o=e.nodes.end,s=t&&(t.f&33554432)===0?t.nodes.start:r;n!==null;){var a=yt(n);if(s.before(n),n===o)return;n=a}}function fn(e,t,r){t===null?e.effect.first=r:t.next=r,r===null?e.effect.last=t:r.prev=t}function wf(e,t){let r=new Map,n=e.length;for(let o=0;o<n;o++){let s=t(e[o],o);if(r.has(s)){let a=String(r.get(s)),l=String(o),d=String(s);d.startsWith("[object ")&&(d=null),Xo(a,l,d)}r.set(s,o)}}function st(e,t,...r){var n=new Mr(e);Ht(()=>{let o=t()??null;w&&o==null&&Wa(),n.ensure(o,o&&(s=>o(s,...r)))},65536)}function Ni(e,t,r){var n;P&&(n=K,$t());var o=new Mr(e);Ht(()=>{var s=t()??null;if(P){var a=on(n),l=a==="[",d=s!==null;if(l!==d){var f=wr();be(f),o.anchor=f,Ge(!1),o.ensure(s,s&&(v=>r(v,s))),Ge(!0);return}}o.ensure(s,s&&(v=>r(v,s)))},65536)}function Pe(e,t){var r=void 0,n;gs(()=>{r!==(r=t())&&(n&&(Ue(n),n=null),r&&(n=nt(()=>{Gt(()=>r(e))})))})}function Wl(e){var t,r,n="";if(typeof e=="string"||typeof e=="number")n+=e;else if(typeof e=="object")if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(r=Wl(e[t]))&&(n&&(n+=" "),n+=r)}else for(r in e)e[r]&&(n&&(n+=" "),n+=r);return n}function jl(){for(var e,t,r=0,n="",o=arguments.length;r<o;r++)(e=arguments[r])&&(t=Wl(e))&&(n&&(n+=" "),n+=t);return n}function rr(e){return typeof e=="object"?jl(e):e??""}var Xl=[...` 	
-\r\f\xA0\v\uFEFF`];function Zl(e,t,r){var n=e==null?"":""+e;if(t&&(n=n?n+" "+t:t),r){for(var o of Object.keys(r))if(r[o])n=n?n+" "+o:o;else if(n.length)for(var s=o.length,a=0;(a=n.indexOf(o,a))>=0;){var l=a+s;(a===0||Xl.includes(n[a-1]))&&(l===n.length||Xl.includes(n[l]))?n=(a===0?"":n.substring(0,a))+n.substring(l+1):a=l}}return n===""?null:n}function Kl(e,t=!1){var r=t?" !important;":";",n="";for(var o of Object.keys(e)){var s=e[o];s!=null&&s!==""&&(n+=" "+o+": "+s+r)}return n}function Rs(e){return e[0]!=="-"||e[1]!=="-"?e.toLowerCase():e}function Jl(e,t){if(t){var r="",n,o;if(Array.isArray(t)?(n=t[0],o=t[1]):n=t,e){e=String(e).replaceAll(/\/\*.*?\*\//g,"").trim();var s=!1,a=0,l=!1,d=[];n&&d.push(...Object.keys(n).map(Rs)),o&&d.push(...Object.keys(o).map(Rs));var f=0,v=-1;let _=e.length;for(var h=0;h<_;h++){var u=e[h];if(l?u==="/"&&e[h-1]==="*"&&(l=!1):s?s===u&&(s=!1):u==="/"&&e[h+1]==="*"?l=!0:u==='"'||u==="'"?s=u:u==="("?a++:u===")"&&a--,!l&&s===!1&&a===0){if(u===":"&&v===-1)v=h;else if(u===";"||h===_-1){if(v!==-1){var p=Rs(e.substring(f,v).trim());if(!d.includes(p)){u!==";"&&h++;var g=e.substring(f,h).trim();r+=" "+g+";"}}f=h+1,v=-1}}}}return n&&(r+=Kl(n)),o&&(r+=Kl(o,!0)),r=r.trim(),r===""?null:r}return e==null?null:String(e)}function B(e,t,r,n,o,s){var a=e[pi];if(P||a!==r||a===void 0){var l=Zl(r,n,s);(!P||l!==e.getAttribute("class"))&&(l==null?e.removeAttribute("class"):t?e.className=l:e.setAttribute("class",l)),e[pi]=r}else if(s&&o!==s)for(var d in s){var f=!!s[d];(o==null||f!==!!o[d])&&e.classList.toggle(d,f)}return s}function As(e,t={},r,n){for(var o in r){var s=r[o];t[o]!==s&&(r[o]==null?e.style.removeProperty(o):e.style.setProperty(o,s,n))}}function gr(e,t,r,n){var o=e[vi];if(P||o!==t){var s=Jl(t,n);(!P||s!==e.getAttribute("style"))&&(s==null?e.removeAttribute("style"):e.style.cssText=s),e[vi]=t}else n&&(Array.isArray(n)?(As(e,r?.[0],n[0]),As(e,r?.[1],n[1],"important")):As(e,r,n));return n}var Mf=Symbol("class"),Lf=Symbol("style"),Of=Symbol("is custom element"),If=Symbol("is html"),Pf=Go?"link":"LINK";function Fe(e,t,r,n){var o=Ff(e);if(P&&(o[t]=e.getAttribute(t),t==="src"||t==="srcset"||t==="href"&&e.nodeName===Pf)){n||Uf(e,t,r??"");return}o[t]!==(o[t]=r)&&(t==="loading"&&(e[ka]=r),r==null?e.removeAttribute(t):typeof r!="string"&&Hf(e).has(t)?e[t]=r:e.setAttribute(t,r))}function Ff(e){return e[Gi]??={[Of]:e.nodeName.includes("-"),[If]:e.namespaceURI===Wi}}var Ql=new Map;function Hf(e){var t=e.getAttribute("is")||e.nodeName,r=Ql.get(t);if(r)return r;Ql.set(t,r=new Set);for(var n,o=e,s=Element.prototype;s!==o;){n=Vo(o);for(var a in n)n[a].set&&a!=="innerHTML"&&a!=="textContent"&&a!=="innerText"&&r.add(a);o=In(o)}return r}function Uf(e,t,r){w&&(t==="srcset"&&Vf(e,r)||Ns(e.getAttribute(t)??"",r)||Na(t,e.outerHTML.replace(e.innerHTML,e.innerHTML&&"..."),String(r)))}function Ns(e,t){return e===t?!0:new URL(e,document.baseURI).href===new URL(t,document.baseURI).href}function ed(e){return e.split(",").map(t=>t.trim().split(" ").filter(Boolean))}function Vf(e,t){var r=ed(e.srcset),n=ed(t);return n.length===r.length&&n.every(([o,s],a)=>s===r[a][1]&&(Ns(r[a][0],o)||Ns(o,r[a][0])))}var Ms=class e{#e=new WeakMap;#t;#r;static entries=new WeakMap;constructor(t){this.#r=t}observe(t,r){var n=this.#e.get(t)||new Set;return n.add(r),this.#e.set(t,n),this.#n().observe(t,this.#r),()=>{var o=this.#e.get(t);o.delete(r),o.size===0&&(this.#e.delete(t),this.#t.unobserve(t))}}#n(){return this.#t??(this.#t=new ResizeObserver(t=>{for(var r of t){e.entries.set(r.target,r);for(var n of this.#e.get(r.target)||[])n(r)}}))}};var Bf=new Ms({box:"border-box"});function $o(e,t,r){var n=Bf.observe(e,()=>r(e[t]));Gt(()=>(L(()=>r(e[t])),n))}function Ls(e,t){return e===t||e?.[Ot]===t}function nr(e=_i(),t,r,n){var o=re.r,s=O;return Gt(()=>{var a,l;return Nt(()=>{a=l,l=n?.()||[],L(()=>{Ls(r(...l),e)||(t(e,...l),a&&Ls(r(...a),e)&&t(null,...a))})}),()=>{let d=s;for(;d!==o&&d.parent!==null&&d.parent.f&33554432;)d=d.parent;let f=()=>{l&&Ls(r(...l),e)&&t(null,...l)},v=d.teardown;d.teardown=()=>{f(),v?.()}}}),e}var yo=!1,NC=Symbol("unmounted");function Os(e){var t=yo;try{return yo=!1,[e(),yo]}finally{yo=t}}var Xf={get(e,t){if(!e.exclude.has(t))return e.props[t]},set(e,t){return w&&Xa(`${e.name}.${String(t)}`),!1},getOwnPropertyDescriptor(e,t){if(!e.exclude.has(t)&&t in e.props)return{enumerable:!0,configurable:!0,value:e.props[t]}},has(e,t){return e.exclude.has(t)?!1:t in e.props},ownKeys(e){return Reflect.ownKeys(e.props).filter(t=>!e.exclude.has(t))}};function Is(e,t,r){return new Proxy(w?{props:e,exclude:t,name:r}:{props:e,exclude:t},Xf)}function ge(e,t,r,n){var o=!Yr||(r&2)!==0,s=(r&8)!==0,a=(r&16)!==0,l=n,d=!0,f=void 0,v=()=>a&&o?(f??=ln(n),i(f)):(d&&(d=!1,l=a?L(n):n),l);let h;if(s){var u=Ot in e||ui in e;h=Vt(e,t)?.set??(u&&t in e?E=>e[t]=E:void 0)}var p,g=!1;s?[p,g]=Os(()=>e[t]):p=e[t],p===void 0&&n!==void 0&&(p=v(),h&&(o&&ja(t),h(p)));var _;if(o?_=()=>{var E=e[t];return E===void 0?v():(d=!0,E)}:_=()=>{var E=e[t];return E!==void 0&&(l=void 0),E===void 0?l:E},o&&(r&4)===0)return _;if(h){var m=e.$$legacy;return(function(E,D){return arguments.length>0?((!o||!D||m||g)&&h(D?_():E),E):_()})}var y=!1,b=((r&1)!==0?ln:_n)(()=>(y=!1,_()));w&&(b.label=t),s&&i(b);var x=O;return(function(E,D){if(arguments.length>0){let $=D?i(b):o&&s?tt(E):E;return C(b,$),y=!0,l!==void 0&&(l=$),E}return Jt&&y||(x.f&16384)!==0?b.v:i(b)})}function rd(e){return new Ps(e)}var Ps=class{#e;#t;constructor(t){var r=new Map,n=(s,a)=>{var l=xn(a,!1,!1);return r.set(s,l),l};let o=new Proxy({...t.props||{},$$events:{}},{get(s,a){return i(r.get(a)??n(a,Reflect.get(s,a)))},has(s,a){return a===ui?!0:(i(r.get(a)??n(a,Reflect.get(s,a))),Reflect.has(s,a))},set(s,a,l){return C(r.get(a)??n(a,l),l),Reflect.set(s,a,l)}});this.#t=(t.hydrate?Ds:Qn)(t.component,{target:t.target,anchor:t.anchor,props:o,context:t.context,intro:t.intro??!1,recover:t.recover,transformError:t.transformError}),!ct&&(!t?.props?.$$host||t.sync===!1)&&dn(),this.#e=o.$$events;for(let s of Object.keys(this.#t))s==="$set"||s==="$destroy"||s==="$on"||dt(this,s,{get(){return this.#t[s]},set(a){this.#t[s]=a},enumerable:!0});this.#t.$set=s=>{Object.assign(o,s)},this.#t.$destroy=()=>{Si(this.#t)}}$set(t){this.#t.$set(t)}$on(t,r){this.#e[t]=this.#e[t]||[];let n=(...o)=>r.call(this,...o);return this.#e[t].push(n),()=>{this.#e[t]=this.#e[t].filter(o=>o!==n)}}$destroy(){this.#t.$destroy()}};var nu;typeof HTMLElement=="function"&&(nu=class extends HTMLElement{$$ctor;$$s;$$c;$$cn=!1;$$d={};$$r=!1;$$p_d={};$$l={};$$l_u=new Map;$$me;$$shadowRoot=null;constructor(e,t,r){super(),this.$$ctor=e,this.$$s=t,r&&(this.$$shadowRoot=this.attachShadow(r))}addEventListener(e,t,r){if(this.$$l[e]=this.$$l[e]||[],this.$$l[e].push(t),this.$$c){let n=this.$$c.$on(e,t);this.$$l_u.set(t,n)}super.addEventListener(e,t,r)}removeEventListener(e,t,r){if(super.removeEventListener(e,t,r),this.$$c){let n=this.$$l_u.get(t);n&&(n(),this.$$l_u.delete(t))}}async connectedCallback(){if(this.$$cn=!0,!this.$$c){let e=function(n){return o=>{let s=Ir("slot");n!=="default"&&(s.name=n),I(o,s)}};if(await Promise.resolve(),!this.$$cn||this.$$c)return;let t={},r=iu(this);for(let n of this.$$s)n in r&&(n==="default"&&!this.$$d.children?(this.$$d.children=e(n),t.default=!0):t[n]=e(n));for(let n of this.attributes){let o=this.$$g_p(n.name);o in this.$$d||(this.$$d[o]=Fs(o,n.value,this.$$p_d,"toProp"))}for(let n in this.$$p_d)!(n in this.$$d)&&this[n]!==void 0&&(this.$$d[n]=this[n],delete this[n]);this.$$c=rd({component:this.$$ctor,target:this.$$shadowRoot||this,props:{...this.$$d,$$slots:t,$$host:this}}),this.$$me=ms(()=>{Nt(()=>{this.$$r=!0;for(let n of Uo(this.$$c)){if(!this.$$p_d[n]?.reflect)continue;this.$$d[n]=this.$$c[n];let o=Fs(n,this.$$d[n],this.$$p_d,"toAttribute");o==null?this.removeAttribute(this.$$p_d[n].attribute||n):this.setAttribute(this.$$p_d[n].attribute||n,o)}this.$$r=!1})});for(let n in this.$$l)for(let o of this.$$l[n]){let s=this.$$c.$on(n,o);this.$$l_u.set(o,s)}this.$$l={}}}attributeChangedCallback(e,t,r){this.$$r||(e=this.$$g_p(e),this.$$d[e]=Fs(e,r,this.$$p_d,"toProp"),this.$$c?.$set({[e]:this.$$d[e]}))}disconnectedCallback(){this.$$cn=!1,Promise.resolve().then(()=>{!this.$$cn&&this.$$c&&(this.$$c.$destroy(),this.$$me(),this.$$c=void 0)})}$$g_p(e){return Uo(this.$$p_d).find(t=>this.$$p_d[t].attribute===e||!this.$$p_d[t].attribute&&t.toLowerCase()===e)||e}});function Fs(e,t,r,n){let o=r[e]?.type;if(t=o==="Boolean"&&typeof t!="boolean"?t!=null:t,!n||!r[e])return t;if(n==="toAttribute")switch(o){case"Object":case"Array":return t==null?null:JSON.stringify(t);case"Boolean":return t?"":null;case"Number":return t??null;default:return t}else switch(o){case"Object":case"Array":return t&&JSON.parse(t);case"Boolean":return t;case"Number":return t!=null?+t:t;default:return t}}function iu(e){let t={};return e.childNodes.forEach(r=>{t[r.slot||"default"]=!0}),t}if(w){let e=function(t){if(!(t in globalThis)){let r;Object.defineProperty(globalThis,t,{configurable:!0,get:()=>{if(r!==void 0)return r;Ka(t)},set:n=>{r=n}})}};e("$state"),e("$effect"),e("$derived"),e("$inspect"),e("$props"),e("$bindable")}function nd(){return U===null&&za(),(U.ac??=new AbortController).signal}function Mi(e){re===null&&mi("onMount"),Yr&&re.l!==null?su(re).m.push(e):Et(()=>{let t=L(e);if(typeof t=="function")return t})}function su(e){var t=e.l;return t.u??={a:[],b:[],m:[]}}typeof window<"u"&&((window.__svelte??={}).v??=new Set).add("5");var ei=class extends Map{#e=new Map;#t=z(0);#r=z(0);#n=vr||-1;constructor(t){if(super(),w&&(t=new Map(t),Ee(this.#t,"SvelteMap version"),Ee(this.#r,"SvelteMap.size")),t){for(var[r,n]of t)super.set(r,n);this.#r.v=super.size}}#i(t){return vr===this.#n?z(t):pt(t)}has(t){var r=this.#e,n=r.get(t);if(n===void 0)if(super.has(t))n=this.#i(0),w&&Ee(n,`SvelteMap get(${Vn(t)})`),r.set(t,n);else return i(this.#t),!1;return i(n),!0}forEach(t,r){this.#o(),super.forEach(t,r)}get(t){var r=this.#e,n=r.get(t);if(n===void 0)if(super.has(t))n=this.#i(0),w&&Ee(n,`SvelteMap get(${Vn(t)})`),r.set(t,n);else{i(this.#t);return}return i(n),super.get(t)}getOrInsert(t,r){return super.has(t)||this.set(t,r),this.get(t)}getOrInsertComputed(t,r){return super.has(t)||this.set(t,r(t)),this.get(t)}set(t,r){var n=this.#e,o=n.get(t),s=super.get(t),a=super.set(t,r),l=this.#t;if(o===void 0)o=this.#i(0),w&&Ee(o,`SvelteMap get(${Vn(t)})`),n.set(t,o),C(this.#r,super.size),et(l);else if(s!==r){et(o);var d=l.reactions===null?null:new Set(l.reactions),f=d===null||!o.reactions?.every(v=>d.has(v));f&&et(l)}return a}delete(t){var r=this.#e,n=r.get(t),o=super.delete(t);return n!==void 0&&(r.delete(t),C(n,-1)),o&&(C(this.#r,super.size),et(this.#t)),o}clear(){if(super.size!==0){super.clear();var t=this.#e;C(this.#r,0);for(var r of t.values())C(r,-1);et(this.#t),t.clear()}}#o(){i(this.#t);var t=this.#e;if(this.#r.v!==t.size){for(var r of super.keys())if(!t.has(r)){var n=this.#i(0);w&&Ee(n,`SvelteMap get(${Vn(r)})`),t.set(r,n)}}for([,n]of this.#e)i(n)}keys(){return i(this.#t),super.keys()}values(){return this.#o(),super.values()}entries(){return this.#o(),super.entries()}[Symbol.iterator](){return this.entries()}get size(){return i(this.#r),super.size}};var id=Symbol("replace"),bo=class extends URLSearchParams{#e=w?Ee(z(0),"SvelteURLSearchParams version"):z(0);#t=od();#r=!1;#n(){if(!this.#t||this.#r)return;this.#r=!0;let t=super.toString();this.#t.search=t&&`?${t}`,this.#r=!1}[id](t){if(!this.#r&&t.toString()!==super.toString()){this.#r=!0;for(let r of[...super.keys()])super.delete(r);for(let[r,n]of t)super.append(r,n);et(this.#e),this.#r=!1}}append(t,r){super.append(t,r),this.#n(),et(this.#e)}delete(t,r){var n=super.has(t,r);super.delete(t,r),n&&(this.#n(),et(this.#e))}get(t){return i(this.#e),super.get(t)}getAll(t){return i(this.#e),super.getAll(t)}has(t,r){return i(this.#e),super.has(t,r)}keys(){return i(this.#e),super.keys()}forEach(t,r){i(this.#e),super.forEach(t,r)}set(t,r){var n=super.getAll(t);super.set(t,r);var o=super.getAll(t);(n.length!==o.length||n.some((s,a)=>s!==o[a]))&&(this.#n(),et(this.#e))}sort(){super.sort(),this.#n(),et(this.#e)}toString(){return i(this.#e),super.toString()}values(){return i(this.#e),super.values()}entries(){return i(this.#e),super.entries()}[Symbol.iterator](){return this.entries()}get size(){return i(this.#e),super.size}};var lu=null;function od(){return lu}function ta(e,t=void 0){return function(r){return r.key==="Enter"||r.key===" "&&!r.preventDefault()?e.call(t,r):void 0}}function Lt(e,t){return t?null:r=>{typeof e=="string"?r.innerText=e:e?.domNodes?r.replaceChildren(...e.domNodes):e?.html&&(r.innerHTML=e.html)}}function du(e){return t=>{let r=n=>{t&&!t.contains(n.target)&&t.dispatchEvent(new CustomEvent(e+"outside",{detail:{jsEvent:n}}))};return document.addEventListener(e,r,!0),()=>{document.removeEventListener(e,r,!0)}}}function bd(e,t=!1){return r=>{let n,o=new ResizeObserver(s=>{for(let a of s){if(t){let{inlineSize:l}=a.contentBoxSize?.[0]??{inlineSize:a.contentRect.width};if(l===n)continue;n=l}e(r,a)}});return o.observe(r),()=>{o.unobserve(r)}}}function cu(e,t){return r=>{let n=new IntersectionObserver(o=>{for(let s of o)e(r,s)},t);return n.observe(r),()=>{n.unobserve(r)}}}function pe(...e){return Object.assign(...e)}function Tn(e){return Object.keys(e)}function fu(e){return Object.entries(e)}function zs(e,t){return Object.hasOwn(e,t)}function wd(e){return Math.floor(e)}function uu(e){return Math.ceil(e)}function Xr(...e){return Math.min(...e)}function _r(...e){return Math.max(...e)}function pu(){return Symbol("ec")}function Wt(e){return e.length}function Hr(e){return!Wt(e)}function Co(e=new Date){return-e.getTimezoneOffset()}function si(e){return Array.isArray(e)}function Ne(e){return typeof e=="function"}function xd(e){if(typeof e!="object"||e===null)return!1;let t=Object.getPrototypeOf(e);return t===null||t===Object.prototype}function ra(e){return e instanceof Date}function vu(e){return e()}function hu(e){e.forEach(vu)}function mu(){}var To=e=>e;function Ed(){return window.getComputedStyle(document.documentElement).direction==="rtl"}function Gs(e){return t=>t===void 0?void 0:e(t)}var sd=new WeakMap,gu=1;function Cd(e){let t=sd.get(e);return t||(t=gu++,sd.set(e,t)),t}function Td(e){return{url:e.url?.replace(/&+$/,"")||"",method:e.method?.toUpperCase()||"GET",extraParams:e.extraParams??{}}}function Sn(e,t,r,n){return n?{snippet:n,arg:t?.()}:{content:(Ne(e)?e(t?.()):e)??(Ne(r)?r():r)}}var Ws=86400;function $r(e=new Date,t=void 0){return ra(e)?yu(e,t):bu(e,t)}function gt(e){if(typeof e=="number")e={seconds:e};else if(typeof e=="string"){let r=0,n=2;for(let o of e.split(":",3))r+=parseInt(o,10)*Math.pow(60,n--);e={seconds:r}}else ra(e)&&(e={hours:e.getUTCHours(),minutes:e.getUTCMinutes(),seconds:e.getUTCSeconds()});let t=e.weeks||e.week||0;return{years:e.years||e.year||0,months:e.months||e.month||0,days:t*7+(e.days||e.day||0),seconds:(e.hours||e.hour||0)*60*60+(e.minutes||e.minute||0)*60+(e.seconds||e.second||0),inWeeks:!!t}}function Y(e){let t=new Date(Zr(e));return Oi(t,Xs(e)),t}function Le(e,t,r=1){e.setUTCFullYear(e.getUTCFullYear()+r*t.years);let n=e.getUTCMonth()+r*t.months;for(e.setUTCMonth(n),n%=12,n<0&&(n+=12);e.getUTCMonth()!==n;)Dn(e);return e.setUTCDate(e.getUTCDate()+r*t.days),e.setUTCSeconds(e.getUTCSeconds()+r*t.seconds),e}function xo(e,t,r=1){return Le(e,t,-r)}function or(e,t=1){return e.setUTCDate(e.getUTCDate()+t),e}function Dn(e,t=1){return or(e,-t)}function Tt(e){return e.setUTCHours(0,0,0,0),e}function at(e){return new Date(e.getUTCFullYear(),e.getUTCMonth(),e.getUTCDate(),e.getUTCHours(),e.getUTCMinutes(),e.getUTCSeconds())}function ir(e,t=19){return e.toISOString().substring(0,t)}function Zr(e){return e.getTime()}function We(e,...t){return t.every(r=>Zr(e)===Zr(r))}function _u(e,t){let r=t-e.getUTCDay();return e.setUTCDate(e.getUTCDate()+(r>=0?r:r+7)),e}function kd(e,t){let r=t-e.getUTCDay();return e.setUTCDate(e.getUTCDate()+(r<=0?r:r-7)),e}function ad(e){return typeof e=="string"&&e.length<=10}function js(e,t){return e.setUTCHours(t.getUTCHours(),t.getUTCMinutes(),t.getUTCSeconds(),0),e}function He(e){return e.seconds}function Dd(e,t,r){return Le(e,t),Md(e,r,or),e}function Sd(e,t,r){return xo(e,t),Md(e,r,Dn),e}function Rd(e,t){e=Y(e),t===0?e.setUTCDate(e.getUTCDate()+6-e.getUTCDay()):e.setUTCDate(e.getUTCDate()+4-(e.getUTCDay()||7));let r=new Date(Date.UTC(e.getUTCFullYear(),0,1));return Math.ceil(((e-r)/1e3/Ws+1)/7)}function $u(e,t,r,n){return Sn(r,()=>({date:at(t),week:e}),()=>"W"+String(e).padStart(2,"0"),n)}function Ad(e,t={}){let r=e.match(/(?:Z|([+-])(\d{2}):?(\d{2}))$/);if(r)return pe(t,r),r[1]?+(r[1]+"1")*(+r[2]*60+ +r[3]):0}function na(e,t){return t&&e.setUTCMinutes(e.getUTCMinutes()+t),e}var Nd=Symbol("ec");function Oi(e,t){return e[Nd]=t,e}function Xs(e){return e[Nd]}function yu(e,t=void 0){let r=new Date(Date.UTC(e.getFullYear(),e.getMonth(),e.getDate(),e.getHours(),e.getMinutes(),e.getSeconds()));return na(r,t?t-Co(r):0),Oi(r,t??Co(r)),r}function bu(e,t=void 0){let r={},n=Ad(e,r);n!==void 0&&(e=e.substring(0,r.index));let o=e.match(/\d+/g),s=new Date(Date.UTC(+o[0],+o[1]-1,+o[2],+o[3]||0,+o[4]||0,+o[5]||0));return t!==void 0&&n!==void 0&&na(s,t-n),Oi(s,t??n),s}function Md(e,t,r){if(t.length&&t.length<7)for(;t.includes(e.getUTCDay());)r(e)}var ia=pu();function Ld(e,t){e[ia]=t}function wu(e){return!!e?.[ia]}function ri(e){return e[ia]}function Od(e,t,r,n=[]){let o=document.createElement(e);o.className=t,typeof r=="string"?o.innerText=r:r.domNodes?o.replaceChildren(...r.domNodes):r.html&&(o.innerHTML=r.html);for(let s of n)o.setAttribute(...s);return o}function kn(e){return e.getBoundingClientRect()}function ld(e,t){for(;t--;)e=e.parentElement;return e}function ti(e){return kn(e).height}function ni(e,t,r=document,n=[]){n.push(r);for(let o of r.elementsFromPoint(e,t)){if(wu(o))return o;if(o.shadowRoot&&!n.includes(o.shadowRoot)){let s=ni(e,t,o.shadowRoot,n);if(s)return s}}return null}function Li(e,t,r,n){return e.addEventListener(t,r,n),()=>e.removeEventListener(t,r,n)}function Ks(e,t=void 0){return function(r){r.stopPropagation(),e&&e.call(t,r)}}function xu(e,t,r,n){return{type:e,title:t,currentStart:r.start,currentEnd:r.end,activeStart:n.start,activeEnd:n.end,calendar:void 0}}function Mt(e){return e=pe({},e),e.currentStart=at(e.currentStart),e.currentEnd=at(e.currentEnd),e.activeStart=at(e.activeStart),e.activeEnd=at(e.activeEnd),e}var Eu=1;function ko(e,t=void 0){return e.map(r=>{let n={id:r.id!=null?String(r.id):`{generated-${Eu++}}`,resourceIds:Hs(r,"resourceId").map(String),allDay:r.allDay??(ad(r.start)&&ad(r.end)),start:$r(r.start,t),end:$r(r.end,t),title:r.title??"",editable:r.editable,startEditable:r.startEditable,durationEditable:r.durationEditable,display:r.display??"auto",layoutGroup:r.layoutGroup?.toString(),extendedProps:r.extendedProps??{},backgroundColor:r.backgroundColor??r.color,textColor:r.textColor,classNames:Hs(r,"className"),styles:Hs(r,"style")};if(n.allDay){Tt(n.start);let o=Y(n.end);Tt(n.end),(!We(n.end,o)||We(n.end,n.start))&&or(n.end)}return n})}function Hs(e,t){let r=e[t+"s"]??e[t]??[];return si(r)?r:[r]}function Cu(e){return e.map(t=>({events:t.events,...Td(t)}))}function Tu(e,t,r){return r.formatRange(e.start,t&&e.event.display!=="pointer"&&!e.zeroDuration?e.end:null)}function ku(e,t,r){let n;switch(e.event.display){case"background":n=[];break;case"pointer":n=e.event.allDay?[]:[dd(t,e,r)];break;default:n=[...e.event.allDay?[]:[dd(t,e,r)],Od("h4",r.eventTitle,e.event.title)]}return{domNodes:n}}function dd(e,t,r){return Od("time",r.eventTime,e,[["datetime",ir(t.start)]])}function Du(e,t,r){let n=t.classNames;return e&&(Ne(e)&&(e=e({event:Ct(t),view:Mt(r)})),n=[...si(e)?e:[e],...n]),n}function Ct(e){return Id(e,at)}function Us(e){return Id(e,Y)}function Id(e,t){return e=pe({},e),e.start=t(e.start),e.end=t(e.end),e}var cd=0;function Pd(e,t){e.length=t.length,++cd;for(let r of e)r?.reposition(cd)}function ii(e,t,r,n=void 0){return(!n||e.resourceIds.includes(n.id))&&e.start<r&&e.end>t}function So(e){return Fd(e)||Su(e)||Hd(e)}function sr(e){return e==="background"}function Fd(e){return e==="preview"}function Su(e){return e==="ghost"}function Hd(e){return e==="pointer"}function Ii(e,t,r){return t=e.start>t?e.start:t,r=e.end<r?e.end:r,{start:t,end:r,event:e,zeroDuration:We(t,r)}}function oi(e,t,r=!0){let n=[],o,s,a,l;for(let{gridColumn:d,gridRow:f,resource:v,dayStart:h,dayEnd:u,disabled:p}of t)!p&&ii(e,h,u,v)&&(n.push(h),o=u,s||(s=d,a=f,l=v));if(n.length){let d=Ii(e,n[0],o);return pe(d,{gridColumn:s,gridRow:a,resource:l,dates:n}),r&&oa(d),[d]}return[]}function Ud(e){let t={},r={};for(let n of e){let{gridColumn:o,gridRow:s}=n;for(let l=1;l<n.dates.length;++l){let d=`${s}_${o+l}`;r[d]?r[d].chunks.push(n):r[d]={sorted:!1,chunks:[n]}}let a=`${s}_${o}`;n.long=r[a],n.prev=t[a],t[a]=n}}function Vd(e,t,r=1,n=1){e.prev&&(r=e.prev.bottom+n);let o=r+t;if(e.long){let s=e.long;s.sorted||(s.chunks.sort((a,l)=>a.top-l.top),s.sorted=!0);for(let a of s.chunks)if(r<a.bottom&&o>a.top){let l=a.bottom-r+n;r+=l,o+=l}}return pe(e,{top:r,bottom:o}),r}function oa(e){let{event:t,gridColumn:r,gridRow:n}=e;e.id=`${Cd(t)}-${r}-${n}`}function un(e,t){return()=>{let{options:{locale:r}}=e,n=e.options[t],o;return L(()=>{o=Ne(n)?{format:n}:new Intl.DateTimeFormat(r,n)}),{format:s=>o.format(at(s))}}}function fd(e,t,r=!1){return()=>{let{options:{locale:n}}=e,o=e.options[t],s;return L(()=>{if(Ne(o))s=(a,l)=>o(at(a),l&&at(l));else{let a=new Intl.DateTimeFormat(n,o);s=(l,d)=>{if(!d)return a.format(at(l));if(r&&(d=js(Y(l),d)),l=at(l),d=at(d),l<=d)return a.formatRange(l,d);{let f=a.formatRangeToParts(d,l),v="",h=["startRange","endRange"],u=[!1,!1];for(let p of f){let g=h.indexOf(p.source);g>=0?u[g]||(v+=Ru(h[1-g],f),u[g]=!0):v+=p.value}return v}}}}),{formatRange:s}}}function Ru(e,t){let r="";for(let n of t)n.source==e&&(r+=n.value);return r}function sa(e){return Ro(e,"day")}function aa(e){return Ro(e,"week")}function Bd(e){return Ro(e,"month")}function Au(e){return Ro(e,"year")}function Ro(e,t){return{...e,next:"Next "+t,prev:"Previous "+t}}function Kr(e){return t=>({...t,view:e})}function Nu(e){let t,r;return e&&({start:t,end:r}=e,t&&(t=Tt($r(t))),r&&(r=Tt($r(r)))),{start:t,end:r}}function ai(e,t){return t.start&&e<t.start||t.end&&e>t.end}function la(e){let t=[];return Yd(e,0,!1,t),t}function Yd(e,t,r,n){let o=[];for(let s of e){let a=Mu(s);o.push(a),n.push(a);let l={level:t,children:[],hidden:r};Ld(a,l),s.children&&(l.children=Yd(s.children,t+1,r||!a.expanded,n))}return o}function Mu(e){return{id:e.id!=null?String(e.id):"",title:e.title??"",eventBackgroundColor:qd(e),eventTextColor:zd(e),expanded:e.expanded??!0,extendedProps:e.extendedProps??{}}}function qd(e){return e?.eventBackgroundColor}function zd(e){return e?.eventTextColor}function ud(e,t){return Hr(e.resourceIds)?void 0:t.find(r=>e.resourceIds.includes(r.id))}function Gd(e,t,r,n,o){let s=[];e=Y(e);let a=Y(e);for(Le(e,n.min),Le(a,n.max);e<a;)s.push([ir(e),o.format(e)]),Le(e,t,r);let l=wd((e-a)/1e3/He(t));return l&&l!==r&&(s.at(-1)[2]=r-l),s}function Wd(e,t,r,n,o){let s=gt(e),a=gt(t);if(r){let l=gt(Xr(He(s),_r(0,He(a)-Ws))),d=gt(_r(He(a),He(l)+Ws)),f=Ne(r?.eventFilter)?r.eventFilter:v=>!sr(v.display);e:for(let v of n){let h=Le(Y(v),s),u=Le(Y(v),a),p=Le(Y(v),l),g=Le(Y(v),d);for(let _ of o)if(!_.allDay&&f(_)&&_.start<g&&_.end>p){if(_.start<h){let m=_r((_.start-v)/1e3,He(l));m<He(s)&&(s.seconds=m)}if(_.end>u){let m=Xr((_.end-v)/1e3,He(d));m>He(a)&&(a.seconds=m)}if(He(s)===He(l)&&He(a)===He(d))break e}}}return{min:s,max:a}}function Do(e){let t=0,r=z(tt(t));return jd(e,()=>i(r),()=>!0,()=>C(r,++t,!0))}function Lu(e){let t=0,r=tt({});return jd(e,n=>r[n],(n,o)=>n!==o,n=>r[n]=++t)}function jd(e,t,r,n){return new Proxy(e,{get(o,s,a){return zs(o,s)&&t(s),Reflect.get(o,s,a)},set(o,s,a,l){let d=r(o[s],a),f=Reflect.set(o,s,a,l);return d&&n(s),f}})}function Ou(e){let t={buttonText:{today:"today"},customButtons:{},customScrollbars:!1,date:new Date,dateIncrement:void 0,datesSet:void 0,dayCellContent:void 0,dayHeaderFormat:{weekday:"short",month:"numeric",day:"numeric"},dayHeaderAriaLabelFormat:{dateStyle:"full"},displayEventEnd:!0,duration:{weeks:1},events:[],eventAllUpdated:void 0,eventBackgroundColor:void 0,eventClassNames:void 0,eventClick:void 0,eventColor:void 0,eventContent:void 0,eventDidMount:void 0,eventFilter:void 0,eventGap:1,eventMouseEnter:void 0,eventMouseLeave:void 0,eventOrder:void 0,eventOrderStrict:!1,eventSources:[],eventTextColor:void 0,eventTimeFormat:{hour:"numeric",minute:"2-digit"},filterEventsWithResources:!1,firstDay:0,headerToolbar:{start:"title",center:"",end:"today prev,next"},height:void 0,hiddenDays:[],highlightedDates:[],icons:{},lazyFetching:!0,loading:void 0,locale:void 0,refetchResourcesOnNavigate:!1,resources:[],selectable:!1,theme:{active:"ec-active",bgEvent:"ec-bg-event",bgEvents:"ec-bg-events",body:"ec-body",button:"ec-button",buttonGroup:"ec-button-group",calendar:"ec",colHead:"ec-col-head",customScrollbars:"ec-custom-scrollbars",day:"ec-day",dayHead:"ec-day-head",disabled:"ec-disabled",endClipped:"ec-end-clipped",event:"ec-event",eventBody:"ec-event-body",eventTime:"ec-event-time",eventTitle:"ec-event-title",events:"ec-events",grid:"ec-grid",header:"ec-header",hidden:"ec-hidden",highlight:"ec-highlight",icon:"ec-icon",main:"ec-main",noBeb:"ec-no-beb",noIeb:"ec-no-ieb",startClipped:"ec-start-clipped",today:"ec-today",title:"ec-title",toolbar:"ec-toolbar",view:"",weekdays:["ec-sun","ec-mon","ec-tue","ec-wed","ec-thu","ec-fri","ec-sat"],weekNumber:"ec-week-number"},timeZone:"local",titleFormat:{year:"numeric",month:"short",day:"numeric"},validRange:void 0,view:void 0,viewDidMount:void 0,views:{}};for(let r of e)r.createOptions?.(t);return t}function Iu(e){let t={date:r=>Tt($r(r)),dateIncrement:Gs(gt),duration:gt,events:ko,eventSources:Cu,hiddenDays:r=>[...new Set(r)],highlightedDates:r=>r.map(n=>Tt($r(n))),resources:r=>si(r)?la(r):xd(r)?Td(r):r,validRange:Nu};for(let r of e)r.createParsers?.(t);return t}var Zs=["buttonText","customButtons","icons","theme"];function Pu(e,t){let r=Ou(e),n=Iu(e);r=Js(r,n),t=Js(t,n);let o=Vs(r,"views")??{},s=Vs(t,"views")??{},a=Lu({});pe(a,r),t.view&&(a.view=t.view);let l={},d={},f={},v=new Set([...Tn(o),...Tn(s)]);for(let h of v){let u=s[h]??{},p=pd(r,o[h]??o[u.type]??{}),g=pd(p,t,u),_=Vs(g,"component");delete g.view;for(let m of Tn(g))zs(a,m)?(l[m]??=[],l[m].push(Zs.includes(m)?y=>g[m]=Ne(y)?y(p[m]):y:y=>g[m]=y)):delete g[m];d[h]=g,f[h]=_}return pe(a,d[a.view]),[a,function(u,p,g=!0){zs(a,u)&&(g||(u in n?p=n[u](p):xd(p)?p={...p}:si(p)&&(p=[...p])),l[u]?.forEach(_=>_(p)),a[u]=Zs.includes(u)&&Ne(p)?d[a.view][u]:p)},function(u){return pe(a,d[u]),f[u]}]}function Js(e,t){let r={...e};for(let n of Tn(t))n in r&&(r[n]=t[n](r[n]));if(e.views){r.views={};for(let n of Tn(e.views))r.views[n]=Js(e.views[n],t)}return r}function Vs(e,t){let r=e[t];return delete e[t],r}function pd(...e){let t={};for(let r of e){let n={};for(let o of Zs)Ne(r[o])&&(n[o]=r[o](t[o]));t={...t,...r,...n}}return t}function Fu(e,t){let r=[];for(let n of Tn(e))e[n]!==t[n]&&r.push([n,e[n]]);return r}function Hu(e){return()=>{let{options:{view:t}}=e;L(()=>{let r=e.setViewOptions(t);e.extensions={},e.features=[],e.viewComponent=r(e)})}}function Uu(e,t){return()=>{let{activeRange:r,fetchedRange:{events:n},offset:o,viewDates:s,options:{events:a,eventSources:l,lazyFetching:d,timeZone:f}}=e;L(()=>{Xd(l.map(v=>Ne(v.events)?v.events:v),a,v=>ko(v,o),v=>e.events=Do(v),f,r,n,s,!0,d,t)})}}function Vu(e,t){return()=>{let{activeRange:r,fetchedRange:{resources:n},viewDates:o,options:{lazyFetching:s,refetchResourcesOnNavigate:a,resources:l,timeZone:d}}=e;L(()=>{Xd(si(l)?[]:[l],l,la,f=>e.resources=Do(f),d,r,n,o,a,s,t)})}}function Xd(e,t,r,n,o,s,a,l,d,f,v){if(!Hr(l)){if(Hr(e)){n(t);return}if((d||!a.start)&&(!f||!a.start||a.start>s.start||a.end<s.end||a.timeZone!==o)){let h=[],u=m=>v.stop(),p=m=>{h=h.concat(r(m)),n(h),v.stop()},g=ir(s.start),_=ir(s.end);for(let m of e)if(v.start(),Ne(m)){let y=m(d?{start:at(s.start),end:at(s.end),startStr:g,endStr:_,timeZone:o}:{},p,u);y!==void 0&&Promise.resolve(y).then(p,u)}else{let y=Ne(m.extraParams)?m.extraParams():pe({},m.extraParams);d&&(y.start=g,y.end=_,o!=="local"&&(y.timeZone=o)),y=new URLSearchParams(y);let b=m.url,x={},E;["GET","HEAD"].includes(m.method)?b+=(b.includes("?")?"&":"?")+y:(x["content-type"]="application/x-www-form-urlencoded;charset=UTF-8",E=String(y)),fetch(b,{method:m.method,headers:x,body:E,signal:nd(),credentials:"same-origin"}).then(D=>D.json()).then(p).catch(u)}pe(a,{...s,timeZone:o})}}}function Bu(e){let t=0;function r(n){let{options:{loading:o}}=e;Ne(o)&&o(n)}return{start:()=>++t===1&&r(!0),stop:()=>--t===0&&r(!1)}}function Yu(e){return()=>{let{offset:t}=e,r=setInterval(()=>{let n=$r(void 0,t),o=Tt(Y(n));e.now=n,We(e.today,o)||(e.today=o)},1e3);return()=>clearInterval(r)}}function qu(e){return()=>{let{offset:t,options:r}=e;L(()=>{for(let o of e.events)if(!o.allDay)for(let s of["start","end"]){let a=Xs(o[s]);a!==void 0&&na(o[s],t-a),Oi(o[s],t)}let n=Xs(r.date);if(n!==void 0){let o=$r(void 0,t).getUTCDay()-$r(void 0,n).getUTCDay(),s=or(Y(r.date),o);e.setOption("date",s)}Oi(r.date,t)})}}function zu(e){return()=>{let{activeRange:t,options:{datesSet:r}}=e;L(()=>{Ne(r)&&r({start:at(t.start),end:at(t.end),startStr:ir(t.start),endStr:ir(t.end),view:Mt(e.view)})})}}function Gu(e){let t;return()=>{let{filteredEvents:r,options:{eventAllUpdated:n}}=e;L(()=>{Ne(n)&&(t||(t=setTimeout(()=>{t=null,n({view:Mt(e.view)})})))})}}function Wu(e){return()=>{let{options:{view:t,viewDidMount:r}}=e;L(()=>{Ne(r)&&jr().then(()=>r({view:Mt(e.view)}))})}}function ju(e){let t;return()=>{let{options:{date:r,duration:n,firstDay:o}}=e,s,a;return L(()=>{s=Y(r),n.years?(s.setUTCMonth(0),s.setUTCDate(1)):n.months?s.setUTCDate(1):n.inWeeks&&kd(s,o),a=Le(Y(s),n)}),t&&We(t.start,s)&&We(t.end,a)?t:t={start:s,end:a}}}function Xu(e){let t;return()=>{let{currentRange:r,extensions:{activeRange:n}}=e,o,s;L(()=>{o=Y(r.start),s=Y(r.end)});let a=n?n(o,s):{start:o,end:s};return t&&We(t.start,a.start)&&We(t.end,a.end)?t:t=a}}function Ku(e){return()=>{let{events:t,options:{eventFilter:r,eventOrder:n,filterEventsWithResources:o,resources:s,view:a}}=e,l=[...t];return L(()=>{if(Ne(r)){let d=t.map(Ct),f=Mt(e.view);l=l.filter((v,h)=>r({event:Ct(v),index:h,events:d,view:f}))}o&&(l=l.filter(d=>s.some(f=>d.resourceIds.includes(f.id)))),Ne(n)?l.sort((d,f)=>n(Ct(d),Ct(f))):l.sort((d,f)=>d.start-f.start||f.allDay-d.allDay)}),l}}function Zu(e){return()=>{let{options:{timeZone:t}}=e,r;return L(()=>{r=t==="local"?Co():t==="UTC"?0:Ad(t)??Co()}),r}}function Ju(e){return()=>{let{options:t,activeRange:r}=e,{hiddenDays:n}=t,o=[];return L(()=>{let s=Tt(Y(r.start)),a=Tt(Y(r.end));for(;s<a;)n.includes(s.getUTCDay())||o.push(Y(s)),or(s);if(!o.length&&n.length&&n.length<7){for(;n.includes(s.getUTCDay());)or(s);jr().then(()=>{e.setOption("date",s)})}}),o}}function Qu(e){return()=>{let{currentRange:t,intlTitle:r}=e,n;return L(()=>{n=r.formatRange(t.start,Dn(Y(t.end)))}),n}}function ep(e){return()=>{let{activeRange:t,currentRange:r,viewTitle:n,options:{view:o}}=e,s;return L(()=>{s=xu(o,n,r,t)}),s}}var tp=class{#e;get auxComponents(){return i(this.#e)}set auxComponents(e){C(this.#e,e,!0)}#t;get offset(){return i(this.#t)}set offset(e){C(this.#t,e)}#r;get currentRange(){return i(this.#r)}set currentRange(e){C(this.#r,e)}#n;get activeRange(){return i(this.#n)}set activeRange(e){C(this.#n,e)}#i;get fetchedRange(){return i(this.#i)}set fetchedRange(e){C(this.#i,e,!0)}#o;get events(){return i(this.#o)}set events(e){C(this.#o,e)}#s;get filteredEvents(){return i(this.#s)}set filteredEvents(e){C(this.#s,e)}#l;get mainEl(){return i(this.#l)}set mainEl(e){C(this.#l,e,!0)}#a;get now(){return i(this.#a)}set now(e){C(this.#a,e,!0)}#u;get resources(){return i(this.#u)}set resources(e){C(this.#u,e)}#c;get scrollDate(){return i(this.#c)}set scrollDate(e){C(this.#c,e,!0)}#f;get today(){return i(this.#f)}set today(e){C(this.#f,e,!0)}#p;get intlEventTime(){return i(this.#p)}set intlEventTime(e){C(this.#p,e)}#g;get intlDayHeader(){return i(this.#g)}set intlDayHeader(e){C(this.#g,e)}#d;get intlDayHeaderAL(){return i(this.#d)}set intlDayHeaderAL(e){C(this.#d,e)}#b;get intlTitle(){return i(this.#b)}set intlTitle(e){C(this.#b,e)}#w;get viewDates(){return i(this.#w)}set viewDates(e){C(this.#w,e)}#_;get viewTitle(){return i(this.#_)}set viewTitle(e){C(this.#_,e)}#y;get view(){return i(this.#y)}set view(e){C(this.#y,e)}#v;get viewComponent(){return i(this.#v)}set viewComponent(e){C(this.#v,e,!0)}#x;get extensions(){return i(this.#x)}set extensions(e){C(this.#x,e,!0)}#h;get features(){return i(this.#h)}set features(e){C(this.#h,e,!0)}#$;get interaction(){return i(this.#$)}set interaction(e){C(this.#$,e,!0)}#m;get iClasses(){return i(this.#m)}set iClasses(e){C(this.#m,e,!0)}#E;get iClass(){return i(this.#E)}set iClass(e){C(this.#E,e,!0)}options;setOption;setViewOptions;constructor(e,t){[this.options,this.setOption,this.setViewOptions]=Pu(e,t),this.#e=z(tt([])),this.#t=c(Zu(this)),this.#r=c(ju(this)),this.#n=c(Xu(this)),this.#i=z(tt({events:{},resources:{}})),this.#o=z(Do(this.options.events)),this.#s=c(Ku(this)),this.#l=z(),this.#a=z(tt($r(void 0,this.offset))),this.#u=z(Do(si(this.options.resources)?this.options.resources:[])),this.#c=z(),this.#f=z(tt(Tt(Y(this.now)))),this.#p=c(fd(this,"eventTimeFormat",!0)),this.#g=c(un(this,"dayHeaderFormat")),this.#d=c(un(this,"dayHeaderAriaLabelFormat")),this.#b=c(fd(this,"titleFormat")),this.#w=c(Ju(this)),this.#_=c(Qu(this)),this.#y=c(ep(this)),this.#v=z(),this.#x=z(tt({})),this.#h=z(tt([])),this.snippets={},this.#$=z(tt({})),this.iEvents=new ei,this.#m=z(tt(To)),this.#E=z();for(let r of e)r.initState?.(this);this.#C()}#C(){let e=Bu(this);mr(Hu(this)),mr(qu(this)),mr(Yu(this)),Et(Uu(this,e)),Et(Vu(this,e)),Et(zu(this)),Et(Gu(this)),Et(Wu(this))}},rp=ee("<h2></h2>"),vd=ee("<button><i></i></button>"),hd=ee("<button> </button>"),np=ee("<div><!></div>"),ip=ee("<button></button>");function md(e,t){Ce(t,!0);let r=he("state"),n=c(()=>r.currentRange),o=c(()=>r.snippets),s=c(()=>r.today),a=c(()=>r.viewTitle),l=c(()=>r.viewDates),d=c(()=>r.options.buttonText),f=c(()=>r.options.customButtons),v=c(()=>r.options.date),h=c(()=>r.options.dateIncrement),u=c(()=>r.options.duration),p=c(()=>r.options.hiddenDays),g=c(()=>r.options.theme),_=c(()=>r.options.validRange),m=c(()=>r.options.view),y=z(!1),b=z(!1),x=z(!1),E=!1;mr(()=>{i(l),i(_),t.buttons,L(()=>{E||(E=!0,t.buttons.includes("prev")&&(C(y,!1),i(_).start&&C(y,D($),!0)),t.buttons.includes("next")&&(C(b,!1),i(_).end&&C(b,D(k),!0)),t.buttons.includes("today")&&(C(x,i(s)>=i(n).start&&i(s)<i(n).end,!0),!i(x)&&(i(_).start||i(_).end)&&C(x,D(A),!0)),jr().then(()=>E=!1))})});function D(X){let R=i(v);X();let W=i(l).every(Q=>ai(Q,i(_)));return r.setOption("date",R),W}function $(){r.setOption("date",Sd(Y(i(v)),i(h)??i(u),i(p)))}function k(){r.setOption("date",Dd(Y(i(v)),i(h)??i(u),i(p)))}function A(){r.setOption("date",Y(i(s)))}function N(X){return"customButton"+X.charAt(0).toUpperCase()+X.slice(1)}var G=Oe(),se=ye(G);Ae(se,17,()=>t.buttons,ot,(X,R)=>{var W=Oe(),Q=ye(W),fe=H=>{var T=rp();Pe(T,()=>Lt(i(a))),me(()=>B(T,1,i(g).title)),I(H,T)},xe=H=>{var T=vd(),ae=Kn(T);me(()=>{B(T,1,`${i(g).button??""} ec-${i(R)??""}`),Fe(T,"aria-label",i(d).prev),Fe(T,"title",i(d).prev),T.disabled=i(y),B(ae,1,`${i(g).icon??""} ec-${i(R)??""}`)}),it("click",T,$),I(H,T)},ve=H=>{var T=vd(),ae=Kn(T);me(()=>{B(T,1,`${i(g).button??""} ec-${i(R)??""}`),Fe(T,"aria-label",i(d).next),Fe(T,"title",i(d).next),T.disabled=i(b),B(ae,1,`${i(g).icon??""} ec-${i(R)??""}`)}),it("click",T,k),I(H,T)},q=H=>{var T=hd(),ae=Kn(T,!0);me(()=>{B(T,1,`${i(g).button??""} ec-${i(R)??""}`),T.disabled=i(x),go(ae,i(d)[i(R)])}),it("click",T,A),I(H,T)},ne=H=>{let T=c(()=>Sn(i(f)[i(R)]?.content,void 0,void 0,i(o)[N(i(R))]));var ae=np(),j=ue(ae);st(j,()=>i(T).snippet??Me),J(ae),Pe(ae,()=>Lt(i(T).content,i(T).snippet)),me(()=>B(ae,1,`ec-${i(R)??""}`)),I(H,ae)},ke=c(()=>i(o)[N(i(R))]||i(f)[i(R)]?.content!=null),V=H=>{var T=ip();Pe(T,()=>Lt(i(f)[i(R)].text)),me(()=>B(T,1,rr([i(g).button,`ec-${i(R)}`,i(f)[i(R)].active&&i(g).active]))),it("click",T,function(...ae){i(f)[i(R)].click?.apply(this,ae)}),I(H,T)},F=H=>{var T=hd(),ae=Kn(T,!0);me(()=>{B(T,1,rr([i(g).button,`ec-${i(R)}`,i(m)===i(R)&&i(g).active])),go(ae,i(d)[i(R)])}),it("click",T,()=>r.setOption("view",i(R))),I(H,T)};Ye(Q,H=>{i(R)==="title"?H(fe):i(R)==="prev"?H(xe,1):i(R)==="next"?H(ve,2):i(R)==="today"?H(q,3):i(ke)?H(ne,4):i(f)[i(R)]?H(V,5):H(F,-1)}),I(X,W)}),I(e,G),Te()}Ar(["click"]);var op=ee("<div><!></div>"),sp=ee("<div></div>"),ap=ee("<nav></nav>");function lp(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).options.headerToolbar),o=c(()=>i(r).options.theme),s=c(()=>{let l={};for(let d of["start","center","end"])l[d]=i(n)[d]?.split(" ").filter(Boolean).map(f=>f.split(",").filter(Boolean))??[];return l});var a=ap();Ae(a,21,()=>Tn(i(s)),ot,(l,d)=>{var f=sp();Ae(f,21,()=>i(s)[i(d)],ot,(v,h)=>{var u=Oe(),p=ye(u),g=m=>{var y=op();md(ue(y),{get buttons(){return i(h)}}),J(y),me(()=>B(y,1,i(o).buttonGroup)),I(m,y)},_=m=>{md(m,{get buttons(){return i(h)}})};Ye(p,m=>{i(h).length>1?m(g):m(_,-1)}),I(v,u)}),J(f),me(()=>B(f,1,`ec-${i(d)??""}`)),I(l,f)}),J(a),me(()=>B(a,1,i(o).toolbar)),I(e,a),Te()}var dp=new Set(["$$slots","$$events","$$legacy","plugins","options"]),cp=ee("<div><!> <!> <!></div>");function fp(e,t){Ce(t,!0);let r=ge(t,"plugins",19,()=>[]),n=ge(t,"options",19,()=>({})),o=Is(t,dp),s=new tp(r(),n());s.snippets=o,Yn("state",s);let a=c(()=>s.auxComponents),l=c(()=>s.features),d=c(()=>s.events),f=c(()=>s.interaction),v=c(()=>s.iClass),h=c(()=>s.offset),u=c(()=>s.view),p=c(()=>s.viewComponent),g=c(()=>s.options.date),_=c(()=>s.options.dateIncrement),m=c(()=>s.options.duration),y=c(()=>s.options.height),b=c(()=>s.options.hiddenDays),x=c(()=>s.options.customScrollbars),E=c(()=>s.options.theme),D={...n()};mr(()=>{for(let[j,ie]of Fu(n(),D))L(()=>{$(j,ie)});pe(D,n())});function $(j,ie){return s.setOption(j,ie,!1),this}function k(j){let ie=s.options[j];return ra(ie)?at(ie):ie}function A(){return s.fetchedRange.resources={},this}function N(){return s.fetchedRange.events={},this}function G(){return i(d).map(Ct)}function se(j){j=String(j);for(let ie of i(d))if(ie.id===j)return Ct(ie);return null}function X(j){return j=ko([j],i(h))[0],i(d).push(j),Ct(j)}function R(j){let ie=String(j.id),kt=i(d).findIndex(je=>je.id===ie);return kt>=0?(j=ko([j],i(h))[0],i(d)[kt]=j,Ct(j)):null}function W(j){j=String(j);let ie=i(d).findIndex(kt=>kt.id===j);return ie>=0&&i(d).splice(ie,1),this}function Q(){return Mt(i(u))}function fe(){return i(f).action?.unselect(),this}function xe(j,ie){let kt=ni(j,ie);if(kt){let je=ri(kt)(j,ie);return je.date=at(je.date),je}return null}function ve(j){return j=Tt($r(j)),s.setOption("date",Y(j)),s.scrollDate=j,this}function q(){return s.setOption("date",Dd(Y(i(g)),i(_)??i(m),i(b))),this}function ne(){return s.setOption("date",Sd(Y(i(g)),i(_)??i(m),i(b))),this}var ke={setOption:$,getOption:k,refetchResources:A,refetchEvents:N,getEvents:G,getEventById:se,addEvent:X,updateEvent:R,removeEventById:W,getView:Q,unselect:fe,dateFromPoint:xe,gotoDate:ve,next:q,prev:ne},V=cp();let F;var H=ue(V);lp(H,{});var T=_e(H,2);Ni(T,()=>i(p),(j,ie)=>{ie(j,{})});var ae=_e(T,2);return Ae(ae,17,()=>i(a),ot,(j,ie)=>{var kt=Oe(),je=ye(kt);Ni(je,()=>i(ie),(jt,yr)=>{yr(jt,{})}),I(j,kt)}),J(V),me(j=>{B(V,1,rr([i(E).calendar,i(E).view,i(v)&&i(E)[i(v)],i(x)&&i(E).customScrollbars])),Fe(V,"role",j),F=gr(V,"",F,{height:i(y)})},[()=>i(l).includes("list")?"list":"table"]),I(e,V),Te(ke)}function up(e){"weekNumbers"in e||pe(e,{weekNumbers:!1,weekNumberContent:void 0})}function pp(e){return()=>{let{viewDates:t,options:{duration:r,hiddenDays:n}}=e,o;return L(()=>o=r.months||r.inWeeks?7-n.length:t.length),o}}function vp(e,t){return()=>{let{options:{highlightedDates:r,validRange:n},viewDates:o}=e,{colsCount:s}=t,a=[];return L(()=>{let l=[],d=1,f=1;for(let v of o)l.push({gridColumn:d,gridRow:f,resource:void 0,dayStart:v,dayEnd:or(Y(v)),disabled:ai(v,n),highlight:r.some(h=>We(h,v))}),d===s&&(a.push(l),l=[],d=0,++f),++d}),a}}function hp(e,t){return()=>{let{filteredEvents:r}=e,{grid:n}=t,o=[],s=[];return L(()=>{for(let a of r)for(let l of n)sr(a.display)?a.allDay&&(s=s.concat(oi(a,l))):o=o.concat(oi(a,l));Ud(o)}),{chunks:o,bgChunks:s}}}function mp(e,t){return()=>{let{iEvents:r}=e,{grid:n}=t,o=[];for(let[,s]of r)s&&L(()=>{for(let a of n)o=o.concat(oi(s,a,!1))});return o}}var gp=class{#e;get colsCount(){return i(this.#e)}set colsCount(e){C(this.#e,e)}#t;get grid(){return i(this.#t)}set grid(e){C(this.#t,e)}#r;get gridEl(){return i(this.#r)}set gridEl(e){C(this.#r,e,!0)}#n;get chunks(){return i(this.#n)}set chunks(e){C(this.#n,e)}#i;get bgChunks(){return i(this.#i)}set bgChunks(e){C(this.#i,e)}#o;get iChunks(){return i(this.#o)}set iChunks(e){C(this.#o,e)}#s;get intlDayCell(){return i(this.#s)}set intlDayCell(e){C(this.#s,e)}#l;get intlDayPopover(){return i(this.#l)}set intlDayPopover(e){C(this.#l,e)}#a;get popupDay(){return i(this.#a)}set popupDay(e){C(this.#a,e,!0)}constructor(e){this.#e=c(pp(e)),this.#t=c(vp(e,this)),this.#r=z();let t=c(hp(e,this)),r=c(()=>i(t).chunks),n=c(()=>i(t).bgChunks);this.#n=c(()=>i(r)),this.#i=c(()=>i(n)),this.#o=c(mp(e,this)),this.hiddenChunks=new ei,this.#s=c(un(e,"dayCellFormat")),this.#l=c(un(e,"dayPopoverFormat")),this.#a=z(null)}},_p=ee("<div><!></div>");function da(e,t){Ce(t,!0);let r=ge(t,"el",15),n=ge(t,"allDay",3,!1),o=ge(t,"resource",3,void 0),s=ge(t,"dateFromPoint",3,()=>t.date),a=ge(t,"classes",3,To),l=ge(t,"disabled",3,!1),d=ge(t,"highlight",3,!1),f=ge(t,"role",3,"cell"),v=ge(t,"noIeb",3,!1),h=ge(t,"noBeb",3,!1),u=ge(t,"defaultContent",3,void 0),p=c(()=>he("state")),g=c(()=>i(p).today),_=c(()=>i(p).snippets),m=c(()=>i(p).interaction.action),y=c(()=>i(p).options.dayCellContent),b=c(()=>i(p).options.theme),x=c(()=>he("view-state")),E=c(()=>i(x).snap),D=c(()=>We(t.date,i(g))),$=c(()=>Sn(i(y),()=>({allDay:n(),date:at(t.date),isToday:i(D),resource:o()}),u(),i(_).dayCellContent)),k=c(()=>a()([i(b).day,i(b).weekdays?.[t.date.getUTCDay()],i(D)&&i(b).today,d()&&i(b).highlight,l()&&i(b).disabled,v()&&i(b).noIeb,h()&&i(b).noBeb]));Mi(()=>{Ld(r(),(R,W)=>({allDay:n(),date:s()(R,W),resource:o(),dayEl:r(),disabled:l()}))});let A=c(()=>!l()&&i(m)?R=>i(m).select(R,i(E)):void 0);var N=_p(),G=ue(N),se=R=>{var W=Oe(),Q=ye(W);st(Q,()=>t.content,()=>i($)),I(R,W)},X=R=>{var W=Oe(),Q=ye(W);st(Q,()=>i($).snippet??Me,()=>i($).arg),I(R,W)};Ye(G,R=>{t.content?R(se):R(X,-1)}),J(N),nr(N,R=>r(R),()=>r()),Pe(N,()=>t.content?null:Lt(i($).content,i($).snippet)),me(()=>{B(N,1,rr(i(k))),Fe(N,"role",f())}),it("pointerdown",N,function(...R){i(A)?.apply(this,R)}),I(e,N),Te()}Ar(["pointerdown"]);var $p=ee("<div><!></div>"),yp=ee("<article><!></article>");function Kd(e,t){Ce(t,!0);let r=ge(t,"el",15),n=ge(t,"classes",3,To),o=ge(t,"styles",3,To),s=c(()=>he("state")),a=c(()=>i(s).intlEventTime),l=c(()=>i(s).resources),d=c(()=>i(s).snippets),f=c(()=>i(s).view),v=c(()=>i(s).options.displayEventEnd),h=c(()=>i(s).options.eventBackgroundColor),u=c(()=>i(s).options.eventColor),p=c(()=>i(s).options.eventContent),g=c(()=>i(s).options.eventClick),_=c(()=>i(s).options.eventDidMount),m=c(()=>i(s).options.eventClassNames),y=c(()=>i(s).options.eventMouseEnter),b=c(()=>i(s).options.eventMouseLeave),x=c(()=>i(s).options.eventTextColor),E=c(()=>i(s).options.theme),D=c(()=>t.chunk.event),$=c(()=>t.chunk.event.display),k=c(()=>i(D).backgroundColor??qd(t.chunk.resource??ud(i(D),i(l)))??i(h)??i(u)),A=c(()=>i(D).textColor??zd(t.chunk.resource??ud(i(D),i(l)))??i(x)),N=c(()=>fu(o()({"background-color":i(k),color:i(A)})).map(V=>`${V[0]}:${V[1]}`).concat(i(D).styles).join(";")),G=c(()=>{let V=[sr(i($))?i(E).bgEvent:i(E).event];if(i(D).allDay){We(Tt(Y(t.chunk.start)),i(D).start)||V.push(i(E).startClipped);let F=Y(t.chunk.end),H=Y(i(D).end);F.setUTCSeconds(F.getUTCSeconds()-1),H.setUTCSeconds(H.getUTCSeconds()-1),We(Tt(F),Tt(H))||V.push(i(E).endClipped)}else We(t.chunk.start,i(D).start)||V.push(i(E).startClipped),We(t.chunk.end,i(D).end)||V.push(i(E).endClipped);return n()(V.concat(Du(i(m),i(D),i(f))))}),se=c(()=>Tu(t.chunk,i(v),i(a))),X=c(()=>Sn(i(p),()=>({event:Ct(i(D)),timeText:i(se),view:Mt(i(f))}),()=>ku(t.chunk,i(se),i(E)),i(d).eventContent));Mi(()=>{Ne(i(_))&&i(_)({event:Ct(i(D)),timeText:i(se),el:r(),view:Mt(i(f))})});function R(V,F){return Ne(V)&&!So(F)?H=>V({event:Ct(i(D)),el:r(),jsEvent:H,view:Mt(i(f))}):void 0}let W=c(()=>!sr(i($))&&R(i(g),i($))||void 0),Q=c(()=>i(W)&&ta(i(W))),fe=c(()=>R(i(y),i($))),xe=c(()=>R(i(b),i($)));var ve=yp();{let V=F=>{var H=$p(),T=ue(H);st(T,()=>i(X).snippet??Me,()=>i(X).arg),J(H),Pe(H,()=>Lt(i(X).content,i(X).snippet)),me(()=>B(H,1,rr(i(E).eventBody))),I(F,H)};var q=ue(ve),ne=F=>{var H=Oe(),T=ye(H);st(T,()=>t.body,()=>V,()=>i(k),()=>i(A)),I(F,H)},ke=F=>{V(F)};Ye(q,F=>{t.body?F(ne):F(ke,-1)}),J(ve),nr(ve,F=>r(F),()=>r())}me(()=>{B(ve,1,rr(i(G))),gr(ve,i(N)),Fe(ve,"role",i(W)?"button":void 0),Fe(ve,"tabindex",i(W)?0:void 0)}),it("click",ve,function(...V){i(W)?.apply(this,V)}),it("keydown",ve,function(...V){i(Q)?.apply(this,V)}),Ut("mouseenter",ve,function(...V){i(fe)?.apply(this,V)}),Ut("mouseleave",ve,function(...V){i(xe)?.apply(this,V)}),it("pointerdown",ve,function(...V){t.onpointerdown?.apply(this,V)}),I(e,ve),Te()}Ar(["click","keydown","pointerdown"]);var bp=ee("<div><!></div>");function wp(e,t){Ce(t,!0);let r=ge(t,"weekday",3,!0),n=ge(t,"colSpan",3,1),o=ge(t,"ariaHidden",3,!1),s=ge(t,"disabled",3,!1),a=ge(t,"highlight",3,!1),l=ge(t,"cssSpan",3,!1),d=c(()=>he("state")),f=c(()=>i(d).today),v=c(()=>i(d).options.theme);var h=bp();let u;var p=ue(h);st(p,()=>t.children),J(h),me(g=>{B(h,1,g),Fe(h,"role",o()?null:"columnheader"),Fe(h,"aria-colspan",o()||n()<=1?null:n()),Fe(h,"aria-colindex",o()?null:t.colIndex),Fe(h,"aria-hidden",o()?"true":null),u=gr(h,"",u,{"--ec-col-group-span":l()?n():void 0})},[()=>rr([t.className??i(v).colHead,r()&&i(v).weekdays?.[t.date.getUTCDay()],r()&&We(t.date,i(f))&&i(v).today,a()&&i(v).highlight,s()&&i(v).disabled])]),I(e,h),Te()}var xp=ee("<time></time>");function Ep(e,t){Ce(t,!0);let r=ge(t,"alPrefix",3,""),n=c(()=>he("state")),o=c(()=>i(n).intlDayHeader),s=c(()=>i(n).intlDayHeaderAL);var a=xp();Pe(a,()=>Lt(i(o).format(t.date))),me((l,d)=>{Fe(a,"datetime",l),Fe(a,"aria-label",`${r()??""}${d??""}`)},[()=>ir(t.date,10),()=>i(s).format(t.date)]),I(e,a),Te()}function ca(e,t){Ce(t,!0);let r=ge(t,"el",15),n=c(()=>he("state")),o=c(()=>i(n).iClasses),s=c(()=>i(n).interaction.action),a=c(()=>i(n).interaction.resizer),l=c(()=>he("view-state")),d=c(()=>i(l).snap),f=c(()=>t.chunk.event),v=c(()=>t.chunk.event.display),h=c(()=>g=>i(o)(g,i(f)));function u(g){return i(s)?.draggable(g)?_=>i(s).drag(g,_,t.forceDate,t.forceMargin,i(d)):i(s)?.noAction}let p=c(()=>!sr(i(v))&&!So(i(v))?u(i(f)):void 0);Kd(e,{get chunk(){return t.chunk},get classes(){return i(h)},get styles(){return t.styles},get onpointerdown(){return i(p)},get el(){return r()},set el(_){r(_)},body:(_,m=Me)=>{var y=Oe(),b=ye(y),x=D=>{var $=Oe(),k=ye($);Ni(k,()=>i(a),(A,N)=>{N(A,{get chunk(){return t.chunk},get axis(){return t.axis},get forceDate(){return t.forceDate},get forceMargin(){return t.forceMargin},children:(G,se)=>{var X=Oe(),R=ye(X);st(R,m),I(G,X)},$$slots:{default:!0}})}),I(D,$)},E=D=>{var $=Oe(),k=ye($);st(k,m),I(D,$)};Ye(b,D=>{i(a)?D(x):D(E,-1)}),I(_,y)},$$slots:{body:!0}}),Te()}var Cp=ee("<span><!></span>"),Tp=ee('<a role="button" tabindex="0" aria-haspopup="dialog"><!></a>'),kp=ee("<div><time><!></time> <!></div> <div><!></div>",1);function Dp(e,t){Ce(t,!0);let r=he("state"),n=he("view-state");c(()=>r.features);let o=c(()=>r.snippets),s=c(()=>r.options.date),a=c(()=>r.options.firstDay),l=c(()=>r.options.moreLinkContent),d=c(()=>r.options.theme),f=c(()=>r.options.weekNumbers),v=c(()=>r.options.weekNumberContent),h=c(()=>n.hiddenChunks),u=c(()=>n.intlDayCell),p=c(()=>t.day.dayStart),g=c(()=>t.day.disabled),_=c(()=>t.day.highlight),m=c(()=>i(p).getUTCMonth()!==i(s).getUTCMonth()),y=c(()=>k=>[...k,i(m)&&i(d).otherMonth]),b=c(()=>i(f)&&i(p).getUTCDay()===(i(a)?1:0)),x=c(()=>i(b)?$u(Rd(i(p),i(a)),i(p),i(v),i(o).weekNumberContent):{}),E=c(()=>i(h).get(Zr(i(p)))),D=c(()=>{if(!i(E))return{};let k=i(E).length,A="+"+k+" more";return Sn(i(l),()=>({num:k,text:A}),A,i(o).moreLinkContent)});function $(){n.popupDay=t.day}da(e,{get date(){return i(p)},allDay:!0,get classes(){return i(y)},get disabled(){return i(g)},get highlight(){return i(_)},get noIeb(){return t.noIeb},get noBeb(){return t.noBeb},defaultContent:()=>i(u).format(i(p)),content:(A,N=Me)=>{var G=kp(),se=ye(G),X=ue(se),R=ue(X);st(R,()=>N().snippet??Me,()=>N().arg),J(X),Pe(X,()=>Lt(N().content,N().snippet));var W=_e(X,2),Q=q=>{var ne=Cp(),ke=ue(ne);st(ke,()=>i(x).snippet??Me,()=>i(x).arg),J(ne),Pe(ne,()=>Lt(i(x).content,i(x).snippet)),me(()=>B(ne,1,i(d).weekNumber)),I(q,ne)};Ye(W,q=>{i(b)&&q(Q)}),J(se);var fe=_e(se,2),xe=ue(fe),ve=q=>{var ne=Tp(),ke=c(()=>Ks($)),V=c(()=>ta($)),F=c(Ks),H=ue(ne);st(H,()=>i(D).snippet??Me,()=>i(D).arg),J(ne),Pe(ne,()=>Lt(i(D).content,i(D).snippet)),it("click",ne,function(...T){i(ke)?.apply(this,T)}),it("keydown",ne,function(...T){i(V)?.apply(this,T)}),it("pointerdown",ne,function(...T){i(F)?.apply(this,T)}),I(q,ne)};Ye(xe,q=>{i(E)&&q(ve)}),J(fe),me(q=>{B(se,1,i(d).dayHead),Fe(X,"datetime",q),B(fe,1,i(d).dayFoot)},[()=>ir(i(p),10)]),I(A,G)},$$slots:{content:!0}}),Te()}Ar(["click","keydown","pointerdown"]);function Eo(e,t){Ce(t,!0);let r=ge(t,"inPopup",3,!1),n=c(()=>he("state")),o=c(()=>i(n).options.dayMaxEvents),s=c(()=>i(n).options.eventGap),a=c(()=>he("view-state")),l=c(()=>i(a).colsCount),d=c(()=>i(a).gridEl),f=c(()=>i(a).hiddenChunks),v=c(()=>i(a).popupDay),h=z(void 0),u=z(1),p=z(!1),g=c(()=>t.chunk.event),_=c(()=>t.chunk.event.display);function m(){return i(d).children.item((t.chunk.gridRow-1)*i(l)+t.chunk.gridColumn-1)}Et(()=>{!r()&&(Fd(i(_))||Hd(i(_)))&&C(u,ti(m().firstElementChild)||1,!0)});let y=c(()=>$=>{if($["grid-column"]=`${t.chunk.gridColumn} / span ${t.chunk.dates.length}`,$["grid-row"]=t.chunk.gridRow,!sr(i(_))){let k=r()?1:i(u);if(i(g)._margin){let[A,N]=i(g)._margin;A>k&&t.chunk.gridRow===N&&(k=A)}$["margin-block-start"]=`${k}px`}return i(p)&&($.visibility="hidden"),$});function b(){C(u,Vd(t.chunk,ti(i(h)),ti(m().firstElementChild)||1,i(s)),!0)}function x(){if(i(o)===!0){let $=m(),k=ti($)-E($);if(C(p,t.chunk.bottom>k),i(p))for(let A of t.chunk.dates){let N=Zr(A);if(i(f).has(N)){let G=i(f).get(N);G.includes(t.chunk)||i(f).set(N,[...G,t.chunk])}else i(f).set(N,[t.chunk])}}else C(p,!1),i(f).size&&i(f).clear()}function E($){let k=0;for(let A=0;A<t.chunk.dates.length&&(k=_r(k,ti($.lastElementChild)),$=$.nextElementSibling,!!$);++A);return k}var D={reposition:b,hide:x};{let $=c(()=>r()&&i(v).dayStart),k=c(()=>[i(u),t.chunk.gridRow]);ca(e,{get chunk(){return t.chunk},get styles(){return i(y)},axis:"x",get forceDate(){return i($)},get forceMargin(){return i(k)},get el(){return i(h)},set el(A){C(h,A,!0)}})}return Te(D)}var Sp=ee('<dialog closedby="closerequest"><header><time></time>  <a role="button" tabindex="0">&times;</a></header> <div></div></dialog>');function Rp(e,t){Ce(t,!0);let r=he("view-state"),n=c(()=>he("state")),o=c(()=>i(n).interaction),s=c(()=>i(n).options.buttonText),a=c(()=>i(n).options.theme),l=c(()=>r.colsCount),d=c(()=>r.chunks),f=c(()=>r.gridEl),v=c(()=>r.intlDayPopover),h=c(()=>r.popupDay),u=z(void 0),p=z(""),g=c(()=>i(h).gridColumn),_=c(()=>i(h).gridRow),m=c(()=>i(h).dayStart),y=c(()=>i(h).dayEnd),b=c(()=>{let W=[];for(let Q of i(d))Q.gridRow===i(_)&&Q.gridColumn<=i(g)&&Q.gridColumn+Q.dates.length>i(g)&&W.push(pe({},Q,Ii(Q.event,i(m),i(y))));return W.sort((Q,fe)=>Q.top-fe.top),W});Mi(()=>{i(u).show()}),Et(()=>{i(b).length?L(x):E()});function x(){let W=i(f).children.item((i(_)-1)*i(l)+i(g)-1),Q=kn(i(u)),fe=kn(W),xe=kn(i(f));C(p,"");let ve;if(Q.width>=xe.width){ve=xe.left-fe.left;let ne=fe.right-xe.right;C(p,i(p)+`inset-inline-end:${ne}px;`)}else ve=(fe.width-Q.width)/2,fe.left+ve<xe.left?ve=xe.left-fe.left:fe.left+ve+Q.width>xe.right&&(ve=xe.right-fe.left-Q.width);C(p,i(p)+`inset-inline-start:${ve}px;`);let q;Q.height>=xe.height?(q=xe.top-fe.top,C(p,i(p)+`block-size:${xe.height}px;`)):(q=(fe.height-Q.height)/2,fe.top+q<xe.top?q=xe.top-fe.top:fe.top+q+Q.height>xe.bottom&&(q=xe.bottom-fe.top-Q.height)),C(p,i(p)+`inset-block-start:${q}px;`)}function E(){r.popupDay=null}function D(){E(),i(o).action?.noClick()}var $=Sp();let k;var A=ue($),N=ue(A);Pe(N,()=>Lt(i(v).format(i(m))));var G=_e(N,2);to(G,!0);var se=c(()=>Ks(E)),X=c(()=>ta(E));J(A);var R=_e(A,2);Ae(R,21,()=>i(b),ot,(W,Q)=>{Eo(W,{get chunk(){return i(Q)},inPopup:!0})}),J(R),J($),nr($,W=>C(u,W),()=>i(u)),Pe($,()=>du("pointerdown")),me(W=>{B($,1,i(a).popup),k=gr($,i(p),k,{"grid-area":`${i(_)+1} / ${i(g)}`}),B(A,1,i(a).dayHead),Fe(N,"datetime",W),Fe(G,"aria-label",i(s).close),B(R,1,i(a).events)},[()=>ir(i(m),10)]),Ut("pointerdownoutside",$,D),Ut("close",$,E),it("click",G,function(...W){i(se)?.apply(this,W)}),it("keydown",G,function(...W){i(X)?.apply(this,W)}),I(e,$),Te()}Ar(["click","keydown"]);var Ap=ee('<div role="columnheader"><span></span></div>'),Np=ee('<section><header><div role="row"></div></header> <div><div></div> <div><!> <!> <!></div></div> <!></section>');function Qs(e,t){Ce(t,!0);let r=he("state"),n=new gp(r);Yn("view-state",n);let o=c(()=>r.intlDayHeader),s=c(()=>r.intlDayHeaderAL),a=c(()=>r.options.dayMaxEvents),l=c(()=>r.options.eventGap),d=c(()=>r.options.theme),f=c(()=>n.grid),v=c(()=>n.chunks),h=c(()=>n.bgChunks),u=c(()=>n.iChunks),p=c(()=>n.hiddenChunks),g=c(()=>n.popupDay),_=[];function m(){Pd(_,i(v)),i(p).clear(),jr().then(y)}function y(){i(p).size,_.forEach($=>$?.hide())}Et(()=>{i(l),m()}),Et(y);var b=Oe(),x=ye(b),E=$=>{var k=Np();let A;var N=ue(k),G=ue(N);Ae(G,21,()=>i(f)[0],ot,(q,ne,ke)=>{let V=()=>i(ne).dayStart;var F=Ap();Fe(F,"aria-colindex",1+ke);var H=ue(F);Pe(H,()=>Lt(i(o).format(V()))),J(F),me((T,ae)=>{B(F,1,T),Fe(H,"aria-label",ae)},[()=>rr([i(d).colHead,i(d).weekdays?.[V().getUTCDay()]]),()=>i(s).format(V())]),I(q,F)}),J(G),J(N);var se=_e(N,2),X=ue(se);Ae(X,21,()=>i(f),ot,(q,ne,ke)=>{var V=Oe(),F=ye(V);Ae(F,17,()=>i(ne),ot,(H,T,ae)=>{{let j=c(()=>ae+1===Wt(i(ne))),ie=c(()=>ke+1===Wt(i(f)));Dp(H,{get day(){return i(T)},get noIeb(){return i(j)},get noBeb(){return i(ie)}})}}),I(q,V)}),J(X),nr(X,q=>n.gridEl=q,()=>n?.gridEl);var R=_e(X,2),W=ue(R);Ae(W,19,()=>i(v),q=>q.id,(q,ne,ke)=>{nr(Eo(q,{get chunk(){return i(ne)}}),(V,F)=>_[F]=V,V=>_?.[V],()=>[i(ke)])});var Q=_e(W,2);Ae(Q,17,()=>i(h),q=>q.id,(q,ne)=>{Eo(q,{get chunk(){return i(ne)}})});var fe=_e(Q,2);Ae(fe,17,()=>i(u),ot,(q,ne)=>{Eo(q,{get chunk(){return i(ne)}})}),J(R),J(se);var xe=_e(se,2),ve=q=>{Rp(q,{})};Ye(xe,q=>{i(g)&&q(ve)}),J(k),nr(k,q=>r.mainEl=q,()=>r?.mainEl),Pe(k,()=>bd(m)),me((q,ne)=>{B(k,1,rr([i(d).main,i(a)===!0&&i(d).uniform])),A=gr(k,"",A,{"--ec-grid-cols":q,"--ec-grid-rows":ne}),B(N,1,i(d).header),B(G,1,i(d).grid),B(se,1,i(d).body),B(X,1,i(d).grid),B(R,1,i(d).events)},[()=>Wt(i(f)[0]),()=>Wt(i(f))]),I($,k)},D=c(()=>!Hr(i(f))&&!Hr(i(f)[0]));Ye(x,$=>{i(D)&&$(E)}),I(e,b),Te()}var Zd={createOptions(e){up(e),pe(e,{dayMaxEvents:!1,dayCellFormat:{day:"numeric"},dayPopoverFormat:{month:"long",day:"numeric",year:"numeric"},moreLinkContent:void 0,view:"dayGridMonth"}),pe(e.buttonText,{dayGridDay:"day",dayGridMonth:"month",dayGridWeek:"week",close:"Close"}),pe(e.theme,{uniform:"ec-uniform",dayFoot:"ec-day-foot",otherMonth:"ec-other-month",popup:"ec-popup"}),pe(e.views,{dayGridDay:{buttonText:sa,component:()=>Qs,dayHeaderFormat:{weekday:"long"},displayEventEnd:!1,duration:{days:1},theme:Kr("ec-day-grid ec-day-view")},dayGridWeek:{buttonText:aa,component:()=>Qs,displayEventEnd:!1,theme:Kr("ec-day-grid ec-week-view")},dayGridMonth:{buttonText:Bd,component:Mp,dayHeaderFormat:{weekday:"short"},dayHeaderAriaLabelFormat:{weekday:"long"},displayEventEnd:!1,duration:{months:1},theme:Kr("ec-day-grid ec-month-view"),titleFormat:{year:"numeric",month:"long"}}})}};function Mp(e){return e.features=["dayNumber"],e.extensions.activeRange=(t,r)=>{let{options:{firstDay:n}}=e;return{start:kd(t,n),end:_u(r,n)}},Qs}function Jd(e,t,r){return e.startEditable??t??e.editable??r}function Lp(e,t,r){return e.durationEditable??t??e.editable??r}var Bs=!1;function Op(e){Bs||(Bs=!0,window.requestAnimationFrame(()=>{e(),Bs=!1}))}function gd(e,t,r){return _r(t,Xr(r,e))}function Ip(e){return()=>{let{options:{editable:t,eventStartEditable:r,theme:n}}=e;e.iClasses=(o,s)=>{let{display:a}=s;return[...o,So(a)?[n[a]]:!sr(a)&&Jd(s,r,t)?[n.draggable]:[]]}}}function Pp(e){return()=>{let{interaction:t,mainEl:r}=e;if(r)return Li(r,"scroll",()=>{t.action.handleScroll(),t.pointer?.handleScroll()})}}var Fp=class{constructor(e){this.#e(e)}#e(e){mr(Ip(e)),Et(Pp(e))}};function Hp(e,t){Ce(t,!0);let r=he("state"),n=c(()=>r.events),o=c(()=>r.iEvents),s=c(()=>r.features),a=c(()=>r.view),l=c(()=>r.mainEl),d=c(()=>r.options.dateClick),f=c(()=>r.options.dragConstraint),v=c(()=>r.options.dragScroll),h=c(()=>r.options.editable),u=c(()=>r.options.eventStartEditable),p=c(()=>r.options.eventDragMinDistance),g=c(()=>r.options.eventDragStart),_=c(()=>r.options.eventDragStop),m=c(()=>r.options.eventDrop),y=c(()=>r.options.eventLongPressDelay),b=c(()=>r.options.eventResizeStart),x=c(()=>r.options.eventResizeStop),E=c(()=>r.options.eventResize),D=c(()=>r.options.longPressDelay),$=c(()=>r.options.resizeConstraint),k=c(()=>r.options.selectable),A=c(()=>r.options.select),N=c(()=>r.options.selectBackgroundColor),G=c(()=>r.options.selectConstraint),se=c(()=>r.options.selectLongPressDelay),X=c(()=>r.options.selectMinDistance),R=c(()=>r.options.unselect),W=c(()=>r.options.unselectAuto),Q=c(()=>r.options.unselectCancel),fe=c(()=>r.options.validRange),xe=1,ve=2,q=3,ne=4,ke=5,V=6,F,H,T,ae,j,ie,kt,je,jt,yr,Jr,Xe,Ve,Nn,Mn,ar,Xt,oe,le,de,lt,Ke,qe,Dt,Ie,br,ze,St;function li(S){return Jd(S,i(u),i(h))}function Qr(S,M,ce,te,Rt){F||(F=Fo(M)?xe:V,pn()&&(T=S,ci(M,Rt),ce&&(ie=ce),te&&(br=te),oe="dragging",en(M)))}function di(S,M,ce,te,Rt,Ui,Fc){if(!F&&(F=Fo(M)?ce?q:ve:V,pn())){let{zeroDuration:Vi}=S;T=S.event,ci(M,Fc),Ui&&(br=Ui),oe=te==="x"?"resizingX":"resizingY",Fi()?(de=Y(T.end),Xt?(js(de,T.start),de>=T.end&&Dn(de)):(xo(de,ze),de<T.start&&(de=T.start)),ie=Xt?Tt(Y(T.start)):T.start):(de=Y(T.start),Xt?(js(de,T.end),de<=T.start&&!Vi&&or(de)):(Le(de,ze),de>T.end&&(de=T.end)),Xt?(ie=Tt(Y(T.end)),!Vi&&We(ie,T.end)&&Dn(ie)):(ie=T.end,Vi||(ie=xo(Y(ie),ze))),Vi&&!Xt&&(St=ze)),Rt&&(ie=Rt),en(M)}}function Oo(S,M){F||(F=Fo(S)?i(k)&&!i(s).includes("list")?ne:ke:V,pn()&&(ci(S,M),oe="selecting",lt=Xt?gt({day:1}):ze,T={allDay:Xt,start:ie,end:Le(Y(ie),lt),resourceIds:je?[je.id]:[]},en(S)))}function Io(){F||(F=V)}function ci(S,M){window.getSelection().removeAllRanges(),yr=Xe=S.clientX,Jr=Ve=S.clientY,ze=M?.duration;let ce=ni(Xe,Ve);({allDay:Xt,date:ie,resource:je}=ri(ce)(Xe,Ve)),Mn=i(l)!==ld(ce,3),Nn=ld(ce,1),ya(),S.pointerType!=="mouse"&&(Dt=setTimeout(()=>{F&&(H=!0,en(S))},(tn()?i(se):i(y))??i(D)))}function en(S){if(H||S&&S.pointerType==="mouse"&&Ac()>=(tn()?i(X):i(p))){H=!0,Hi(S),ae||(tn()?Sc():Dc(S,Ln()?i(b):i(g)));let M=fi(kc());if(M){let ce;if({allDay:ce,date:kt,resource:jt}=M,ce===Xt){let te=Pi({},ae),Rt=i($);ar=gt((kt-ie)/1e3),Fi()?(te.start=Le(Y(T.start),ar),te.start>de&&(te.start=de,ar=gt((de-T.start)/1e3))):(te.end=Le(Y(T.end),ar),St&&Le(te.end,St),Ln()?te.end<de&&(te.end=de,ar=gt((de-T.end)/1e3)):tn()?(te.end<T.end?(te.start=xo(te.end,lt),te.end=T.end):te.start=T.start,Rt=i(G)):(te.start=Le(Y(T.start),ar),je&&(te.resourceIds=T.resourceIds.filter(Ui=>Ui!==je.id),te.resourceIds.push(jt.id)),Rt=i(f))),le=!1,Rt!==void 0&&(te=Pi(Us(T),te),le=Rt(tn()?wa(te,S):xa(te,T,S))===!1),le||Rc(te)}}r.iClass=le?"notAllowed":oe}if(i(v)){let M=24,ce=24;Op(()=>{Ie&&(Mn||(Ve<Ie.top+M&&(i(l).scrollTop+=_r(-8,(Ve-Ie.top-M)/3)),Ve>Ie.bottom-M&&(i(l).scrollTop+=Xr(8,(Ve-Ie.bottom+M)/3))),Xe<Ie.left+ce&&(i(l).scrollLeft+=_r(-8,(Xe-Ie.left-ce)/3)),Xe>Ie.right-ce&&(i(l).scrollLeft+=Xr(8,(Xe-Ie.right+ce)/3)),Ve<M&&window.scrollBy(0,_r(-8,(Ve-M)/3)),Ve>window.innerHeight-M&&window.scrollBy(0,Xr(8,(Ve-window.innerHeight+M)/3)))})}}function _a(){pn()&&(ya(),en())}function Cc(S){pn()&&S.isPrimary&&(Xe=S.clientX,Ve=S.clientY,en(S))}function Tc(S){if(Ke&&i(W)&&!(i(Q)&&S.target.closest(i(Q)))&&Hi(S),F&&S.isPrimary){if(H)if(tn()){if(le)Po();else if(Ke=!0,Ne(i(A))){let M=wa(ae,S);i(A)(M)}}else{T.display=j;let M=Ln()?i(x):i(_);Ne(M)&&M({event:Ct(T),jsEvent:S,view:Mt(i(a))});let ce=Us(T);if(ba(T,le?ce:ae),Po(),M=Ln()?i(E):i(m),!le&&Ne(M)){let te=T,Rt=xa(T,ce,S);M(pe(Rt,{revert(){ba(te,ce)}}))}}else if((Nc()||tn())&&Ne(i(d))&&!qe){Xe=S.clientX,Ve=S.clientY;let M=ni(Xe,Ve);if(M){let{allDay:ce,date:te,resource:Rt}=ri(M)(Xe,Ve);i(d)({allDay:ce,date:at(te),dateStr:ir(te),dayEl:M,jsEvent:S,view:Mt(i(a)),resource:Rt})}}$a()}qe=!1}function $a(){H=le=!1,F=yr=Jr=Xe=Ve=T=j=ie=kt=je=jt=ar=St=Xt=de=lt=br=Nn=Ie=ze=void 0,r.iClass=void 0,Dt&&(clearTimeout(Dt),Dt=void 0)}function kc(){return ni(gd(Xe,Ie.left,Ie.right),gd(Ve,Ie.top,Ie.bottom))}function fi(S){if(S){let M=ri(S)(Xe,Ve);if(M.disabled){if(!i(fe).end||M.date<i(fe).end)return fi(S.nextElementSibling);if(!i(fe).start||M.date>i(fe).start)return fi(S.previousElementSibling)}else return(tn()||Ln())&&M.resource&&!ae.resourceIds.includes(M.resource.id)&&!i(s).includes("timeline")?Xe>yr?fi(S.previousElementSibling):fi(S.nextElementSibling):M}return null}function ya(){let S=kn(i(l)),M=kn(Nn),ce=S.width/i(l).offsetWidth,te=S.height/i(l).offsetHeight,Rt=Ed();Ie={left:_r(0,Rt?S.right-i(l).clientWidth*ce:M.left+i(l).scrollLeft*ce),right:Xr(document.documentElement.clientWidth,Rt?M.right+i(l).scrollLeft*ce:S.left+i(l).clientWidth*ce)-2,top:_r(0,M.top+(Mn?0:i(l).scrollTop)*te),bottom:Xr(document.documentElement.clientHeight,Mn?M.bottom:S.top+i(l).clientHeight*te)-2}}function Dc(S,M){Ne(M)&&M({event:Ct(T),jsEvent:S,view:Mt(i(a))}),j=T.display,T.display="preview",ae=Us(T),br!==void 0&&(ae._margin=br),St&&Le(ae.end,St),T.display="ghost",i(n).length=i(n).length}function Sc(){ae={id:"{select}",allDay:T.allDay,start:T.start,title:"",display:"preview",extendedProps:{},backgroundColor:i(N),resourceIds:T.resourceIds,classNames:[],styles:[]}}function Po(){ae=void 0,i(o).delete("action")}function Pi(S,M){return S.start=M.start,S.end=M.end,S.resourceIds=M.resourceIds,{...S}}function ba(S,M){Pi(S,M),i(n).length=i(n).length}function Rc(S){ae=Pi(ae,S),i(o).set("action",ae)}function wa(S,M){let{start:ce,end:te}=Ct(S);return{start:ce,end:te,startStr:ir(S.start),endStr:ir(S.end),allDay:Xt,view:Mt(i(a)),resource:je,jsEvent:M}}function xa(S,M,ce){let te;return Ln()?te=Fi()?{startDelta:ar,endDelta:gt(0)}:{startDelta:gt(0),endDelta:ar}:te={delta:ar,oldResource:je!==jt?je:void 0,newResource:je!==jt?jt:void 0},pe(te,{event:Ct(S),oldEvent:Ct(M),view:Mt(i(a)),jsEvent:ce}),te}function Ac(){return Math.sqrt(Math.pow(Xe-yr,2)+Math.pow(Ve-Jr,2))}function Ln(){return F===ve||Fi()}function Fi(){return F===q}function Nc(){return F===ke}function tn(){return F===ne}function pn(){return F&&F<ke}function Fo(S){return S.isPrimary&&(S.pointerType!=="mouse"||S.buttons&1)}function Hi(S){Ke&&(Ke=!1,Po(),Ne(i(R))&&i(R)({jsEvent:S,view:Mt(i(a))}))}mr(()=>{i(a),Hi()});function Mc(){qe=!0}function Lc(S){if(pn()){let M=S.target,ce=[],te=()=>hu(ce);ce.push(Li(M,"touchmove",Ho(()=>H))),ce.push(Li(M,"touchend",te)),ce.push(Li(M,"touchcancel",te))}}function Ho(S){return M=>{S()&&M.preventDefault()}}Mi(()=>Li(window,"touchmove",mu,{passive:!1}));var Oc={draggable:li,drag:Qr,resize:di,select:Oo,noAction:Io,handleScroll:_a,unselect:Hi,noClick:Mc};Ut("pointermove",tr,Cc),Ut("pointerup",tr,Tc),Ut("pointercancel",tr,$a),Ut("scroll",tr,_a);var Ic=c(()=>Ho(pn));Ut("selectstart",tr,function(...S){i(Ic)?.apply(this,S)});var Pc=c(()=>Ho(()=>Dt));return Ut("contextmenu",tr,function(...S){i(Pc)?.apply(this,S)}),Ut("touchstart",tr,Lc,void 0,!0),Te(Oc)}function Up(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).iEvents),o=c(()=>i(r).options.slotDuration),s=0,a=0,l;function d(){let _=ni(s,a);if(_&&!i(n).has("action")){let{allDay:m,date:y,resource:b,disabled:x}=ri(_)(s,a);if(!x){l||h(),l.allDay=m,l.start=y,l.end=Le(Y(y),i(o)),l.resourceIds=b?[b.id]:[],i(n).set("pointer",{...l});return}}u()}function f(){d()}function v(_){p(_)&&(s=_.clientX,a=_.clientY,d())}function h(){l={id:"{pointer}",title:"",display:"pointer",extendedProps:{},backgroundColor:"transparent",classNames:[],styles:[]}}function u(){l=void 0,i(n).delete("pointer")}function p(_){return _.isPrimary&&_.pointerType==="mouse"}var g={handleScroll:f};return Ut("pointermove",tr,v),Ut("scroll",tr,f),Te(g)}var _d=ee("<div></div>"),Vp=ee("<!> <!> <!>",1);function Bp(e,t){Ce(t,!0);let r=ge(t,"forceDate",3,void 0),n=ge(t,"forceMargin",3,void 0),o=c(()=>he("state")),s=c(()=>i(o).interaction.action),a=c(()=>i(o).options.editable),l=c(()=>i(o).options.eventDurationEditable),d=c(()=>i(o).options.eventResizableFromStart),f=c(()=>i(o).options.theme),v=c(()=>he("view-state")),h=c(()=>i(v).snap),u=c(()=>t.chunk.event),p=c(()=>t.chunk.event.display),g=c(()=>!sr(i(p))&&!So(i(p))&&Lp(i(u),i(l),i(a)));function _($){return k=>i(s).resize(t.chunk,k,$,t.axis,r(),n(),i(h))}var m=Vp(),y=ye(m),b=$=>{var k=_d(),A=c(()=>_(!0));me(()=>B(k,1,`${i(f).resizer??""} ${i(f).start??""}`)),it("pointerdown",k,function(...N){i(A)?.apply(this,N)}),I($,k)};Ye(y,$=>{i(g)&&i(d)&&$(b)});var x=_e(y,2);st(x,()=>t.children);var E=_e(x,2),D=$=>{var k=_d(),A=c(()=>_(!1));me(()=>B(k,1,i(f).resizer)),it("pointerdown",k,function(...N){i(A)?.apply(this,N)}),I($,k)};Ye(E,$=>{i(g)&&$(D)}),I(e,m),Te()}Ar(["pointerdown"]);var Yp=ee("<!> <!>",1);function qp(e,t){Ce(t,!0);let r=he("state");new Fp(r);let n=c(()=>r.interaction),o=c(()=>r.options.pointer);i(n).resizer=Bp;var s=Yp(),a=ye(s);nr(Hp(a,{}),f=>i(n).action=f,()=>i(n)?.action);var l=_e(a,2),d=f=>{nr(Up(f,{}),v=>i(n).pointer=v,()=>i(n)?.pointer)};Ye(l,f=>{i(o)&&f(d)}),I(e,s),Te()}var Qd={createOptions(e){pe(e,{dateClick:void 0,dragConstraint:void 0,dragScroll:!0,editable:!1,eventDragMinDistance:5,eventDragStart:void 0,eventDragStop:void 0,eventDrop:void 0,eventDurationEditable:!0,eventLongPressDelay:void 0,eventResizableFromStart:!1,eventResizeStart:void 0,eventResizeStop:void 0,eventResize:void 0,eventStartEditable:!0,longPressDelay:1e3,pointer:!1,resizeConstraint:void 0,select:void 0,selectBackgroundColor:void 0,selectConstraint:void 0,selectLongPressDelay:void 0,selectMinDistance:5,snapDuration:void 0,unselect:void 0,unselectAuto:!0,unselectCancel:""}),pe(e.theme,{draggable:"ec-draggable",ghost:"ec-ghost",preview:"ec-preview",pointer:"ec-pointer",resizer:"ec-resizer",start:"ec-start",dragging:"ec-dragging",resizingY:"ec-resizing-y",resizingX:"ec-resizing-x",selecting:"ec-selecting",notAllowed:"ec-not-allowed"})},initState(e){e.auxComponents.push(qp)}},zp=class{#e;get intlListDay(){return i(this.#e)}set intlListDay(e){C(this.#e,e)}#t;get intlListDaySide(){return i(this.#t)}set intlListDaySide(e){C(this.#t,e)}constructor(e){this.#e=c(un(e,"listDayFormat")),this.#t=c(un(e,"listDaySideFormat"))}},Gp=ee("<div></div> <!>",1);function Wp(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).interaction),o=c(()=>i(r).options.theme),s=c(()=>a=>(delete a["background-color"],delete a.color,a));{let a=(d,f=Me,v=Me,h=Me)=>{var u=Gp(),p=ye(u);let g;var _=_e(p,2);st(_,f),me(()=>{B(p,1,i(o).eventTag),g=gr(p,"",g,{"background-color":v()})}),I(d,u)},l=c(()=>i(n).action?.noAction);Kd(e,{get chunk(){return t.chunk},get styles(){return i(s)},get onpointerdown(){return i(l)},body:a,$$slots:{body:!0}})}Te()}var jp=ee("<h4><time><!></time> <time></time></h4> <!>",1);function Xp(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).filteredEvents),o=c(()=>i(r).options.highlightedDates),s=c(()=>i(r).options.theme),a=c(()=>i(r).options.validRange),l=c(()=>he("view-state")),d=c(()=>i(l).intlListDay),f=c(()=>i(l).intlListDaySide),v=c(()=>i(o).some(y=>We(y,t.date))),h=c(()=>ai(t.date,i(a))),u=c(()=>ir(t.date,10)),p=c(()=>{let y=[];if(!i(h)){let b=t.date,x=or(Y(t.date));for(let E of i(n))if(!sr(E.display)&&ii(E,b,x)){let D=Ii(E,b,x);y.push(D)}}return y});var g=Oe(),_=ye(g),m=y=>{da(y,{get date(){return t.date},allDay:!0,role:"listitem",get disabled(){return i(h)},get highlight(){return i(v)},defaultContent:()=>i(d).format(t.date),content:(x,E=Me)=>{var D=jp(),$=ye(D),k=ue($),A=ue(k);st(A,()=>E().snippet??Me,()=>E().arg),J(k),Pe(k,()=>Lt(E().content,E().snippet));var N=_e(k,2);Pe(N,()=>Lt(i(f).format(t.date))),J($);var G=_e($,2);Ae(G,17,()=>i(p),se=>se.event,(se,X)=>{Wp(se,{get chunk(){return i(X)}})}),me(()=>{B($,1,i(s).dayHead),Fe(k,"datetime",i(u)),B(N,1,i(s).daySide),Fe(N,"datetime",i(u))}),I(x,D)},$$slots:{content:!0}})};Ye(_,y=>{i(p).length&&y(m)}),I(e,g),Te()}var Kp=ee("<div><!></div>"),Zp=ee("<section><!></section>");function Jp(e,t){Ce(t,!0);let r=he("state"),n=new zp(r);Yn("view-state",n);let o=c(()=>r.filteredEvents),s=c(()=>r.snippets),a=c(()=>r.view),l=c(()=>r.viewDates),d=c(()=>r.options.noEventsClick),f=c(()=>r.options.noEventsContent),v=c(()=>r.options.theme),h=c(()=>{let b=!0;if(!Hr(i(l))){let x=i(l)[0],E=or(Y(i(l).at(-1)));for(let D of i(o))if(!sr(D.display)&&D.start<E&&D.end>x){b=!1;break}}return b}),u=c(()=>Sn(i(f),void 0,void 0,i(s).noEventsContent));function p(b){Ne(i(d))&&i(d)({jsEvent:b,view:Mt(i(a))})}var g=Zp(),_=ue(g),m=b=>{var x=Kp(),E=ue(x);st(E,()=>i(u).snippet??Me,()=>i(u).arg),J(x),Pe(x,()=>Lt(i(u).content,i(u).snippet)),me(()=>B(x,1,i(v).noEvents)),it("click",x,p),I(b,x)},y=b=>{var x=Oe(),E=ye(x);Ae(E,17,()=>i(l),ot,(D,$)=>{Xp(D,{get date(){return i($)}})}),I(b,x)};Ye(_,b=>{i(h)?b(m):b(y,-1)}),J(g),nr(g,b=>r.mainEl=b,()=>r?.mainEl),me(()=>B(g,1,i(v).main)),I(e,g),Te()}Ar(["click"]);var ec={createOptions(e){pe(e,{listDayFormat:{weekday:"long"},listDaySideFormat:{year:"numeric",month:"long",day:"numeric"},noEventsClick:void 0,noEventsContent:"No events",view:"listWeek"}),pe(e.buttonText,{listDay:"day",listWeek:"week",listMonth:"month",listYear:"year"}),pe(e.theme,{daySide:"ec-day-side",eventTag:"ec-event-tag",noEvents:"ec-no-events"}),pe(e.views,{listDay:{buttonText:sa,component:wo,duration:{days:1},theme:Kr("ec-list ec-day-view"),titleFormat:{year:"numeric",month:"long",day:"numeric"}},listWeek:{buttonText:aa,component:wo,duration:{weeks:1},theme:Kr("ec-list ec-week-view")},listMonth:{buttonText:Bd,component:wo,duration:{months:1},theme:Kr("ec-list ec-month-view"),titleFormat:{year:"numeric",month:"long"}},listYear:{buttonText:Au,component:wo,duration:{years:1},theme:Kr("ec-list ec-year-view"),titleFormat:{year:"numeric"}}})}};function wo(e){return e.features=["list"],Jp}function ea(e,t,r=!0){let n=[];for(let{gridColumn:o,gridRow:s,resource:a,start:l,end:d,disabled:f}of t)if(!f&&ii(e,l,d,a)){let v=Ii(e,l,d);pe(v,{gridColumn:o,gridRow:s,resource:a,top:(v.start-l)/1e3,height:(v.end-v.start)/1e3,maxHeight:(d-v.start)/1e3}),r&&oa(v),n.push(v)}return n}function Qp(e){let t={};for(let r of e){let{gridColumn:n}=r,o=t[n],s=0;if(o&&r.start<o.end){for(;s<o.columns.length&&!(o.columns[s].at(-1).end<=r.start);++s);r.end>o.end&&(o.end=r.end)}else o={columns:[],end:r.end};o.columns.length<s+1&&o.columns.push([]),o.columns[s].push(r),t[n]=o,r.group=o,r.groupColumn=s}}function ev(e,t){let r="all-day",n=Sn(e,()=>({text:r}),{html:r},t);return typeof n.content=="string"&&(n.content={html:n.content}),n}function tv(e){e.extensions.activeRange=(t,r)=>{let{options:{slotMaxTime:n}}=e;if(n.days||n.seconds>86400){Le(Dn(r),n);let o=Dn(Y(r));o<t&&(t=o)}return{start:t,end:r}}}function rv(e){"scrollTime"in e||(pe(e,{columnWidth:void 0,flexibleSlotTimeLimits:!1,nowIndicator:!1,scrollTime:"06:00:00",slotDuration:"00:30:00",slotHeight:24,slotLabelInterval:void 0,slotLabelFormat:{hour:"numeric",minute:"2-digit"},slotMaxTime:"24:00:00",slotMinTime:"00:00:00",snapDuration:void 0}),pe(e.theme,{nowIndicator:"ec-now-indicator",sidebar:"ec-sidebar",slot:"ec-slot"}))}function nv(e){"allDaySlot"in e||(pe(e,{allDayContent:void 0,allDaySlot:!0,slotEventOverlap:!0}),pe(e.theme,{allDay:"ec-all-day"}))}function iv(e){"scrollTime"in e||pe(e,{scrollTime:gt,slotDuration:gt,slotLabelInterval:Gs(gt),slotMaxTime:gt,slotMinTime:gt,snapDuration:Gs(gt)})}function ov(e,t){return()=>{let{viewDates:r,options:{highlightedDates:n,validRange:o}}=e,{slotTimeLimits:s}=t,a=[];return L(()=>{let l=1;for(let d of r)a.push({gridColumn:l,gridRow:1,resource:void 0,start:Le(Y(d),s.min),end:Le(Y(d),s.max),dayStart:d,dayEnd:or(Y(d)),disabled:ai(d,o),highlight:n.some(f=>We(f,d))}),++l}),[a]}}function sv(e,t){return()=>{let{filteredEvents:r}=e,{grid:n}=t,o=[],s=[],a=[],l=[];return L(()=>{for(let d of r)for(let f of n)sr(d.display)?(s=s.concat(ea(d,f)),d.allDay&&(l=l.concat(oi(d,f)))):d.allDay?a=a.concat(oi(d,f)):o=o.concat(ea(d,f));Qp(o),Ud(a)}),{chunks:o,bgChunks:s,allDayChunks:a,allDayBgChunks:l}}}function av(e,t){return()=>{let{iEvents:r}=e,{grid:n}=t,o=[],s=[];for(let[,a]of r)a&&L(()=>{for(let l of n)a.allDay?s=s.concat(oi(a,l,!1)):o=o.concat(ea(a,l,!1))});return{iChunks:o,allDayIChunks:s}}}function lv(e){return()=>{let{filteredEvents:t,viewDates:r,options:{flexibleSlotTimeLimits:n,slotMinTime:o,slotMaxTime:s}}=e,a;return L(()=>{a=Wd(o,s,n,r,t)}),a}}function dv(e){return()=>{let{options:{slotDuration:t,slotLabelInterval:r}}=e,n;return L(()=>{n=r===void 0?He(t)<3600?2:1:uu(He(r)/He(t))||1}),n}}function cv(e,t){return()=>{let{offset:r,options:{slotDuration:n}}=e,{intlSlotLabel:o,slotLabelPeriodicity:s,slotTimeLimits:a}=t,l;return L(()=>{l=Gd(Tt($r(void 0,r)),n,s,a,o)}),l}}function fv(e){return()=>{let{options:{slotDuration:t,snapDuration:r}}=e;return r??=t,{duration:r,ratio:He(r)/He(t)}}}function fa(){return class{#e;get intlSlotLabel(){return i(this.#e)}set intlSlotLabel(e){C(this.#e,e)}#t;get slotLabelPeriodicity(){return i(this.#t)}set slotLabelPeriodicity(e){C(this.#t,e)}#r;get sidebarWidth(){return i(this.#r)}set sidebarWidth(e){C(this.#r,e,!0)}#n;get snap(){return i(this.#n)}set snap(e){C(this.#n,e)}constructor(e){this.#e=c(un(e,"slotLabelFormat")),this.#t=c(dv(e)),this.#r=z(0),this.#n=c(fv(e))}}}function tc(e){return class extends e{#e;get slotTimeLimits(){return i(this.#e)}set slotTimeLimits(t){C(this.#e,t)}#t;get slots(){return i(this.#t)}set slots(t){C(this.#t,t)}#r;get chunks(){return i(this.#r)}set chunks(t){C(this.#r,t)}#n;get bgChunks(){return i(this.#n)}set bgChunks(t){C(this.#n,t)}#i;get allDayChunks(){return i(this.#i)}set allDayChunks(t){C(this.#i,t)}#o;get allDayBgChunks(){return i(this.#o)}set allDayBgChunks(t){C(this.#o,t)}#s;get iChunks(){return i(this.#s)}set iChunks(t){C(this.#s,t)}#l;get allDayIChunks(){return i(this.#l)}set allDayIChunks(t){C(this.#l,t)}constructor(t){super(t),this.#e=c(lv(t)),this.#t=c(cv(t,this));let r=c(sv(t,this)),n=c(()=>i(r).chunks),o=c(()=>i(r).bgChunks),s=c(()=>i(r).allDayChunks),a=c(()=>i(r).allDayBgChunks);this.#r=c(()=>i(n)),this.#n=c(()=>i(o)),this.#i=c(()=>i(s)),this.#o=c(()=>i(a));let l=c(av(t,this)),d=c(()=>i(l).iChunks),f=c(()=>i(l).allDayIChunks);this.#s=c(()=>i(d)),this.#l=c(()=>i(f))}}}var uv=class extends tc(fa()){#e;get grid(){return i(this.#e)}set grid(e){C(this.#e,e)}constructor(e){super(e),this.#e=c(ov(e,this))}},pv;function vv(e){return()=>{let{activeRange:t,filteredEvents:r,resources:n,options:{filterResourcesWithEvents:o},extensions:{viewResources:s}}=e,a=s?s(n):n;return L(()=>{o&&(a=n.filter(l=>r.some(d=>!sr(d.display)&&ii(d,t.start,t.end,l)))),a.length||(a=pv??=la([{}]))}),a}}function hv(e,t){return()=>{let{viewDates:r,options:{datesAboveResources:n,highlightedDates:o,validRange:s}}=e,{slotTimeLimits:a,viewResources:l}=t,d=[];return L(()=>{let f=1,v=[l,r],h=[Cd,Zr];n&&(v.reverse(),h.reverse());for(let u of v[0]){let p=[],g=h[0](u);for(let _ of v[1]){let m=n?u:_,y=n?_:u;p.push({gridColumn:f,gridRow:1,resource:y,key:h[1](_),groupKey:g,start:Le(Y(m),a.min),end:Le(Y(m),a.max),dayStart:m,dayEnd:or(Y(m)),disabled:ai(m,s),highlight:o.some(b=>We(b,m))}),++f}d.push(p)}}),d}}function rc(e){return class extends e{#e;get viewResources(){return i(this.#e)}set viewResources(t){C(this.#e,t)}constructor(t){super(t),this.#e=c(vv(t))}}}var S1=class extends rc(tc(fa())){#e;get grid(){return i(this.#e)}set grid(e){C(this.#e,e)}constructor(e){super(e),this.#e=c(hv(e,this))}},R1=ee("<span><!></span>");function $d(e,t){Ce(t,!0);let r=ge(t,"allDay",3,!1),n=c(()=>he("state")),o=c(()=>i(n).options.slotHeight),s=c(()=>he("view-state")),a=c(()=>i(s).snap),l=c(()=>t.day.dayStart),d=c(()=>t.day.start),f=c(()=>t.day.resource),v=c(()=>t.day.disabled),h=c(()=>t.day.highlight),u=z(void 0);function p(g,_){if(r())return i(l);{let m=kn(i(u)),y=m.height/i(u).offsetHeight;return Le(Y(i(d)),i(a).duration,wd((_-m.top)/(i(o)*i(a).ratio*y)))}}da(e,{get date(){return i(l)},get allDay(){return r()},get resource(){return i(f)},dateFromPoint:p,get disabled(){return i(v)},get highlight(){return i(h)},get noIeb(){return t.noIeb},get noBeb(){return t.noBeb},get el(){return i(u)},set el(g){C(u,g,!0)}}),Te()}function Ys(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).options.slotEventOverlap),o=c(()=>i(r).options.slotDuration),s=c(()=>i(r).options.slotHeight),a=c(()=>l=>{let d=He(i(o)),f=t.chunk.top/d*i(s),v=t.chunk.height/d*i(s)||i(s),h=t.chunk.maxHeight/d*i(s);l["grid-column"]=t.chunk.gridColumn,l["inset-block-start"]=`${f}px`,l["min-block-size"]=`${v}px`,l["block-size"]=`${v}px`,l["max-block-size"]=`${h}px`;let u="100% - var(--ec-event-col-gap)";if(t.chunk.group){let p=t.chunk.group.columns.length;l["z-index"]=`${t.chunk.groupColumn+1}`,l["inset-inline-start"]=`calc((${u}) / ${p} * ${t.chunk.groupColumn})`,l["inline-size"]=`calc((${u}) / ${p} * ${i(n)?.5*(1+p-t.chunk.groupColumn):1})`}return l});ca(e,{get chunk(){return t.chunk},get styles(){return i(a)},axis:"y"}),Te()}function qs(e,t){Ce(t,!0);let r=c(()=>he("state")),n=c(()=>i(r).options.eventGap),o=z(void 0),s=z(0),a=c(()=>t.chunk.event),l=c(()=>v=>(v["grid-column"]=`${t.chunk.gridColumn} / span ${t.chunk.dates.length}`,(i(s)||i(a)._margin)&&(v["margin-block-start"]=`${i(a)._margin??i(s)}px`),v));function d(){C(s,Vd(t.chunk,ti(i(o)),1,i(n)),!0)}var f={reposition:d};return ca(e,{get chunk(){return t.chunk},get styles(){return i(l)},axis:"x",get forceMargin(){return i(s)},get el(){return i(o)},set el(v){C(o,v,!0)}}),Te(f)}var mv=ee("<div></div>");function gv(e,t){Ce(t,!0);let r=ge(t,"span",3,1),n=c(()=>he("state")),o=c(()=>i(n).mainEl),s=c(()=>i(n).now),a=c(()=>i(n).today),l=c(()=>i(n).options.slotDuration),d=c(()=>i(n).options.slotHeight),f=c(()=>i(n).options.theme),v=c(()=>he("view-state")),h=c(()=>i(v).sidebarWidth),u=c(()=>{for(let $ of t.days)if(We($.dayStart,i(a)))return $;return{}}),p=c(()=>i(u).gridColumn),g=c(()=>i(u).start),_=c(()=>i(u).end),m=c(()=>{if(i(s)<i(g)||i(s)>i(_))return null;let $=He(i(l));return(i(s)-i(g))/1e3/$*i(d)}),y=c(()=>({root:i(o),rootMargin:Ed()?`0px -${i(h)+5.5}px 0px 0px`:`0px 0px 0px -${i(h)+5.5}px`,threshold:0}));function b($,k){$.classList.toggle(i(f).hidden,!k.isIntersecting)}var x=Oe(),E=ye(x),D=$=>{var k=mv();let A;Pe(k,()=>cu(b,i(y))),me(()=>{B(k,1,i(f).nowIndicator),A=gr(k,"",A,{"grid-column":`${i(p)+1} / span ${r()??""}`,"inset-block-start":`${i(m)??""}px`})}),I($,k)};Ye(E,$=>{i(p)&&i(m)!==null&&$(D)}),I(e,x),Te()}var _v=ee('<div><aside><!></aside> <div role="row"></div> <div><!> <!> <!></div></div>'),$v=ee("<div><time></time></div>"),yv=ee('<section><header><aside></aside> <div role="row"><!></div> <!></header> <div role="rowgroup"><aside aria-hidden="true"></aside> <div role="row"></div> <div><!> <!> <!></div></div> <!></section>');function bv(e,t){Ce(t,!0);let r=ge(t,"viewState",7),n=he("state");r()||r(new uv(n)),Yn("view-state",r());let o=c(()=>n.mainEl),s=c(()=>n.snippets),a=c(()=>n.viewDates),l=c(()=>n.options.allDayContent),d=c(()=>n.options.allDaySlot),f=c(()=>n.options.columnWidth),v=c(()=>n.options.eventGap),h=c(()=>n.options.nowIndicator),u=c(()=>n.options.scrollTime),p=c(()=>n.options.slotHeight),g=c(()=>n.options.slotDuration),_=c(()=>n.options.theme),m=c(()=>r().allDayChunks),y=c(()=>r().allDayBgChunks),b=c(()=>r().allDayIChunks),x=c(()=>r().bgChunks),E=c(()=>r().chunks),D=c(()=>r().iChunks),$=c(()=>r().grid),k=c(()=>r().sidebarWidth),A=c(()=>r().slots),N=c(()=>r().slotLabelPeriodicity),G=c(()=>r().slotTimeLimits),se=z(0),X=c(()=>ev(i(l),i(s).allDayContent));Et(()=>{i(u),Hr(i(a))||jr().then(R)});function R(){i(o).scrollTop=((He(i(u))-He(i(G).min))/He(i(g))-.5)*i(p)}let W=[];function Q(){Pd(W,i(m))}Et(()=>{i(v),Q()});var fe=Oe(),xe=ye(fe),ve=ne=>{var ke=yv();let V;var F=ue(ke),H=ue(F),T=_e(H,2),ae=ue(T),j=oe=>{var le=Oe(),de=ye(le);st(de,()=>t.header),I(oe,le)},ie=oe=>{var le=Oe(),de=ye(le);Ae(de,17,()=>i($)[0],ot,(lt,Ke,qe)=>{let Dt=()=>i(Ke).dayStart,Ie=()=>i(Ke).disabled,br=()=>i(Ke).highlight;wp(lt,{get date(){return Dt()},colIndex:1+qe,get disabled(){return Ie()},get highlight(){return br()},children:(ze,St)=>{Ep(ze,{get date(){return Dt()}})},$$slots:{default:!0}})}),I(oe,le)};Ye(ae,oe=>{t.header?oe(j):oe(ie,-1)}),J(T);var kt=_e(T,2),je=oe=>{var le=_v(),de=ue(le),lt=ue(de);st(lt,()=>i(X).snippet??Me,()=>i(X).arg),J(de),Pe(de,()=>Lt(i(X).content,i(X).snippet));var Ke=_e(de,2);Ae(Ke,21,()=>i($),ot,(ze,St,li)=>{var Qr=Oe(),di=ye(Qr);Ae(di,17,()=>i(St),ot,(Oo,Io,ci)=>{{let en=c(()=>li+1===Wt(i($))&&ci+1===Wt(i(St)));$d(Oo,{get day(){return i(Io)},allDay:!0,get noIeb(){return i(en)}})}}),I(ze,Qr)}),J(Ke);var qe=_e(Ke,2),Dt=ue(qe);Ae(Dt,19,()=>i(m),ze=>ze.id,(ze,St,li)=>{nr(qs(ze,{get chunk(){return i(St)}}),(Qr,di)=>W[di]=Qr,Qr=>W?.[Qr],()=>[i(li)])});var Ie=_e(Dt,2);Ae(Ie,17,()=>i(y),ze=>ze.id,(ze,St)=>{qs(ze,{get chunk(){return i(St)}})});var br=_e(Ie,2);Ae(br,17,()=>i(b),ot,(ze,St)=>{qs(ze,{get chunk(){return i(St)}})}),J(qe),J(le),me(()=>{B(le,1,i(_).allDay),B(de,1,i(_).sidebar),B(Ke,1,i(_).grid),B(qe,1,i(_).events)}),I(oe,le)};Ye(kt,oe=>{i(d)&&oe(je)}),J(F);var jt=_e(F,2),yr=ue(jt);Ae(yr,21,()=>i(A),ot,(oe,le,de)=>{var lt=$v();let Ke;var qe=ue(lt);Pe(qe,()=>Lt(i(le)[1])),J(lt),me(()=>{B(lt,1,rr([i(_).slot,!de&&i(_).hidden])),Ke=gr(lt,"",Ke,{"--ec-slot-label-periodicity":i(le)[2]}),Fe(qe,"datetime",i(le)[0])}),I(oe,lt)}),J(yr);var Jr=_e(yr,2);Ae(Jr,21,()=>i($),ot,(oe,le,de)=>{var lt=Oe(),Ke=ye(lt);Ae(Ke,17,()=>i(le),ot,(qe,Dt,Ie)=>{{let br=c(()=>de+1===Wt(i($))&&Ie+1===Wt(i(le)));$d(qe,{get day(){return i(Dt)},get noIeb(){return i(br)},noBeb:!0})}}),I(oe,lt)}),J(Jr);var Xe=_e(Jr,2),Ve=ue(Xe);Ae(Ve,17,()=>i(E),oe=>oe.id,(oe,le)=>{Ys(oe,{get chunk(){return i(le)}})});var Nn=_e(Ve,2);Ae(Nn,17,()=>i(x),oe=>oe.id,(oe,le)=>{Ys(oe,{get chunk(){return i(le)}})});var Mn=_e(Nn,2);Ae(Mn,17,()=>i(D),ot,(oe,le)=>{Ys(oe,{get chunk(){return i(le)}})}),J(Xe),J(jt);var ar=_e(jt,2),Xt=oe=>{var le=Oe(),de=ye(le),lt=qe=>{var Dt=Oe(),Ie=ye(Dt);st(Ie,()=>t.nowIndicator),I(qe,Dt)},Ke=qe=>{gv(qe,{get days(){return i($)[0]}})};Ye(de,qe=>{t.nowIndicator?qe(lt):qe(Ke,-1)}),I(oe,le)};Ye(ar,oe=>{i(h)&&oe(Xt)}),J(ke),nr(ke,oe=>n.mainEl=oe,()=>n?.mainEl),Pe(ke,()=>bd(Q)),me((oe,le)=>{B(ke,1,i(_).main),V=gr(ke,"",V,{"--ec-grid-cols":oe,"--ec-col-group-span":le,"--ec-col-width":i(f)??"minmax(0, 1fr)","--ec-slot-label-periodicity":i(N),"--ec-slot-height":`${i(p)??""}px`,"--ec-header-height":`${i(se)??""}px`,"--ec-sidebar-width":`${i(k)??""}px`}),B(F,1,i(_).header),B(H,1,i(_).sidebar),B(T,1,i(_).grid),B(jt,1,i(_).body),B(yr,1,i(_).sidebar),B(Jr,1,i(_).grid),B(Xe,1,i(_).events)},[()=>Wt(i($))*Wt(i($)[0]),()=>Wt(i($)[0])]),$o(H,"offsetWidth",oe=>r().sidebarWidth=oe),$o(F,"offsetHeight",oe=>C(se,oe)),I(ne,ke)},q=c(()=>!Hr(i($))&&!Hr(i($)[0]));Ye(xe,ne=>{i(q)&&ne(ve)}),I(e,fe),Te()}var A1=ee("<!> <!>",1);function wv(e,t){let r=0,n=t.length;for(;r<n;){let o=r+n>>1;t[o].dayEnd>e.start?n=o:r=o+1}for(;r>0&&t[r-1].end>e.start;)--r;return r}function nc(e,t,r,n=!0){let o=[],s,a,l,d,f,v,h=0;for(let u=wv(e,t);u<t.length;++u){let{gridColumn:p,gridRow:g,resource:_,dayStart:m,dayEnd:y,start:b,end:x,disabled:E}=t[u];if(m>=e.end)break;E||(r?ii(e,m,y,_)&&(o.length||(s=m,l=p,d=g,f=_),o.push(m),a=y):ii(e,b,x,_)&&(o.length||(s=b,l=p,d=g,f=_,v=_r(e.start-b,0)/1e3),o.push(m),a=x,h+=(Xr(x,e.end)-_r(b,e.start))/1e3))}if(o.length){let u=Ii(e,s,a);return pe(u,{gridColumn:l,gridRow:d,resource:f,dates:o,left:v,width:h}),n&&oa(u),u}return null}function ic(e,t){let r=t[0]?.resource;return!r||e.resourceIds.includes(r.id)}function xv(e,t){let r={};for(let n=0;n<e.length;++n){let o=e[n],{gridColumn:s,gridRow:a}=o;o.order=n;let l=[];for(let d=0;d<o.dates.length;++d){let f=`${a}_${s+d}`,v=r[f]??={pass:0,placed:[],chunks:[]};v.chunks.push(o),l.push(v)}o.cells=l}if(t){let n={};for(let o of e){let{gridColumn:s,gridRow:a}=o,l=new Set([o]),d=[];for(let v=0;v<o.dates.length;++v)for(let h of r[`${a}_${s+v}`].chunks)l.has(h)||(l.add(h),d.push(h));o.rivals=d;let{layoutGroup:f}=o.event;f!==void 0&&(o.mates=n[`${a}_${f}`]??=[],o.mates.push(o))}}}function Ev(e,t){return()=>{let{viewDates:r,options:{highlightedDates:n,validRange:o}}=e,{dayTimeLimits:s,viewResources:a}=t,l=[];return L(()=>{let d=1;for(let f of a){let v=[],h=1;for(let u of r){let p=s[Zr(u)];v.push({gridColumn:h,gridRow:d,resource:f,start:Le(Y(u),p.min),end:Le(Y(u),p.max),dayStart:u,dayEnd:or(Y(u)),disabled:ai(u,o),highlight:n.some(g=>We(g,u))}),++h}l.push(v),++d}}),l}}function Cv(e){return e.months===1&&!e.years&&!e.days&&!e.seconds}function Tv(e){return e.inWeeks&&e.days===7&&!e.years&&!e.months&&!e.seconds}function kv(e,t){return()=>{let{features:r,options:{duration:n,firstDay:o,weekNumbers:s}}=e,{grid:a}=t,l=[],d=[];return L(()=>{let f,v;if(!Hr(a)){for(let{dayStart:h,gridColumn:u}of a[0])if(r.includes("month")&&(f&&f.date.getUTCMonth()===h.getUTCMonth()?++f.span:(f={date:h,gridColumn:u,span:1},l.push(f))),s){let p=Rd(h,o);v&&v.number===p?++v.span:(v={number:p,date:h,gridColumn:u,span:1},d.push(v))}}Wt(l)===1&&Cv(n)&&(l=[]),Wt(d)===1&&Tv(n)&&(d=[])}),{months:l,weeks:d}}}function Dv(e,t){return()=>{let{filteredEvents:r,options:{eventOrderStrict:n}}=e,{grid:o,monthView:s}=t,a=[],l=[];return L(()=>{for(let d of r){let f=sr(d.display);if(f&&s&&!d.allDay)continue;let v=f?l:a;for(let h of o){if(!ic(d,h))continue;let u=nc(d,h,s);u&&v.push(u)}}xv(a,n)}),{chunks:a,bgChunks:l}}}function Sv(e,t){return()=>{let{iEvents:r}=e,{grid:n,monthView:o}=t,s=[];for(let[,a]of r)a&&L(()=>{for(let l of n){if(!ic(a,l))continue;let d=nc(a,l,o,!1);d&&s.push(d)}});return s}}function Rv(e){return()=>{let{filteredEvents:t,viewDates:r,options:{flexibleSlotTimeLimits:n,slotMinTime:o,slotMaxTime:s}}=e,a={};return L(()=>{for(let l of r)a[Zr(l)]=Wd(o,s,n,[l],t)}),a}}function Av(e,t){return()=>{let{viewDates:r,options:{slotDuration:n}}=e,{dayTimeLimits:o,intlSlotLabel:s,slotLabelPeriodicity:a}=t,l={};return L(()=>{for(let d of r){let f=Zr(d);l[f]=f in o?Gd(d,n,a,o[f],s):[]}}),l}}function Nv(e){return()=>{let{resources:t}=e,r;return L(()=>{r=t.some(n=>ri(n).children.length)}),r}}function Mv(e){return()=>{let{options:{slotDuration:t}}=e,r;return L(()=>{r=!He(t)}),r}}var N1=class extends rc(fa()){#e;get dayTimeLimits(){return i(this.#e)}set dayTimeLimits(e){C(this.#e,e)}#t;get daySlots(){return i(this.#t)}set daySlots(e){C(this.#t,e)}#r;get grid(){return i(this.#r)}set grid(e){C(this.#r,e)}#n;get extraHeads(){return i(this.#n)}set extraHeads(e){C(this.#n,e)}#i;get intlMonthHeader(){return i(this.#i)}set intlMonthHeader(e){C(this.#i,e)}#o;get monthView(){return i(this.#o)}set monthView(e){C(this.#o,e)}#s;get chunks(){return i(this.#s)}set chunks(e){C(this.#s,e)}#l;get bgChunks(){return i(this.#l)}set bgChunks(e){C(this.#l,e)}#a;get iChunks(){return i(this.#a)}set iChunks(e){C(this.#a,e)}#u;get nestedResources(){return i(this.#u)}set nestedResources(e){C(this.#u,e)}constructor(e){super(e),this.#e=c(Rv(e)),this.#t=c(Av(e,this)),this.#r=c(Ev(e,this)),this.#n=c(kv(e,this)),this.#i=c(un(e,"monthHeaderFormat")),this.#o=c(Mv(e));let t=c(Dv(e,this)),r=c(()=>i(t).chunks),n=c(()=>i(t).bgChunks);this.#s=c(()=>i(r)),this.#l=c(()=>i(n)),this.#a=c(Sv(e,this)),this.#u=c(Nv(e))}};var M1=ee("<span></span>"),L1=ee("<button></button>"),O1=ee("<!> <span><!></span>",1);Ar(["click"]);var I1=ee("<div></div>");var P1=ee("<time></time>"),F1=ee("<span><!></span>"),H1=ee("<div><time></time></div>"),U1=ee('<div role="rowheader"><!> <!></div>'),V1=ee('<section><header><aside></aside> <div role="row"><!> <!> <!> <!></div></header> <div role="rowgroup"><aside></aside> <div role="row"></div> <div><!> <!> <!></div></div> <!></section>');var oc={createOptions(e){rv(e),nv(e),pe(e.buttonText,{timeGridDay:"day",timeGridWeek:"week"}),pe(e,{view:"timeGridWeek"}),pe(e.views,{timeGridDay:{buttonText:sa,component:yd,dayHeaderFormat:{weekday:"long"},duration:{days:1},theme:Kr("ec-time-grid ec-day-view"),titleFormat:{year:"numeric",month:"long",day:"numeric"}},timeGridWeek:{buttonText:aa,component:yd,duration:{weeks:1},theme:Kr("ec-time-grid ec-week-view")}})},createParsers(e){iv(e)}};function yd(e){return tv(e),bv}function sc(e,t,r){return Qn(fp,{target:e,props:{plugins:t,options:r}})}function ac(e){return Si(e)}import jv from"@typo3/core/ajax/ajax-request.js";import Xv from"@typo3/core/document-service.js";import Kv from"@typo3/backend/notification.js";import pc from"@typo3/core/ajax/ajax-request.js";import Iv from"@typo3/backend/notification.js";import Pv from"@typo3/backend/viewport.js";import Lv from"@typo3/backend/modal.js";import{html as Ao}from"lit";var lc=e=>{let t=r=>String(r).padStart(2,"0");return`${e.getFullYear()}-${t(e.getMonth()+1)}-${t(e.getDate())}T${t(e.getHours())}:${t(e.getMinutes())}`},Ov=(e,t)=>{if(!t)return e;let r=new Date(e);return r.setDate(r.getDate()-1),r.setHours(23,59,0,0),r};function dc(e,t,r,n,o){return new Promise(s=>{let a=Lv.advanced({title:e.title,content:Ao`
+https://svelte.dev/e/hydration_failed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/hydration_failed`);
+  }
+}
+function invalid_snippet() {
+  if (dev_fallback_default) {
+    const error = new Error(`invalid_snippet
+Could not \`{@render}\` snippet due to the expression being \`null\` or \`undefined\`. Consider using optional chaining \`{@render snippet?.()}\`
+https://svelte.dev/e/invalid_snippet`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/invalid_snippet`);
+  }
+}
+function props_invalid_value(key2) {
+  if (dev_fallback_default) {
+    const error = new Error(`props_invalid_value
+Cannot do \`bind:${key2}={undefined}\` when \`${key2}\` has a fallback value
+https://svelte.dev/e/props_invalid_value`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/props_invalid_value`);
+  }
+}
+function props_rest_readonly(property) {
+  if (dev_fallback_default) {
+    const error = new Error(`props_rest_readonly
+Rest element properties of \`$props()\` such as \`${property}\` are readonly
+https://svelte.dev/e/props_rest_readonly`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/props_rest_readonly`);
+  }
+}
+function rune_outside_svelte(rune) {
+  if (dev_fallback_default) {
+    const error = new Error(`rune_outside_svelte
+The \`${rune}\` rune is only available inside \`.svelte\` and \`.svelte.js/ts\` files
+https://svelte.dev/e/rune_outside_svelte`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/rune_outside_svelte`);
+  }
+}
+function state_descriptors_fixed() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_descriptors_fixed
+Property descriptors defined on \`$state\` objects must contain \`value\` and always be \`enumerable\`, \`configurable\` and \`writable\`.
+https://svelte.dev/e/state_descriptors_fixed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_descriptors_fixed`);
+  }
+}
+function state_prototype_fixed() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_prototype_fixed
+Cannot set prototype of \`$state\` object
+https://svelte.dev/e/state_prototype_fixed`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_prototype_fixed`);
+  }
+}
+function state_unsafe_mutation() {
+  if (dev_fallback_default) {
+    const error = new Error(`state_unsafe_mutation
+Updating state inside \`$derived(...)\`, \`$inspect(...)\` or a template expression is forbidden. If the value should not be reactive, declare it without \`$state\`
+https://svelte.dev/e/state_unsafe_mutation`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/state_unsafe_mutation`);
+  }
+}
+function svelte_boundary_reset_onerror() {
+  if (dev_fallback_default) {
+    const error = new Error(`svelte_boundary_reset_onerror
+A \`<svelte:boundary>\` \`reset\` function cannot be called while an error is still being handled
+https://svelte.dev/e/svelte_boundary_reset_onerror`);
+    error.name = "Svelte error";
+    throw error;
+  } else {
+    throw new Error(`https://svelte.dev/e/svelte_boundary_reset_onerror`);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/flags/index.js
+var async_mode_flag = false;
+var legacy_mode_flag = false;
+var tracing_mode_flag = false;
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dev/tracing.js
+var tracing_expressions = null;
+function tag(source2, label2) {
+  source2.label = label2;
+  tag_proxy(source2.v, label2);
+  return source2;
+}
+function tag_proxy(value, label2) {
+  value?.[PROXY_PATH_SYMBOL]?.(label2);
+  return value;
+}
+function label(value) {
+  if (typeof value === "symbol") return `Symbol(${value.description})`;
+  if (typeof value === "function") return "<function>";
+  if (typeof value === "object" && value) return "<object>";
+  return String(value);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/shared/dev.js
+function get_error(label2) {
+  const error = new Error();
+  const stack2 = get_stack();
+  if (stack2.length === 0) {
+    return null;
+  }
+  stack2.unshift("\n");
+  define_property(error, "stack", {
+    value: stack2.join("\n")
+  });
+  define_property(error, "name", {
+    value: label2
+  });
+  return (
+    /** @type {Error & { stack: string }} */
+    error
+  );
+}
+function get_stack() {
+  const limit2 = Error.stackTraceLimit;
+  Error.stackTraceLimit = Infinity;
+  const stack2 = new Error().stack;
+  Error.stackTraceLimit = limit2;
+  if (!stack2) return [];
+  const lines = stack2.split("\n");
+  const new_lines = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const posixified = line.replaceAll("\\", "/");
+    if (line.trim() === "Error") {
+      continue;
+    }
+    if (line.includes("validate_each_keys")) {
+      return [];
+    }
+    if (posixified.includes("svelte/src/internal") || posixified.includes("node_modules/.vite")) {
+      continue;
+    }
+    new_lines.push(line);
+  }
+  return new_lines;
+}
+function invariant(condition, message) {
+  if (!dev_fallback_default) {
+    throw new Error("invariant(...) was not guarded by if (DEV)");
+  }
+  if (!condition) invariant_violation(message);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/shared/context.js
+function get_parent_context(context) {
+  let parent = context.p;
+  while (parent !== null && parent.c === null) {
+    parent = parent.p;
+  }
+  return parent?.c ?? null;
+}
+function get_or_init_context_map(context, name) {
+  if (context === null) {
+    lifecycle_outside_component(name);
+  }
+  return context.c ??= new Map(get_parent_context(context) || void 0);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/context.js
+var component_context = null;
+function set_component_context(context) {
+  component_context = context;
+}
+var dev_stack = null;
+function set_dev_stack(stack2) {
+  dev_stack = stack2;
+}
+var dev_current_component_function = null;
+function set_dev_current_component_function(fn) {
+  dev_current_component_function = fn;
+}
+function getContext(key2) {
+  const context_map = get_or_init_context_map(component_context, "getContext");
+  const result = (
+    /** @type {T} */
+    context_map.get(key2)
+  );
+  return result;
+}
+function setContext(key2, context) {
+  const context_map = get_or_init_context_map(component_context, "setContext");
+  if (async_mode_flag) {
+    var flags2 = (
+      /** @type {Effect} */
+      active_effect.f
+    );
+    var valid = !active_reaction && (flags2 & BRANCH_EFFECT) !== 0 && // pop() runs synchronously, so this indicates we're setting context after an await
+    !/** @type {ComponentContext} */
+    component_context.i;
+    if (!valid) {
+      set_context_after_init();
+    }
+  }
+  context_map.set(key2, context);
+  return context;
+}
+function push(props, runes = false, fn) {
+  component_context = {
+    p: component_context,
+    i: false,
+    c: null,
+    e: null,
+    s: props,
+    x: null,
+    r: (
+      /** @type {Effect} */
+      active_effect
+    ),
+    l: legacy_mode_flag && !runes ? { s: null, u: null, $: [] } : null
+  };
+  if (dev_fallback_default) {
+    component_context.function = fn;
+    dev_current_component_function = fn;
+  }
+}
+function pop(component2) {
+  var context = (
+    /** @type {ComponentContext} */
+    component_context
+  );
+  var effects = context.e;
+  if (effects !== null) {
+    context.e = null;
+    for (var fn of effects) {
+      create_user_effect(fn);
+    }
+  }
+  if (component2 !== void 0) {
+    context.x = component2;
+  }
+  context.i = true;
+  component_context = context.p;
+  if (dev_fallback_default) {
+    dev_current_component_function = component_context?.function ?? null;
+  }
+  return mark_as_component(component2);
+}
+function mark_as_component(component2 = {}) {
+  define_property(component2, COMPONENT_SYMBOL, { value: true });
+  return component2;
+}
+function is_runes() {
+  return !legacy_mode_flag || component_context !== null && component_context.l === null;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/task.js
+var micro_tasks = [];
+function run_micro_tasks() {
+  var tasks = micro_tasks;
+  micro_tasks = [];
+  run_all(tasks);
+}
+function queue_micro_task(fn) {
+  if (micro_tasks.length === 0 && !is_flushing_sync) {
+    var tasks = micro_tasks;
+    queueMicrotask(() => {
+      if (tasks === micro_tasks) run_micro_tasks();
+    });
+  }
+  micro_tasks.push(fn);
+}
+function flush_tasks() {
+  while (micro_tasks.length > 0) {
+    run_micro_tasks();
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/status.js
+var STATUS_MASK = ~(DIRTY | MAYBE_DIRTY | CLEAN);
+function set_signal_status(signal, status) {
+  signal.f = signal.f & STATUS_MASK | status;
+}
+function update_derived_status(derived2) {
+  if ((derived2.f & CONNECTED) !== 0 || derived2.deps === null) {
+    set_signal_status(derived2, CLEAN);
+  } else {
+    set_signal_status(derived2, MAYBE_DIRTY);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/utils.js
+function defer_effect(effect2, dirty_effects, maybe_dirty_effects) {
+  if ((effect2.f & DIRTY) !== 0) {
+    dirty_effects.add(effect2);
+  } else if ((effect2.f & MAYBE_DIRTY) !== 0) {
+    maybe_dirty_effects.add(effect2);
+  }
+  set_signal_status(effect2, CLEAN);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/misc.js
+function autofocus(dom, value) {
+  if (value) {
+    const body = document.body;
+    dom.autofocus = true;
+    queue_micro_task(() => {
+      if (document.activeElement === body) {
+        dom.focus();
+      }
+    });
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/bindings/shared.js
+function without_reactive_context(fn) {
+  var previous_reaction = active_reaction;
+  var previous_effect = active_effect;
+  set_active_reaction(null);
+  set_active_effect(null);
+  try {
+    return fn();
+  } finally {
+    set_active_reaction(previous_reaction);
+    set_active_effect(previous_effect);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/async.js
+function flatten(blockers, sync, async2, fn) {
+  const d = is_runes() ? derived : derived_safe_equal;
+  var pending2 = blockers.filter((b) => !b.settled);
+  var deriveds = sync.map(d);
+  if (dev_fallback_default) {
+    deriveds.forEach((d2, i) => {
+      d2.label = sync[i].toString().replace("() => ", "").replaceAll("$.eager(() => ", "$state.eager(").replace(/\$\.get\((.+?)\)/g, (_, id) => id);
+    });
+  }
+  if (async2.length === 0 && pending2.length === 0) {
+    fn(deriveds);
+    return;
+  }
+  var parent = (
+    /** @type {Effect} */
+    active_effect
+  );
+  var restore = capture();
+  var blocker_promise = pending2.length === 1 ? pending2[0].promise : pending2.length > 1 ? Promise.all(pending2.map((b) => b.promise)) : null;
+  function finish(async3) {
+    if ((parent.f & DESTROYED) !== 0) {
+      return;
+    }
+    restore();
+    try {
+      fn([...deriveds, ...async3]);
+    } catch (error) {
+      invoke_error_boundary(error, parent);
+    }
+    unset_context();
+  }
+  var decrement_pending = increment_pending();
+  if (async2.length === 0) {
+    blocker_promise.then(() => finish([])).finally(decrement_pending);
+    return;
+  }
+  function run4() {
+    Promise.all(async2.map((expression) => async_derived(expression))).then(finish).catch((error) => invoke_error_boundary(error, parent)).finally(decrement_pending);
+  }
+  if (blocker_promise) {
+    blocker_promise.then(() => {
+      if ((parent.f & DESTROYED) !== 0) {
+        decrement_pending();
+        return;
+      }
+      restore();
+      run4();
+      unset_context();
+    });
+  } else {
+    run4();
+  }
+}
+function capture() {
+  var previous_effect = (
+    /** @type {Effect} */
+    active_effect
+  );
+  var previous_reaction = active_reaction;
+  var previous_component_context = component_context;
+  var previous_batch2 = (
+    /** @type {Batch} */
+    current_batch
+  );
+  if (dev_fallback_default) {
+    var previous_dev_stack = dev_stack;
+  }
+  return function restore(activate_batch = true) {
+    set_active_effect(previous_effect);
+    set_active_reaction(previous_reaction);
+    set_component_context(previous_component_context);
+    if (activate_batch && (previous_effect.f & DESTROYED) === 0) {
+      previous_batch2?.activate();
+      previous_batch2?.apply();
+    }
+    if (dev_fallback_default) {
+      set_reactivity_loss_tracker(null);
+      set_dev_stack(previous_dev_stack);
+    }
+  };
+}
+var restored = false;
+function unset_context(deactivate_batch = true) {
+  restored = false;
+  set_active_effect(null);
+  set_active_reaction(null);
+  set_component_context(null);
+  if (deactivate_batch) current_batch?.deactivate();
+  if (dev_fallback_default) {
+    set_reactivity_loss_tracker(null);
+    set_dev_stack(null);
+  }
+}
+function increment_pending() {
+  var effect2 = (
+    /** @type {Effect} */
+    active_effect
+  );
+  var boundary2 = effect2.b;
+  var batch = (
+    /** @type {Batch} */
+    current_batch
+  );
+  var blocking = !!boundary2?.is_rendered();
+  boundary2?.update_pending_count(1, batch);
+  batch.increment(blocking, effect2);
+  return () => {
+    boundary2?.update_pending_count(-1, batch);
+    batch.decrement(blocking, effect2);
+  };
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/deriveds.js
+var reactivity_loss_tracker = null;
+function set_reactivity_loss_tracker(v) {
+  reactivity_loss_tracker = v;
+}
+var recent_async_deriveds = /* @__PURE__ */ new Set();
+// @__NO_SIDE_EFFECTS__
+function derived(fn) {
+  var flags2 = DERIVED | DIRTY;
+  if (active_effect !== null) {
+    active_effect.f |= EFFECT_PRESERVED;
+  }
+  const signal = {
+    ctx: component_context,
+    deps: null,
+    effects: null,
+    equals,
+    f: flags2,
+    fn,
+    reactions: null,
+    rv: 0,
+    v: (
+      /** @type {V} */
+      UNINITIALIZED
+    ),
+    wv: 0,
+    parent: active_effect,
+    ac: null
+  };
+  if (dev_fallback_default && tracing_mode_flag) {
+    signal.created = get_error("created at");
+  }
+  return signal;
+}
+var OBSOLETE = Symbol("obsolete");
+// @__NO_SIDE_EFFECTS__
+function async_derived(fn, label2, location) {
+  let parent = (
+    /** @type {Effect | null} */
+    active_effect
+  );
+  if (parent === null) {
+    async_derived_orphan();
+  }
+  var promise = (
+    /** @type {Promise<V>} */
+    /** @type {unknown} */
+    void 0
+  );
+  var signal = source(
+    /** @type {V} */
+    UNINITIALIZED
+  );
+  if (dev_fallback_default) signal.label = label2 ?? fn.toString();
+  var should_suspend = !active_reaction;
+  var deferreds = /* @__PURE__ */ new Set();
+  async_effect(() => {
+    var effect2 = (
+      /** @type {Effect} */
+      active_effect
+    );
+    if (dev_fallback_default) {
+      reactivity_loss_tracker = { effect: effect2, effect_deps: /* @__PURE__ */ new Set(), warned: false };
+    }
+    var d = deferred();
+    promise = d.promise;
+    try {
+      Promise.resolve(fn()).then(d.resolve, (e) => {
+        if (e !== STALE_REACTION) d.reject(e);
+      }).finally(unset_context);
+    } catch (error) {
+      d.reject(error);
+      unset_context();
+    }
+    if (dev_fallback_default) {
+      if (reactivity_loss_tracker) {
+        if (effect2.deps !== null) {
+          for (let i = 0; i < skipped_deps; i += 1) {
+            reactivity_loss_tracker.effect_deps.add(effect2.deps[i]);
+          }
+        }
+        if (new_deps !== null) {
+          for (let i = 0; i < new_deps.length; i += 1) {
+            reactivity_loss_tracker.effect_deps.add(new_deps[i]);
+          }
+        }
+      }
+      reactivity_loss_tracker = null;
+    }
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    if (should_suspend) {
+      if ((effect2.f & REACTION_RAN) !== 0) {
+        var decrement_pending = increment_pending();
+      }
+      if (
+        // boundary can be null if the async derived is inside an $effect.root not connected to the component render tree
+        parent.b?.is_rendered()
+      ) {
+        batch.async_deriveds.get(effect2)?.reject(OBSOLETE);
+      } else {
+        for (const d2 of deferreds.values()) {
+          d2.reject(OBSOLETE);
+        }
+      }
+      deferreds.add(d);
+      batch.async_deriveds.set(effect2, d);
+    }
+    const handler = (value, error = void 0) => {
+      if (dev_fallback_default) {
+        reactivity_loss_tracker = null;
+      }
+      decrement_pending?.();
+      deferreds.delete(d);
+      if (error === OBSOLETE) return;
+      batch.activate();
+      if (error) {
+        signal.f |= ERROR_VALUE;
+        internal_set(signal, error);
+      } else {
+        if ((signal.f & ERROR_VALUE) !== 0) {
+          signal.f ^= ERROR_VALUE;
+        }
+        if (dev_fallback_default && location !== void 0 && !signal.equals(value)) {
+          recent_async_deriveds.add(signal);
+          setTimeout(() => {
+            if (recent_async_deriveds.has(signal) && (effect2.f & DESTROYED) === 0) {
+              await_waterfall(
+                /** @type {string} */
+                signal.label,
+                location
+              );
+              recent_async_deriveds.delete(signal);
+            }
+          });
+        }
+        internal_set(signal, value);
+      }
+      batch.deactivate();
+    };
+    d.promise.then(handler, (e) => handler(null, e || "unknown"));
+  });
+  teardown(() => {
+    for (const d of deferreds) {
+      d.reject(OBSOLETE);
+    }
+  });
+  if (dev_fallback_default) {
+    signal.f |= ASYNC;
+  }
+  return new Promise((fulfil) => {
+    function next2(p) {
+      function go() {
+        if (p === promise) {
+          fulfil(signal);
+        } else {
+          next2(promise);
+        }
+      }
+      p.then(go, go);
+    }
+    next2(promise);
+  });
+}
+// @__NO_SIDE_EFFECTS__
+function user_derived(fn) {
+  const d = /* @__PURE__ */ derived(fn);
+  if (!async_mode_flag) push_reaction_value(d);
+  return d;
+}
+// @__NO_SIDE_EFFECTS__
+function derived_safe_equal(fn) {
+  const signal = /* @__PURE__ */ derived(fn);
+  signal.equals = safe_equals;
+  return signal;
+}
+function destroy_derived_effects(derived2) {
+  var effects = derived2.effects;
+  if (effects !== null) {
+    derived2.effects = null;
+    for (var i = 0; i < effects.length; i += 1) {
+      destroy_effect(
+        /** @type {Effect} */
+        effects[i]
+      );
+    }
+  }
+}
+var stack = [];
+function execute_derived(derived2) {
+  var value;
+  var prev_active_effect = active_effect;
+  var parent = derived2.parent;
+  if (!is_destroying_effect && parent !== null && derived2.v !== UNINITIALIZED && // if it was never evaluated before, it's guaranteed to fail downstream, so we try to execute instead
+  (parent.f & (DESTROYED | INERT)) !== 0) {
+    derived_inert();
+    return derived2.v;
+  }
+  set_active_effect(parent);
+  if (dev_fallback_default) {
+    let prev_eager_effects = eager_effects;
+    set_eager_effects(/* @__PURE__ */ new Set());
+    try {
+      if (includes.call(stack, derived2)) {
+        derived_references_self();
+      }
+      stack.push(derived2);
+      destroy_derived_effects(derived2);
+      value = update_reaction(derived2);
+    } finally {
+      set_active_effect(prev_active_effect);
+      set_eager_effects(prev_eager_effects);
+      stack.pop();
+    }
+  } else {
+    try {
+      destroy_derived_effects(derived2);
+      value = update_reaction(derived2);
+    } finally {
+      set_active_effect(prev_active_effect);
+    }
+  }
+  return value;
+}
+function update_derived(derived2) {
+  var value = execute_derived(derived2);
+  if (!derived2.equals(value)) {
+    derived2.wv = increment_write_version();
+    if (!current_batch?.is_fork || derived2.deps === null) {
+      if (current_batch !== null) {
+        current_batch.capture(derived2, value, true);
+        previous_batch?.capture(derived2, value, true);
+      } else {
+        derived2.v = value;
+      }
+      if (derived2.deps === null) {
+        set_signal_status(derived2, CLEAN);
+        return;
+      }
+    }
+  }
+  if (is_destroying_effect) {
+    return;
+  }
+  if (batch_values !== null) {
+    if (effect_tracking() || current_batch?.is_fork) {
+      batch_values.set(derived2, value);
+    }
+  } else {
+    update_derived_status(derived2);
+  }
+}
+function freeze_derived_effects(derived2) {
+  if (derived2.effects === null) return;
+  for (const e of derived2.effects) {
+    if (e.teardown || e.ac) {
+      e.teardown?.();
+      if (e.ac !== null) {
+        without_reactive_context(() => {
+          e.ac.abort(STALE_REACTION);
+          e.ac = null;
+        });
+      }
+      if (e.fn !== null) e.teardown = noop;
+      remove_reactions(e, 0);
+      destroy_effect_children(e);
+    }
+  }
+}
+function unfreeze_derived_effects(derived2) {
+  if (derived2.effects === null) return;
+  for (const e of derived2.effects) {
+    if (e.teardown && e.fn !== null) {
+      update_effect(e);
+    }
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/batch.js
+var first_batch = null;
+var last_batch = null;
+var current_batch = null;
+var previous_batch = null;
+var batch_values = null;
+var last_scheduled_effect = null;
+var is_flushing_sync = false;
+var is_processing = false;
+var collected_effects = null;
+var legacy_updates = null;
+var flush_count = 0;
+var source_stacks = /* @__PURE__ */ new Set();
+var uid = 1;
+var Batch = class _Batch {
+  id = uid++;
+  /** True as soon as `#process` was called */
+  #started = false;
+  linked = true;
+  /** @type {Batch | null} */
+  #prev = null;
+  /** @type {Batch | null} */
+  #next = null;
+  /** @type {Map<Effect, ReturnType<typeof deferred<any>>>} */
+  async_deriveds = /* @__PURE__ */ new Map();
+  /**
+   * The current values of any signals that are updated in this batch.
+   * Tuple format: [value, is_derived] (note: is_derived is false for deriveds, too, if they were overridden via assignment)
+   * They keys of this map are identical to `this.#previous`
+   * @type {Map<Value, [any, boolean]>}
+   */
+  current = /* @__PURE__ */ new Map();
+  /**
+   * The values of any signals (sources and deriveds) that are updated in this batch _before_ those updates took place.
+   * They keys of this map are identical to `this.#current`
+   * @type {Map<Value, any>}
+   */
+  previous = /* @__PURE__ */ new Map();
+  /**
+   * When the batch is committed (and the DOM is updated), we need to remove old branches
+   * and append new ones by calling the functions added inside (if/each/key/etc) blocks
+   * @type {Set<(batch: Batch) => void>}
+   */
+  #commit_callbacks = /* @__PURE__ */ new Set();
+  /**
+   * If a fork is discarded, we need to destroy any effects that are no longer needed
+   * @type {Set<(batch: Batch) => void>}
+   */
+  #discard_callbacks = /* @__PURE__ */ new Set();
+  /**
+   * The number of async effects that are currently in flight
+   */
+  #pending = 0;
+  /**
+   * Async effects that are currently in flight, _not_ inside a pending boundary
+   * @type {Map<Effect, number>}
+   */
+  #blocking_pending = /* @__PURE__ */ new Map();
+  /**
+   * A deferred that resolves when the batch is committed, used with `settled()`
+   * TODO replace with Promise.withResolvers once supported widely enough
+   * @type {{ promise: Promise<void>, resolve: (value?: any) => void, reject: (reason: unknown) => void } | null}
+   */
+  #deferred = null;
+  /**
+   * Effects that were scheduled in this batch but not yet 'resolved' into the
+   * root effects that need to be flushed. Resolving — the upwards traversal that
+   * marks the path to each effect on the shared effect tree (see #resolve) — is
+   * deferred until the batch is processed, so that the markers are created and
+   * consumed within a single traversal. Scheduling into other batches (which can
+   * happen concurrently, e.g. while a batch is committed) can therefore never
+   * observe (and be confused by) this batch's markers.
+   * May contain duplicates — deduplication happens during resolving
+   * @type {Effect[]}
+   */
+  #scheduled = [];
+  /**
+   * Effects created while this batch was active.
+   * @type {Effect[]}
+   */
+  #new_effects = [];
+  /**
+   * Deferred effects (which run after async work has completed) that are DIRTY
+   * @type {Set<Effect>}
+   */
+  #dirty_effects = /* @__PURE__ */ new Set();
+  /**
+   * Deferred effects that are MAYBE_DIRTY
+   * @type {Set<Effect>}
+   */
+  #maybe_dirty_effects = /* @__PURE__ */ new Set();
+  /**
+   * A map of branches that still exist, but will be destroyed when this batch
+   * is committed — we skip over these during `process`.
+   * The value contains child effects that were dirty/maybe_dirty before being reset,
+   * so they can be rescheduled if the branch survives.
+   * @type {Map<Effect, { d: Effect[], m: Effect[] }>}
+   */
+  #skipped_branches = /* @__PURE__ */ new Map();
+  /**
+   * Inverse of #skipped_branches which we need to tell prior batches to unskip them when committing
+   * @type {Set<Effect>}
+   */
+  #unskipped_branches = /* @__PURE__ */ new Set();
+  is_fork = false;
+  #decrement_queued = false;
+  constructor() {
+    if (last_batch === null) {
+      first_batch = last_batch = this;
+    } else {
+      last_batch.#next = this;
+      this.#prev = last_batch;
+    }
+    last_batch = this;
+  }
+  #is_deferred() {
+    if (this.is_fork) return true;
+    for (const effect2 of this.#blocking_pending.keys()) {
+      var e = effect2;
+      var skipped = false;
+      while (e.parent !== null) {
+        if (this.#skipped_branches.has(e)) {
+          skipped = true;
+          break;
+        }
+        e = e.parent;
+      }
+      if (!skipped) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Add an effect to the #skipped_branches map and reset its children
+   * @param {Effect} effect
+   */
+  skip_effect(effect2) {
+    if (!this.#skipped_branches.has(effect2)) {
+      this.#skipped_branches.set(effect2, { d: [], m: [] });
+    }
+    this.#unskipped_branches.delete(effect2);
+  }
+  /**
+   * Remove an effect from the #skipped_branches map and reschedule
+   * any tracked dirty/maybe_dirty child effects
+   * @param {Effect} effect
+   * @param {(e: Effect) => void} callback
+   */
+  unskip_effect(effect2, callback = (e) => this.schedule(e)) {
+    var tracked = this.#skipped_branches.get(effect2);
+    if (tracked) {
+      this.#skipped_branches.delete(effect2);
+      for (var e of tracked.d) {
+        set_signal_status(e, DIRTY);
+        callback(e);
+      }
+      for (e of tracked.m) {
+        set_signal_status(e, MAYBE_DIRTY);
+        callback(e);
+      }
+    }
+    this.#unskipped_branches.add(effect2);
+  }
+  /**
+   * Convert the effects that were scheduled in this batch into the root effects
+   * that need to be traversed, marking the path to each effect (by clearing the
+   * `CLEAN` flag on ancestor branches) so that the traversal can find them.
+   * This happens right before traversal rather than at scheduling time, so that
+   * the markers left on the (shared) effect tree are created and consumed within
+   * a single traversal — scheduling into other batches can never observe them
+   * @returns {Effect[]}
+   */
+  #resolve() {
+    var roots = [];
+    for (const effect2 of this.#scheduled) {
+      if ((effect2.f & DESTROYED) !== 0 || (effect2.f & (DIRTY | MAYBE_DIRTY)) === 0) continue;
+      var e = effect2;
+      var covered = false;
+      while (e.parent !== null) {
+        e = e.parent;
+        var flags2 = e.f;
+        if ((flags2 & (ROOT_EFFECT | BRANCH_EFFECT)) !== 0) {
+          if ((flags2 & CLEAN) === 0) {
+            covered = true;
+            break;
+          }
+          e.f ^= CLEAN;
+        }
+      }
+      if (!covered) {
+        roots.push(e);
+      }
+    }
+    this.#scheduled = [];
+    return roots;
+  }
+  #process() {
+    this.#started = true;
+    if (dev_fallback_default) {
+      for (const value of this.current.keys()) {
+        source_stacks.add(value);
+      }
+    }
+    for (const e of this.#dirty_effects) {
+      this.#maybe_dirty_effects.delete(e);
+      set_signal_status(e, DIRTY);
+      this.schedule(e);
+    }
+    for (const e of this.#maybe_dirty_effects) {
+      set_signal_status(e, MAYBE_DIRTY);
+      this.schedule(e);
+    }
+    this.apply();
+    var effects = collected_effects = [];
+    var render_effects = [];
+    var updates = legacy_updates = [];
+    while (this.#scheduled.length > 0) {
+      if (flush_count++ > 1e3) {
+        this.#unlink();
+        infinite_loop_guard();
+      }
+      for (const root2 of this.#resolve()) {
+        try {
+          this.#traverse(root2, effects, render_effects);
+        } catch (e) {
+          reset_all(root2);
+          if (!this.#is_deferred()) this.discard();
+          throw e;
+        }
+      }
+    }
+    current_batch = null;
+    if (updates.length > 0) {
+      var batch = _Batch.ensure();
+      for (const e of updates) {
+        batch.schedule(e);
+      }
+    }
+    collected_effects = null;
+    legacy_updates = null;
+    if (this.#is_deferred()) {
+      this.#defer_effects(render_effects);
+      this.#defer_effects(effects);
+      for (const [e, t] of this.#skipped_branches) {
+        reset_branch(e, t);
+      }
+      if (updates.length > 0) {
+        /** @type {unknown} */
+        current_batch.#process();
+      }
+      return;
+    }
+    const earlier_batch = this.#find_earlier_batch();
+    if (earlier_batch) {
+      this.#defer_effects(render_effects);
+      this.#defer_effects(effects);
+      earlier_batch.#merge(this);
+      return;
+    }
+    this.#dirty_effects.clear();
+    this.#maybe_dirty_effects.clear();
+    for (const fn of this.#commit_callbacks) fn(this);
+    this.#commit_callbacks.clear();
+    previous_batch = this;
+    flush_queued_effects(render_effects);
+    flush_queued_effects(effects);
+    previous_batch = null;
+    this.#deferred?.resolve();
+    var next_batch = (
+      /** @type {Batch | null} */
+      /** @type {unknown} */
+      current_batch
+    );
+    if (this.#pending === 0 && (this.#scheduled.length === 0 || next_batch !== null)) {
+      this.#unlink();
+      if (async_mode_flag) {
+        this.#commit();
+        current_batch = next_batch;
+      }
+    }
+    if (this.#scheduled.length > 0) {
+      if (next_batch !== null) {
+        for (const e of this.#scheduled) {
+          next_batch.#scheduled.push(e);
+        }
+        this.#scheduled = [];
+      } else {
+        next_batch = this;
+      }
+    }
+    if (next_batch !== null) {
+      old_values.clear();
+      next_batch.#process();
+    }
+  }
+  /**
+   * Traverse the effect tree, executing effects or stashing
+   * them for later execution as appropriate
+   * @param {Effect} root
+   * @param {Effect[]} effects
+   * @param {Effect[]} render_effects
+   */
+  #traverse(root2, effects, render_effects) {
+    root2.f ^= CLEAN;
+    var effect2 = root2.first;
+    while (effect2 !== null) {
+      var flags2 = effect2.f;
+      var is_branch = (flags2 & (BRANCH_EFFECT | ROOT_EFFECT)) !== 0;
+      var is_skippable_branch = is_branch && (flags2 & CLEAN) !== 0;
+      var skip = is_skippable_branch || (flags2 & INERT) !== 0 || this.#skipped_branches.has(effect2);
+      if (!skip && effect2.fn !== null) {
+        if (is_branch) {
+          effect2.f ^= CLEAN;
+        } else if ((flags2 & EFFECT) !== 0) {
+          effects.push(effect2);
+        } else if (async_mode_flag && (flags2 & (RENDER_EFFECT | MANAGED_EFFECT)) !== 0) {
+          render_effects.push(effect2);
+        } else if (is_dirty(effect2)) {
+          if ((flags2 & BLOCK_EFFECT) !== 0) this.#maybe_dirty_effects.add(effect2);
+          update_effect(effect2);
+        }
+        var child2 = effect2.first;
+        if (child2 !== null) {
+          effect2 = child2;
+          continue;
+        }
+      }
+      while (effect2 !== null) {
+        var next2 = effect2.next;
+        if (next2 !== null) {
+          effect2 = next2;
+          break;
+        }
+        effect2 = effect2.parent;
+      }
+    }
+  }
+  #find_earlier_batch() {
+    var batch = this.#prev;
+    while (batch !== null) {
+      if (!batch.is_fork) {
+        for (const [value, [, is_derived]] of this.current) {
+          if (batch.current.has(value) && !is_derived) {
+            return batch;
+          }
+        }
+      }
+      batch = batch.#prev;
+    }
+    return null;
+  }
+  /**
+   * @param {Batch} batch
+   */
+  #merge(batch) {
+    for (const [source2, value] of batch.current) {
+      if (!this.previous.has(source2) && batch.previous.has(source2)) {
+        this.previous.set(source2, batch.previous.get(source2));
+      }
+      this.current.set(source2, value);
+    }
+    for (const [effect2, deferred2] of batch.async_deriveds) {
+      const d = this.async_deriveds.get(effect2);
+      if (d) deferred2.promise.then(d.resolve).catch(d.reject);
+    }
+    batch.async_deriveds.clear();
+    this.transfer_effects(batch.#dirty_effects, batch.#maybe_dirty_effects);
+    const mark = (value) => {
+      var reactions = value.reactions;
+      if (reactions === null) return;
+      if ((value.f & DERIVED) !== 0 && (value.f & (DIRTY | MAYBE_DIRTY)) === 0) {
+        return;
+      }
+      for (const reaction of reactions) {
+        var flags2 = reaction.f;
+        if ((flags2 & DERIVED) !== 0) {
+          mark(
+            /** @type {Derived} */
+            reaction
+          );
+        } else {
+          var effect2 = (
+            /** @type {Effect} */
+            reaction
+          );
+          if (flags2 & (ASYNC | BLOCK_EFFECT) && !this.async_deriveds.has(effect2)) {
+            this.#maybe_dirty_effects.delete(effect2);
+            set_signal_status(effect2, DIRTY);
+            this.schedule(effect2);
+          }
+        }
+      }
+    };
+    for (const source2 of this.current.keys()) {
+      mark(source2);
+    }
+    this.oncommit(() => batch.discard());
+    batch.#unlink();
+    current_batch = this;
+    this.#process();
+  }
+  /**
+   * @param {Effect[]} effects
+   */
+  #defer_effects(effects) {
+    for (var i = 0; i < effects.length; i += 1) {
+      defer_effect(effects[i], this.#dirty_effects, this.#maybe_dirty_effects);
+    }
+  }
+  /**
+   * Associate a change to a given source with the current
+   * batch, noting its previous and current values
+   * @param {Value} source
+   * @param {any} value
+   * @param {boolean} [is_derived]
+   */
+  capture(source2, value, is_derived = false) {
+    if (source2.v !== UNINITIALIZED && !this.previous.has(source2)) {
+      this.previous.set(source2, source2.v);
+    }
+    if ((source2.f & ERROR_VALUE) === 0) {
+      this.current.set(source2, [value, is_derived]);
+      batch_values?.set(source2, value);
+    }
+    if (!this.is_fork) {
+      source2.v = value;
+    }
+  }
+  activate() {
+    current_batch = this;
+  }
+  deactivate() {
+    current_batch = null;
+    batch_values = null;
+  }
+  flush() {
+    try {
+      if (dev_fallback_default) {
+        source_stacks.clear();
+      }
+      is_processing = true;
+      current_batch = this;
+      this.#process();
+    } finally {
+      flush_count = 0;
+      last_scheduled_effect = null;
+      collected_effects = null;
+      legacy_updates = null;
+      is_processing = false;
+      current_batch = null;
+      batch_values = null;
+      old_values.clear();
+      if (dev_fallback_default) {
+        for (const source2 of source_stacks) {
+          source2.updated = null;
+        }
+      }
+    }
+  }
+  discard() {
+    for (const fn of this.#discard_callbacks) fn(this);
+    this.#discard_callbacks.clear();
+    for (const deferred2 of this.async_deriveds.values()) {
+      deferred2.reject(OBSOLETE);
+    }
+    this.#unlink();
+    this.#deferred?.resolve();
+  }
+  /**
+   * @param {Effect} effect
+   */
+  register_created_effect(effect2) {
+    this.#new_effects.push(effect2);
+  }
+  #commit() {
+    for (let batch = first_batch; batch !== null; batch = batch.#next) {
+      var is_earlier = batch.id < this.id;
+      var sources = [];
+      for (const [source3, [value, is_derived]] of this.current) {
+        if (batch.current.has(source3)) {
+          var batch_value = (
+            /** @type {[any, boolean]} */
+            batch.current.get(source3)[0]
+          );
+          if (is_earlier && value !== batch_value) {
+            batch.current.set(source3, [value, is_derived]);
+          } else {
+            continue;
+          }
+        }
+        sources.push(source3);
+      }
+      if (is_earlier) {
+        for (const [effect2, deferred2] of this.async_deriveds) {
+          const d = batch.async_deriveds.get(effect2);
+          if (d) deferred2.promise.then(d.resolve).catch(d.reject);
+        }
+      }
+      var current = [...batch.current.keys()].filter(
+        (source3) => !/** @type {[any, boolean]} */
+        batch.current.get(source3)[1]
+      );
+      if (!batch.#started || current.length === 0) continue;
+      var others = current.filter((source3) => !this.current.has(source3));
+      if (others.length === 0) {
+        if (is_earlier) {
+          batch.discard();
+        }
+      } else if (sources.length > 0) {
+        if (dev_fallback_default && !batch.#decrement_queued) {
+          invariant(batch.#scheduled.length === 0, "Batch has scheduled effects");
+        }
+        if (is_earlier) {
+          for (const unskipped of this.#unskipped_branches) {
+            batch.unskip_effect(unskipped, (e) => {
+              if ((e.f & (BLOCK_EFFECT | ASYNC)) !== 0) {
+                batch.schedule(e);
+              } else {
+                batch.#defer_effects([e]);
+              }
+            });
+          }
+        }
+        batch.activate();
+        var marked = /* @__PURE__ */ new Set();
+        var checked = /* @__PURE__ */ new Map();
+        for (var source2 of sources) {
+          mark_effects(source2, others, marked, checked);
+        }
+        checked = /* @__PURE__ */ new Map();
+        var current_unequal = [...batch.current].filter(([c, v1]) => {
+          const v2 = this.current.get(c);
+          if (!v2) return true;
+          return v2[0] !== v1[0] || v2[1] !== v1[1];
+        }).map(([c]) => c);
+        if (current_unequal.length > 0) {
+          for (const effect2 of this.#new_effects) {
+            if ((effect2.f & (DESTROYED | INERT | EAGER_EFFECT)) === 0 && depends_on(effect2, current_unequal, checked)) {
+              if ((effect2.f & (ASYNC | BLOCK_EFFECT)) !== 0) {
+                set_signal_status(effect2, DIRTY);
+                batch.schedule(effect2);
+              } else {
+                batch.#dirty_effects.add(effect2);
+              }
+            }
+          }
+        }
+        if (batch.#scheduled.length > 0 && !batch.#decrement_queued) {
+          batch.apply();
+          for (var root2 of batch.#resolve()) {
+            batch.#traverse(root2, [], []);
+          }
+        }
+        batch.deactivate();
+      }
+    }
+  }
+  /**
+   * @param {boolean} blocking
+   * @param {Effect} effect
+   */
+  increment(blocking, effect2) {
+    this.#pending += 1;
+    if (blocking) {
+      let blocking_pending_count = this.#blocking_pending.get(effect2) ?? 0;
+      this.#blocking_pending.set(effect2, blocking_pending_count + 1);
+    }
+  }
+  /**
+   * @param {boolean} blocking
+   * @param {Effect} effect
+   */
+  decrement(blocking, effect2) {
+    this.#pending -= 1;
+    if (blocking) {
+      let blocking_pending_count = this.#blocking_pending.get(effect2) ?? 0;
+      if (blocking_pending_count === 1) {
+        this.#blocking_pending.delete(effect2);
+      } else {
+        this.#blocking_pending.set(effect2, blocking_pending_count - 1);
+      }
+    }
+    if (this.#decrement_queued) return;
+    this.#decrement_queued = true;
+    queue_micro_task(() => {
+      this.#decrement_queued = false;
+      if (this.linked) {
+        this.flush();
+      }
+    });
+  }
+  /**
+   * @param {Set<Effect>} dirty_effects
+   * @param {Set<Effect>} maybe_dirty_effects
+   */
+  transfer_effects(dirty_effects, maybe_dirty_effects) {
+    for (const e of dirty_effects) {
+      this.#dirty_effects.add(e);
+    }
+    for (const e of maybe_dirty_effects) {
+      this.#maybe_dirty_effects.add(e);
+    }
+    dirty_effects.clear();
+    maybe_dirty_effects.clear();
+  }
+  /** @param {(batch: Batch) => void} fn */
+  oncommit(fn) {
+    this.#commit_callbacks.add(fn);
+  }
+  /** @param {(batch: Batch) => void} fn */
+  ondiscard(fn) {
+    this.#discard_callbacks.add(fn);
+  }
+  settled() {
+    return (this.#deferred ??= deferred()).promise;
+  }
+  static ensure() {
+    if (current_batch === null) {
+      const batch = current_batch = new _Batch();
+      if (!is_processing && !is_flushing_sync) {
+        queue_micro_task(() => {
+          if (!batch.#started) {
+            batch.flush();
+          }
+        });
+      }
+    }
+    return current_batch;
+  }
+  apply() {
+    if (!async_mode_flag || !this.is_fork && this.#prev === null && this.#next === null) {
+      batch_values = null;
+      return;
+    }
+    batch_values = /* @__PURE__ */ new Map();
+    for (const [source2, [value]] of this.current) {
+      batch_values.set(source2, value);
+    }
+    for (let batch = first_batch; batch !== null; batch = batch.#next) {
+      if (batch === this || batch.is_fork) continue;
+      var intersects = false;
+      if (batch.id < this.id) {
+        for (const [source2, [, is_derived]] of batch.current) {
+          if (is_derived) continue;
+          if (this.current.has(source2)) {
+            intersects = true;
+            break;
+          }
+        }
+      }
+      if (!intersects) {
+        for (const [source2, previous] of batch.previous) {
+          if (!batch_values.has(source2)) {
+            batch_values.set(source2, previous);
+          }
+        }
+      }
+    }
+  }
+  /**
+   *
+   * @param {Effect} effect
+   */
+  schedule(effect2) {
+    last_scheduled_effect = effect2;
+    if (effect2.b?.is_pending && (effect2.f & (EFFECT | RENDER_EFFECT | MANAGED_EFFECT)) !== 0 && (effect2.f & REACTION_RAN) === 0) {
+      effect2.b.defer_effect(effect2);
+      return;
+    }
+    this.#scheduled.push(effect2);
+  }
+  #unlink() {
+    if (!this.linked) return;
+    var prev = this.#prev;
+    var next2 = this.#next;
+    if (prev === null) {
+      first_batch = next2;
+    } else {
+      prev.#next = next2;
+    }
+    if (next2 === null) {
+      last_batch = prev;
+    } else {
+      next2.#prev = prev;
+    }
+    this.linked = false;
+  }
+};
+function flushSync(fn) {
+  var was_flushing_sync = is_flushing_sync;
+  var prev_previous_batch = previous_batch;
+  previous_batch = null;
+  is_flushing_sync = true;
+  try {
+    var result;
+    if (fn) {
+      flushSync();
+      result = fn();
+    }
+    while (true) {
+      flush_tasks();
+      if (current_batch === null) {
+        return (
+          /** @type {T} */
+          result
+        );
+      }
+      current_batch.flush();
+    }
+  } finally {
+    is_flushing_sync = was_flushing_sync;
+    previous_batch = prev_previous_batch;
+  }
+}
+function infinite_loop_guard() {
+  if (dev_fallback_default) {
+    var updates = /* @__PURE__ */ new Map();
+    for (
+      const source2 of
+      /** @type {Batch} */
+      current_batch.current.keys()
+    ) {
+      for (const [stack2, update2] of source2.updated ?? []) {
+        var entry = updates.get(stack2);
+        if (!entry) {
+          entry = { error: update2.error, count: 0 };
+          updates.set(stack2, entry);
+        }
+        entry.count += update2.count;
+      }
+    }
+    for (const update2 of updates.values()) {
+      if (update2.error) {
+        console.error(update2.error);
+      }
+    }
+  }
+  try {
+    effect_update_depth_exceeded();
+  } catch (error) {
+    if (dev_fallback_default) {
+      define_property(error, "stack", { value: "" });
+    }
+    invoke_error_boundary(error, last_scheduled_effect);
+  }
+}
+var eager_block_effects = null;
+function flush_queued_effects(effects) {
+  var length2 = effects.length;
+  if (length2 === 0) return;
+  var i = 0;
+  while (i < length2) {
+    var effect2 = effects[i++];
+    if ((effect2.f & (DESTROYED | INERT)) === 0 && is_dirty(effect2)) {
+      eager_block_effects = /* @__PURE__ */ new Set();
+      update_effect(effect2);
+      if (effect2.deps === null && effect2.first === null && effect2.nodes === null && effect2.teardown === null && effect2.ac === null) {
+        unlink_effect(effect2);
+      }
+      if (eager_block_effects?.size > 0) {
+        old_values.clear();
+        for (const e of eager_block_effects) {
+          if ((e.f & (DESTROYED | INERT)) !== 0) continue;
+          const ordered_effects = [e];
+          let ancestor2 = e.parent;
+          while (ancestor2 !== null) {
+            if (eager_block_effects.has(ancestor2)) {
+              eager_block_effects.delete(ancestor2);
+              ordered_effects.push(ancestor2);
+            }
+            ancestor2 = ancestor2.parent;
+          }
+          for (let j = ordered_effects.length - 1; j >= 0; j--) {
+            const e2 = ordered_effects[j];
+            if ((e2.f & (DESTROYED | INERT)) !== 0) continue;
+            update_effect(e2);
+          }
+        }
+        eager_block_effects.clear();
+      }
+    }
+  }
+  eager_block_effects = null;
+}
+function mark_effects(value, sources, marked, checked) {
+  if (marked.has(value)) return;
+  marked.add(value);
+  if (value.reactions !== null) {
+    for (const reaction of value.reactions) {
+      const flags2 = reaction.f;
+      if ((flags2 & DERIVED) !== 0) {
+        mark_effects(
+          /** @type {Derived} */
+          reaction,
+          sources,
+          marked,
+          checked
+        );
+      } else if ((flags2 & (ASYNC | BLOCK_EFFECT)) !== 0 && (flags2 & DIRTY) === 0 && depends_on(reaction, sources, checked)) {
+        set_signal_status(reaction, DIRTY);
+        schedule_effect(
+          /** @type {Effect} */
+          reaction
+        );
+      }
+    }
+  }
+}
+function depends_on(reaction, sources, checked) {
+  const depends = checked.get(reaction);
+  if (depends !== void 0) return depends;
+  if (reaction.deps !== null) {
+    for (const dep of reaction.deps) {
+      if (includes.call(sources, dep)) {
+        return true;
+      }
+      if ((dep.f & DERIVED) !== 0 && depends_on(
+        /** @type {Derived} */
+        dep,
+        sources,
+        checked
+      )) {
+        checked.set(
+          /** @type {Derived} */
+          dep,
+          true
+        );
+        return true;
+      }
+    }
+  }
+  checked.set(reaction, false);
+  return false;
+}
+function schedule_effect(effect2) {
+  current_batch.schedule(effect2);
+}
+function reset_branch(effect2, tracked) {
+  if ((effect2.f & BRANCH_EFFECT) !== 0 && (effect2.f & CLEAN) !== 0) {
+    return;
+  }
+  if ((effect2.f & DIRTY) !== 0) {
+    tracked.d.push(effect2);
+  } else if ((effect2.f & MAYBE_DIRTY) !== 0) {
+    tracked.m.push(effect2);
+  }
+  set_signal_status(effect2, CLEAN);
+  var e = effect2.first;
+  while (e !== null) {
+    reset_branch(e, tracked);
+    e = e.next;
+  }
+}
+function reset_all(effect2) {
+  set_signal_status(effect2, CLEAN);
+  var e = effect2.first;
+  while (e !== null) {
+    reset_all(e);
+    e = e.next;
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/sources.js
+var eager_effects = /* @__PURE__ */ new Set();
+var old_values = /* @__PURE__ */ new Map();
+function set_eager_effects(v) {
+  eager_effects = v;
+}
+var eager_effects_deferred = false;
+function set_eager_effects_deferred() {
+  eager_effects_deferred = true;
+}
+function source(v, stack2) {
+  var signal = {
+    f: 0,
+    // TODO ideally we could skip this altogether, but it causes type errors
+    v,
+    reactions: null,
+    equals,
+    rv: 0,
+    wv: 0
+  };
+  if (dev_fallback_default && tracing_mode_flag) {
+    signal.created = stack2 ?? get_error("created at");
+    signal.updated = null;
+    signal.set_during_effect = false;
+    signal.trace = null;
+  }
+  return signal;
+}
+// @__NO_SIDE_EFFECTS__
+function state(v, stack2) {
+  const s = source(v, stack2);
+  push_reaction_value(s);
+  return s;
+}
+// @__NO_SIDE_EFFECTS__
+function mutable_source(initial_value, immutable = false, trackable = true) {
+  const s = source(initial_value);
+  if (!immutable) {
+    s.equals = safe_equals;
+  }
+  if (legacy_mode_flag && trackable && component_context !== null && component_context.l !== null) {
+    (component_context.l.s ??= []).push(s);
+  }
+  return s;
+}
+function set(source2, value, should_proxy = false) {
+  if (active_reaction !== null && // since we are untracking the function inside `$inspect.with` we need to add this check
+  // to ensure we error if state is set inside an inspect effect
+  (!untracking || (active_reaction.f & EAGER_EFFECT) !== 0) && is_runes() && (active_reaction.f & (DERIVED | BLOCK_EFFECT | ASYNC | EAGER_EFFECT)) !== 0 && (current_sources === null || !current_sources.has(source2))) {
+    state_unsafe_mutation();
+  }
+  let new_value = should_proxy ? proxy(value) : value;
+  if (dev_fallback_default) {
+    tag_proxy(
+      new_value,
+      /** @type {string} */
+      source2.label
+    );
+  }
+  return internal_set(source2, new_value, legacy_updates);
+}
+var seen = null;
+var count_deps = 0;
+function internal_set(source2, value, updated_during_traversal = null) {
+  if (!source2.equals(value)) {
+    if (is_destroying_effect) {
+      old_values.set(source2, value);
+    } else if (!old_values.has(source2)) {
+      old_values.set(source2, source2.v);
+    }
+    var batch = Batch.ensure();
+    batch.capture(source2, value);
+    if (dev_fallback_default) {
+      if (tracing_mode_flag || active_effect !== null) {
+        source2.updated ??= /* @__PURE__ */ new Map();
+        const count = (source2.updated.get("")?.count ?? 0) + 1;
+        source2.updated.set("", { error: (
+          /** @type {any} */
+          null
+        ), count });
+        if (tracing_mode_flag || count > 5) {
+          const error = get_error("updated at");
+          if (error !== null) {
+            let entry = source2.updated.get(error.stack);
+            if (!entry) {
+              entry = { error, count: 0 };
+              source2.updated.set(error.stack, entry);
+            }
+            entry.count++;
+          }
+        }
+      }
+      if (active_effect !== null) {
+        source2.set_during_effect = true;
+      }
+    }
+    if ((source2.f & DERIVED) !== 0) {
+      const derived2 = (
+        /** @type {Derived} */
+        source2
+      );
+      if ((source2.f & DIRTY) !== 0) {
+        execute_derived(derived2);
+      }
+      if (batch_values === null) {
+        update_derived_status(derived2);
+      }
+    }
+    source2.wv = increment_write_version();
+    seen = null;
+    count_deps = 0;
+    mark_reactions(source2, DIRTY, updated_during_traversal);
+    seen = null;
+    if (is_runes() && active_effect !== null && (active_effect.f & CLEAN) !== 0 && (active_effect.f & (BRANCH_EFFECT | ROOT_EFFECT)) === 0) {
+      if (untracked_writes === null) {
+        set_untracked_writes([source2]);
+      } else {
+        untracked_writes.push(source2);
+      }
+    }
+    if (!batch.is_fork && eager_effects.size > 0 && !eager_effects_deferred) {
+      flush_eager_effects();
+    }
+  }
+  return value;
+}
+function flush_eager_effects() {
+  eager_effects_deferred = false;
+  for (const effect2 of eager_effects) {
+    if ((effect2.f & CLEAN) !== 0) {
+      set_signal_status(effect2, MAYBE_DIRTY);
+    }
+    let dirty;
+    try {
+      dirty = is_dirty(effect2);
+    } catch {
+      dirty = true;
+    }
+    if (dirty) {
+      update_effect(effect2);
+    }
+  }
+  eager_effects.clear();
+}
+function increment(source2) {
+  set(source2, source2.v + 1);
+}
+function mark_reactions(signal, status, updated_during_traversal) {
+  var reactions = signal.reactions;
+  if (reactions === null) return;
+  var runes = is_runes();
+  var length2 = reactions.length;
+  count_deps += length2;
+  if (count_deps > 1e5 && seen === null) seen = /* @__PURE__ */ new Set();
+  if (seen !== null) {
+    if (seen.has(signal)) return;
+    seen.add(signal);
+  }
+  for (var i = 0; i < length2; i++) {
+    var reaction = reactions[i];
+    var flags2 = reaction.f;
+    if (!runes && reaction === active_effect) continue;
+    var not_dirty = (flags2 & DIRTY) === 0;
+    if (not_dirty) {
+      set_signal_status(reaction, status);
+    }
+    if ((flags2 & EAGER_EFFECT) !== 0) {
+      eager_effects.add(
+        /** @type {Effect} */
+        reaction
+      );
+    } else if ((flags2 & DERIVED) !== 0) {
+      var derived2 = (
+        /** @type {Derived} */
+        reaction
+      );
+      batch_values?.delete(derived2);
+      mark_reactions(derived2, MAYBE_DIRTY, updated_during_traversal);
+    } else if (not_dirty) {
+      var effect2 = (
+        /** @type {Effect} */
+        reaction
+      );
+      if ((flags2 & BLOCK_EFFECT) !== 0 && eager_block_effects !== null) {
+        eager_block_effects.add(effect2);
+      }
+      if (updated_during_traversal !== null) {
+        updated_during_traversal.push(effect2);
+      } else {
+        schedule_effect(effect2);
+      }
+    }
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/proxy.js
+var regex_is_valid_identifier = /^[a-zA-Z_$][a-zA-Z_$0-9]*$/;
+function proxy(value) {
+  if (typeof value !== "object" || value === null || STATE_SYMBOL in value || COMPONENT_SYMBOL in value) {
+    return value;
+  }
+  const prototype = get_prototype_of(value);
+  if (prototype !== object_prototype && prototype !== array_prototype) {
+    return value;
+  }
+  var sources = /* @__PURE__ */ new Map();
+  var is_proxied_array = is_array(value);
+  var version = state(0);
+  var stack2 = dev_fallback_default && tracing_mode_flag ? get_error("created at") : null;
+  var parent_version = update_version;
+  var with_parent = (fn) => {
+    if (update_version === parent_version) {
+      return fn();
+    }
+    var reaction = active_reaction;
+    var version2 = update_version;
+    set_active_reaction(null);
+    set_update_version(parent_version);
+    var result = fn();
+    set_active_reaction(reaction);
+    set_update_version(version2);
+    return result;
+  };
+  if (is_proxied_array) {
+    sources.set("length", state(
+      /** @type {any[]} */
+      value.length,
+      stack2
+    ));
+    if (dev_fallback_default) {
+      value = /** @type {any} */
+      inspectable_array(
+        /** @type {any[]} */
+        value
+      );
+    }
+  }
+  var path = "";
+  let updating = false;
+  function update_path(new_path) {
+    if (updating) return;
+    updating = true;
+    path = new_path;
+    tag(version, `${path} version`);
+    for (const [prop2, source2] of sources) {
+      tag(source2, get_label(path, prop2));
+    }
+    updating = false;
+  }
+  return new Proxy(
+    /** @type {any} */
+    value,
+    {
+      defineProperty(_, prop2, descriptor) {
+        if (!("value" in descriptor) || descriptor.configurable === false || descriptor.enumerable === false || descriptor.writable === false) {
+          state_descriptors_fixed();
+        }
+        var s = sources.get(prop2);
+        if (s === void 0) {
+          with_parent(() => {
+            var s2 = state(descriptor.value, stack2);
+            sources.set(prop2, s2);
+            if (dev_fallback_default && typeof prop2 === "string") {
+              tag(s2, get_label(path, prop2));
+            }
+            return s2;
+          });
+        } else {
+          set(s, descriptor.value, true);
+        }
+        return true;
+      },
+      deleteProperty(target, prop2) {
+        var s = sources.get(prop2);
+        if (s === void 0) {
+          if (prop2 in target) {
+            const s2 = with_parent(() => state(UNINITIALIZED, stack2));
+            sources.set(prop2, s2);
+            increment(version);
+            if (dev_fallback_default) {
+              tag(s2, get_label(path, prop2));
+            }
+          }
+        } else {
+          set(s, UNINITIALIZED);
+          increment(version);
+        }
+        return true;
+      },
+      get(target, prop2, receiver) {
+        if (prop2 === STATE_SYMBOL) {
+          return value;
+        }
+        if (dev_fallback_default && prop2 === PROXY_PATH_SYMBOL) {
+          return update_path;
+        }
+        var s = sources.get(prop2);
+        var exists = prop2 in target;
+        if (s === void 0 && (!exists || get_descriptor(target, prop2)?.writable)) {
+          s = with_parent(() => {
+            var p = proxy(exists ? target[prop2] : UNINITIALIZED);
+            var s2 = state(p, stack2);
+            if (dev_fallback_default) {
+              tag(s2, get_label(path, prop2));
+            }
+            return s2;
+          });
+          sources.set(prop2, s);
+        }
+        if (s !== void 0) {
+          var v = get(s);
+          return v === UNINITIALIZED ? void 0 : v;
+        }
+        return Reflect.get(target, prop2, receiver);
+      },
+      getOwnPropertyDescriptor(target, prop2) {
+        this.has?.(target, prop2);
+        var descriptor = Reflect.getOwnPropertyDescriptor(target, prop2);
+        var s = sources.get(prop2);
+        if (s !== void 0) {
+          var value2 = get(s);
+          if (value2 === UNINITIALIZED) {
+            return void 0;
+          }
+          if (descriptor && "value" in descriptor) {
+            descriptor.value = value2;
+          } else {
+            return {
+              enumerable: true,
+              configurable: true,
+              value: value2,
+              writable: true
+            };
+          }
+        }
+        return descriptor;
+      },
+      has(target, prop2) {
+        if (prop2 === STATE_SYMBOL) {
+          return true;
+        }
+        var s = sources.get(prop2);
+        var has = s !== void 0 && s.v !== UNINITIALIZED || Reflect.has(target, prop2);
+        if (s !== void 0 || active_effect !== null && (!has || get_descriptor(target, prop2)?.writable)) {
+          if (s === void 0) {
+            s = with_parent(() => {
+              var p = has ? proxy(target[prop2]) : UNINITIALIZED;
+              var s2 = state(p, stack2);
+              if (dev_fallback_default) {
+                tag(s2, get_label(path, prop2));
+              }
+              return s2;
+            });
+            sources.set(prop2, s);
+          }
+          var value2 = get(s);
+          if (value2 === UNINITIALIZED) {
+            return false;
+          }
+        }
+        return has;
+      },
+      set(target, prop2, value2, receiver) {
+        var s = sources.get(prop2);
+        var has = prop2 in target;
+        if (is_proxied_array && prop2 === "length") {
+          for (var i = value2; i < /** @type {Source<number>} */
+          s.v; i += 1) {
+            var other_s = sources.get(i + "");
+            if (other_s !== void 0) {
+              set(other_s, UNINITIALIZED);
+            } else if (i in target) {
+              other_s = with_parent(() => state(UNINITIALIZED, stack2));
+              sources.set(i + "", other_s);
+              if (dev_fallback_default) {
+                tag(other_s, get_label(path, i));
+              }
+            }
+          }
+        }
+        if (s === void 0) {
+          if (!has || get_descriptor(target, prop2)?.writable) {
+            s = with_parent(() => state(void 0, stack2));
+            if (dev_fallback_default) {
+              tag(s, get_label(path, prop2));
+            }
+            set(s, proxy(value2));
+            sources.set(prop2, s);
+          }
+        } else {
+          has = s.v !== UNINITIALIZED;
+          var p = with_parent(() => proxy(value2));
+          set(s, p);
+        }
+        var descriptor = Reflect.getOwnPropertyDescriptor(target, prop2);
+        if (descriptor?.set) {
+          descriptor.set.call(receiver, value2);
+        }
+        if (!has) {
+          if (is_proxied_array && typeof prop2 === "string") {
+            var ls = (
+              /** @type {Source<number>} */
+              sources.get("length")
+            );
+            var n = Number(prop2);
+            if (Number.isInteger(n) && n >= ls.v) {
+              set(ls, n + 1);
+            }
+          }
+          increment(version);
+        }
+        return true;
+      },
+      ownKeys(target) {
+        get(version);
+        var own_keys = Reflect.ownKeys(target).filter((key3) => {
+          var source3 = sources.get(key3);
+          return source3 === void 0 || source3.v !== UNINITIALIZED;
+        });
+        for (var [key2, source2] of sources) {
+          if (source2.v !== UNINITIALIZED && !(key2 in target)) {
+            own_keys.push(key2);
+          }
+        }
+        return own_keys;
+      },
+      setPrototypeOf() {
+        state_prototype_fixed();
+      }
+    }
+  );
+}
+function get_label(path, prop2) {
+  if (typeof prop2 === "symbol") return `${path}[Symbol(${prop2.description ?? ""})]`;
+  if (regex_is_valid_identifier.test(prop2)) return `${path}.${prop2}`;
+  return /^\d+$/.test(prop2) ? `${path}[${prop2}]` : `${path}['${prop2}']`;
+}
+function get_proxied_value(value) {
+  try {
+    if (value !== null && typeof value === "object" && STATE_SYMBOL in value) {
+      return value[STATE_SYMBOL];
+    }
+  } catch {
+  }
+  return value;
+}
+var ARRAY_MUTATING_METHODS = /* @__PURE__ */ new Set([
+  "copyWithin",
+  "fill",
+  "pop",
+  "push",
+  "reverse",
+  "shift",
+  "sort",
+  "splice",
+  "unshift"
+]);
+function inspectable_array(array) {
+  return new Proxy(array, {
+    get(target, prop2, receiver) {
+      var value = Reflect.get(target, prop2, receiver);
+      if (!ARRAY_MUTATING_METHODS.has(
+        /** @type {string} */
+        prop2
+      )) {
+        return value;
+      }
+      return function(...args) {
+        set_eager_effects_deferred();
+        var result = value.apply(this, args);
+        flush_eager_effects();
+        return result;
+      };
+    }
+  });
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dev/equality.js
+function init_array_prototype_warnings() {
+  const array_prototype2 = Array.prototype;
+  const cleanup = Array.__svelte_cleanup;
+  if (cleanup) {
+    cleanup();
+  }
+  const { indexOf, lastIndexOf, includes: includes2 } = array_prototype2;
+  array_prototype2.indexOf = function(item, from_index) {
+    const index2 = indexOf.call(this, item, from_index);
+    if (index2 === -1) {
+      for (let i = from_index ?? 0; i < this.length; i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.indexOf(...)");
+          break;
+        }
+      }
+    }
+    return index2;
+  };
+  array_prototype2.lastIndexOf = function(item, from_index) {
+    const index2 = lastIndexOf.call(this, item, from_index ?? this.length - 1);
+    if (index2 === -1) {
+      for (let i = 0; i <= (from_index ?? this.length - 1); i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.lastIndexOf(...)");
+          break;
+        }
+      }
+    }
+    return index2;
+  };
+  array_prototype2.includes = function(item, from_index) {
+    const has = includes2.call(this, item, from_index);
+    if (!has) {
+      for (let i = 0; i < this.length; i += 1) {
+        if (get_proxied_value(this[i]) === item) {
+          state_proxy_equality_mismatch("array.includes(...)");
+          break;
+        }
+      }
+    }
+    return has;
+  };
+  Array.__svelte_cleanup = () => {
+    array_prototype2.indexOf = indexOf;
+    array_prototype2.lastIndexOf = lastIndexOf;
+    array_prototype2.includes = includes2;
+  };
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/operations.js
+var $window;
+var $document;
+var is_firefox;
+var first_child_getter;
+var next_sibling_getter;
+function init_operations() {
+  if ($window !== void 0) {
+    return;
+  }
+  $window = window;
+  $document = document;
+  is_firefox = /Firefox/.test(navigator.userAgent);
+  var element_prototype = Element.prototype;
+  var node_prototype = Node.prototype;
+  var text_prototype = Text.prototype;
+  first_child_getter = get_descriptor(node_prototype, "firstChild").get;
+  next_sibling_getter = get_descriptor(node_prototype, "nextSibling").get;
+  if (is_extensible(element_prototype)) {
+    element_prototype[CLASS_CACHE] = void 0;
+    element_prototype[ATTRIBUTES_CACHE] = null;
+    element_prototype[STYLE_CACHE] = void 0;
+    element_prototype.__e = void 0;
+  }
+  if (is_extensible(text_prototype)) {
+    text_prototype[TEXT_CACHE] = void 0;
+  }
+  if (dev_fallback_default) {
+    element_prototype.__svelte_meta = null;
+    init_array_prototype_warnings();
+  }
+}
+function create_text(value = "") {
+  return document.createTextNode(value);
+}
+// @__NO_SIDE_EFFECTS__
+function get_first_child(node) {
+  return (
+    /** @type {TemplateNode | null} */
+    first_child_getter.call(node)
+  );
+}
+// @__NO_SIDE_EFFECTS__
+function get_next_sibling(node) {
+  return (
+    /** @type {TemplateNode | null} */
+    next_sibling_getter.call(node)
+  );
+}
+function child(node, is_text) {
+  if (!hydrating) {
+    return /* @__PURE__ */ get_first_child(node);
+  }
+  var child2 = /* @__PURE__ */ get_first_child(hydrate_node);
+  if (child2 === null) {
+    child2 = hydrate_node.appendChild(create_text());
+  } else if (is_text && child2.nodeType !== TEXT_NODE) {
+    var text2 = create_text();
+    child2?.before(text2);
+    set_hydrate_node(text2);
+    return text2;
+  }
+  if (is_text) {
+    merge_text_nodes(
+      /** @type {Text} */
+      child2
+    );
+  }
+  set_hydrate_node(child2);
+  return child2;
+}
+function first_child(node, is_text = false) {
+  if (!hydrating) {
+    var first = /* @__PURE__ */ get_first_child(node);
+    if (first instanceof Comment && first.data === "") return /* @__PURE__ */ get_next_sibling(first);
+    return first;
+  }
+  if (is_text) {
+    if (hydrate_node?.nodeType !== TEXT_NODE) {
+      var text2 = create_text();
+      hydrate_node?.before(text2);
+      set_hydrate_node(text2);
+      return text2;
+    }
+    merge_text_nodes(
+      /** @type {Text} */
+      hydrate_node
+    );
+  }
+  return hydrate_node;
+}
+function only_child(node, is_text = false) {
+  if (!hydrating) {
+    return /* @__PURE__ */ get_first_child(node);
+  }
+  var first = child(node, is_text);
+  reset(node);
+  return first;
+}
+function sibling(node, count = 1, is_text = false) {
+  let next_sibling = hydrating ? hydrate_node : node;
+  var last_sibling;
+  while (count--) {
+    last_sibling = next_sibling;
+    next_sibling = /** @type {TemplateNode} */
+    /* @__PURE__ */ get_next_sibling(next_sibling);
+  }
+  if (!hydrating) {
+    return next_sibling;
+  }
+  if (is_text) {
+    if (next_sibling?.nodeType !== TEXT_NODE) {
+      var text2 = create_text();
+      if (next_sibling === null) {
+        last_sibling?.after(text2);
+      } else {
+        next_sibling.before(text2);
+      }
+      set_hydrate_node(text2);
+      return text2;
+    }
+    merge_text_nodes(
+      /** @type {Text} */
+      next_sibling
+    );
+  }
+  set_hydrate_node(next_sibling);
+  return next_sibling;
+}
+function clear_text_content(node) {
+  node.textContent = "";
+}
+function should_defer_append() {
+  if (!async_mode_flag) return false;
+  if (eager_block_effects !== null) return false;
+  var flags2 = (
+    /** @type {Effect} */
+    active_effect.f
+  );
+  return (flags2 & REACTION_RAN) !== 0;
+}
+function create_element(tag2, namespace, is2) {
+  if (namespace == null || namespace === NAMESPACE_HTML) {
+    return (
+      /** @type {T extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[T] : Element} */
+      is2 ? document.createElement(tag2, { is: is2 }) : document.createElement(tag2)
+    );
+  }
+  return (
+    /** @type {T extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[T] : Element} */
+    is2 ? document.createElementNS(namespace, tag2, { is: is2 }) : document.createElementNS(namespace, tag2)
+  );
+}
+function merge_text_nodes(text2) {
+  if (
+    /** @type {string} */
+    text2.nodeValue.length < 65536
+  ) {
+    return;
+  }
+  let next2 = text2.nextSibling;
+  while (next2 !== null && next2.nodeType === TEXT_NODE) {
+    next2.remove();
+    text2.nodeValue += /** @type {string} */
+    next2.nodeValue;
+    next2 = text2.nextSibling;
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/error-handling.js
+var adjustments = /* @__PURE__ */ new WeakMap();
+function handle_error(error) {
+  var effect2 = active_effect;
+  if (effect2 === null) {
+    active_reaction.f |= ERROR_VALUE;
+    return error;
+  }
+  if (dev_fallback_default && error instanceof Error && !adjustments.has(error)) {
+    adjustments.set(error, get_adjustments(error, effect2));
+  }
+  if ((effect2.f & REACTION_RAN) === 0 && (effect2.f & EFFECT) === 0) {
+    if (dev_fallback_default && !effect2.parent && error instanceof Error) {
+      apply_adjustments(error);
+    }
+    throw error;
+  }
+  invoke_error_boundary(error, effect2);
+}
+function invoke_error_boundary(error, effect2) {
+  if (error === HYDRATION_ERROR) {
+    throw error;
+  }
+  if (effect2 !== null && (effect2.f & DESTROYED) !== 0) {
+    return;
+  }
+  while (effect2 !== null) {
+    if ((effect2.f & BOUNDARY_EFFECT) !== 0 && (effect2.f & (DESTROYED | DESTROYING)) === 0) {
+      if ((effect2.f & REACTION_RAN) === 0) {
+        throw error;
+      }
+      try {
+        effect2.b.error(error);
+        return;
+      } catch (e) {
+        error = e;
+      }
+    }
+    effect2 = effect2.parent;
+  }
+  if (dev_fallback_default && error instanceof Error) {
+    apply_adjustments(error);
+  }
+  throw error;
+}
+function get_adjustments(error, effect2) {
+  const message_descriptor = get_descriptor(error, "message");
+  if (message_descriptor && !message_descriptor.configurable) return;
+  var indent = is_firefox ? "  " : "	";
+  var component_stack = `
+${indent}in ${effect2.fn?.name || "<unknown>"}`;
+  var context = effect2.ctx;
+  while (context !== null) {
+    component_stack += `
+${indent}in ${context.function?.[FILENAME].split("/").pop()}`;
+    context = context.p;
+  }
+  return {
+    message: error.message + `
+${component_stack}
+`,
+    stack: error.stack?.split("\n").filter((line) => !line.includes("svelte/src/internal")).join("\n")
+  };
+}
+function apply_adjustments(error) {
+  const adjusted = adjustments.get(error);
+  if (adjusted) {
+    define_property(error, "message", {
+      value: adjusted.message
+    });
+    define_property(error, "stack", {
+      value: adjusted.stack
+    });
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/effects.js
+function validate_effect(rune) {
+  if (active_effect === null) {
+    if (active_reaction === null) {
+      effect_orphan(rune);
+    }
+    effect_in_unowned_derived();
+  }
+  if (is_destroying_effect) {
+    effect_in_teardown(rune);
+  }
+}
+function push_effect(effect2, parent_effect) {
+  var parent_last = parent_effect.last;
+  if (parent_last === null) {
+    parent_effect.last = parent_effect.first = effect2;
+  } else {
+    parent_last.next = effect2;
+    effect2.prev = parent_last;
+    parent_effect.last = effect2;
+  }
+}
+function create_effect(type, fn) {
+  var parent = active_effect;
+  if (dev_fallback_default) {
+    while (parent !== null && (parent.f & EAGER_EFFECT) !== 0) {
+      parent = parent.parent;
+    }
+  }
+  if (parent !== null && (parent.f & INERT) !== 0) {
+    type |= INERT;
+  }
+  var effect2 = {
+    ctx: component_context,
+    deps: null,
+    nodes: null,
+    f: type | DIRTY | CONNECTED,
+    first: null,
+    fn,
+    last: null,
+    next: null,
+    parent,
+    b: parent && parent.b,
+    prev: null,
+    teardown: null,
+    wv: 0,
+    ac: null
+  };
+  if (dev_fallback_default) {
+    effect2.component_function = dev_current_component_function;
+  }
+  current_batch?.register_created_effect(effect2);
+  var e = effect2;
+  if ((type & EFFECT) !== 0) {
+    if (collected_effects !== null) {
+      collected_effects.push(effect2);
+    } else {
+      Batch.ensure().schedule(effect2);
+    }
+  } else if (fn !== null) {
+    try {
+      update_effect(effect2);
+    } catch (e2) {
+      destroy_effect(effect2);
+      throw e2;
+    }
+    if (e.deps === null && e.teardown === null && e.nodes === null && e.first === e.last && // either `null`, or a singular child
+    (e.f & EFFECT_PRESERVED) === 0) {
+      e = e.first;
+      if ((type & BLOCK_EFFECT) !== 0 && (type & EFFECT_TRANSPARENT) !== 0 && e !== null) {
+        e.f |= EFFECT_TRANSPARENT;
+      }
+    }
+  }
+  if (e !== null) {
+    e.parent = parent;
+    if (parent !== null) {
+      push_effect(e, parent);
+    }
+    if (active_reaction !== null && (active_reaction.f & DERIVED) !== 0 && (type & ROOT_EFFECT) === 0) {
+      var derived2 = (
+        /** @type {Derived} */
+        active_reaction
+      );
+      (derived2.effects ??= []).push(e);
+    }
+  }
+  return effect2;
+}
+function effect_tracking() {
+  return active_reaction !== null && !untracking;
+}
+function teardown(fn) {
+  const effect2 = create_effect(RENDER_EFFECT, null);
+  set_signal_status(effect2, CLEAN);
+  effect2.teardown = fn;
+  return effect2;
+}
+function user_effect(fn) {
+  validate_effect("$effect");
+  if (dev_fallback_default) {
+    define_property(fn, "name", {
+      value: "$effect"
+    });
+  }
+  var flags2 = (
+    /** @type {Effect} */
+    active_effect.f
+  );
+  var defer = !active_reaction && (flags2 & BRANCH_EFFECT) !== 0 && component_context !== null && !component_context.i;
+  if (defer) {
+    var context = (
+      /** @type {ComponentContext} */
+      component_context
+    );
+    (context.e ??= []).push(fn);
+  } else {
+    return create_user_effect(fn);
+  }
+}
+function create_user_effect(fn) {
+  return create_effect(EFFECT | USER_EFFECT, fn);
+}
+function user_pre_effect(fn) {
+  validate_effect("$effect.pre");
+  if (dev_fallback_default) {
+    define_property(fn, "name", {
+      value: "$effect.pre"
+    });
+  }
+  return create_effect(RENDER_EFFECT | USER_EFFECT, fn);
+}
+function effect_root(fn) {
+  Batch.ensure();
+  const effect2 = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn);
+  return () => {
+    destroy_effect(effect2);
+  };
+}
+function component_root(fn) {
+  Batch.ensure();
+  const effect2 = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn);
+  return (options = {}) => {
+    return new Promise((fulfil) => {
+      if (options.outro) {
+        pause_effect(effect2, () => {
+          destroy_effect(effect2);
+          fulfil(void 0);
+        });
+      } else {
+        destroy_effect(effect2);
+        fulfil(void 0);
+      }
+    });
+  };
+}
+function effect(fn) {
+  return create_effect(EFFECT, fn);
+}
+function async_effect(fn) {
+  return create_effect(ASYNC | EFFECT_PRESERVED, fn);
+}
+function render_effect(fn, flags2 = 0) {
+  return create_effect(RENDER_EFFECT | flags2, fn);
+}
+function template_effect(fn, sync = [], async2 = [], blockers = []) {
+  flatten(blockers, sync, async2, (values) => {
+    create_effect(RENDER_EFFECT, () => {
+      fn(...values.map(get));
+    });
+  });
+}
+function block(fn, flags2 = 0) {
+  var effect2 = create_effect(BLOCK_EFFECT | flags2, fn);
+  if (dev_fallback_default) {
+    effect2.dev_stack = dev_stack;
+  }
+  return effect2;
+}
+function managed(fn, flags2 = 0) {
+  var effect2 = create_effect(MANAGED_EFFECT | flags2, fn);
+  if (dev_fallback_default) {
+    effect2.dev_stack = dev_stack;
+  }
+  return effect2;
+}
+function branch(fn) {
+  return create_effect(BRANCH_EFFECT | EFFECT_PRESERVED, fn);
+}
+function execute_effect_teardown(effect2) {
+  var teardown2 = effect2.teardown;
+  if (teardown2 !== null) {
+    const previously_destroying_effect = is_destroying_effect;
+    const previous_reaction = active_reaction;
+    set_is_destroying_effect(true);
+    set_active_reaction(null);
+    try {
+      teardown2.call(null);
+    } catch (error) {
+      invoke_error_boundary(error, effect2.parent);
+    } finally {
+      set_is_destroying_effect(previously_destroying_effect);
+      set_active_reaction(previous_reaction);
+    }
+  }
+}
+function destroy_effect_children(signal, remove_dom = false) {
+  var effect2 = signal.first;
+  signal.first = signal.last = null;
+  while (effect2 !== null) {
+    const controller = effect2.ac;
+    if (controller !== null) {
+      without_reactive_context(() => {
+        controller.abort(STALE_REACTION);
+      });
+    }
+    var next2 = effect2.next;
+    if ((effect2.f & ROOT_EFFECT) !== 0) {
+      effect2.parent = null;
+    } else {
+      destroy_effect(effect2, remove_dom);
+    }
+    effect2 = next2;
+  }
+}
+function destroy_block_effect_children(signal) {
+  var effect2 = signal.first;
+  while (effect2 !== null) {
+    var next2 = effect2.next;
+    if ((effect2.f & BRANCH_EFFECT) === 0) {
+      destroy_effect(effect2);
+    }
+    effect2 = next2;
+  }
+}
+function destroy_effect(effect2, remove_dom = true) {
+  var removed = false;
+  if ((remove_dom || (effect2.f & HEAD_EFFECT) !== 0) && effect2.nodes !== null && effect2.nodes.end !== null) {
+    remove_effect_dom(
+      effect2.nodes.start,
+      /** @type {TemplateNode} */
+      effect2.nodes.end
+    );
+    removed = true;
+  }
+  effect2.f |= DESTROYING;
+  destroy_effect_children(effect2, remove_dom && !removed);
+  remove_reactions(effect2, 0);
+  var transitions = effect2.nodes && effect2.nodes.t;
+  if (transitions !== null) {
+    for (const transition2 of transitions) {
+      transition2.stop();
+    }
+  }
+  execute_effect_teardown(effect2);
+  effect2.f ^= DESTROYING;
+  effect2.f |= DESTROYED;
+  var parent = effect2.parent;
+  if (parent !== null && parent.first !== null) {
+    unlink_effect(effect2);
+  }
+  if (dev_fallback_default) {
+    effect2.component_function = null;
+  }
+  effect2.next = effect2.prev = effect2.teardown = effect2.ctx = effect2.deps = effect2.fn = effect2.nodes = effect2.ac = effect2.b = null;
+}
+function remove_effect_dom(node, end) {
+  while (node !== null) {
+    var next2 = node === end ? null : get_next_sibling(node);
+    node.remove();
+    node = next2;
+  }
+}
+function unlink_effect(effect2) {
+  var parent = effect2.parent;
+  var prev = effect2.prev;
+  var next2 = effect2.next;
+  if (prev !== null) prev.next = next2;
+  if (next2 !== null) next2.prev = prev;
+  if (parent !== null) {
+    if (parent.first === effect2) parent.first = next2;
+    if (parent.last === effect2) parent.last = prev;
+  }
+}
+function pause_effect(effect2, callback, destroy = true) {
+  var transitions = [];
+  effect2.f |= PAUSED;
+  pause_children(effect2, transitions, true);
+  var fn = () => {
+    if (destroy) destroy_effect(effect2);
+    if (callback) callback();
+  };
+  var remaining = transitions.length;
+  if (remaining > 0) {
+    var check = () => --remaining || fn();
+    for (var transition2 of transitions) {
+      transition2.out(check);
+    }
+  } else {
+    fn();
+  }
+}
+function pause_children(effect2, transitions, local) {
+  if ((effect2.f & INERT) !== 0) return;
+  effect2.f ^= INERT;
+  var t = effect2.nodes && effect2.nodes.t;
+  if (t !== null) {
+    for (const transition2 of t) {
+      if (transition2.is_global || local) {
+        transitions.push(transition2);
+      }
+    }
+  }
+  var child2 = effect2.first;
+  while (child2 !== null) {
+    var sibling2 = child2.next;
+    if ((child2.f & ROOT_EFFECT) === 0) {
+      var transparent = (child2.f & EFFECT_TRANSPARENT) !== 0 || // If this is a branch effect without a block effect parent,
+      // it means the parent block effect was pruned. In that case,
+      // transparency information was transferred to the branch effect.
+      (child2.f & BRANCH_EFFECT) !== 0 && (effect2.f & BLOCK_EFFECT) !== 0;
+      pause_children(child2, transitions, transparent ? local : false);
+    }
+    child2 = sibling2;
+  }
+}
+function resume_effect(effect2) {
+  effect2.f &= ~PAUSED;
+  resume_children(effect2, true);
+}
+function resume_children(effect2, local) {
+  if ((effect2.f & PAUSED) !== 0) return;
+  if ((effect2.f & INERT) === 0) return;
+  effect2.f ^= INERT;
+  if ((effect2.f & CLEAN) === 0) {
+    set_signal_status(effect2, DIRTY);
+    Batch.ensure().schedule(effect2);
+  }
+  var child2 = effect2.first;
+  while (child2 !== null) {
+    var sibling2 = child2.next;
+    var transparent = (child2.f & EFFECT_TRANSPARENT) !== 0 || (child2.f & BRANCH_EFFECT) !== 0;
+    resume_children(child2, transparent ? local : false);
+    child2 = sibling2;
+  }
+  var t = effect2.nodes && effect2.nodes.t;
+  if (t !== null) {
+    for (const transition2 of t) {
+      if (transition2.is_global || local) {
+        transition2.in();
+      }
+    }
+  }
+}
+function move_effect(effect2, fragment) {
+  if (!effect2.nodes) return;
+  var node = effect2.nodes.start;
+  var end = effect2.nodes.end;
+  while (node !== null) {
+    var next2 = node === end ? null : get_next_sibling(node);
+    fragment.append(node);
+    node = next2;
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/legacy.js
+var captured_signals = null;
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/runtime.js
+var is_destroying_effect = false;
+function set_is_destroying_effect(value) {
+  is_destroying_effect = value;
+}
+var active_reaction = null;
+var untracking = false;
+function set_active_reaction(reaction) {
+  active_reaction = reaction;
+}
+var active_effect = null;
+function set_active_effect(effect2) {
+  active_effect = effect2;
+}
+var current_sources = null;
+function push_reaction_value(value) {
+  if (active_reaction !== null && (!async_mode_flag && (active_reaction.f & REACTION_IS_UPDATING) !== 0 || (active_reaction.f & DERIVED) !== 0)) {
+    (current_sources ??= /* @__PURE__ */ new Set()).add(value);
+  }
+}
+var new_deps = null;
+var skipped_deps = 0;
+var untracked_writes = null;
+function set_untracked_writes(value) {
+  untracked_writes = value;
+}
+var write_version = 1;
+var read_version = 0;
+var update_version = read_version;
+function set_update_version(value) {
+  update_version = value;
+}
+function increment_write_version() {
+  return ++write_version;
+}
+function is_dirty(reaction) {
+  var flags2 = reaction.f;
+  if ((flags2 & DIRTY) !== 0) {
+    return true;
+  }
+  if ((flags2 & MAYBE_DIRTY) !== 0) {
+    var dependencies = (
+      /** @type {Value[]} */
+      reaction.deps
+    );
+    var length2 = dependencies.length;
+    for (var i = 0; i < length2; i++) {
+      var dependency = dependencies[i];
+      if (is_dirty(
+        /** @type {Derived} */
+        dependency
+      )) {
+        update_derived(
+          /** @type {Derived} */
+          dependency
+        );
+      }
+      if (dependency.wv > reaction.wv) {
+        return true;
+      }
+    }
+    if ((flags2 & CONNECTED) !== 0 && // During time traveling we don't want to reset the status so that
+    // traversal of the graph in the other batches still happens
+    batch_values === null) {
+      set_signal_status(reaction, CLEAN);
+    }
+  }
+  return false;
+}
+function schedule_possible_effect_self_invalidation(signal, effect2, root2 = true) {
+  var reactions = signal.reactions;
+  if (reactions === null) return;
+  if (!async_mode_flag && current_sources !== null && current_sources.has(signal)) {
+    return;
+  }
+  for (var i = 0; i < reactions.length; i++) {
+    var reaction = reactions[i];
+    if ((reaction.f & DERIVED) !== 0) {
+      schedule_possible_effect_self_invalidation(
+        /** @type {Derived} */
+        reaction,
+        effect2,
+        false
+      );
+    } else if (effect2 === reaction) {
+      if (root2) {
+        set_signal_status(reaction, DIRTY);
+      } else if ((reaction.f & CLEAN) !== 0) {
+        set_signal_status(reaction, MAYBE_DIRTY);
+      }
+      schedule_effect(
+        /** @type {Effect} */
+        reaction
+      );
+    }
+  }
+}
+function update_reaction(reaction) {
+  var previous_deps = new_deps;
+  var previous_skipped_deps = skipped_deps;
+  var previous_untracked_writes = untracked_writes;
+  var previous_reaction = active_reaction;
+  var previous_sources = current_sources;
+  var previous_component_context = component_context;
+  var previous_untracking = untracking;
+  var previous_update_version = update_version;
+  var flags2 = reaction.f;
+  new_deps = /** @type {null | Value[]} */
+  null;
+  skipped_deps = 0;
+  untracked_writes = null;
+  active_reaction = (flags2 & (BRANCH_EFFECT | ROOT_EFFECT)) === 0 ? reaction : null;
+  current_sources = null;
+  set_component_context(reaction.ctx);
+  untracking = false;
+  update_version = ++read_version;
+  if (reaction.ac !== null) {
+    without_reactive_context(() => {
+      reaction.ac.abort(STALE_REACTION);
+    });
+    reaction.ac = null;
+  }
+  try {
+    reaction.f |= REACTION_IS_UPDATING;
+    var fn = (
+      /** @type {Function} */
+      reaction.fn
+    );
+    var result = fn();
+    reaction.f |= REACTION_RAN;
+    var deps = update_dependencies(reaction);
+    if (is_runes() && untracked_writes !== null && !untracking && deps !== null && (reaction.f & (DERIVED | MAYBE_DIRTY | DIRTY)) === 0) {
+      for (var i = 0; i < /** @type {Source[]} */
+      untracked_writes.length; i++) {
+        schedule_possible_effect_self_invalidation(
+          untracked_writes[i],
+          /** @type {Effect} */
+          reaction
+        );
+      }
+    }
+    if (previous_reaction !== null && previous_reaction !== reaction) {
+      read_version++;
+      if (previous_reaction.deps !== null) {
+        for (let i2 = 0; i2 < previous_skipped_deps; i2 += 1) {
+          previous_reaction.deps[i2].rv = read_version;
+        }
+      }
+      if (previous_deps !== null) {
+        for (const dep of previous_deps) {
+          dep.rv = read_version;
+        }
+      }
+      if (untracked_writes !== null) {
+        if (previous_untracked_writes === null) {
+          previous_untracked_writes = untracked_writes;
+        } else {
+          previous_untracked_writes.push(.../** @type {Source[]} */
+          untracked_writes);
+        }
+      }
+    }
+    if ((reaction.f & ERROR_VALUE) !== 0) {
+      reaction.f ^= ERROR_VALUE;
+    }
+    return result;
+  } catch (error) {
+    update_dependencies(reaction);
+    return handle_error(error);
+  } finally {
+    reaction.f ^= REACTION_IS_UPDATING;
+    new_deps = previous_deps;
+    skipped_deps = previous_skipped_deps;
+    untracked_writes = previous_untracked_writes;
+    active_reaction = previous_reaction;
+    current_sources = previous_sources;
+    set_component_context(previous_component_context);
+    untracking = previous_untracking;
+    update_version = previous_update_version;
+  }
+}
+function update_dependencies(reaction) {
+  var deps = reaction.deps;
+  var is_fork = current_batch?.is_fork;
+  if (new_deps !== null) {
+    var i;
+    if (!is_fork) {
+      remove_reactions(reaction, skipped_deps);
+    }
+    if (deps !== null && skipped_deps > 0) {
+      deps.length = skipped_deps + new_deps.length;
+      for (i = 0; i < new_deps.length; i++) {
+        deps[skipped_deps + i] = new_deps[i];
+      }
+    } else {
+      reaction.deps = deps = new_deps;
+    }
+    if (effect_tracking() && (reaction.f & CONNECTED) !== 0) {
+      for (i = skipped_deps; i < deps.length; i++) {
+        (deps[i].reactions ??= []).push(reaction);
+      }
+    }
+  } else if (!is_fork && deps !== null && skipped_deps < deps.length) {
+    remove_reactions(reaction, skipped_deps);
+    deps.length = skipped_deps;
+  }
+  return deps;
+}
+function remove_reaction(signal, dependency) {
+  let reactions = dependency.reactions;
+  if (reactions !== null) {
+    var index2 = index_of.call(reactions, signal);
+    if (index2 !== -1) {
+      var new_length = reactions.length - 1;
+      if (new_length === 0) {
+        reactions = dependency.reactions = null;
+      } else {
+        reactions[index2] = reactions[new_length];
+        reactions.pop();
+      }
+    }
+  }
+  if (reactions === null && (dependency.f & DERIVED) !== 0 && // Destroying a child effect while updating a parent effect can cause a dependency to appear
+  // to be unused, when in fact it is used by the currently-updating parent. Checking `new_deps`
+  // allows us to skip the expensive work of disconnecting and immediately reconnecting it
+  (new_deps === null || !includes.call(new_deps, dependency))) {
+    var derived2 = (
+      /** @type {Derived} */
+      dependency
+    );
+    if ((derived2.f & CONNECTED) !== 0) {
+      derived2.f ^= CONNECTED;
+    }
+    if (derived2.v !== UNINITIALIZED) {
+      update_derived_status(derived2);
+    }
+    if (derived2.ac !== null) {
+      without_reactive_context(() => {
+        derived2.ac.abort(STALE_REACTION);
+        derived2.ac = null;
+        set_signal_status(derived2, DIRTY);
+      });
+    }
+    freeze_derived_effects(derived2);
+    remove_reactions(derived2, 0);
+  }
+}
+function remove_reactions(signal, start_index) {
+  var dependencies = signal.deps;
+  if (dependencies === null) return;
+  for (var i = start_index; i < dependencies.length; i++) {
+    remove_reaction(signal, dependencies[i]);
+  }
+}
+function update_effect(effect2) {
+  var flags2 = effect2.f;
+  if ((flags2 & DESTROYED) !== 0) {
+    return;
+  }
+  set_signal_status(effect2, CLEAN);
+  var previous_effect = active_effect;
+  active_effect = effect2;
+  if (dev_fallback_default) {
+    var previous_component_fn = dev_current_component_function;
+    set_dev_current_component_function(effect2.component_function);
+    var previous_stack = (
+      /** @type {any} */
+      dev_stack
+    );
+    set_dev_stack(effect2.dev_stack ?? dev_stack);
+  }
+  try {
+    if ((flags2 & (BLOCK_EFFECT | MANAGED_EFFECT)) !== 0) {
+      destroy_block_effect_children(effect2);
+    } else {
+      destroy_effect_children(effect2);
+    }
+    execute_effect_teardown(effect2);
+    var teardown2 = update_reaction(effect2);
+    effect2.teardown = typeof teardown2 === "function" ? teardown2 : null;
+    effect2.wv = write_version;
+    if (dev_fallback_default && tracing_mode_flag && (effect2.f & DIRTY) !== 0 && effect2.deps !== null) {
+      for (var dep of effect2.deps) {
+        if (dep.set_during_effect) {
+          dep.wv = increment_write_version();
+          dep.set_during_effect = false;
+        }
+      }
+    }
+  } finally {
+    active_effect = previous_effect;
+    if (dev_fallback_default) {
+      set_dev_current_component_function(previous_component_fn);
+      set_dev_stack(previous_stack);
+    }
+  }
+}
+async function tick() {
+  if (async_mode_flag) {
+    return new Promise((f) => {
+      requestAnimationFrame(() => f());
+      setTimeout(() => f());
+    });
+  }
+  await Promise.resolve();
+  flushSync();
+}
+function get(signal) {
+  var flags2 = signal.f;
+  var is_derived = (flags2 & DERIVED) !== 0;
+  captured_signals?.add(signal);
+  if (active_reaction !== null && !untracking) {
+    var destroyed = active_effect !== null && (active_effect.f & DESTROYED) !== 0;
+    if (!destroyed && (current_sources === null || !current_sources.has(signal))) {
+      var deps = active_reaction.deps;
+      if ((active_reaction.f & REACTION_IS_UPDATING) !== 0) {
+        if (signal.rv < read_version) {
+          signal.rv = read_version;
+          if (new_deps === null && deps !== null && deps[skipped_deps] === signal) {
+            skipped_deps++;
+          } else if (new_deps === null) {
+            new_deps = [signal];
+          } else {
+            new_deps.push(signal);
+          }
+        }
+      } else {
+        active_reaction.deps ??= [];
+        if (!includes.call(active_reaction.deps, signal)) {
+          active_reaction.deps.push(signal);
+        }
+        var reactions = signal.reactions;
+        if (reactions === null) {
+          signal.reactions = [active_reaction];
+        } else if (!includes.call(reactions, active_reaction)) {
+          reactions.push(active_reaction);
+        }
+      }
+    }
+  }
+  if (dev_fallback_default) {
+    if (!untracking && reactivity_loss_tracker && // By checking that current/previous batch are null we filter out false positives.
+    // reactivity_loss_tracker is only reset after a microtask, so if a flush happens
+    // before that, we get warnings for things we shouldn't warn on.
+    current_batch === null && previous_batch === null && !reactivity_loss_tracker.warned && (reactivity_loss_tracker.effect.f & REACTION_IS_UPDATING) === 0 && !reactivity_loss_tracker.effect_deps.has(signal)) {
+      reactivity_loss_tracker.warned = true;
+      await_reactivity_loss(
+        /** @type {string} */
+        signal.label
+      );
+      var trace2 = get_error("traced at");
+      if (trace2) console.warn(trace2);
+    }
+    recent_async_deriveds.delete(signal);
+    if (tracing_mode_flag && !untracking && tracing_expressions !== null && active_reaction !== null && tracing_expressions.reaction === active_reaction) {
+      if (signal.trace) {
+        signal.trace();
+      } else {
+        trace2 = get_error("traced at");
+        if (trace2) {
+          var entry = tracing_expressions.entries.get(signal);
+          if (entry === void 0) {
+            entry = { traces: [] };
+            tracing_expressions.entries.set(signal, entry);
+          }
+          var last = entry.traces[entry.traces.length - 1];
+          if (trace2.stack !== last?.stack) {
+            entry.traces.push(trace2);
+          }
+        }
+      }
+    }
+  }
+  if (is_destroying_effect && old_values.has(signal)) {
+    return old_values.get(signal);
+  }
+  if (is_derived) {
+    var derived2 = (
+      /** @type {Derived} */
+      signal
+    );
+    if (is_destroying_effect) {
+      var value = derived2.v;
+      if ((derived2.f & CLEAN) === 0 && derived2.reactions !== null || depends_on_old_values(derived2)) {
+        value = execute_derived(derived2);
+      }
+      old_values.set(derived2, value);
+      return value;
+    }
+    var should_connect = (derived2.f & CONNECTED) === 0 && !untracking && active_reaction !== null && (active_reaction.f & CONNECTED) !== 0;
+    var is_new = (derived2.f & REACTION_RAN) === 0;
+    if (is_dirty(derived2)) {
+      if (should_connect) {
+        derived2.f |= CONNECTED;
+      }
+      update_derived(derived2);
+    }
+    if (should_connect && !is_new) {
+      unfreeze_derived_effects(derived2);
+      reconnect(derived2);
+    }
+  }
+  if (batch_values?.has(signal)) {
+    return batch_values.get(signal);
+  }
+  if ((signal.f & ERROR_VALUE) !== 0) {
+    throw signal.v;
+  }
+  return signal.v;
+}
+function reconnect(derived2) {
+  derived2.f |= CONNECTED;
+  if (derived2.deps === null) return;
+  for (const dep of derived2.deps) {
+    var reactions = dep.reactions;
+    if (reactions === null) {
+      dep.reactions = [derived2];
+    } else if (!includes.call(reactions, derived2)) {
+      reactions.push(derived2);
+    }
+    if ((dep.f & DERIVED) !== 0 && (dep.f & CONNECTED) === 0) {
+      unfreeze_derived_effects(
+        /** @type {Derived} */
+        dep
+      );
+      reconnect(
+        /** @type {Derived} */
+        dep
+      );
+    }
+  }
+}
+function depends_on_old_values(derived2) {
+  if (derived2.v === UNINITIALIZED) return true;
+  if (derived2.deps === null) return false;
+  for (const dep of derived2.deps) {
+    if (old_values.has(dep)) {
+      return true;
+    }
+    if ((dep.f & DERIVED) !== 0 && depends_on_old_values(
+      /** @type {Derived} */
+      dep
+    )) {
+      return true;
+    }
+  }
+  return false;
+}
+function untrack(fn) {
+  var previous_untracking = untracking;
+  try {
+    untracking = true;
+    return fn();
+  } finally {
+    untracking = previous_untracking;
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/utils.js
+var DOM_BOOLEAN_ATTRIBUTES = [
+  "allowfullscreen",
+  "async",
+  "autofocus",
+  "autoplay",
+  "checked",
+  "controls",
+  "default",
+  "disabled",
+  "formnovalidate",
+  "indeterminate",
+  "inert",
+  "ismap",
+  "loop",
+  "multiple",
+  "muted",
+  "nomodule",
+  "novalidate",
+  "open",
+  "playsinline",
+  "readonly",
+  "required",
+  "reversed",
+  "seamless",
+  "selected",
+  "webkitdirectory",
+  "defer",
+  "disablepictureinpicture",
+  "disableremoteplayback"
+];
+var DOM_PROPERTIES = [
+  ...DOM_BOOLEAN_ATTRIBUTES,
+  "formNoValidate",
+  "isMap",
+  "noModule",
+  "playsInline",
+  "readOnly",
+  "value",
+  "volume",
+  "defaultValue",
+  "defaultChecked",
+  "srcObject",
+  "noValidate",
+  "allowFullscreen",
+  "disablePictureInPicture",
+  "disableRemotePlayback"
+];
+var PASSIVE_EVENTS = ["touchstart", "touchmove"];
+function is_passive_event(name) {
+  return PASSIVE_EVENTS.includes(name);
+}
+var STATE_CREATION_RUNES = (
+  /** @type {const} */
+  [
+    "$state",
+    "$state.raw",
+    "$derived",
+    "$derived.by"
+  ]
+);
+var RUNES = (
+  /** @type {const} */
+  [
+    ...STATE_CREATION_RUNES,
+    "$state.eager",
+    "$state.snapshot",
+    "$props",
+    "$props.id",
+    "$bindable",
+    "$effect",
+    "$effect.pre",
+    "$effect.tracking",
+    "$effect.root",
+    "$effect.pending",
+    "$inspect",
+    "$inspect().with",
+    "$inspect.trace",
+    "$host"
+  ]
+);
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/events.js
+var event_symbol = Symbol("events");
+var all_registered_events = /* @__PURE__ */ new Set();
+var root_event_handles = /* @__PURE__ */ new Set();
+function create_event(event_name, dom, handler, options = {}) {
+  function target_handler(event2) {
+    if (!options.capture) {
+      handle_event_propagation.call(dom, event2);
+    }
+    if (!event2.cancelBubble) {
+      return without_reactive_context(() => {
+        return handler?.call(this, event2);
+      });
+    }
+  }
+  if (event_name.startsWith("pointer") || event_name.startsWith("touch") || event_name === "wheel") {
+    target_handler.__removed = false;
+    queue_micro_task(() => {
+      if (!target_handler.__removed) {
+        dom.addEventListener(event_name, target_handler, options);
+      }
+    });
+  } else {
+    dom.addEventListener(event_name, target_handler, options);
+  }
+  return target_handler;
+}
+function event(event_name, dom, handler, capture2, passive2) {
+  var options = { capture: capture2, passive: passive2 };
+  var target_handler = create_event(event_name, dom, handler, options);
+  if (dom === document.body || // @ts-ignore
+  dom === window || // @ts-ignore
+  dom === document || // Firefox has quirky behavior, it can happen that we still get "canplay" events when the element is already removed
+  dom instanceof HTMLMediaElement) {
+    teardown(() => {
+      target_handler.__removed = true;
+      dom.removeEventListener(event_name, target_handler, options);
+    });
+  }
+}
+function delegated(event_name, element2, handler) {
+  (element2[event_symbol] ??= {})[event_name] = handler;
+}
+function delegate(events) {
+  for (var i = 0; i < events.length; i++) {
+    all_registered_events.add(events[i]);
+  }
+  for (var fn of root_event_handles) {
+    fn(events);
+  }
+}
+var last_propagated_event = null;
+var last_propagated_event_clear_scheduled = false;
+function handle_event_propagation(event2) {
+  var handler_element = this;
+  var owner_document = (
+    /** @type {Node} */
+    handler_element.ownerDocument
+  );
+  var event_name = event2.type;
+  var path = event2.composedPath?.() || [];
+  var current_target = (
+    /** @type {null | Element} */
+    path[0] || event2.target
+  );
+  last_propagated_event = event2;
+  if (!last_propagated_event_clear_scheduled) {
+    last_propagated_event_clear_scheduled = true;
+    setTimeout(() => {
+      last_propagated_event_clear_scheduled = false;
+      last_propagated_event = null;
+    });
+  }
+  var path_idx = 0;
+  var handled_at = last_propagated_event === event2 && event2[event_symbol];
+  if (handled_at) {
+    var at_idx = path.indexOf(handled_at);
+    if (at_idx !== -1 && (handler_element === document || handler_element === /** @type {any} */
+    window)) {
+      event2[event_symbol] = handler_element;
+      return;
+    }
+    var handler_idx = path.indexOf(handler_element);
+    if (handler_idx === -1) {
+      return;
+    }
+    if (at_idx <= handler_idx) {
+      path_idx = at_idx;
+    }
+  }
+  current_target = /** @type {Element} */
+  path[path_idx] || event2.target;
+  if (current_target === handler_element) return;
+  define_property(event2, "currentTarget", {
+    configurable: true,
+    get() {
+      return current_target || owner_document;
+    }
+  });
+  var previous_reaction = active_reaction;
+  var previous_effect = active_effect;
+  set_active_reaction(null);
+  set_active_effect(null);
+  try {
+    var throw_error;
+    var other_errors = [];
+    while (current_target !== null) {
+      if (current_target === handler_element) break;
+      try {
+        var delegated2 = current_target[event_symbol]?.[event_name];
+        if (delegated2 != null && (!/** @type {any} */
+        current_target.disabled || // DOM could've been updated already by the time this is reached, so we check this as well
+        // -> the target could not have been disabled because it emits the event in the first place
+        event2.target === current_target)) {
+          delegated2.call(current_target, event2);
+        }
+      } catch (error) {
+        if (throw_error) {
+          other_errors.push(error);
+        } else {
+          throw_error = error;
+        }
+      }
+      if (event2.cancelBubble) break;
+      path_idx++;
+      current_target = path_idx < path.length ? (
+        /** @type {Element} */
+        path[path_idx]
+      ) : null;
+    }
+    if (throw_error) {
+      for (let error of other_errors) {
+        queueMicrotask(() => {
+          throw error;
+        });
+      }
+      throw throw_error;
+    }
+  } finally {
+    event2[event_symbol] = handler_element;
+    delete event2.currentTarget;
+    set_active_reaction(previous_reaction);
+    set_active_effect(previous_effect);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/reconciler.js
+var policy = (
+  // We gotta write it like this because after downleveling the pure comment may end up in the wrong location
+  globalThis?.window?.trustedTypes && /* @__PURE__ */ globalThis.window.trustedTypes.createPolicy("svelte-trusted-html", {
+    /** @param {string} html */
+    createHTML: (html3) => {
+      return html3;
+    }
+  })
+);
+function create_trusted_html(html3) {
+  return (
+    /** @type {string} */
+    policy?.createHTML(html3) ?? html3
+  );
+}
+function create_fragment_from_html(html3) {
+  var elem = create_element("template");
+  elem.innerHTML = create_trusted_html(html3.replaceAll("<!>", "<!---->"));
+  return elem.content;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/template.js
+function assign_nodes(start, end) {
+  var effect2 = (
+    /** @type {Effect} */
+    active_effect
+  );
+  if (effect2.nodes === null) {
+    effect2.nodes = { start, end, a: null, t: null };
+  }
+}
+// @__NO_SIDE_EFFECTS__
+function from_html(content, flags2) {
+  var is_fragment = (flags2 & TEMPLATE_FRAGMENT) !== 0;
+  var use_import_node = (flags2 & TEMPLATE_USE_IMPORT_NODE) !== 0;
+  var node;
+  var has_start = !content.startsWith("<!>");
+  return () => {
+    if (hydrating) {
+      assign_nodes(hydrate_node, null);
+      return hydrate_node;
+    }
+    if (node === void 0) {
+      node = create_fragment_from_html(has_start ? content : "<!>" + content);
+      if (!is_fragment) node = /** @type {TemplateNode} */
+      get_first_child(node);
+    }
+    var clone = (
+      /** @type {TemplateNode} */
+      use_import_node || is_firefox ? document.importNode(node, true) : node.cloneNode(true)
+    );
+    if (is_fragment) {
+      var start = (
+        /** @type {TemplateNode} */
+        get_first_child(clone)
+      );
+      var end = (
+        /** @type {TemplateNode} */
+        clone.lastChild
+      );
+      assign_nodes(start, end);
+    } else {
+      assign_nodes(clone, clone);
+    }
+    return clone;
+  };
+}
+function comment() {
+  if (hydrating) {
+    assign_nodes(hydrate_node, null);
+    return hydrate_node;
+  }
+  var frag = document.createDocumentFragment();
+  var start = document.createComment("");
+  var anchor = create_text();
+  frag.append(start, anchor);
+  assign_nodes(start, anchor);
+  return frag;
+}
+function append(anchor, dom) {
+  if (hydrating) {
+    var effect2 = (
+      /** @type {Effect & { nodes: EffectNodes }} */
+      active_effect
+    );
+    if ((effect2.f & REACTION_RAN) === 0 || effect2.nodes.end === null) {
+      effect2.nodes.end = hydrate_node;
+    }
+    hydrate_next();
+    return;
+  }
+  if (anchor === null) {
+    return;
+  }
+  anchor.before(
+    /** @type {Node} */
+    dom
+  );
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/reactivity/create-subscriber.js
+function createSubscriber(start) {
+  let subscribers = 0;
+  let version = source(0);
+  let stop;
+  if (dev_fallback_default) {
+    tag(version, "createSubscriber version");
+  }
+  return () => {
+    if (effect_tracking()) {
+      get(version);
+      render_effect(() => {
+        if (subscribers === 0) {
+          stop = untrack(() => start(() => increment(version)));
+        }
+        subscribers += 1;
+        return () => {
+          queue_micro_task(() => {
+            subscribers -= 1;
+            if (subscribers === 0) {
+              stop?.();
+              stop = void 0;
+              increment(version);
+            }
+          });
+        };
+      });
+    }
+  };
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/boundary.js
+var flags = EFFECT_TRANSPARENT | EFFECT_PRESERVED;
+function boundary(node, props, children, transform_error) {
+  new Boundary(node, props, children, transform_error);
+}
+var Boundary = class {
+  /** @type {Boundary | null} */
+  parent;
+  is_pending = false;
+  /**
+   * API-level transformError transform function. Transforms errors before they reach the `failed` snippet.
+   * Inherited from parent boundary, or defaults to identity.
+   * @type {(error: unknown) => unknown}
+   */
+  transform_error;
+  /** @type {TemplateNode} */
+  #anchor;
+  /** @type {TemplateNode | null} */
+  #hydrate_open = hydrating ? hydrate_node : null;
+  /** @type {BoundaryProps} */
+  #props;
+  /** @type {((anchor: Node) => void)} */
+  #children;
+  /** @type {Effect} */
+  #effect;
+  /** @type {Effect | null} */
+  #main_effect = null;
+  /** @type {Effect | null} */
+  #pending_effect = null;
+  /** @type {Effect | null} */
+  #failed_effect = null;
+  /** @type {DocumentFragment | null} */
+  #offscreen_fragment = null;
+  #local_pending_count = 0;
+  #pending_count = 0;
+  #pending_count_update_queued = false;
+  /** @type {Set<Effect>} */
+  #dirty_effects = /* @__PURE__ */ new Set();
+  /** @type {Set<Effect>} */
+  #maybe_dirty_effects = /* @__PURE__ */ new Set();
+  /**
+   * A source containing the number of pending async deriveds/expressions.
+   * Only created if `$effect.pending()` is used inside the boundary,
+   * otherwise updating the source results in needless `Batch.ensure()`
+   * calls followed by no-op flushes
+   * @type {Source<number> | null}
+   */
+  #effect_pending = null;
+  #effect_pending_subscriber = createSubscriber(() => {
+    this.#effect_pending = source(this.#local_pending_count);
+    if (dev_fallback_default) {
+      tag(this.#effect_pending, "$effect.pending()");
+    }
+    return () => {
+      this.#effect_pending = null;
+    };
+  });
+  /**
+   * @param {TemplateNode} node
+   * @param {BoundaryProps} props
+   * @param {((anchor: Node) => void)} children
+   * @param {((error: unknown) => unknown) | undefined} [transform_error]
+   */
+  constructor(node, props, children, transform_error) {
+    this.#anchor = node;
+    this.#props = props;
+    this.#children = (anchor) => {
+      var effect2 = (
+        /** @type {Effect} */
+        active_effect
+      );
+      effect2.b = this;
+      effect2.f |= BOUNDARY_EFFECT;
+      children(anchor);
+    };
+    this.parent = /** @type {Effect} */
+    active_effect.b;
+    this.transform_error = transform_error ?? this.parent?.transform_error ?? ((e) => e);
+    this.#effect = block(() => {
+      if (hydrating) {
+        const comment_data = read_hydration_instruction(
+          /** @type {TemplateNode} */
+          this.#hydrate_open
+        );
+        hydrate_next();
+        const server_rendered_pending = comment_data === HYDRATION_START_ELSE;
+        const server_rendered_failed = comment_data.startsWith(HYDRATION_START_FAILED);
+        if (server_rendered_failed) {
+          const serialized_error = JSON.parse(comment_data.slice(HYDRATION_START_FAILED.length));
+          this.#hydrate_failed_content(serialized_error);
+        } else if (server_rendered_pending) {
+          this.#hydrate_pending_content();
+        } else {
+          this.#hydrate_resolved_content();
+        }
+      } else {
+        this.#render();
+      }
+    }, flags);
+    if (hydrating) {
+      this.#anchor = hydrate_node;
+    }
+  }
+  #hydrate_resolved_content() {
+    try {
+      this.#main_effect = branch(() => this.#children(this.#anchor));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+  /**
+   * @param {unknown} error The deserialized error from the server's hydration comment
+   */
+  #hydrate_failed_content(error) {
+    const failed = this.#props.failed;
+    const { reset: reset2, invoke_onerror } = this.#create_reset(error);
+    queue_micro_task(invoke_onerror);
+    if (!failed) return;
+    this.#failed_effect = branch(() => {
+      failed(
+        this.#anchor,
+        () => error,
+        () => reset2
+      );
+    });
+  }
+  /**
+   * Creates the `reset` function for a failed boundary, along with a function
+   * that invokes `onerror` with it (if provided)
+   * @param {unknown} error
+   * @returns {{ reset: () => void, invoke_onerror: () => void }}
+   */
+  #create_reset(error) {
+    var did_reset = false;
+    var calling_on_error = false;
+    const reset2 = () => {
+      if (this.#is_destroyed()) return;
+      if (did_reset) {
+        svelte_boundary_reset_noop();
+        return;
+      }
+      did_reset = true;
+      if (calling_on_error) {
+        svelte_boundary_reset_onerror();
+      }
+      if (this.#failed_effect !== null) {
+        pause_effect(this.#failed_effect, () => {
+          this.#failed_effect = null;
+        });
+      }
+      this.#run(() => {
+        this.#render();
+      });
+    };
+    const invoke_onerror = () => {
+      if (this.#is_destroyed()) return;
+      try {
+        calling_on_error = true;
+        this.#props.onerror?.(error, reset2);
+        calling_on_error = false;
+      } catch (err) {
+        invoke_error_boundary(err, this.#effect && this.#effect.parent);
+      }
+    };
+    return { reset: reset2, invoke_onerror };
+  }
+  #is_destroyed() {
+    return (this.#effect.f & (DESTROYED | DESTROYING)) !== 0;
+  }
+  #hydrate_pending_content() {
+    const pending2 = this.#props.pending;
+    if (!pending2) return;
+    this.is_pending = true;
+    this.#pending_effect = branch(() => pending2(this.#anchor));
+    queue_micro_task(() => {
+      if (this.#is_destroyed()) return;
+      var fragment = this.#offscreen_fragment = document.createDocumentFragment();
+      var anchor = create_text();
+      var handled = false;
+      fragment.append(anchor);
+      this.#main_effect = this.#run(() => {
+        try {
+          return branch(() => this.#children(anchor));
+        } catch (error) {
+          try {
+            this.error(error);
+            handled = true;
+          } catch (error2) {
+            invoke_error_boundary(error2, this.#effect.parent);
+          }
+          return null;
+        }
+      });
+      if (this.#main_effect === null) {
+        this.#offscreen_fragment = null;
+        if (handled) this.#resolve(
+          /** @type {Batch} */
+          current_batch
+        );
+        return;
+      }
+      if (this.#pending_count === 0) {
+        this.#anchor.before(fragment);
+        this.#offscreen_fragment = null;
+        pause_effect(
+          /** @type {Effect} */
+          this.#pending_effect,
+          () => {
+            this.#pending_effect = null;
+          }
+        );
+        this.#resolve(
+          /** @type {Batch} */
+          current_batch
+        );
+      }
+    });
+  }
+  #render() {
+    try {
+      this.is_pending = this.has_pending_snippet();
+      this.#pending_count = 0;
+      this.#local_pending_count = 0;
+      this.#main_effect = branch(() => {
+        this.#children(this.#anchor);
+      });
+      if (this.#pending_count > 0) {
+        var fragment = this.#offscreen_fragment = document.createDocumentFragment();
+        move_effect(this.#main_effect, fragment);
+        const pending2 = (
+          /** @type {(anchor: Node) => void} */
+          this.#props.pending
+        );
+        this.#pending_effect = branch(() => pending2(this.#anchor));
+      } else {
+        this.#resolve(
+          /** @type {Batch} */
+          current_batch
+        );
+      }
+    } catch (error) {
+      this.error(error);
+    }
+  }
+  /**
+   * @param {Batch} batch
+   */
+  #resolve(batch) {
+    this.is_pending = false;
+    batch.transfer_effects(this.#dirty_effects, this.#maybe_dirty_effects);
+  }
+  /**
+   * Defer an effect inside a pending boundary until the boundary resolves
+   * @param {Effect} effect
+   */
+  defer_effect(effect2) {
+    defer_effect(effect2, this.#dirty_effects, this.#maybe_dirty_effects);
+  }
+  /**
+   * Returns `false` if the effect exists inside a boundary whose pending snippet is shown
+   * @returns {boolean}
+   */
+  is_rendered() {
+    return !this.is_pending && (!this.parent || this.parent.is_rendered());
+  }
+  has_pending_snippet() {
+    return !!this.#props.pending;
+  }
+  /**
+   * @template T
+   * @param {() => T} fn
+   */
+  #run(fn) {
+    var previous_effect = active_effect;
+    var previous_reaction = active_reaction;
+    var previous_ctx = component_context;
+    set_active_effect(this.#effect);
+    set_active_reaction(this.#effect);
+    set_component_context(this.#effect.ctx);
+    try {
+      Batch.ensure();
+      return fn();
+    } finally {
+      set_active_effect(previous_effect);
+      set_active_reaction(previous_reaction);
+      set_component_context(previous_ctx);
+    }
+  }
+  /**
+   * Updates the pending count associated with the currently visible pending snippet,
+   * if any, such that we can replace the snippet with content once work is done
+   * @param {1 | -1} d
+   * @param {Batch} batch
+   */
+  #update_pending_count(d, batch) {
+    if (!this.has_pending_snippet()) {
+      if (this.parent) {
+        this.parent.#update_pending_count(d, batch);
+      }
+      return;
+    }
+    this.#pending_count += d;
+    if (this.#pending_count === 0) {
+      this.#resolve(batch);
+      if (this.#pending_effect) {
+        pause_effect(this.#pending_effect, () => {
+          this.#pending_effect = null;
+        });
+      }
+      if (this.#offscreen_fragment) {
+        this.#anchor.before(this.#offscreen_fragment);
+        this.#offscreen_fragment = null;
+      }
+    }
+  }
+  /**
+   * Update the source that powers `$effect.pending()` inside this boundary,
+   * and controls when the current `pending` snippet (if any) is removed.
+   * Do not call from inside the class
+   * @param {1 | -1} d
+   * @param {Batch} batch
+   */
+  update_pending_count(d, batch) {
+    this.#update_pending_count(d, batch);
+    this.#local_pending_count += d;
+    if (!this.#effect_pending || this.#pending_count_update_queued) return;
+    this.#pending_count_update_queued = true;
+    queue_micro_task(() => {
+      this.#pending_count_update_queued = false;
+      if (this.#effect_pending) {
+        internal_set(this.#effect_pending, this.#local_pending_count);
+      }
+    });
+  }
+  get_effect_pending() {
+    this.#effect_pending_subscriber();
+    return get(
+      /** @type {Source<number>} */
+      this.#effect_pending
+    );
+  }
+  /** @param {unknown} error */
+  error(error) {
+    if (error === HYDRATION_ERROR) {
+      throw error;
+    }
+    if (!this.#props.onerror && !this.#props.failed) {
+      throw error;
+    }
+    if (current_batch?.is_fork) {
+      if (this.#main_effect) current_batch.skip_effect(this.#main_effect);
+      if (this.#pending_effect) current_batch.skip_effect(this.#pending_effect);
+      if (this.#failed_effect) current_batch.skip_effect(this.#failed_effect);
+      current_batch.oncommit(() => {
+        if (!this.#is_destroyed()) this.#handle_error(error);
+      });
+    } else {
+      this.#handle_error(error);
+    }
+  }
+  /**
+   * @param {unknown} error
+   */
+  #handle_error(error) {
+    if (this.#main_effect) {
+      destroy_effect(this.#main_effect);
+      this.#main_effect = null;
+    }
+    if (this.#pending_effect) {
+      destroy_effect(this.#pending_effect);
+      this.#pending_effect = null;
+    }
+    if (this.#failed_effect) {
+      destroy_effect(this.#failed_effect);
+      this.#failed_effect = null;
+    }
+    if (hydrating) {
+      set_hydrate_node(
+        /** @type {TemplateNode} */
+        this.#hydrate_open
+      );
+      next();
+      set_hydrate_node(skip_nodes());
+    }
+    let failed = this.#props.failed;
+    const handle_error_result = (transformed_error) => {
+      if (this.#is_destroyed()) return;
+      const { reset: reset2, invoke_onerror } = this.#create_reset(transformed_error);
+      invoke_onerror();
+      if (failed && !this.#is_destroyed()) {
+        this.#failed_effect = this.#run(() => {
+          try {
+            return branch(() => {
+              var effect2 = (
+                /** @type {Effect} */
+                active_effect
+              );
+              effect2.b = this;
+              effect2.f |= BOUNDARY_EFFECT;
+              failed(
+                this.#anchor,
+                () => transformed_error,
+                () => reset2
+              );
+            });
+          } catch (error2) {
+            invoke_error_boundary(
+              error2,
+              /** @type {Effect} */
+              this.#effect.parent
+            );
+            return null;
+          }
+        });
+      }
+    };
+    queue_micro_task(() => {
+      if (this.#is_destroyed()) return;
+      var result;
+      try {
+        result = this.transform_error(error);
+      } catch (e) {
+        invoke_error_boundary(e, this.#effect && this.#effect.parent);
+        return;
+      }
+      if (result !== null && typeof result === "object" && typeof /** @type {any} */
+      result.then === "function") {
+        result.then(
+          handle_error_result,
+          /** @param {unknown} e */
+          (e) => invoke_error_boundary(e, this.#effect && this.#effect.parent)
+        );
+      } else {
+        handle_error_result(result);
+      }
+    });
+  }
+};
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/render.js
+var should_intro = true;
+function set_text(text2, value) {
+  var str = value == null ? "" : typeof value === "object" ? `${value}` : value;
+  if (str !== /** @type {any} */
+  (text2[TEXT_CACHE] ??= text2.nodeValue)) {
+    text2[TEXT_CACHE] = str;
+    text2.nodeValue = `${str}`;
+  }
+}
+function mount(component2, options) {
+  return _mount(component2, options);
+}
+function hydrate(component2, options) {
+  init_operations();
+  options.intro = options.intro ?? false;
+  const target = options.target;
+  const was_hydrating = hydrating;
+  const previous_hydrate_node = hydrate_node;
+  try {
+    var anchor = get_first_child(target);
+    while (anchor && (anchor.nodeType !== COMMENT_NODE || /** @type {Comment} */
+    anchor.data !== HYDRATION_START)) {
+      anchor = get_next_sibling(anchor);
+    }
+    if (!anchor) {
+      throw HYDRATION_ERROR;
+    }
+    set_hydrating(true);
+    set_hydrate_node(
+      /** @type {Comment} */
+      anchor
+    );
+    const instance = _mount(component2, { ...options, anchor });
+    set_hydrating(false);
+    return (
+      /**  @type {Exports} */
+      instance
+    );
+  } catch (error) {
+    if (error instanceof Error && error.message.split("\n").some((line) => line.startsWith("https://svelte.dev/e/"))) {
+      throw error;
+    }
+    if (error !== HYDRATION_ERROR) {
+      console.warn("Failed to hydrate: ", error);
+    }
+    if (options.recover === false) {
+      hydration_failed();
+    }
+    init_operations();
+    clear_text_content(target);
+    set_hydrating(false);
+    return mount(component2, options);
+  } finally {
+    set_hydrating(was_hydrating);
+    set_hydrate_node(previous_hydrate_node);
+  }
+}
+var listeners = /* @__PURE__ */ new Map();
+function _mount(Component, { target, anchor, props = {}, events, context, intro = true, transformError }) {
+  init_operations();
+  var component2 = void 0;
+  var unmount2 = component_root(() => {
+    var anchor_node = anchor ?? target.appendChild(create_text());
+    boundary(
+      /** @type {TemplateNode} */
+      anchor_node,
+      {
+        pending: () => {
+        }
+      },
+      (anchor_node2) => {
+        push({});
+        var ctx = (
+          /** @type {ComponentContext} */
+          component_context
+        );
+        if (context) ctx.c = context;
+        if (events) {
+          props.$$events = events;
+        }
+        if (hydrating) {
+          assign_nodes(
+            /** @type {TemplateNode} */
+            anchor_node2,
+            null
+          );
+        }
+        should_intro = intro;
+        component2 = Component(anchor_node2, props) || mark_as_component();
+        should_intro = true;
+        if (hydrating) {
+          active_effect.nodes.end = hydrate_node;
+          if (hydrate_node === null || hydrate_node.nodeType !== COMMENT_NODE || /** @type {Comment} */
+          hydrate_node.data !== HYDRATION_END) {
+            hydration_mismatch();
+            throw HYDRATION_ERROR;
+          }
+        }
+        pop();
+      },
+      transformError
+    );
+    var registered_events = /* @__PURE__ */ new Set();
+    var event_handle = (events2) => {
+      for (var i = 0; i < events2.length; i++) {
+        var event_name = events2[i];
+        if (registered_events.has(event_name)) continue;
+        registered_events.add(event_name);
+        var passive2 = is_passive_event(event_name);
+        for (const node of [target, document]) {
+          var counts = listeners.get(node);
+          if (counts === void 0) {
+            counts = /* @__PURE__ */ new Map();
+            listeners.set(node, counts);
+          }
+          var count = counts.get(event_name);
+          if (count === void 0) {
+            node.addEventListener(event_name, handle_event_propagation, { passive: passive2 });
+            counts.set(event_name, 1);
+          } else {
+            counts.set(event_name, count + 1);
+          }
+        }
+      }
+    };
+    event_handle(array_from(all_registered_events));
+    root_event_handles.add(event_handle);
+    return () => {
+      for (var event_name of registered_events) {
+        for (const node of [target, document]) {
+          var counts = (
+            /** @type {Map<string, number>} */
+            listeners.get(node)
+          );
+          var count = (
+            /** @type {number} */
+            counts.get(event_name)
+          );
+          if (--count == 0) {
+            node.removeEventListener(event_name, handle_event_propagation);
+            counts.delete(event_name);
+            if (counts.size === 0) {
+              listeners.delete(node);
+            }
+          } else {
+            counts.set(event_name, count);
+          }
+        }
+      }
+      root_event_handles.delete(event_handle);
+      if (anchor_node !== anchor) {
+        anchor_node.parentNode?.removeChild(anchor_node);
+      }
+    };
+  });
+  mounted_components.set(component2, unmount2);
+  return component2;
+}
+var mounted_components = /* @__PURE__ */ new WeakMap();
+function unmount(component2, options) {
+  const fn = mounted_components.get(component2);
+  if (fn) {
+    mounted_components.delete(component2);
+    return fn(options);
+  }
+  if (dev_fallback_default) {
+    lifecycle_double_unmount();
+  }
+  return Promise.resolve();
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/branches.js
+var BranchManager = class {
+  /** @type {TemplateNode} */
+  anchor;
+  /** @type {Map<Batch, Key>} */
+  #batches = /* @__PURE__ */ new Map();
+  /**
+   * Map of keys to effects that are currently rendered in the DOM.
+   * These effects are visible and actively part of the document tree.
+   * Example:
+   * ```
+   * {#if condition}
+   * 	foo
+   * {:else}
+   * 	bar
+   * {/if}
+   * ```
+   * Can result in the entries `true->Effect` and `false->Effect`
+   * @type {Map<Key, Effect>}
+   */
+  #onscreen = /* @__PURE__ */ new Map();
+  /**
+   * Similar to #onscreen with respect to the keys, but contains branches that are not yet
+   * in the DOM, because their insertion is deferred.
+   * @type {Map<Key, Branch>}
+   */
+  #offscreen = /* @__PURE__ */ new Map();
+  /**
+   * Keys of effects that are currently outroing
+   * @type {Set<Key>}
+   */
+  #outroing = /* @__PURE__ */ new Set();
+  /**
+   * Whether to pause (i.e. outro) on change, or destroy immediately.
+   * This is necessary for `<svelte:element>`
+   */
+  #transition = true;
+  /**
+   * @param {TemplateNode} anchor
+   * @param {boolean} transition
+   */
+  constructor(anchor, transition2 = true) {
+    this.anchor = anchor;
+    this.#transition = transition2;
+  }
+  /**
+   * @param {Batch} batch
+   */
+  #commit = (batch) => {
+    if (!this.#batches.has(batch)) return;
+    var key2 = (
+      /** @type {Key} */
+      this.#batches.get(batch)
+    );
+    var onscreen = this.#onscreen.get(key2);
+    if (onscreen) {
+      resume_effect(onscreen);
+      this.#outroing.delete(key2);
+    } else {
+      var offscreen = this.#offscreen.get(key2);
+      if (offscreen) {
+        resume_effect(offscreen.effect);
+        this.#onscreen.set(key2, offscreen.effect);
+        this.#offscreen.delete(key2);
+        if (dev_fallback_default) {
+          offscreen.fragment.lastChild[HMR_ANCHOR] = this.anchor;
+        }
+        offscreen.fragment.lastChild.remove();
+        this.anchor.before(offscreen.fragment);
+        onscreen = offscreen.effect;
+      }
+    }
+    for (const [b, k] of this.#batches) {
+      this.#batches.delete(b);
+      if (b === batch) {
+        break;
+      }
+      const offscreen2 = this.#offscreen.get(k);
+      if (offscreen2) {
+        destroy_effect(offscreen2.effect);
+        this.#offscreen.delete(k);
+      }
+    }
+    for (const [k, effect2] of this.#onscreen) {
+      if (k === key2 || this.#outroing.has(k)) continue;
+      const on_destroy = () => {
+        const keys2 = Array.from(this.#batches.values());
+        if (keys2.includes(k)) {
+          var fragment = document.createDocumentFragment();
+          move_effect(effect2, fragment);
+          fragment.append(create_text());
+          this.#offscreen.set(k, { effect: effect2, fragment });
+        } else {
+          destroy_effect(effect2);
+        }
+        this.#outroing.delete(k);
+        this.#onscreen.delete(k);
+      };
+      if (this.#transition || !onscreen) {
+        this.#outroing.add(k);
+        pause_effect(effect2, on_destroy, false);
+      } else {
+        on_destroy();
+      }
+    }
+  };
+  /**
+   * @param {Batch} batch
+   */
+  #discard = (batch) => {
+    this.#batches.delete(batch);
+    const keys2 = Array.from(this.#batches.values());
+    for (const [k, branch2] of this.#offscreen) {
+      if (!keys2.includes(k)) {
+        destroy_effect(branch2.effect);
+        this.#offscreen.delete(k);
+      }
+    }
+  };
+  /**
+   *
+   * @param {any} key
+   * @param {null | ((target: TemplateNode) => void)} fn
+   */
+  ensure(key2, fn) {
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    var defer = should_defer_append();
+    if (fn && !this.#onscreen.has(key2) && !this.#offscreen.has(key2)) {
+      if (defer) {
+        var fragment = document.createDocumentFragment();
+        var target = create_text();
+        fragment.append(target);
+        this.#offscreen.set(key2, {
+          effect: branch(() => fn(target)),
+          fragment
+        });
+      } else {
+        this.#onscreen.set(
+          key2,
+          branch(() => fn(this.anchor))
+        );
+      }
+    }
+    this.#batches.set(batch, key2);
+    if (defer) {
+      for (const [k, effect2] of this.#onscreen) {
+        if (k === key2) {
+          batch.unskip_effect(effect2);
+        } else {
+          batch.skip_effect(effect2);
+        }
+      }
+      for (const [k, branch2] of this.#offscreen) {
+        if (k === key2) {
+          batch.unskip_effect(branch2.effect);
+        } else {
+          batch.skip_effect(branch2.effect);
+        }
+      }
+      batch.oncommit(this.#commit);
+      batch.ondiscard(this.#discard);
+    } else {
+      if (hydrating) {
+        this.anchor = hydrate_node;
+      }
+      this.#commit(batch);
+    }
+  }
+};
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/if.js
+function if_block(node, fn, elseif = false) {
+  var marker;
+  if (hydrating) {
+    marker = hydrate_node;
+    hydrate_next();
+  }
+  var branches = new BranchManager(node);
+  var flags2 = elseif ? EFFECT_TRANSPARENT : 0;
+  function update_branch(key2, fn2) {
+    if (hydrating) {
+      var data = read_hydration_instruction(
+        /** @type {TemplateNode} */
+        marker
+      );
+      if (key2 !== parseInt(data.substring(1))) {
+        var anchor = skip_nodes();
+        set_hydrate_node(anchor);
+        branches.anchor = anchor;
+        set_hydrating(false);
+        branches.ensure(key2, fn2);
+        set_hydrating(true);
+        return;
+      }
+    }
+    branches.ensure(key2, fn2);
+  }
+  block(() => {
+    var has_branch = false;
+    fn((fn2, key2 = 0) => {
+      has_branch = true;
+      update_branch(key2, fn2);
+    });
+    if (!has_branch) {
+      update_branch(-1, null);
+    }
+  }, flags2);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/key.js
+var NAN = Symbol("NaN");
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/each.js
+function index(_, i) {
+  return i;
+}
+function pause_effects(state2, to_destroy, controlled_anchor) {
+  var transitions = [];
+  var length2 = to_destroy.length;
+  var group;
+  var remaining = to_destroy.length;
+  for (var i = 0; i < length2; i++) {
+    let effect2 = to_destroy[i];
+    pause_effect(
+      effect2,
+      () => {
+        if (group) {
+          group.pending.delete(effect2);
+          group.done.add(effect2);
+          if (group.pending.size === 0) {
+            var groups = (
+              /** @type {Set<EachOutroGroup>} */
+              state2.outrogroups
+            );
+            destroy_effects(state2, array_from(group.done));
+            groups.delete(group);
+            if (groups.size === 0) {
+              state2.outrogroups = null;
+            }
+          }
+        } else {
+          remaining -= 1;
+        }
+      },
+      false
+    );
+  }
+  if (remaining === 0) {
+    var fast_path = transitions.length === 0 && controlled_anchor !== null && state2.pending.size === 0;
+    if (fast_path) {
+      var anchor = (
+        /** @type {Element} */
+        controlled_anchor
+      );
+      var parent_node = (
+        /** @type {Element} */
+        anchor.parentNode
+      );
+      clear_text_content(parent_node);
+      parent_node.append(anchor);
+      state2.items.clear();
+    }
+    destroy_effects(state2, to_destroy, !fast_path);
+  } else {
+    group = {
+      pending: new Set(to_destroy),
+      done: /* @__PURE__ */ new Set()
+    };
+    (state2.outrogroups ??= /* @__PURE__ */ new Set()).add(group);
+  }
+}
+function destroy_effects(state2, to_destroy, remove_dom = true) {
+  var preserved_effects;
+  if (state2.pending.size > 0) {
+    preserved_effects = /* @__PURE__ */ new Set();
+    for (const keys2 of state2.pending.values()) {
+      for (const key2 of keys2) {
+        preserved_effects.add(
+          /** @type {EachItem} */
+          state2.items.get(key2).e
+        );
+      }
+    }
+  }
+  for (var i = 0; i < to_destroy.length; i++) {
+    var e = to_destroy[i];
+    if (preserved_effects?.has(e)) {
+      e.f |= EFFECT_OFFSCREEN;
+      const fragment = document.createDocumentFragment();
+      move_effect(e, fragment);
+    } else {
+      destroy_effect(to_destroy[i], remove_dom);
+    }
+  }
+}
+var offscreen_anchor;
+function each(node, flags2, get_collection, get_key, render_fn, fallback_fn = null) {
+  var anchor = node;
+  var items = /* @__PURE__ */ new Map();
+  var is_controlled = (flags2 & EACH_IS_CONTROLLED) !== 0;
+  if (is_controlled) {
+    var parent_node = (
+      /** @type {Element} */
+      node
+    );
+    anchor = hydrating ? set_hydrate_node(get_first_child(parent_node)) : parent_node.appendChild(create_text());
+  }
+  if (hydrating) {
+    hydrate_next();
+  }
+  var fallback2 = null;
+  var each_array = derived_safe_equal(() => {
+    var collection = get_collection();
+    return (
+      /** @type {V[]} */
+      is_array(collection) ? collection : collection == null ? [] : array_from(collection)
+    );
+  });
+  if (dev_fallback_default) {
+    tag(each_array, "{#each ...}");
+  }
+  var pending2 = /* @__PURE__ */ new Map();
+  var first_run = true;
+  function commit(batch) {
+    if ((state2.effect.f & DESTROYED) !== 0) {
+      return;
+    }
+    state2.pending.delete(batch);
+    var array = get(each_array);
+    state2.fallback = fallback2;
+    reconcile(state2, array, anchor, flags2, get_key);
+    if (fallback2 !== null) {
+      if (array.length === 0) {
+        if ((fallback2.f & EFFECT_OFFSCREEN) === 0) {
+          resume_effect(fallback2);
+        } else {
+          fallback2.f ^= EFFECT_OFFSCREEN;
+          move(fallback2, null, anchor);
+        }
+      } else {
+        pause_effect(fallback2, () => {
+          fallback2 = null;
+        });
+      }
+    }
+  }
+  function discard(batch) {
+    state2.pending.delete(batch);
+  }
+  var effect2 = block(() => {
+    var array = (
+      /** @type {V[]} */
+      get(each_array)
+    );
+    var length2 = array.length;
+    let mismatch = false;
+    if (hydrating) {
+      var is_else = read_hydration_instruction(anchor) === HYDRATION_START_ELSE;
+      if (is_else !== (length2 === 0)) {
+        anchor = skip_nodes();
+        set_hydrate_node(anchor);
+        set_hydrating(false);
+        mismatch = true;
+      }
+    }
+    var keys2 = /* @__PURE__ */ new Set();
+    var batch = (
+      /** @type {Batch} */
+      current_batch
+    );
+    var defer = should_defer_append();
+    for (var index2 = 0; index2 < length2; index2 += 1) {
+      if (hydrating && hydrate_node.nodeType === COMMENT_NODE && /** @type {Comment} */
+      hydrate_node.data === HYDRATION_END) {
+        anchor = /** @type {Comment} */
+        hydrate_node;
+        mismatch = true;
+        set_hydrating(false);
+      }
+      var value = array[index2];
+      var key2 = get_key(value, index2);
+      if (dev_fallback_default) {
+        var key_again = get_key(value, index2);
+        if (key2 !== key_again) {
+          each_key_volatile(String(index2), String(key2), String(key_again));
+        }
+      }
+      var item = first_run ? null : items.get(key2);
+      if (item) {
+        if (item.v) internal_set(item.v, value);
+        if (item.i) internal_set(item.i, index2);
+        if (defer) {
+          batch.unskip_effect(item.e);
+        }
+      } else {
+        item = create_item(
+          items,
+          first_run ? anchor : offscreen_anchor ??= create_text(),
+          value,
+          key2,
+          index2,
+          render_fn,
+          flags2,
+          get_collection
+        );
+        if (!first_run) {
+          item.e.f |= EFFECT_OFFSCREEN;
+        }
+        items.set(key2, item);
+      }
+      keys2.add(key2);
+    }
+    if (length2 === 0 && fallback_fn && !fallback2) {
+      if (first_run) {
+        fallback2 = branch(() => fallback_fn(anchor));
+      } else {
+        fallback2 = branch(() => fallback_fn(offscreen_anchor ??= create_text()));
+        fallback2.f |= EFFECT_OFFSCREEN;
+      }
+    }
+    if (length2 > keys2.size) {
+      if (dev_fallback_default) {
+        validate_each_keys(array, get_key);
+      } else {
+        each_key_duplicate("", "", "");
+      }
+    }
+    if (hydrating && length2 > 0) {
+      set_hydrate_node(skip_nodes());
+    }
+    if (!first_run) {
+      pending2.set(batch, keys2);
+      if (defer) {
+        for (const [key3, item2] of items) {
+          if (!keys2.has(key3)) {
+            batch.skip_effect(item2.e);
+          }
+        }
+        batch.oncommit(commit);
+        batch.ondiscard(discard);
+      } else {
+        commit(batch);
+      }
+    }
+    if (mismatch) {
+      set_hydrating(true);
+    }
+    get(each_array);
+  });
+  var state2 = { effect: effect2, flags: flags2, items, pending: pending2, outrogroups: null, fallback: fallback2 };
+  first_run = false;
+  if (hydrating) {
+    anchor = hydrate_node;
+  }
+}
+function skip_to_branch(effect2) {
+  while (effect2 !== null && (effect2.f & BRANCH_EFFECT) === 0) {
+    effect2 = effect2.next;
+  }
+  return effect2;
+}
+function reconcile(state2, array, anchor, flags2, get_key) {
+  var is_animated = (flags2 & EACH_IS_ANIMATED) !== 0;
+  var length2 = array.length;
+  var items = state2.items;
+  var current = skip_to_branch(state2.effect.first);
+  var seen2;
+  var prev = null;
+  var to_animate;
+  var matched = [];
+  var stashed = [];
+  var value;
+  var key2;
+  var effect2;
+  var i;
+  if (is_animated) {
+    for (i = 0; i < length2; i += 1) {
+      value = array[i];
+      key2 = get_key(value, i);
+      effect2 = /** @type {EachItem} */
+      items.get(key2).e;
+      if ((effect2.f & EFFECT_OFFSCREEN) === 0) {
+        effect2.nodes?.a?.measure();
+        (to_animate ??= /* @__PURE__ */ new Set()).add(effect2);
+      }
+    }
+  }
+  for (i = 0; i < length2; i += 1) {
+    value = array[i];
+    key2 = get_key(value, i);
+    effect2 = /** @type {EachItem} */
+    items.get(key2).e;
+    if (state2.outrogroups !== null) {
+      for (const group of state2.outrogroups) {
+        group.pending.delete(effect2);
+        group.done.delete(effect2);
+      }
+    }
+    if ((effect2.f & INERT) !== 0) {
+      resume_effect(effect2);
+      if (is_animated) {
+        effect2.nodes?.a?.unfix();
+        (to_animate ??= /* @__PURE__ */ new Set()).delete(effect2);
+      }
+    }
+    if ((effect2.f & EFFECT_OFFSCREEN) !== 0) {
+      effect2.f ^= EFFECT_OFFSCREEN;
+      if (effect2 === current) {
+        move(effect2, null, anchor);
+      } else {
+        var next2 = prev ? prev.next : current;
+        if (effect2 === state2.effect.last) {
+          state2.effect.last = effect2.prev;
+        }
+        if (effect2.prev) effect2.prev.next = effect2.next;
+        if (effect2.next) effect2.next.prev = effect2.prev;
+        link(state2, prev, effect2);
+        link(state2, effect2, next2);
+        move(effect2, next2, anchor);
+        prev = effect2;
+        matched = [];
+        stashed = [];
+        current = skip_to_branch(prev.next);
+        continue;
+      }
+    }
+    if (effect2 !== current) {
+      if (seen2 !== void 0 && seen2.has(effect2)) {
+        if (matched.length < stashed.length) {
+          var start = stashed[0];
+          var j;
+          prev = start.prev;
+          var a = matched[0];
+          var b = matched[matched.length - 1];
+          for (j = 0; j < matched.length; j += 1) {
+            move(matched[j], start, anchor);
+          }
+          for (j = 0; j < stashed.length; j += 1) {
+            seen2.delete(stashed[j]);
+          }
+          link(state2, a.prev, b.next);
+          link(state2, prev, a);
+          link(state2, b, start);
+          current = start;
+          prev = b;
+          i -= 1;
+          matched = [];
+          stashed = [];
+        } else {
+          seen2.delete(effect2);
+          move(effect2, current, anchor);
+          link(state2, effect2.prev, effect2.next);
+          link(state2, effect2, prev === null ? state2.effect.first : prev.next);
+          link(state2, prev, effect2);
+          prev = effect2;
+        }
+        continue;
+      }
+      matched = [];
+      stashed = [];
+      while (current !== null && current !== effect2) {
+        (seen2 ??= /* @__PURE__ */ new Set()).add(current);
+        stashed.push(current);
+        current = skip_to_branch(current.next);
+      }
+      if (current === null) {
+        continue;
+      }
+    }
+    if ((effect2.f & EFFECT_OFFSCREEN) === 0) {
+      matched.push(effect2);
+    }
+    prev = effect2;
+    current = skip_to_branch(effect2.next);
+  }
+  if (state2.outrogroups !== null) {
+    for (const group of state2.outrogroups) {
+      if (group.pending.size === 0) {
+        destroy_effects(state2, array_from(group.done));
+        state2.outrogroups?.delete(group);
+      }
+    }
+    if (state2.outrogroups.size === 0) {
+      state2.outrogroups = null;
+    }
+  }
+  if (current !== null || seen2 !== void 0) {
+    var to_destroy = [];
+    if (seen2 !== void 0) {
+      for (effect2 of seen2) {
+        if ((effect2.f & INERT) === 0) {
+          to_destroy.push(effect2);
+        }
+      }
+    }
+    while (current !== null) {
+      if ((current.f & INERT) === 0 && current !== state2.fallback) {
+        to_destroy.push(current);
+      }
+      current = skip_to_branch(current.next);
+    }
+    var destroy_length = to_destroy.length;
+    if (destroy_length > 0) {
+      var controlled_anchor = (flags2 & EACH_IS_CONTROLLED) !== 0 && length2 === 0 ? anchor : null;
+      if (is_animated) {
+        for (i = 0; i < destroy_length; i += 1) {
+          to_destroy[i].nodes?.a?.measure();
+        }
+        for (i = 0; i < destroy_length; i += 1) {
+          to_destroy[i].nodes?.a?.fix();
+        }
+      }
+      pause_effects(state2, to_destroy, controlled_anchor);
+    }
+  }
+  if (is_animated) {
+    queue_micro_task(() => {
+      if (to_animate === void 0) return;
+      for (effect2 of to_animate) {
+        effect2.nodes?.a?.apply();
+      }
+    });
+  }
+}
+function create_item(items, anchor, value, key2, index2, render_fn, flags2, get_collection) {
+  var v = (flags2 & EACH_ITEM_REACTIVE) !== 0 ? (flags2 & EACH_ITEM_IMMUTABLE) === 0 ? mutable_source(value, false, false) : source(value) : null;
+  var i = (flags2 & EACH_INDEX_REACTIVE) !== 0 ? source(index2) : null;
+  if (dev_fallback_default && v) {
+    v.trace = () => {
+      get_collection()[i?.v ?? index2];
+    };
+  }
+  return {
+    v,
+    i,
+    e: branch(() => {
+      render_fn(anchor, v ?? value, i ?? index2, get_collection);
+      return () => {
+        items.delete(key2);
+      };
+    })
+  };
+}
+function move(effect2, next2, anchor) {
+  if (!effect2.nodes) return;
+  var node = effect2.nodes.start;
+  var end = effect2.nodes.end;
+  var dest = next2 && (next2.f & EFFECT_OFFSCREEN) === 0 ? (
+    /** @type {EffectNodes} */
+    next2.nodes.start
+  ) : anchor;
+  while (node !== null) {
+    var next_node = (
+      /** @type {TemplateNode} */
+      get_next_sibling(node)
+    );
+    dest.before(node);
+    if (node === end) {
+      return;
+    }
+    node = next_node;
+  }
+}
+function link(state2, prev, next2) {
+  if (prev === null) {
+    state2.effect.first = next2;
+  } else {
+    prev.next = next2;
+  }
+  if (next2 === null) {
+    state2.effect.last = prev;
+  } else {
+    next2.prev = prev;
+  }
+}
+function validate_each_keys(array, key_fn) {
+  const keys2 = /* @__PURE__ */ new Map();
+  const length2 = array.length;
+  for (let i = 0; i < length2; i++) {
+    const key2 = key_fn(array[i], i);
+    if (keys2.has(key2)) {
+      const a = String(keys2.get(key2));
+      const b = String(i);
+      let k = String(key2);
+      if (k.startsWith("[object ")) k = null;
+      each_key_duplicate(a, b, k);
+    }
+    keys2.set(key2, i);
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/snippet.js
+function snippet(node, get_snippet, ...args) {
+  var branches = new BranchManager(node);
+  block(() => {
+    const snippet2 = get_snippet() ?? null;
+    if (dev_fallback_default && snippet2 == null) {
+      invalid_snippet();
+    }
+    branches.ensure(snippet2, snippet2 && ((anchor) => snippet2(anchor, ...args)));
+  }, EFFECT_TRANSPARENT);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/blocks/svelte-component.js
+function component(node, get_component, render_fn) {
+  var hydration_start_node;
+  if (hydrating) {
+    hydration_start_node = hydrate_node;
+    hydrate_next();
+  }
+  var branches = new BranchManager(node);
+  block(() => {
+    var component2 = get_component() ?? null;
+    if (hydrating) {
+      var data = read_hydration_instruction(
+        /** @type {TemplateNode} */
+        hydration_start_node
+      );
+      var server_had_component = data === HYDRATION_START;
+      var client_has_component = component2 !== null;
+      if (server_had_component !== client_has_component) {
+        var anchor = skip_nodes();
+        set_hydrate_node(anchor);
+        branches.anchor = anchor;
+        set_hydrating(false);
+        branches.ensure(component2, component2 && ((target) => render_fn(target, component2)));
+        set_hydrating(true);
+        return;
+      }
+    }
+    branches.ensure(component2, component2 && ((target) => render_fn(target, component2)));
+  }, EFFECT_TRANSPARENT);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/attachments.js
+function attach(node, get_fn) {
+  var fn = void 0;
+  var e;
+  managed(() => {
+    if (fn !== (fn = get_fn())) {
+      if (e) {
+        destroy_effect(e);
+        e = null;
+      }
+      if (fn) {
+        e = branch(() => {
+          effect(() => (
+            /** @type {(node: Element) => void} */
+            fn(node)
+          ));
+        });
+      }
+    }
+  });
+}
+
+// node_modules/clsx/dist/clsx.mjs
+function r(e) {
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
+  else if ("object" == typeof e) if (Array.isArray(e)) {
+    var o = e.length;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
+}
+function clsx() {
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/shared/attributes.js
+function clsx2(value) {
+  if (typeof value === "object") {
+    return clsx(value);
+  } else {
+    return value ?? "";
+  }
+}
+var whitespace = [..." 	\n\r\f\xA0\v\uFEFF"];
+function to_class(value, hash2, directives) {
+  var classname = value == null ? "" : "" + value;
+  if (hash2) {
+    classname = classname ? classname + " " + hash2 : hash2;
+  }
+  if (directives) {
+    for (var key2 of Object.keys(directives)) {
+      if (directives[key2]) {
+        classname = classname ? classname + " " + key2 : key2;
+      } else if (classname.length) {
+        var len = key2.length;
+        var a = 0;
+        while ((a = classname.indexOf(key2, a)) >= 0) {
+          var b = a + len;
+          if ((a === 0 || whitespace.includes(classname[a - 1])) && (b === classname.length || whitespace.includes(classname[b]))) {
+            classname = (a === 0 ? "" : classname.substring(0, a)) + classname.substring(b + 1);
+          } else {
+            a = b;
+          }
+        }
+      }
+    }
+  }
+  return classname === "" ? null : classname;
+}
+function append_styles(styles, important = false) {
+  var separator = important ? " !important;" : ";";
+  var css = "";
+  for (var key2 of Object.keys(styles)) {
+    var value = styles[key2];
+    if (value != null && value !== "") {
+      css += " " + key2 + ": " + value + separator;
+    }
+  }
+  return css;
+}
+function to_css_name(name) {
+  if (name[0] !== "-" || name[1] !== "-") {
+    return name.toLowerCase();
+  }
+  return name;
+}
+function to_style(value, styles) {
+  if (styles) {
+    var new_style = "";
+    var normal_styles;
+    var important_styles;
+    if (Array.isArray(styles)) {
+      normal_styles = styles[0];
+      important_styles = styles[1];
+    } else {
+      normal_styles = styles;
+    }
+    if (value) {
+      value = String(value).replaceAll(/\/\*.*?\*\//g, "").trim();
+      var in_str = false;
+      var in_apo = 0;
+      var in_comment = false;
+      var reserved_names = [];
+      if (normal_styles) {
+        reserved_names.push(...Object.keys(normal_styles).map(to_css_name));
+      }
+      if (important_styles) {
+        reserved_names.push(...Object.keys(important_styles).map(to_css_name));
+      }
+      var start_index = 0;
+      var name_index = -1;
+      const len = value.length;
+      for (var i = 0; i < len; i++) {
+        var c = value[i];
+        if (in_comment) {
+          if (c === "/" && value[i - 1] === "*") {
+            in_comment = false;
+          }
+        } else if (in_str) {
+          if (in_str === c) {
+            in_str = false;
+          }
+        } else if (c === "/" && value[i + 1] === "*") {
+          in_comment = true;
+        } else if (c === '"' || c === "'") {
+          in_str = c;
+        } else if (c === "(") {
+          in_apo++;
+        } else if (c === ")") {
+          in_apo--;
+        }
+        if (!in_comment && in_str === false && in_apo === 0) {
+          if (c === ":" && name_index === -1) {
+            name_index = i;
+          } else if (c === ";" || i === len - 1) {
+            if (name_index !== -1) {
+              var name = to_css_name(value.substring(start_index, name_index).trim());
+              if (!reserved_names.includes(name)) {
+                if (c !== ";") {
+                  i++;
+                }
+                var property = value.substring(start_index, i).trim();
+                new_style += " " + property + ";";
+              }
+            }
+            start_index = i + 1;
+            name_index = -1;
+          }
+        }
+      }
+    }
+    if (normal_styles) {
+      new_style += append_styles(normal_styles);
+    }
+    if (important_styles) {
+      new_style += append_styles(important_styles, true);
+    }
+    new_style = new_style.trim();
+    return new_style === "" ? null : new_style;
+  }
+  return value == null ? null : String(value);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/class.js
+function set_class(dom, is_html, value, hash2, prev_classes, next_classes) {
+  var prev = (
+    /** @type {any} */
+    dom[CLASS_CACHE]
+  );
+  if (hydrating || prev !== value || prev === void 0) {
+    var next_class_name = to_class(value, hash2, next_classes);
+    if (!hydrating || next_class_name !== dom.getAttribute("class")) {
+      if (next_class_name == null) {
+        dom.removeAttribute("class");
+      } else if (is_html) {
+        dom.className = next_class_name;
+      } else {
+        dom.setAttribute("class", next_class_name);
+      }
+    }
+    dom[CLASS_CACHE] = value;
+  } else if (next_classes && prev_classes !== next_classes) {
+    for (var key2 in next_classes) {
+      var is_present = !!next_classes[key2];
+      if (prev_classes == null || is_present !== !!prev_classes[key2]) {
+        dom.classList.toggle(key2, is_present);
+      }
+    }
+  }
+  return next_classes;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/style.js
+function update_styles(dom, prev = {}, next2, priority) {
+  for (var key2 in next2) {
+    var value = next2[key2];
+    if (prev[key2] !== value) {
+      if (next2[key2] == null) {
+        dom.style.removeProperty(key2);
+      } else {
+        dom.style.setProperty(key2, value, priority);
+      }
+    }
+  }
+}
+function set_style(dom, value, prev_styles, next_styles) {
+  var prev = (
+    /** @type {any} */
+    dom[STYLE_CACHE]
+  );
+  if (hydrating || prev !== value) {
+    var next_style_attr = to_style(value, next_styles);
+    if (!hydrating || next_style_attr !== dom.getAttribute("style")) {
+      if (next_style_attr == null) {
+        dom.removeAttribute("style");
+      } else {
+        dom.style.cssText = next_style_attr;
+      }
+    }
+    dom[STYLE_CACHE] = value;
+  } else if (next_styles) {
+    if (Array.isArray(next_styles)) {
+      update_styles(dom, prev_styles?.[0], next_styles[0]);
+      update_styles(dom, prev_styles?.[1], next_styles[1], "important");
+    } else {
+      update_styles(dom, prev_styles, next_styles);
+    }
+  }
+  return next_styles;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/attributes.js
+var CLASS = Symbol("class");
+var STYLE = Symbol("style");
+var IS_CUSTOM_ELEMENT = Symbol("is custom element");
+var IS_HTML = Symbol("is html");
+var LINK_TAG = IS_XHTML ? "link" : "LINK";
+function set_attribute2(element2, attribute, value, skip_warning) {
+  var attributes = get_attributes(element2);
+  if (hydrating) {
+    attributes[attribute] = element2.getAttribute(attribute);
+    if (attribute === "src" || attribute === "srcset" || attribute === "href" && element2.nodeName === LINK_TAG) {
+      if (!skip_warning) {
+        check_src_in_dev_hydration(element2, attribute, value ?? "");
+      }
+      return;
+    }
+  }
+  if (attributes[attribute] === (attributes[attribute] = value)) return;
+  if (attribute === "loading") {
+    element2[LOADING_ATTR_SYMBOL] = value;
+  }
+  if (value == null) {
+    element2.removeAttribute(attribute);
+  } else if (typeof value !== "string" && get_setters(element2).has(attribute)) {
+    element2[attribute] = value;
+  } else {
+    element2.setAttribute(attribute, value);
+  }
+}
+function get_attributes(element2) {
+  return (
+    /** @type {Record<string | symbol, unknown>} **/
+    /** @type {any} */
+    element2[ATTRIBUTES_CACHE] ??= {
+      [IS_CUSTOM_ELEMENT]: element2.nodeName.includes("-"),
+      [IS_HTML]: element2.namespaceURI === NAMESPACE_HTML
+    }
+  );
+}
+var setters_cache = /* @__PURE__ */ new Map();
+function get_setters(element2) {
+  var cache_key = element2.getAttribute("is") || element2.nodeName;
+  var setters = setters_cache.get(cache_key);
+  if (setters) return setters;
+  setters_cache.set(cache_key, setters = /* @__PURE__ */ new Set());
+  var descriptors;
+  var proto = element2;
+  var element_proto = Element.prototype;
+  while (element_proto !== proto) {
+    descriptors = get_descriptors(proto);
+    for (var key2 in descriptors) {
+      if (descriptors[key2].set && // better safe than sorry, we don't want spread attributes to mess with HTML content
+      key2 !== "innerHTML" && key2 !== "textContent" && key2 !== "innerText") {
+        setters.add(key2);
+      }
+    }
+    proto = get_prototype_of(proto);
+  }
+  return setters;
+}
+function check_src_in_dev_hydration(element2, attribute, value) {
+  if (!dev_fallback_default) return;
+  if (attribute === "srcset" && srcset_url_equal(element2, value)) return;
+  if (src_url_equal(element2.getAttribute(attribute) ?? "", value)) return;
+  hydration_attribute_changed(
+    attribute,
+    element2.outerHTML.replace(element2.innerHTML, element2.innerHTML && "..."),
+    String(value)
+  );
+}
+function src_url_equal(element_src, url) {
+  if (element_src === url) return true;
+  return new URL(element_src, document.baseURI).href === new URL(url, document.baseURI).href;
+}
+function split_srcset(srcset) {
+  return srcset.split(",").map((src) => src.trim().split(" ").filter(Boolean));
+}
+function srcset_url_equal(element2, srcset) {
+  var element_urls = split_srcset(element2.srcset);
+  var urls = split_srcset(srcset);
+  return urls.length === element_urls.length && urls.every(
+    ([url, width], i) => width === element_urls[i][1] && // We need to test both ways because Vite will create an a full URL with
+    // `new URL(asset, import.meta.url).href` for the client when `base: './'`, and the
+    // relative URLs inside srcset are not automatically resolved to absolute URLs by
+    // browsers (in contrast to img.src). This means both SSR and DOM code could
+    // contain relative or absolute URLs.
+    (src_url_equal(element_urls[i][0], url) || src_url_equal(url, element_urls[i][0]))
+  );
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/bindings/size.js
+var ResizeObserverSingleton = class _ResizeObserverSingleton {
+  /** */
+  #listeners = /* @__PURE__ */ new WeakMap();
+  /** @type {ResizeObserver | undefined} */
+  #observer;
+  /** @type {ResizeObserverOptions} */
+  #options;
+  /** @static */
+  static entries = /* @__PURE__ */ new WeakMap();
+  /** @param {ResizeObserverOptions} options */
+  constructor(options) {
+    this.#options = options;
+  }
+  /**
+   * @param {Element} element
+   * @param {(entry: ResizeObserverEntry) => any} listener
+   */
+  observe(element2, listener) {
+    var listeners2 = this.#listeners.get(element2) || /* @__PURE__ */ new Set();
+    listeners2.add(listener);
+    this.#listeners.set(element2, listeners2);
+    this.#getObserver().observe(element2, this.#options);
+    return () => {
+      var listeners3 = this.#listeners.get(element2);
+      listeners3.delete(listener);
+      if (listeners3.size === 0) {
+        this.#listeners.delete(element2);
+        this.#observer.unobserve(element2);
+      }
+    };
+  }
+  #getObserver() {
+    return this.#observer ?? (this.#observer = new ResizeObserver(
+      /** @param {any} entries */
+      (entries2) => {
+        for (var entry of entries2) {
+          _ResizeObserverSingleton.entries.set(entry.target, entry);
+          for (var listener of this.#listeners.get(entry.target) || []) {
+            listener(entry);
+          }
+        }
+      }
+    ));
+  }
+};
+var resize_observer_border_box = /* @__PURE__ */ new ResizeObserverSingleton({
+  box: "border-box"
+});
+function bind_element_size(element2, type, set2) {
+  var unsub = resize_observer_border_box.observe(element2, () => set2(element2[type]));
+  effect(() => {
+    untrack(() => set2(element2[type]));
+    return unsub;
+  });
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/bindings/this.js
+function is_bound_this(bound_value, element_or_component) {
+  return bound_value === element_or_component || bound_value?.[STATE_SYMBOL] === element_or_component;
+}
+function bind_this(element_or_component = mark_as_component(), update2, get_value, get_parts) {
+  var component_effect = (
+    /** @type {ComponentContext} */
+    component_context.r
+  );
+  var parent = (
+    /** @type {Effect} */
+    active_effect
+  );
+  effect(() => {
+    var old_parts;
+    var parts;
+    render_effect(() => {
+      old_parts = parts;
+      parts = get_parts?.() || [];
+      untrack(() => {
+        if (!is_bound_this(get_value(...parts), element_or_component)) {
+          update2(element_or_component, ...parts);
+          if (old_parts && is_bound_this(get_value(...old_parts), element_or_component)) {
+            update2(null, ...old_parts);
+          }
+        }
+      });
+    });
+    return () => {
+      let p = parent;
+      while (p !== component_effect && p.parent !== null && p.parent.f & DESTROYING) {
+        p = p.parent;
+      }
+      const teardown2 = () => {
+        if (parts && is_bound_this(get_value(...parts), element_or_component)) {
+          update2(null, ...parts);
+        }
+      };
+      const original_teardown = p.teardown;
+      p.teardown = () => {
+        teardown2();
+        original_teardown?.();
+      };
+    };
+  });
+  return element_or_component;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/store.js
+var is_store_binding = false;
+var IS_UNMOUNTED = Symbol("unmounted");
+function capture_store_binding(fn) {
+  var previous_is_store_binding = is_store_binding;
+  try {
+    is_store_binding = false;
+    return [fn(), is_store_binding];
+  } finally {
+    is_store_binding = previous_is_store_binding;
+  }
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/reactivity/props.js
+var rest_props_handler = {
+  get(target, key2) {
+    if (target.exclude.has(key2)) return;
+    return target.props[key2];
+  },
+  set(target, key2) {
+    if (dev_fallback_default) {
+      props_rest_readonly(`${target.name}.${String(key2)}`);
+    }
+    return false;
+  },
+  getOwnPropertyDescriptor(target, key2) {
+    if (target.exclude.has(key2)) return;
+    if (key2 in target.props) {
+      return {
+        enumerable: true,
+        configurable: true,
+        value: target.props[key2]
+      };
+    }
+  },
+  has(target, key2) {
+    if (target.exclude.has(key2)) return false;
+    return key2 in target.props;
+  },
+  ownKeys(target) {
+    return Reflect.ownKeys(target.props).filter((key2) => !target.exclude.has(key2));
+  }
+};
+// @__NO_SIDE_EFFECTS__
+function rest_props(props, exclude, name) {
+  return new Proxy(dev_fallback_default ? { props, exclude, name } : { props, exclude }, rest_props_handler);
+}
+function prop(props, key2, flags2, fallback2) {
+  var runes = !legacy_mode_flag || (flags2 & PROPS_IS_RUNES) !== 0;
+  var bindable = (flags2 & PROPS_IS_BINDABLE) !== 0;
+  var lazy = (flags2 & PROPS_IS_LAZY_INITIAL) !== 0;
+  var fallback_value = (
+    /** @type {V} */
+    fallback2
+  );
+  var fallback_dirty = true;
+  var fallback_signal = (
+    /** @type {Derived<V> | undefined} */
+    void 0
+  );
+  var get_fallback = () => {
+    if (lazy && runes) {
+      fallback_signal ??= derived(
+        /** @type {() => V} */
+        fallback2
+      );
+      return get(fallback_signal);
+    }
+    if (fallback_dirty) {
+      fallback_dirty = false;
+      fallback_value = lazy ? untrack(
+        /** @type {() => V} */
+        fallback2
+      ) : (
+        /** @type {V} */
+        fallback2
+      );
+    }
+    return fallback_value;
+  };
+  let setter;
+  if (bindable) {
+    var is_entry_props = STATE_SYMBOL in props || LEGACY_PROPS in props;
+    setter = get_descriptor(props, key2)?.set ?? (is_entry_props && key2 in props ? (v) => props[key2] = v : void 0);
+  }
+  var initial_value;
+  var is_store_sub = false;
+  if (bindable) {
+    [initial_value, is_store_sub] = capture_store_binding(() => (
+      /** @type {V} */
+      props[key2]
+    ));
+  } else {
+    initial_value = /** @type {V} */
+    props[key2];
+  }
+  if (initial_value === void 0 && fallback2 !== void 0) {
+    initial_value = get_fallback();
+    if (setter) {
+      if (runes) props_invalid_value(key2);
+      setter(initial_value);
+    }
+  }
+  var getter;
+  if (runes) {
+    getter = () => {
+      var value = (
+        /** @type {V} */
+        props[key2]
+      );
+      if (value === void 0) return get_fallback();
+      fallback_dirty = true;
+      return value;
+    };
+  } else {
+    getter = () => {
+      var value = (
+        /** @type {V} */
+        props[key2]
+      );
+      if (value !== void 0) {
+        fallback_value = /** @type {V} */
+        void 0;
+      }
+      return value === void 0 ? fallback_value : value;
+    };
+  }
+  if (runes && (flags2 & PROPS_IS_UPDATED) === 0) {
+    return getter;
+  }
+  if (setter) {
+    var legacy_parent = props.$$legacy;
+    return (
+      /** @type {() => V} */
+      (function(value, mutation) {
+        if (arguments.length > 0) {
+          if (!runes || !mutation || legacy_parent || is_store_sub) {
+            setter(mutation ? getter() : value);
+          }
+          return value;
+        }
+        return getter();
+      })
+    );
+  }
+  var overridden = false;
+  var d = ((flags2 & PROPS_IS_IMMUTABLE) !== 0 ? derived : derived_safe_equal)(() => {
+    overridden = false;
+    return getter();
+  });
+  if (dev_fallback_default) {
+    d.label = key2;
+  }
+  if (bindable) get(d);
+  var parent_effect = (
+    /** @type {Effect} */
+    active_effect
+  );
+  return (
+    /** @type {() => V} */
+    (function(value, mutation) {
+      if (arguments.length > 0) {
+        const new_value = mutation ? get(d) : runes && bindable ? proxy(value) : value;
+        set(d, new_value);
+        overridden = true;
+        if (fallback_value !== void 0) {
+          fallback_value = new_value;
+        }
+        return value;
+      }
+      if (is_destroying_effect && overridden || (parent_effect.f & DESTROYED) !== 0) {
+        return d.v;
+      }
+      return get(d);
+    })
+  );
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/legacy/legacy-client.js
+function createClassComponent(options) {
+  return new Svelte4Component(options);
+}
+var Svelte4Component = class {
+  /** @type {any} */
+  #events;
+  /** @type {Record<string, any>} */
+  #instance;
+  /**
+   * @param {ComponentConstructorOptions & {
+   *  component: any;
+   * }} options
+   */
+  constructor(options) {
+    var sources = /* @__PURE__ */ new Map();
+    var add_source = (key2, value) => {
+      var s = mutable_source(value, false, false);
+      sources.set(key2, s);
+      return s;
+    };
+    const props = new Proxy(
+      { ...options.props || {}, $$events: {} },
+      {
+        get(target, prop2) {
+          return get(sources.get(prop2) ?? add_source(prop2, Reflect.get(target, prop2)));
+        },
+        has(target, prop2) {
+          if (prop2 === LEGACY_PROPS) return true;
+          get(sources.get(prop2) ?? add_source(prop2, Reflect.get(target, prop2)));
+          return Reflect.has(target, prop2);
+        },
+        set(target, prop2, value) {
+          set(sources.get(prop2) ?? add_source(prop2, value), value);
+          return Reflect.set(target, prop2, value);
+        }
+      }
+    );
+    this.#instance = (options.hydrate ? hydrate : mount)(options.component, {
+      target: options.target,
+      anchor: options.anchor,
+      props,
+      context: options.context,
+      intro: options.intro ?? false,
+      recover: options.recover,
+      transformError: options.transformError
+    });
+    if (!async_mode_flag && (!options?.props?.$$host || options.sync === false)) {
+      flushSync();
+    }
+    this.#events = props.$$events;
+    for (const key2 of Object.keys(this.#instance)) {
+      if (key2 === "$set" || key2 === "$destroy" || key2 === "$on") continue;
+      define_property(this, key2, {
+        get() {
+          return this.#instance[key2];
+        },
+        /** @param {any} value */
+        set(value) {
+          this.#instance[key2] = value;
+        },
+        enumerable: true
+      });
+    }
+    this.#instance.$set = /** @param {Record<string, any>} next */
+    (next2) => {
+      Object.assign(props, next2);
+    };
+    this.#instance.$destroy = () => {
+      unmount(this.#instance);
+    };
+  }
+  /** @param {Record<string, any>} props */
+  $set(props) {
+    this.#instance.$set(props);
+  }
+  /**
+   * @param {string} event
+   * @param {(...args: any[]) => any} callback
+   * @returns {any}
+   */
+  $on(event2, callback) {
+    this.#events[event2] = this.#events[event2] || [];
+    const cb = (...args) => callback.call(this, ...args);
+    this.#events[event2].push(cb);
+    return () => {
+      this.#events[event2] = this.#events[event2].filter(
+        /** @param {any} fn */
+        (fn) => fn !== cb
+      );
+    };
+  }
+  $destroy() {
+    this.#instance.$destroy();
+  }
+};
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/client/dom/elements/custom-element.js
+var SvelteElement;
+if (typeof HTMLElement === "function") {
+  SvelteElement = class extends HTMLElement {
+    /** The Svelte component constructor */
+    $$ctor;
+    /** Slots */
+    $$s;
+    /** @type {any} The Svelte component instance */
+    $$c;
+    /** Whether or not the custom element is connected */
+    $$cn = false;
+    /** @type {Record<string, any>} Component props data */
+    $$d = {};
+    /** `true` if currently in the process of reflecting component props back to attributes */
+    $$r = false;
+    /** @type {Record<string, CustomElementPropDefinition>} Props definition (name, reflected, type etc) */
+    $$p_d = {};
+    /** @type {Record<string, EventListenerOrEventListenerObject[]>} Event listeners */
+    $$l = {};
+    /** @type {Map<EventListenerOrEventListenerObject, Function>} Event listener unsubscribe functions */
+    $$l_u = /* @__PURE__ */ new Map();
+    /** @type {any} The managed render effect for reflecting attributes */
+    $$me;
+    /** @type {ShadowRoot | null} The ShadowRoot of the custom element */
+    $$shadowRoot = null;
+    /**
+     * @param {*} $$componentCtor
+     * @param {*} $$slots
+     * @param {ShadowRootInit | undefined} shadow_root_init
+     */
+    constructor($$componentCtor, $$slots, shadow_root_init) {
+      super();
+      this.$$ctor = $$componentCtor;
+      this.$$s = $$slots;
+      if (shadow_root_init) {
+        this.$$shadowRoot = this.attachShadow(shadow_root_init);
+      }
+    }
+    /**
+     * @param {string} type
+     * @param {EventListenerOrEventListenerObject} listener
+     * @param {boolean | AddEventListenerOptions} [options]
+     */
+    addEventListener(type, listener, options) {
+      this.$$l[type] = this.$$l[type] || [];
+      this.$$l[type].push(listener);
+      if (this.$$c) {
+        const unsub = this.$$c.$on(type, listener);
+        this.$$l_u.set(listener, unsub);
+      }
+      super.addEventListener(type, listener, options);
+    }
+    /**
+     * @param {string} type
+     * @param {EventListenerOrEventListenerObject} listener
+     * @param {boolean | AddEventListenerOptions} [options]
+     */
+    removeEventListener(type, listener, options) {
+      super.removeEventListener(type, listener, options);
+      if (this.$$c) {
+        const unsub = this.$$l_u.get(listener);
+        if (unsub) {
+          unsub();
+          this.$$l_u.delete(listener);
+        }
+      }
+    }
+    async connectedCallback() {
+      this.$$cn = true;
+      if (!this.$$c) {
+        let create_slot = function(name) {
+          return (anchor) => {
+            const slot2 = create_element("slot");
+            if (name !== "default") slot2.name = name;
+            append(anchor, slot2);
+          };
+        };
+        await Promise.resolve();
+        if (!this.$$cn || this.$$c) {
+          return;
+        }
+        const $$slots = {};
+        const existing_slots = get_custom_elements_slots(this);
+        for (const name of this.$$s) {
+          if (name in existing_slots) {
+            if (name === "default" && !this.$$d.children) {
+              this.$$d.children = create_slot(name);
+              $$slots.default = true;
+            } else {
+              $$slots[name] = create_slot(name);
+            }
+          }
+        }
+        for (const attribute of this.attributes) {
+          const name = this.$$g_p(attribute.name);
+          if (!(name in this.$$d)) {
+            this.$$d[name] = get_custom_element_value(name, attribute.value, this.$$p_d, "toProp");
+          }
+        }
+        for (const key2 in this.$$p_d) {
+          if (!(key2 in this.$$d) && this[key2] !== void 0) {
+            this.$$d[key2] = this[key2];
+            delete this[key2];
+          }
+        }
+        this.$$c = createClassComponent({
+          component: this.$$ctor,
+          target: this.$$shadowRoot || this,
+          props: {
+            ...this.$$d,
+            $$slots,
+            $$host: this
+          }
+        });
+        this.$$me = effect_root(() => {
+          render_effect(() => {
+            this.$$r = true;
+            for (const key2 of object_keys(this.$$c)) {
+              if (!this.$$p_d[key2]?.reflect) continue;
+              this.$$d[key2] = this.$$c[key2];
+              const attribute_value = get_custom_element_value(
+                key2,
+                this.$$d[key2],
+                this.$$p_d,
+                "toAttribute"
+              );
+              if (attribute_value == null) {
+                this.removeAttribute(this.$$p_d[key2].attribute || key2);
+              } else {
+                this.setAttribute(this.$$p_d[key2].attribute || key2, attribute_value);
+              }
+            }
+            this.$$r = false;
+          });
+        });
+        for (const type in this.$$l) {
+          for (const listener of this.$$l[type]) {
+            const unsub = this.$$c.$on(type, listener);
+            this.$$l_u.set(listener, unsub);
+          }
+        }
+        this.$$l = {};
+      }
+    }
+    // We don't need this when working within Svelte code, but for compatibility of people using this outside of Svelte
+    // and setting attributes through setAttribute etc, this is helpful
+    /**
+     * @param {string} attr
+     * @param {string} _oldValue
+     * @param {string} newValue
+     */
+    attributeChangedCallback(attr2, _oldValue, newValue) {
+      if (this.$$r) return;
+      attr2 = this.$$g_p(attr2);
+      this.$$d[attr2] = get_custom_element_value(attr2, newValue, this.$$p_d, "toProp");
+      this.$$c?.$set({ [attr2]: this.$$d[attr2] });
+    }
+    disconnectedCallback() {
+      this.$$cn = false;
+      Promise.resolve().then(() => {
+        if (!this.$$cn && this.$$c) {
+          this.$$c.$destroy();
+          this.$$me();
+          this.$$c = void 0;
+        }
+      });
+    }
+    /**
+     * @param {string} attribute_name
+     */
+    $$g_p(attribute_name) {
+      return object_keys(this.$$p_d).find(
+        (key2) => this.$$p_d[key2].attribute === attribute_name || !this.$$p_d[key2].attribute && key2.toLowerCase() === attribute_name
+      ) || attribute_name;
+    }
+  };
+}
+function get_custom_element_value(prop2, value, props_definition, transform) {
+  const type = props_definition[prop2]?.type;
+  value = type === "Boolean" && typeof value !== "boolean" ? value != null : value;
+  if (!transform || !props_definition[prop2]) {
+    return value;
+  } else if (transform === "toAttribute") {
+    switch (type) {
+      case "Object":
+      case "Array":
+        return value == null ? null : JSON.stringify(value);
+      case "Boolean":
+        return value ? "" : null;
+      case "Number":
+        return value == null ? null : value;
+      default:
+        return value;
+    }
+  } else {
+    switch (type) {
+      case "Object":
+      case "Array":
+        return value && JSON.parse(value);
+      case "Boolean":
+        return value;
+      // conversion already handled above
+      case "Number":
+        return value != null ? +value : value;
+      default:
+        return value;
+    }
+  }
+}
+function get_custom_elements_slots(element2) {
+  const result = {};
+  element2.childNodes.forEach((node) => {
+    result[
+      /** @type {Element} node */
+      node.slot || "default"
+    ] = true;
+  });
+  return result;
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/index-client.js
+if (dev_fallback_default) {
+  let throw_rune_error = function(rune) {
+    if (!(rune in globalThis)) {
+      let value;
+      Object.defineProperty(globalThis, rune, {
+        configurable: true,
+        // eslint-disable-next-line getter-return
+        get: () => {
+          if (value !== void 0) {
+            return value;
+          }
+          rune_outside_svelte(rune);
+        },
+        set: (v) => {
+          value = v;
+        }
+      });
+    }
+  };
+  throw_rune_error("$state");
+  throw_rune_error("$effect");
+  throw_rune_error("$derived");
+  throw_rune_error("$inspect");
+  throw_rune_error("$props");
+  throw_rune_error("$bindable");
+}
+function getAbortSignal() {
+  if (active_reaction === null) {
+    get_abort_signal_outside_reaction();
+  }
+  return (active_reaction.ac ??= new AbortController()).signal;
+}
+function onMount(fn) {
+  if (component_context === null) {
+    lifecycle_outside_component("onMount");
+  }
+  if (legacy_mode_flag && component_context.l !== null) {
+    init_update_callbacks(component_context).m.push(fn);
+  } else {
+    user_effect(() => {
+      const cleanup = untrack(fn);
+      if (typeof cleanup === "function") return (
+        /** @type {() => void} */
+        cleanup
+      );
+    });
+  }
+}
+function init_update_callbacks(context) {
+  var l = (
+    /** @type {ComponentContextLegacy} */
+    context.l
+  );
+  return l.u ??= { a: [], b: [], m: [] };
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/version.js
+var PUBLIC_VERSION = "5";
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/internal/disclose-version.js
+if (typeof window !== "undefined") {
+  ((window.__svelte ??= {}).v ??= /* @__PURE__ */ new Set()).add(PUBLIC_VERSION);
+}
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/reactivity/map.js
+var SvelteMap = class extends Map {
+  /** @type {Map<K, Source<number>>} */
+  #sources = /* @__PURE__ */ new Map();
+  #version = state(0);
+  #size = state(0);
+  #update_version = update_version || -1;
+  /**
+   * @param {Iterable<readonly [K, V]> | null | undefined} [value]
+   */
+  constructor(value) {
+    super();
+    if (dev_fallback_default) {
+      value = new Map(value);
+      tag(this.#version, "SvelteMap version");
+      tag(this.#size, "SvelteMap.size");
+    }
+    if (value) {
+      for (var [key2, v] of value) {
+        super.set(key2, v);
+      }
+      this.#size.v = super.size;
+    }
+  }
+  /**
+   * If the source is being created inside the same reaction as the SvelteMap instance,
+   * we use `state` so that it will not be a dependency of the reaction. Otherwise we
+   * use `source` so it will be.
+   *
+   * @template T
+   * @param {T} value
+   * @returns {Source<T>}
+   */
+  #source(value) {
+    return update_version === this.#update_version ? state(value) : source(value);
+  }
+  /** @param {K} key */
+  has(key2) {
+    var sources = this.#sources;
+    var s = sources.get(key2);
+    if (s === void 0) {
+      if (super.has(key2)) {
+        s = this.#source(0);
+        if (dev_fallback_default) {
+          tag(s, `SvelteMap get(${label(key2)})`);
+        }
+        sources.set(key2, s);
+      } else {
+        get(this.#version);
+        return false;
+      }
+    }
+    get(s);
+    return true;
+  }
+  /**
+   * @param {(value: V, key: K, map: Map<K, V>) => void} callbackfn
+   * @param {any} [this_arg]
+   */
+  forEach(callbackfn, this_arg) {
+    this.#read_all();
+    super.forEach(callbackfn, this_arg);
+  }
+  /** @param {K} key */
+  get(key2) {
+    var sources = this.#sources;
+    var s = sources.get(key2);
+    if (s === void 0) {
+      if (super.has(key2)) {
+        s = this.#source(0);
+        if (dev_fallback_default) {
+          tag(s, `SvelteMap get(${label(key2)})`);
+        }
+        sources.set(key2, s);
+      } else {
+        get(this.#version);
+        return void 0;
+      }
+    }
+    get(s);
+    return super.get(key2);
+  }
+  /**
+   * @param {K} key
+   * @param {V} value
+   * */
+  getOrInsert(key2, value) {
+    if (!super.has(key2)) {
+      this.set(key2, value);
+    }
+    return (
+      /** @type {V} */
+      this.get(key2)
+    );
+  }
+  /**
+   * @param {K} key
+   * @param {(key: K) => V} callbackFn
+   */
+  getOrInsertComputed(key2, callbackFn) {
+    if (!super.has(key2)) {
+      this.set(key2, callbackFn(key2));
+    }
+    return (
+      /** @type {V} */
+      this.get(key2)
+    );
+  }
+  /**
+   * @param {K} key
+   * @param {V} value
+   * */
+  set(key2, value) {
+    var sources = this.#sources;
+    var s = sources.get(key2);
+    var prev_res = super.get(key2);
+    var res = super.set(key2, value);
+    var version = this.#version;
+    if (s === void 0) {
+      s = this.#source(0);
+      if (dev_fallback_default) {
+        tag(s, `SvelteMap get(${label(key2)})`);
+      }
+      sources.set(key2, s);
+      set(this.#size, super.size);
+      increment(version);
+    } else if (prev_res !== value) {
+      increment(s);
+      var v_reactions = version.reactions === null ? null : new Set(version.reactions);
+      var needs_version_increase = v_reactions === null || !s.reactions?.every(
+        (r2) => (
+          /** @type {NonNullable<typeof v_reactions>} */
+          v_reactions.has(r2)
+        )
+      );
+      if (needs_version_increase) {
+        increment(version);
+      }
+    }
+    return res;
+  }
+  /** @param {K} key */
+  delete(key2) {
+    var sources = this.#sources;
+    var s = sources.get(key2);
+    var res = super.delete(key2);
+    if (s !== void 0) {
+      sources.delete(key2);
+      set(s, -1);
+    }
+    if (res) {
+      set(this.#size, super.size);
+      increment(this.#version);
+    }
+    return res;
+  }
+  clear() {
+    if (super.size === 0) {
+      return;
+    }
+    super.clear();
+    var sources = this.#sources;
+    set(this.#size, 0);
+    for (var s of sources.values()) {
+      set(s, -1);
+    }
+    increment(this.#version);
+    sources.clear();
+  }
+  #read_all() {
+    get(this.#version);
+    var sources = this.#sources;
+    if (this.#size.v !== sources.size) {
+      for (var key2 of super.keys()) {
+        if (!sources.has(key2)) {
+          var s = this.#source(0);
+          if (dev_fallback_default) {
+            tag(s, `SvelteMap get(${label(key2)})`);
+          }
+          sources.set(key2, s);
+        }
+      }
+    }
+    for ([, s] of this.#sources) {
+      get(s);
+    }
+  }
+  keys() {
+    get(this.#version);
+    return super.keys();
+  }
+  values() {
+    this.#read_all();
+    return super.values();
+  }
+  entries() {
+    this.#read_all();
+    return super.entries();
+  }
+  [Symbol.iterator]() {
+    return this.entries();
+  }
+  get size() {
+    get(this.#size);
+    return super.size;
+  }
+};
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/reactivity/url-search-params.js
+var REPLACE = Symbol("replace");
+var SvelteURLSearchParams = class extends URLSearchParams {
+  #version = dev_fallback_default ? tag(state(0), "SvelteURLSearchParams version") : state(0);
+  #url = get_current_url();
+  #updating = false;
+  #update_url() {
+    if (!this.#url || this.#updating) return;
+    this.#updating = true;
+    const search = super.toString();
+    this.#url.search = search && `?${search}`;
+    this.#updating = false;
+  }
+  /**
+   * @param {URLSearchParams} params
+   * @internal
+   */
+  [REPLACE](params) {
+    if (this.#updating) return;
+    if (params.toString() === super.toString()) return;
+    this.#updating = true;
+    for (const key2 of [...super.keys()]) {
+      super.delete(key2);
+    }
+    for (const [key2, value] of params) {
+      super.append(key2, value);
+    }
+    increment(this.#version);
+    this.#updating = false;
+  }
+  /**
+   * @param {string} name
+   * @param {string} value
+   * @returns {void}
+   */
+  append(name, value) {
+    super.append(name, value);
+    this.#update_url();
+    increment(this.#version);
+  }
+  /**
+   * @param {string} name
+   * @param {string=} value
+   * @returns {void}
+   */
+  delete(name, value) {
+    var has_value = super.has(name, value);
+    super.delete(name, value);
+    if (has_value) {
+      this.#update_url();
+      increment(this.#version);
+    }
+  }
+  /**
+   * @param {string} name
+   * @returns {string|null}
+   */
+  get(name) {
+    get(this.#version);
+    return super.get(name);
+  }
+  /**
+   * @param {string} name
+   * @returns {string[]}
+   */
+  getAll(name) {
+    get(this.#version);
+    return super.getAll(name);
+  }
+  /**
+   * @param {string} name
+   * @param {string=} value
+   * @returns {boolean}
+   */
+  has(name, value) {
+    get(this.#version);
+    return super.has(name, value);
+  }
+  keys() {
+    get(this.#version);
+    return super.keys();
+  }
+  /**
+   * @param {(value: string, key: string, parent: URLSearchParams) => void} callback
+   * @param {any} [this_arg]
+   * @returns {void}
+   */
+  forEach(callback, this_arg) {
+    get(this.#version);
+    super.forEach(callback, this_arg);
+  }
+  /**
+   * @param {string} name
+   * @param {string} value
+   * @returns {void}
+   */
+  set(name, value) {
+    var previous = super.getAll(name);
+    super.set(name, value);
+    var current = super.getAll(name);
+    if (previous.length !== current.length || previous.some((value2, i) => value2 !== current[i])) {
+      this.#update_url();
+      increment(this.#version);
+    }
+  }
+  sort() {
+    super.sort();
+    this.#update_url();
+    increment(this.#version);
+  }
+  toString() {
+    get(this.#version);
+    return super.toString();
+  }
+  values() {
+    get(this.#version);
+    return super.values();
+  }
+  entries() {
+    get(this.#version);
+    return super.entries();
+  }
+  [Symbol.iterator]() {
+    return this.entries();
+  }
+  get size() {
+    get(this.#version);
+    return super.size;
+  }
+};
+
+// node_modules/@event-calendar/core/node_modules/svelte/src/reactivity/url.js
+var current_url = null;
+function get_current_url() {
+  return current_url;
+}
+
+// node_modules/@event-calendar/core/dist/index.js
+function keyEnter(fn, _this = void 0) {
+  return function(e) {
+    return e.key === "Enter" || e.key === " " && !e.preventDefault() ? fn.call(_this, e) : void 0;
+  };
+}
+function contentFrom(content, snippet2) {
+  if (snippet2) return null;
+  return (el) => {
+    if (typeof content == "string") el.innerText = content;
+    else if (content?.domNodes) el.replaceChildren(...content.domNodes);
+    else if (content?.html) el.innerHTML = content.html;
+  };
+}
+function outsideEvent(type) {
+  return (el) => {
+    let listener = (jsEvent) => {
+      if (el && !el.contains(jsEvent.target)) el.dispatchEvent(new CustomEvent(type + "outside", { detail: { jsEvent } }));
+    };
+    document.addEventListener(type, listener, true);
+    return () => {
+      document.removeEventListener(type, listener, true);
+    };
+  };
+}
+function resizeObserver(callback, widthOnly = false) {
+  return (el) => {
+    let width;
+    let observer = new ResizeObserver((entries2) => {
+      for (let entry of entries2) {
+        if (widthOnly) {
+          let { inlineSize } = entry.contentBoxSize?.[0] ?? { inlineSize: entry.contentRect.width };
+          if (inlineSize === width) continue;
+          width = inlineSize;
+        }
+        callback(el, entry);
+      }
+    });
+    observer.observe(el);
+    return () => {
+      observer.unobserve(el);
+    };
+  };
+}
+function intersectionObserver(callback, options) {
+  return (el) => {
+    let observer = new IntersectionObserver((entries2) => {
+      for (let entry of entries2) callback(el, entry);
+    }, options);
+    observer.observe(el);
+    return () => {
+      observer.unobserve(el);
+    };
+  };
+}
+function assign2(...args) {
+  return Object.assign(...args);
+}
+function keys(object) {
+  return Object.keys(object);
+}
+function entries(object) {
+  return Object.entries(object);
+}
+function hasOwn(object, property) {
+  return Object.hasOwn(object, property);
+}
+function floor(value) {
+  return Math.floor(value);
+}
+function ceil(value) {
+  return Math.ceil(value);
+}
+function min(...args) {
+  return Math.min(...args);
+}
+function max(...args) {
+  return Math.max(...args);
+}
+function symbol() {
+  return Symbol("ec");
+}
+function length(array) {
+  return array.length;
+}
+function empty(array) {
+  return !length(array);
+}
+function tzOffset(date = /* @__PURE__ */ new Date()) {
+  return -date.getTimezoneOffset();
+}
+function isArray(value) {
+  return Array.isArray(value);
+}
+function isFunction(value) {
+  return typeof value === "function";
+}
+function isPlainObject(value) {
+  if (typeof value !== "object" || value === null) return false;
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.prototype;
+}
+function isDate(value) {
+  return value instanceof Date;
+}
+function run3(fn) {
+  return fn();
+}
+function runAll(fns) {
+  fns.forEach(run3);
+}
+function noop2() {
+}
+var identity = (x) => x;
+function isRtl() {
+  return window.getComputedStyle(document.documentElement).direction === "rtl";
+}
+function undefinedOr(fn) {
+  return (input) => input === void 0 ? void 0 : fn(input);
+}
+var uids = /* @__PURE__ */ new WeakMap();
+var uidCounter = 1;
+function uid2(obj) {
+  let id = uids.get(obj);
+  if (!id) {
+    id = uidCounter++;
+    uids.set(obj, id);
+  }
+  return id;
+}
+function createSource(input) {
+  return {
+    url: input.url?.replace(/&+$/, "") || "",
+    method: input.method?.toUpperCase() || "GET",
+    extraParams: input.extraParams ?? {}
+  };
+}
+function createContent(option, arg, fallback2, snippet2) {
+  if (snippet2) return {
+    snippet: snippet2,
+    arg: arg?.()
+  };
+  return { content: (isFunction(option) ? option(arg?.()) : option) ?? (isFunction(fallback2) ? fallback2() : fallback2) };
+}
+var DAY_IN_SECONDS = 86400;
+function createDate(input = /* @__PURE__ */ new Date(), offset2 = void 0) {
+  return isDate(input) ? _fromLocalDate(input, offset2) : _fromISOString(input, offset2);
+}
+function createDuration(input) {
+  if (typeof input === "number") input = { seconds: input };
+  else if (typeof input === "string") {
+    let seconds = 0, exp = 2;
+    for (let part of input.split(":", 3)) seconds += parseInt(part, 10) * Math.pow(60, exp--);
+    input = { seconds };
+  } else if (isDate(input)) input = {
+    hours: input.getUTCHours(),
+    minutes: input.getUTCMinutes(),
+    seconds: input.getUTCSeconds()
+  };
+  let weeks = input.weeks || input.week || 0;
+  return {
+    years: input.years || input.year || 0,
+    months: input.months || input.month || 0,
+    days: weeks * 7 + (input.days || input.day || 0),
+    seconds: (input.hours || input.hour || 0) * 60 * 60 + (input.minutes || input.minute || 0) * 60 + (input.seconds || input.second || 0),
+    inWeeks: !!weeks
+  };
+}
+function cloneDate(date) {
+  let result = new Date(toTime(date));
+  setOffset(result, getOffset(date));
+  return result;
+}
+function addDuration(date, duration, x = 1) {
+  date.setUTCFullYear(date.getUTCFullYear() + x * duration.years);
+  let month = date.getUTCMonth() + x * duration.months;
+  date.setUTCMonth(month);
+  month %= 12;
+  if (month < 0) month += 12;
+  while (date.getUTCMonth() !== month) subtractDay(date);
+  date.setUTCDate(date.getUTCDate() + x * duration.days);
+  date.setUTCSeconds(date.getUTCSeconds() + x * duration.seconds);
+  return date;
+}
+function subtractDuration(date, duration, x = 1) {
+  return addDuration(date, duration, -x);
+}
+function addDay(date, x = 1) {
+  date.setUTCDate(date.getUTCDate() + x);
+  return date;
+}
+function subtractDay(date, x = 1) {
+  return addDay(date, -x);
+}
+function setMidnight(date) {
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
+}
+function toLocalDate(date) {
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+}
+function toISOString(date, len = 19) {
+  return date.toISOString().substring(0, len);
+}
+function toTime(date) {
+  return date.getTime();
+}
+function datesEqual(date1, ...dates2) {
+  return dates2.every((date2) => toTime(date1) === toTime(date2));
+}
+function nextClosestDay(date, day) {
+  let diff2 = day - date.getUTCDay();
+  date.setUTCDate(date.getUTCDate() + (diff2 >= 0 ? diff2 : diff2 + 7));
+  return date;
+}
+function prevClosestDay(date, day) {
+  let diff2 = day - date.getUTCDay();
+  date.setUTCDate(date.getUTCDate() + (diff2 <= 0 ? diff2 : diff2 - 7));
+  return date;
+}
+function noTimePart(date) {
+  return typeof date === "string" && date.length <= 10;
+}
+function copyTime(toDate, fromDate) {
+  toDate.setUTCHours(fromDate.getUTCHours(), fromDate.getUTCMinutes(), fromDate.getUTCSeconds(), 0);
+  return toDate;
+}
+function toSeconds(duration) {
+  return duration.seconds;
+}
+function nextDate(date, duration, hiddenDays) {
+  addDuration(date, duration);
+  _skipHiddenDays(date, hiddenDays, addDay);
+  return date;
+}
+function prevDate(date, duration, hiddenDays) {
+  subtractDuration(date, duration);
+  _skipHiddenDays(date, hiddenDays, subtractDay);
+  return date;
+}
+function getWeekNumber(date, firstDay) {
+  date = cloneDate(date);
+  if (firstDay === 0) date.setUTCDate(date.getUTCDate() + 6 - date.getUTCDay());
+  else date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  let yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil(((date - yearStart) / 1e3 / DAY_IN_SECONDS + 1) / 7);
+}
+function createWeekNumberContent(week, date, weekNumberContent, snippet2) {
+  return createContent(weekNumberContent, () => ({
+    date: toLocalDate(date),
+    week
+  }), () => "W" + String(week).padStart(2, "0"), snippet2);
+}
+function parseOffset(str, match = {}) {
+  let parts = str.match(/(?:Z|([+-])(\d{2}):?(\d{2}))$/);
+  if (parts) {
+    assign2(match, parts);
+    return parts[1] ? +(parts[1] + "1") * (+parts[2] * 60 + +parts[3]) : 0;
+  }
+}
+function applyOffsetDiff(date, offsetDiff) {
+  if (offsetDiff) date.setUTCMinutes(date.getUTCMinutes() + offsetDiff);
+  return date;
+}
+var offsetSymbol = Symbol("ec");
+function setOffset(date, offset2) {
+  date[offsetSymbol] = offset2;
+  return date;
+}
+function getOffset(date) {
+  return date[offsetSymbol];
+}
+function _fromLocalDate(date, offset2 = void 0) {
+  let result = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+  applyOffsetDiff(result, offset2 ? offset2 - tzOffset(result) : 0);
+  setOffset(result, offset2 ?? tzOffset(result));
+  return result;
+}
+function _fromISOString(str, offset2 = void 0) {
+  let match = {};
+  let inputOffset = parseOffset(str, match);
+  if (inputOffset !== void 0) str = str.substring(0, match.index);
+  let parts = str.match(/\d+/g);
+  let result = new Date(Date.UTC(+parts[0], +parts[1] - 1, +parts[2], +parts[3] || 0, +parts[4] || 0, +parts[5] || 0));
+  if (offset2 !== void 0 && inputOffset !== void 0) applyOffsetDiff(result, offset2 - inputOffset);
+  setOffset(result, offset2 ?? inputOffset);
+  return result;
+}
+function _skipHiddenDays(date, hiddenDays, dateFn) {
+  if (hiddenDays.length && hiddenDays.length < 7) while (hiddenDays.includes(date.getUTCDay())) dateFn(date);
+}
+var payloadProp = symbol();
+function setPayload(obj, payload) {
+  obj[payloadProp] = payload;
+}
+function hasPayload(obj) {
+  return !!obj?.[payloadProp];
+}
+function getPayload(obj) {
+  return obj[payloadProp];
+}
+function createElement(tag2, className, content, attrs = []) {
+  let el = document.createElement(tag2);
+  el.className = className;
+  if (typeof content == "string") el.innerText = content;
+  else if (content.domNodes) el.replaceChildren(...content.domNodes);
+  else if (content.html) el.innerHTML = content.html;
+  for (let attr2 of attrs) el.setAttribute(...attr2);
+  return el;
+}
+function rect(el) {
+  return el.getBoundingClientRect();
+}
+function ancestor(el, up) {
+  while (up--) el = el.parentElement;
+  return el;
+}
+function height(el) {
+  return rect(el).height;
+}
+function getElementWithPayload(x, y, root2 = document, processed = []) {
+  processed.push(root2);
+  for (let el of root2.elementsFromPoint(x, y)) {
+    if (hasPayload(el)) return el;
+    if (el.shadowRoot && !processed.includes(el.shadowRoot)) {
+      let shadowEl = getElementWithPayload(x, y, el.shadowRoot, processed);
+      if (shadowEl) return shadowEl;
+    }
+  }
+  return null;
+}
+function listen2(node, event2, handler, options) {
+  node.addEventListener(event2, handler, options);
+  return () => node.removeEventListener(event2, handler, options);
+}
+function stopPropagation2(fn, _this = void 0) {
+  return function(jsEvent) {
+    jsEvent.stopPropagation();
+    if (fn) fn.call(_this, jsEvent);
+  };
+}
+function createView(view2, _viewTitle, _currentRange, _activeRange) {
+  return {
+    type: view2,
+    title: _viewTitle,
+    currentStart: _currentRange.start,
+    currentEnd: _currentRange.end,
+    activeStart: _activeRange.start,
+    activeEnd: _activeRange.end,
+    calendar: void 0
+  };
+}
+function toViewWithLocalDates(view2) {
+  view2 = assign2({}, view2);
+  view2.currentStart = toLocalDate(view2.currentStart);
+  view2.currentEnd = toLocalDate(view2.currentEnd);
+  view2.activeStart = toLocalDate(view2.activeStart);
+  view2.activeEnd = toLocalDate(view2.activeEnd);
+  return view2;
+}
+var eventId = 1;
+function createEvents(input, offset2 = void 0) {
+  return input.map((event2) => {
+    let result = {
+      id: event2.id != null ? String(event2.id) : `{generated-${eventId++}}`,
+      resourceIds: toArrayProp(event2, "resourceId").map(String),
+      allDay: event2.allDay ?? (noTimePart(event2.start) && noTimePart(event2.end)),
+      start: createDate(event2.start, offset2),
+      end: createDate(event2.end, offset2),
+      title: event2.title ?? "",
+      editable: event2.editable,
+      startEditable: event2.startEditable,
+      durationEditable: event2.durationEditable,
+      display: event2.display ?? "auto",
+      layoutGroup: event2.layoutGroup?.toString(),
+      extendedProps: event2.extendedProps ?? {},
+      backgroundColor: event2.backgroundColor ?? event2.color,
+      textColor: event2.textColor,
+      classNames: toArrayProp(event2, "className"),
+      styles: toArrayProp(event2, "style")
+    };
+    if (result.allDay) {
+      setMidnight(result.start);
+      let end = cloneDate(result.end);
+      setMidnight(result.end);
+      if (!datesEqual(result.end, end) || datesEqual(result.end, result.start)) addDay(result.end);
+    }
+    return result;
+  });
+}
+function toArrayProp(input, propName) {
+  let result = input[propName + "s"] ?? input[propName] ?? [];
+  return isArray(result) ? result : [result];
+}
+function createEventSources(input) {
+  return input.map((source2) => ({
+    events: source2.events,
+    ...createSource(source2)
+  }));
+}
+function createEventTimeText(chunk, displayEventEnd, _intlEventTime) {
+  return _intlEventTime.formatRange(chunk.start, displayEventEnd && chunk.event.display !== "pointer" && !chunk.zeroDuration ? chunk.end : null);
+}
+function createDefaultEventContent(chunk, timeText, theme) {
+  let domNodes;
+  switch (chunk.event.display) {
+    case "background":
+      domNodes = [];
+      break;
+    case "pointer":
+      domNodes = chunk.event.allDay ? [] : [createTimeElement(timeText, chunk, theme)];
+      break;
+    default:
+      domNodes = [...chunk.event.allDay ? [] : [createTimeElement(timeText, chunk, theme)], createElement("h4", theme.eventTitle, chunk.event.title)];
+  }
+  return { domNodes };
+}
+function createTimeElement(timeText, chunk, theme) {
+  return createElement("time", theme.eventTime, timeText, [["datetime", toISOString(chunk.start)]]);
+}
+function createEventClasses(eventClassNames, event2, _view) {
+  let result = event2.classNames;
+  if (eventClassNames) {
+    if (isFunction(eventClassNames)) eventClassNames = eventClassNames({
+      event: toEventWithLocalDates(event2),
+      view: toViewWithLocalDates(_view)
+    });
+    result = [...isArray(eventClassNames) ? eventClassNames : [eventClassNames], ...result];
+  }
+  return result;
+}
+function toEventWithLocalDates(event2) {
+  return _cloneEvent(event2, toLocalDate);
+}
+function cloneEvent(event2) {
+  return _cloneEvent(event2, cloneDate);
+}
+function _cloneEvent(event2, dateFn) {
+  event2 = assign2({}, event2);
+  event2.start = dateFn(event2.start);
+  event2.end = dateFn(event2.end);
+  return event2;
+}
+var repositionPass = 0;
+function runReposition(refs, data) {
+  refs.length = data.length;
+  ++repositionPass;
+  for (let ref of refs) ref?.reposition(repositionPass);
+}
+function eventIntersects(event2, start, end, resource = void 0) {
+  return (!resource || event2.resourceIds.includes(resource.id)) && event2.start < end && event2.end > start;
+}
+function helperEvent(display) {
+  return previewEvent(display) || ghostEvent(display) || pointerEvent(display);
+}
+function bgEvent(display) {
+  return display === "background";
+}
+function previewEvent(display) {
+  return display === "preview";
+}
+function ghostEvent(display) {
+  return display === "ghost";
+}
+function pointerEvent(display) {
+  return display === "pointer";
+}
+function createEventChunk(event2, start, end) {
+  start = event2.start > start ? event2.start : start;
+  end = event2.end < end ? event2.end : end;
+  return {
+    start,
+    end,
+    event: event2,
+    zeroDuration: datesEqual(start, end)
+  };
+}
+function createAllDayChunks(event2, days, withId = true) {
+  let dates = [];
+  let lastEnd;
+  let gridColumn;
+  let gridRow;
+  let resource;
+  for (let { gridColumn: column, gridRow: row, resource: dayResource, dayStart, dayEnd, disabled } of days) if (!disabled && eventIntersects(event2, dayStart, dayEnd, dayResource)) {
+    dates.push(dayStart);
+    lastEnd = dayEnd;
+    if (!gridColumn) {
+      gridColumn = column;
+      gridRow = row;
+      resource = dayResource;
+    }
+  }
+  if (dates.length) {
+    let chunk = createEventChunk(event2, dates[0], lastEnd);
+    assign2(chunk, {
+      gridColumn,
+      gridRow,
+      resource,
+      dates
+    });
+    if (withId) assignChunkId(chunk);
+    return [chunk];
+  }
+  return [];
+}
+function prepareAllDayChunks(chunks) {
+  let prevChunks = {};
+  let longChunks = {};
+  for (let chunk of chunks) {
+    let { gridColumn, gridRow } = chunk;
+    for (let i = 1; i < chunk.dates.length; ++i) {
+      let key3 = `${gridRow}_${gridColumn + i}`;
+      if (longChunks[key3]) longChunks[key3].chunks.push(chunk);
+      else longChunks[key3] = {
+        sorted: false,
+        chunks: [chunk]
+      };
+    }
+    let key2 = `${gridRow}_${gridColumn}`;
+    chunk.long = longChunks[key2];
+    chunk.prev = prevChunks[key2];
+    prevChunks[key2] = chunk;
+  }
+}
+function repositionEvent$1(chunk, height2, top = 1, gap = 1) {
+  if (chunk.prev) top = chunk.prev.bottom + gap;
+  let bottom = top + height2;
+  if (chunk.long) {
+    let longChunks = chunk.long;
+    if (!longChunks.sorted) {
+      longChunks.chunks.sort((a, b) => a.top - b.top);
+      longChunks.sorted = true;
+    }
+    for (let longChunk of longChunks.chunks) if (top < longChunk.bottom && bottom > longChunk.top) {
+      let offset2 = longChunk.bottom - top + gap;
+      top += offset2;
+      bottom += offset2;
+    }
+  }
+  assign2(chunk, {
+    top,
+    bottom
+  });
+  return top;
+}
+function assignChunkId(chunk) {
+  let { event: event2, gridColumn, gridRow } = chunk;
+  chunk.id = `${uid2(event2)}-${gridColumn}-${gridRow}`;
+}
+function intl(mainState, option) {
+  return () => {
+    let { options: { locale } } = mainState;
+    let format = mainState.options[option];
+    let intl2;
+    untrack(() => {
+      intl2 = isFunction(format) ? { format } : new Intl.DateTimeFormat(locale, format);
+    });
+    return { format: (date) => intl2.format(toLocalDate(date)) };
+  };
+}
+function intlRange(mainState, option, timeOnly = false) {
+  return () => {
+    let { options: { locale } } = mainState;
+    let format = mainState.options[option];
+    let formatRange;
+    untrack(() => {
+      if (isFunction(format)) formatRange = (start, end) => format(toLocalDate(start), end && toLocalDate(end));
+      else {
+        let intl2 = new Intl.DateTimeFormat(locale, format);
+        formatRange = (start, end) => {
+          if (!end) return intl2.format(toLocalDate(start));
+          if (timeOnly) end = copyTime(cloneDate(start), end);
+          start = toLocalDate(start);
+          end = toLocalDate(end);
+          if (start <= end) return intl2.formatRange(start, end);
+          else {
+            let parts = intl2.formatRangeToParts(end, start);
+            let result = "";
+            let sources = ["startRange", "endRange"];
+            let processed = [false, false];
+            for (let part of parts) {
+              let i = sources.indexOf(part.source);
+              if (i >= 0) {
+                if (!processed[i]) {
+                  result += _getParts(sources[1 - i], parts);
+                  processed[i] = true;
+                }
+              } else result += part.value;
+            }
+            return result;
+          }
+        };
+      }
+    });
+    return { formatRange };
+  };
+}
+function _getParts(source2, parts) {
+  let result = "";
+  for (let part of parts) if (part.source == source2) result += part.value;
+  return result;
+}
+function btnTextDay(text2) {
+  return btnText(text2, "day");
+}
+function btnTextWeek(text2) {
+  return btnText(text2, "week");
+}
+function btnTextMonth(text2) {
+  return btnText(text2, "month");
+}
+function btnTextYear(text2) {
+  return btnText(text2, "year");
+}
+function btnText(text2, period) {
+  return {
+    ...text2,
+    next: "Next " + period,
+    prev: "Previous " + period
+  };
+}
+function themeView(view2) {
+  return (theme) => ({
+    ...theme,
+    view: view2
+  });
+}
+function createDateRange(input) {
+  let start, end;
+  if (input) {
+    ({ start, end } = input);
+    if (start) start = setMidnight(createDate(start));
+    if (end) end = setMidnight(createDate(end));
+  }
+  return {
+    start,
+    end
+  };
+}
+function outsideRange(date, range) {
+  return range.start && date < range.start || range.end && date > range.end;
+}
+function createResources(input) {
+  let result = [];
+  _createResources(input, 0, false, result);
+  return result;
+}
+function _createResources(input, level, hidden, flat) {
+  let result = [];
+  for (let item of input) {
+    let resource = createResource(item);
+    result.push(resource);
+    flat.push(resource);
+    let payload = {
+      level,
+      children: [],
+      hidden
+    };
+    setPayload(resource, payload);
+    if (item.children) payload.children = _createResources(item.children, level + 1, hidden || !resource.expanded, flat);
+  }
+  return result;
+}
+function createResource(input) {
+  return {
+    id: input.id != null ? String(input.id) : "",
+    title: input.title ?? "",
+    eventBackgroundColor: eventBackgroundColor(input),
+    eventTextColor: eventTextColor(input),
+    expanded: input.expanded ?? true,
+    extendedProps: input.extendedProps ?? {}
+  };
+}
+function eventBackgroundColor(resource) {
+  return resource?.eventBackgroundColor;
+}
+function eventTextColor(resource) {
+  return resource?.eventTextColor;
+}
+function findFirstResource(event2, resources) {
+  return empty(event2.resourceIds) ? void 0 : resources.find((resource) => event2.resourceIds.includes(resource.id));
+}
+function createSlots(date, slotDuration, slotLabelPeriodicity2, slotTimeLimits2, intlSlotLabel) {
+  let slots2 = [];
+  date = cloneDate(date);
+  let end = cloneDate(date);
+  addDuration(date, slotTimeLimits2.min);
+  addDuration(end, slotTimeLimits2.max);
+  while (date < end) {
+    slots2.push([toISOString(date), intlSlotLabel.format(date)]);
+    addDuration(date, slotDuration, slotLabelPeriodicity2);
+  }
+  let span = floor((date - end) / 1e3 / toSeconds(slotDuration));
+  if (span && span !== slotLabelPeriodicity2) slots2.at(-1)[2] = slotLabelPeriodicity2 - span;
+  return slots2;
+}
+function createSlotTimeLimits(slotMinTime, slotMaxTime, flexibleSlotTimeLimits, viewDates2, filteredEvents2) {
+  let min$1 = createDuration(slotMinTime);
+  let max$1 = createDuration(slotMaxTime);
+  if (flexibleSlotTimeLimits) {
+    let minMin = createDuration(min(toSeconds(min$1), max(0, toSeconds(max$1) - DAY_IN_SECONDS)));
+    let maxMax = createDuration(max(toSeconds(max$1), toSeconds(minMin) + DAY_IN_SECONDS));
+    let filter = isFunction(flexibleSlotTimeLimits?.eventFilter) ? flexibleSlotTimeLimits.eventFilter : (event2) => !bgEvent(event2.display);
+    loop: for (let date of viewDates2) {
+      let start = addDuration(cloneDate(date), min$1);
+      let end = addDuration(cloneDate(date), max$1);
+      let minStart = addDuration(cloneDate(date), minMin);
+      let maxEnd = addDuration(cloneDate(date), maxMax);
+      for (let event2 of filteredEvents2) if (!event2.allDay && filter(event2) && event2.start < maxEnd && event2.end > minStart) {
+        if (event2.start < start) {
+          let seconds = max((event2.start - date) / 1e3, toSeconds(minMin));
+          if (seconds < toSeconds(min$1)) min$1.seconds = seconds;
+        }
+        if (event2.end > end) {
+          let seconds = min((event2.end - date) / 1e3, toSeconds(maxMax));
+          if (seconds > toSeconds(max$1)) max$1.seconds = seconds;
+        }
+        if (toSeconds(min$1) === toSeconds(minMin) && toSeconds(max$1) === toSeconds(maxMax)) break loop;
+      }
+    }
+  }
+  return {
+    min: min$1,
+    max: max$1
+  };
+}
+function arrayProxy(array) {
+  let counter = 0;
+  let version = state(proxy(counter));
+  return proxy2(array, () => get(version), () => true, () => set(version, ++counter, true));
+}
+function objectProxy(object) {
+  let counter = 0;
+  let versions = proxy({});
+  return proxy2(object, (prop2) => versions[prop2], (a, b) => a !== b, (prop2) => versions[prop2] = ++counter);
+}
+function proxy2(target, setDependency, hasEffect, invokeEffect) {
+  return new Proxy(target, {
+    get(target2, prop2, receiver) {
+      if (hasOwn(target2, prop2)) setDependency(prop2);
+      return Reflect.get(target2, prop2, receiver);
+    },
+    set(target2, prop2, value, receiver) {
+      let has = hasEffect(target2[prop2], value);
+      let result = Reflect.set(target2, prop2, value, receiver);
+      if (has) invokeEffect(prop2);
+      return result;
+    }
+  });
+}
+function createOptions(plugins) {
+  let options = {
+    buttonText: { today: "today" },
+    customButtons: {},
+    customScrollbars: false,
+    date: /* @__PURE__ */ new Date(),
+    dateIncrement: void 0,
+    datesSet: void 0,
+    dayCellContent: void 0,
+    dayHeaderFormat: {
+      weekday: "short",
+      month: "numeric",
+      day: "numeric"
+    },
+    dayHeaderAriaLabelFormat: { dateStyle: "full" },
+    displayEventEnd: true,
+    duration: { weeks: 1 },
+    events: [],
+    eventAllUpdated: void 0,
+    eventBackgroundColor: void 0,
+    eventClassNames: void 0,
+    eventClick: void 0,
+    eventColor: void 0,
+    eventContent: void 0,
+    eventDidMount: void 0,
+    eventFilter: void 0,
+    eventGap: 1,
+    eventMouseEnter: void 0,
+    eventMouseLeave: void 0,
+    eventOrder: void 0,
+    eventOrderStrict: false,
+    eventSources: [],
+    eventTextColor: void 0,
+    eventTimeFormat: {
+      hour: "numeric",
+      minute: "2-digit"
+    },
+    filterEventsWithResources: false,
+    firstDay: 0,
+    headerToolbar: {
+      start: "title",
+      center: "",
+      end: "today prev,next"
+    },
+    height: void 0,
+    hiddenDays: [],
+    highlightedDates: [],
+    icons: {},
+    lazyFetching: true,
+    loading: void 0,
+    locale: void 0,
+    refetchResourcesOnNavigate: false,
+    resources: [],
+    selectable: false,
+    theme: {
+      active: "ec-active",
+      bgEvent: "ec-bg-event",
+      bgEvents: "ec-bg-events",
+      body: "ec-body",
+      button: "ec-button",
+      buttonGroup: "ec-button-group",
+      calendar: "ec",
+      colHead: "ec-col-head",
+      customScrollbars: "ec-custom-scrollbars",
+      day: "ec-day",
+      dayHead: "ec-day-head",
+      disabled: "ec-disabled",
+      endClipped: "ec-end-clipped",
+      event: "ec-event",
+      eventBody: "ec-event-body",
+      eventTime: "ec-event-time",
+      eventTitle: "ec-event-title",
+      events: "ec-events",
+      grid: "ec-grid",
+      header: "ec-header",
+      hidden: "ec-hidden",
+      highlight: "ec-highlight",
+      icon: "ec-icon",
+      main: "ec-main",
+      noBeb: "ec-no-beb",
+      noIeb: "ec-no-ieb",
+      startClipped: "ec-start-clipped",
+      today: "ec-today",
+      title: "ec-title",
+      toolbar: "ec-toolbar",
+      view: "",
+      weekdays: [
+        "ec-sun",
+        "ec-mon",
+        "ec-tue",
+        "ec-wed",
+        "ec-thu",
+        "ec-fri",
+        "ec-sat"
+      ],
+      weekNumber: "ec-week-number"
+    },
+    timeZone: "local",
+    titleFormat: {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    },
+    validRange: void 0,
+    view: void 0,
+    viewDidMount: void 0,
+    views: {}
+  };
+  for (let plugin of plugins) plugin.createOptions?.(options);
+  return options;
+}
+function createParsers(plugins) {
+  let parsers = {
+    date: (input) => setMidnight(createDate(input)),
+    dateIncrement: undefinedOr(createDuration),
+    duration: createDuration,
+    events: createEvents,
+    eventSources: createEventSources,
+    hiddenDays: (input) => [...new Set(input)],
+    highlightedDates: (input) => input.map((item) => setMidnight(createDate(item))),
+    resources: (input) => isArray(input) ? createResources(input) : isPlainObject(input) ? createSource(input) : input,
+    validRange: createDateRange
+  };
+  for (let plugin of plugins) plugin.createParsers?.(parsers);
+  return parsers;
+}
+var specialOptions = [
+  "buttonText",
+  "customButtons",
+  "icons",
+  "theme"
+];
+function optionsState(plugins, userOptions) {
+  let defOptions = createOptions(plugins);
+  let parsers = createParsers(plugins);
+  defOptions = parseOptions(defOptions, parsers);
+  userOptions = parseOptions(userOptions, parsers);
+  let defViews = extractOption(defOptions, "views") ?? {};
+  let userViews = extractOption(userOptions, "views") ?? {};
+  let options = objectProxy({});
+  assign2(options, defOptions);
+  if (userOptions.view) options.view = userOptions.view;
+  let setters = {};
+  let viewOptions = {};
+  let viewComponents = {};
+  let views = /* @__PURE__ */ new Set([...keys(defViews), ...keys(userViews)]);
+  for (let view2 of views) {
+    let userViewOptions = userViews[view2] ?? {};
+    let defOpts = mergeOpts(defOptions, defViews[view2] ?? defViews[userViewOptions.type] ?? {});
+    let opts = mergeOpts(defOpts, userOptions, userViewOptions);
+    let component2 = extractOption(opts, "component");
+    delete opts.view;
+    for (let key2 of keys(opts)) if (hasOwn(options, key2)) {
+      setters[key2] ??= [];
+      setters[key2].push(specialOptions.includes(key2) ? (value) => opts[key2] = isFunction(value) ? value(defOpts[key2]) : value : (value) => opts[key2] = value);
+    } else delete opts[key2];
+    viewOptions[view2] = opts;
+    viewComponents[view2] = component2;
+  }
+  assign2(options, viewOptions[options.view]);
+  return [
+    options,
+    function setOption(key2, value, parsed = true) {
+      if (hasOwn(options, key2)) {
+        if (!parsed) {
+          if (key2 in parsers) value = parsers[key2](value);
+          else if (isPlainObject(value)) value = { ...value };
+          else if (isArray(value)) value = [...value];
+        }
+        setters[key2]?.forEach((set2) => set2(value));
+        options[key2] = specialOptions.includes(key2) && isFunction(value) ? viewOptions[options.view][key2] : value;
+      }
+    },
+    function setViewOptions(view2) {
+      assign2(options, viewOptions[view2]);
+      return viewComponents[view2];
+    }
+  ];
+}
+function parseOptions(opts, parsers) {
+  let result = { ...opts };
+  for (let key2 of keys(parsers)) if (key2 in result) result[key2] = parsers[key2](result[key2]);
+  if (opts.views) {
+    result.views = {};
+    for (let view2 of keys(opts.views)) result.views[view2] = parseOptions(opts.views[view2], parsers);
+  }
+  return result;
+}
+function extractOption(options, name) {
+  let extracted = options[name];
+  delete options[name];
+  return extracted;
+}
+function mergeOpts(...args) {
+  let result = {};
+  for (let opts of args) {
+    let override = {};
+    for (let key2 of specialOptions) if (isFunction(opts[key2])) override[key2] = opts[key2](result[key2]);
+    result = {
+      ...result,
+      ...opts,
+      ...override
+    };
+  }
+  return result;
+}
+function diff(options, prevOptions) {
+  let diff2 = [];
+  for (let key2 of keys(options)) if (options[key2] !== prevOptions[key2]) diff2.push([key2, options[key2]]);
+  return diff2;
+}
+function switchView(mainState) {
+  return () => {
+    let { options: { view: view2 } } = mainState;
+    untrack(() => {
+      let initComponent = mainState.setViewOptions(view2);
+      mainState.extensions = {};
+      mainState.features = [];
+      mainState.viewComponent = initComponent(mainState);
+    });
+  };
+}
+function loadEvents(mainState, loadingInvoker) {
+  return () => {
+    let { activeRange: activeRange2, fetchedRange: { events: fetchedRange }, offset: offset2, viewDates: viewDates2, options: { events, eventSources, lazyFetching, timeZone } } = mainState;
+    untrack(() => {
+      load(eventSources.map((source2) => isFunction(source2.events) ? source2.events : source2), events, (input) => createEvents(input, offset2), (result) => mainState.events = arrayProxy(result), timeZone, activeRange2, fetchedRange, viewDates2, true, lazyFetching, loadingInvoker);
+    });
+  };
+}
+function loadResources(mainState, loadingInvoker) {
+  return () => {
+    let { activeRange: activeRange2, fetchedRange: { resources: fetchedRange }, viewDates: viewDates2, options: { lazyFetching, refetchResourcesOnNavigate, resources, timeZone } } = mainState;
+    untrack(() => {
+      load(isArray(resources) ? [] : [resources], resources, createResources, (result) => mainState.resources = arrayProxy(result), timeZone, activeRange2, fetchedRange, viewDates2, refetchResourcesOnNavigate, lazyFetching, loadingInvoker);
+    });
+  };
+}
+function load(sources, defaultResult, parseResult, applyResult, timeZone, activeRange2, fetchedRange, viewDates2, refetchOnNavigate, lazyFetching, loading) {
+  if (empty(viewDates2)) return;
+  if (empty(sources)) {
+    applyResult(defaultResult);
+    return;
+  }
+  if ((refetchOnNavigate || !fetchedRange.start) && (!lazyFetching || !fetchedRange.start || fetchedRange.start > activeRange2.start || fetchedRange.end < activeRange2.end || fetchedRange.timeZone !== timeZone)) {
+    let result = [];
+    let failure = (e) => loading.stop();
+    let success = (data) => {
+      result = result.concat(parseResult(data));
+      applyResult(result);
+      loading.stop();
+    };
+    let startStr = toISOString(activeRange2.start);
+    let endStr = toISOString(activeRange2.end);
+    for (let source2 of sources) {
+      loading.start();
+      if (isFunction(source2)) {
+        let result2 = source2(refetchOnNavigate ? {
+          start: toLocalDate(activeRange2.start),
+          end: toLocalDate(activeRange2.end),
+          startStr,
+          endStr,
+          timeZone
+        } : {}, success, failure);
+        if (result2 !== void 0) Promise.resolve(result2).then(success, failure);
+      } else {
+        let params = isFunction(source2.extraParams) ? source2.extraParams() : assign2({}, source2.extraParams);
+        if (refetchOnNavigate) {
+          params.start = startStr;
+          params.end = endStr;
+          if (timeZone !== "local") params.timeZone = timeZone;
+        }
+        params = new URLSearchParams(params);
+        let url = source2.url, headers = {}, body;
+        if (["GET", "HEAD"].includes(source2.method)) url += (url.includes("?") ? "&" : "?") + params;
+        else {
+          headers["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8";
+          body = String(params);
+        }
+        fetch(url, {
+          method: source2.method,
+          headers,
+          body,
+          signal: getAbortSignal(),
+          credentials: "same-origin"
+        }).then((response) => response.json()).then(success).catch(failure);
+      }
+    }
+    assign2(fetchedRange, {
+      ...activeRange2,
+      timeZone
+    });
+  }
+}
+function createLoadingInvoker(mainState) {
+  let counter = 0;
+  function invoke(value) {
+    let { options: { loading } } = mainState;
+    if (isFunction(loading)) loading(value);
+  }
+  return {
+    start: () => ++counter === 1 && invoke(true),
+    stop: () => --counter === 0 && invoke(false)
+  };
+}
+function setNowAndToday(mainState) {
+  return () => {
+    let { offset: offset2 } = mainState;
+    let interval = setInterval(() => {
+      let now = createDate(void 0, offset2);
+      let today = setMidnight(cloneDate(now));
+      mainState.now = now;
+      if (!datesEqual(mainState.today, today)) mainState.today = today;
+    }, 1e3);
+    return () => clearInterval(interval);
+  };
+}
+function handleTimeZoneChange(mainState) {
+  return () => {
+    let { offset: offset2, options } = mainState;
+    untrack(() => {
+      for (let event2 of mainState.events) if (!event2.allDay) for (let prop2 of ["start", "end"]) {
+        let dateOffset2 = getOffset(event2[prop2]);
+        if (dateOffset2 !== void 0) applyOffsetDiff(event2[prop2], offset2 - dateOffset2);
+        setOffset(event2[prop2], offset2);
+      }
+      let dateOffset = getOffset(options.date);
+      if (dateOffset !== void 0) {
+        let diff2 = createDate(void 0, offset2).getUTCDay() - createDate(void 0, dateOffset).getUTCDay();
+        let date = addDay(cloneDate(options.date), diff2);
+        mainState.setOption("date", date);
+      }
+      setOffset(options.date, offset2);
+    });
+  };
+}
+function runDatesSet(mainState) {
+  return () => {
+    let { activeRange: activeRange2, options: { datesSet } } = mainState;
+    untrack(() => {
+      if (isFunction(datesSet)) datesSet({
+        start: toLocalDate(activeRange2.start),
+        end: toLocalDate(activeRange2.end),
+        startStr: toISOString(activeRange2.start),
+        endStr: toISOString(activeRange2.end),
+        view: toViewWithLocalDates(mainState.view)
+      });
+    });
+  };
+}
+function runEventAllUpdated(mainState) {
+  let timer;
+  return () => {
+    let { filteredEvents: filteredEvents2, options: { eventAllUpdated } } = mainState;
+    untrack(() => {
+      if (isFunction(eventAllUpdated)) {
+        if (!timer) timer = setTimeout(() => {
+          timer = null;
+          eventAllUpdated({ view: toViewWithLocalDates(mainState.view) });
+        });
+      }
+    });
+  };
+}
+function runViewDidMount(mainState) {
+  return () => {
+    let { options: { view: view2, viewDidMount } } = mainState;
+    untrack(() => {
+      if (isFunction(viewDidMount)) tick().then(() => viewDidMount({ view: toViewWithLocalDates(mainState.view) }));
+    });
+  };
+}
+function currentRange(mainState) {
+  let prev;
+  return () => {
+    let { options: { date, duration, firstDay } } = mainState;
+    let start, end;
+    untrack(() => {
+      start = cloneDate(date);
+      if (duration.years) {
+        start.setUTCMonth(0);
+        start.setUTCDate(1);
+      } else if (duration.months) start.setUTCDate(1);
+      else if (duration.inWeeks) prevClosestDay(start, firstDay);
+      end = addDuration(cloneDate(start), duration);
+    });
+    if (prev && datesEqual(prev.start, start) && datesEqual(prev.end, end)) return prev;
+    return prev = {
+      start,
+      end
+    };
+  };
+}
+function activeRange(mainState) {
+  let prev;
+  return () => {
+    let { currentRange: currentRange2, extensions: { activeRange: activeRange2 } } = mainState;
+    let start, end;
+    untrack(() => {
+      start = cloneDate(currentRange2.start);
+      end = cloneDate(currentRange2.end);
+    });
+    let result = activeRange2 ? activeRange2(start, end) : {
+      start,
+      end
+    };
+    if (prev && datesEqual(prev.start, result.start) && datesEqual(prev.end, result.end)) return prev;
+    return prev = result;
+  };
+}
+function filteredEvents(mainState) {
+  return () => {
+    let { events, options: { eventFilter, eventOrder, filterEventsWithResources, resources, view: view2 } } = mainState;
+    let result = [...events];
+    untrack(() => {
+      if (isFunction(eventFilter)) {
+        let events2 = events.map(toEventWithLocalDates);
+        let view3 = toViewWithLocalDates(mainState.view);
+        result = result.filter((event2, index2) => eventFilter({
+          event: toEventWithLocalDates(event2),
+          index: index2,
+          events: events2,
+          view: view3
+        }));
+      }
+      if (filterEventsWithResources) result = result.filter((event2) => resources.some((resource) => event2.resourceIds.includes(resource.id)));
+      if (isFunction(eventOrder)) result.sort((a, b) => eventOrder(toEventWithLocalDates(a), toEventWithLocalDates(b)));
+      else result.sort((a, b) => a.start - b.start || b.allDay - a.allDay);
+    });
+    return result;
+  };
+}
+function offset(mainState) {
+  return () => {
+    let { options: { timeZone } } = mainState;
+    let offset2;
+    untrack(() => {
+      offset2 = timeZone === "local" ? tzOffset() : timeZone === "UTC" ? 0 : parseOffset(timeZone) ?? tzOffset();
+    });
+    return offset2;
+  };
+}
+function viewDates(mainState) {
+  return () => {
+    let { options, activeRange: activeRange2 } = mainState;
+    let { hiddenDays } = options;
+    let dates = [];
+    untrack(() => {
+      let date = setMidnight(cloneDate(activeRange2.start));
+      let end = setMidnight(cloneDate(activeRange2.end));
+      while (date < end) {
+        if (!hiddenDays.includes(date.getUTCDay())) dates.push(cloneDate(date));
+        addDay(date);
+      }
+      if (!dates.length && hiddenDays.length && hiddenDays.length < 7) {
+        while (hiddenDays.includes(date.getUTCDay())) addDay(date);
+        tick().then(() => {
+          mainState.setOption("date", date);
+        });
+      }
+    });
+    return dates;
+  };
+}
+function viewTitle(mainState) {
+  return () => {
+    let { currentRange: currentRange2, intlTitle } = mainState;
+    let title;
+    untrack(() => {
+      title = intlTitle.formatRange(currentRange2.start, subtractDay(cloneDate(currentRange2.end)));
+    });
+    return title;
+  };
+}
+function view(mainState) {
+  return () => {
+    let { activeRange: activeRange2, currentRange: currentRange2, viewTitle: viewTitle2, options: { view: view2 } } = mainState;
+    let viewObj;
+    untrack(() => {
+      viewObj = createView(view2, viewTitle2, currentRange2, activeRange2);
+    });
+    return viewObj;
+  };
+}
+var State = class {
+  #auxComponents;
+  get auxComponents() {
+    return get(this.#auxComponents);
+  }
+  set auxComponents(value) {
+    set(this.#auxComponents, value, true);
+  }
+  #offset;
+  get offset() {
+    return get(this.#offset);
+  }
+  set offset(value) {
+    set(this.#offset, value);
+  }
+  #currentRange;
+  get currentRange() {
+    return get(this.#currentRange);
+  }
+  set currentRange(value) {
+    set(this.#currentRange, value);
+  }
+  #activeRange;
+  get activeRange() {
+    return get(this.#activeRange);
+  }
+  set activeRange(value) {
+    set(this.#activeRange, value);
+  }
+  #fetchedRange;
+  get fetchedRange() {
+    return get(this.#fetchedRange);
+  }
+  set fetchedRange(value) {
+    set(this.#fetchedRange, value, true);
+  }
+  #events;
+  get events() {
+    return get(this.#events);
+  }
+  set events(value) {
+    set(this.#events, value);
+  }
+  #filteredEvents;
+  get filteredEvents() {
+    return get(this.#filteredEvents);
+  }
+  set filteredEvents(value) {
+    set(this.#filteredEvents, value);
+  }
+  #mainEl;
+  get mainEl() {
+    return get(this.#mainEl);
+  }
+  set mainEl(value) {
+    set(this.#mainEl, value, true);
+  }
+  #now;
+  get now() {
+    return get(this.#now);
+  }
+  set now(value) {
+    set(this.#now, value, true);
+  }
+  #resources;
+  get resources() {
+    return get(this.#resources);
+  }
+  set resources(value) {
+    set(this.#resources, value);
+  }
+  #scrollDate;
+  get scrollDate() {
+    return get(this.#scrollDate);
+  }
+  set scrollDate(value) {
+    set(this.#scrollDate, value, true);
+  }
+  #today;
+  get today() {
+    return get(this.#today);
+  }
+  set today(value) {
+    set(this.#today, value, true);
+  }
+  #intlEventTime;
+  get intlEventTime() {
+    return get(this.#intlEventTime);
+  }
+  set intlEventTime(value) {
+    set(this.#intlEventTime, value);
+  }
+  #intlDayHeader;
+  get intlDayHeader() {
+    return get(this.#intlDayHeader);
+  }
+  set intlDayHeader(value) {
+    set(this.#intlDayHeader, value);
+  }
+  #intlDayHeaderAL;
+  get intlDayHeaderAL() {
+    return get(this.#intlDayHeaderAL);
+  }
+  set intlDayHeaderAL(value) {
+    set(this.#intlDayHeaderAL, value);
+  }
+  #intlTitle;
+  get intlTitle() {
+    return get(this.#intlTitle);
+  }
+  set intlTitle(value) {
+    set(this.#intlTitle, value);
+  }
+  #viewDates;
+  get viewDates() {
+    return get(this.#viewDates);
+  }
+  set viewDates(value) {
+    set(this.#viewDates, value);
+  }
+  #viewTitle;
+  get viewTitle() {
+    return get(this.#viewTitle);
+  }
+  set viewTitle(value) {
+    set(this.#viewTitle, value);
+  }
+  #view;
+  get view() {
+    return get(this.#view);
+  }
+  set view(value) {
+    set(this.#view, value);
+  }
+  #viewComponent;
+  get viewComponent() {
+    return get(this.#viewComponent);
+  }
+  set viewComponent(value) {
+    set(this.#viewComponent, value, true);
+  }
+  #extensions;
+  get extensions() {
+    return get(this.#extensions);
+  }
+  set extensions(value) {
+    set(this.#extensions, value, true);
+  }
+  #features;
+  get features() {
+    return get(this.#features);
+  }
+  set features(value) {
+    set(this.#features, value, true);
+  }
+  #interaction;
+  get interaction() {
+    return get(this.#interaction);
+  }
+  set interaction(value) {
+    set(this.#interaction, value, true);
+  }
+  #iClasses;
+  get iClasses() {
+    return get(this.#iClasses);
+  }
+  set iClasses(value) {
+    set(this.#iClasses, value, true);
+  }
+  #iClass;
+  get iClass() {
+    return get(this.#iClass);
+  }
+  set iClass(value) {
+    set(this.#iClass, value, true);
+  }
+  options;
+  setOption;
+  setViewOptions;
+  constructor(plugins, options) {
+    [this.options, this.setOption, this.setViewOptions] = optionsState(plugins, options);
+    this.#auxComponents = state(proxy([]));
+    this.#offset = user_derived(offset(this));
+    this.#currentRange = user_derived(currentRange(this));
+    this.#activeRange = user_derived(activeRange(this));
+    this.#fetchedRange = state(proxy({
+      events: {},
+      resources: {}
+    }));
+    this.#events = state(arrayProxy(this.options.events));
+    this.#filteredEvents = user_derived(filteredEvents(this));
+    this.#mainEl = state();
+    this.#now = state(proxy(createDate(void 0, this.offset)));
+    this.#resources = state(arrayProxy(isArray(this.options.resources) ? this.options.resources : []));
+    this.#scrollDate = state();
+    this.#today = state(proxy(setMidnight(cloneDate(this.now))));
+    this.#intlEventTime = user_derived(intlRange(this, "eventTimeFormat", true));
+    this.#intlDayHeader = user_derived(intl(this, "dayHeaderFormat"));
+    this.#intlDayHeaderAL = user_derived(intl(this, "dayHeaderAriaLabelFormat"));
+    this.#intlTitle = user_derived(intlRange(this, "titleFormat"));
+    this.#viewDates = user_derived(viewDates(this));
+    this.#viewTitle = user_derived(viewTitle(this));
+    this.#view = user_derived(view(this));
+    this.#viewComponent = state();
+    this.#extensions = state(proxy({}));
+    this.#features = state(proxy([]));
+    this.snippets = {};
+    this.#interaction = state(proxy({}));
+    this.iEvents = new SvelteMap();
+    this.#iClasses = state(proxy(identity));
+    this.#iClass = state();
+    for (let plugin of plugins) plugin.initState?.(this);
+    this.#initEffects();
+  }
+  #initEffects() {
+    let loading = createLoadingInvoker(this);
+    user_pre_effect(switchView(this));
+    user_pre_effect(handleTimeZoneChange(this));
+    user_pre_effect(setNowAndToday(this));
+    user_effect(loadEvents(this, loading));
+    user_effect(loadResources(this, loading));
+    user_effect(runDatesSet(this));
+    user_effect(runEventAllUpdated(this));
+    user_effect(runViewDidMount(this));
+  }
+};
+var root$21 = from_html(`<h2></h2>`);
+var root_1$9 = from_html(`<button><i></i></button>`);
+var root_2$5 = from_html(`<button> </button>`);
+var root_3$1 = from_html(`<div><!></div>`);
+var root_4$1 = from_html(`<button></button>`);
+function Buttons($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  let currentRange2 = user_derived(() => mainState.currentRange), snippets = user_derived(() => mainState.snippets), today = user_derived(() => mainState.today), viewTitle2 = user_derived(() => mainState.viewTitle), viewDates2 = user_derived(() => mainState.viewDates), buttonText = user_derived(() => mainState.options.buttonText), customButtons = user_derived(() => mainState.options.customButtons), date = user_derived(() => mainState.options.date), dateIncrement = user_derived(() => mainState.options.dateIncrement), duration = user_derived(() => mainState.options.duration), hiddenDays = user_derived(() => mainState.options.hiddenDays), theme = user_derived(() => mainState.options.theme), validRange = user_derived(() => mainState.options.validRange), view2 = user_derived(() => mainState.options.view);
+  let prevDisabled = state(false);
+  let nextDisabled = state(false);
+  let todayDisabled = state(false);
+  let running = false;
+  user_pre_effect(() => {
+    get(viewDates2);
+    get(validRange);
+    $$props.buttons;
+    untrack(() => {
+      if (!running) {
+        running = true;
+        if ($$props.buttons.includes("prev")) {
+          set(prevDisabled, false);
+          if (get(validRange).start) set(prevDisabled, test(prev), true);
+        }
+        if ($$props.buttons.includes("next")) {
+          set(nextDisabled, false);
+          if (get(validRange).end) set(nextDisabled, test(next2), true);
+        }
+        if ($$props.buttons.includes("today")) {
+          set(todayDisabled, get(today) >= get(currentRange2).start && get(today) < get(currentRange2).end, true);
+          if (!get(todayDisabled) && (get(validRange).start || get(validRange).end)) set(todayDisabled, test(setToday), true);
+        }
+        tick().then(() => running = false);
+      }
+    });
+  });
+  function test(fn) {
+    let currentDate = get(date);
+    fn();
+    let result = get(viewDates2).every((date2) => outsideRange(date2, get(validRange)));
+    mainState.setOption("date", currentDate);
+    return result;
+  }
+  function prev() {
+    mainState.setOption("date", prevDate(cloneDate(get(date)), get(dateIncrement) ?? get(duration), get(hiddenDays)));
+  }
+  function next2() {
+    mainState.setOption("date", nextDate(cloneDate(get(date)), get(dateIncrement) ?? get(duration), get(hiddenDays)));
+  }
+  function setToday() {
+    mainState.setOption("date", cloneDate(get(today)));
+  }
+  function snippetName(button) {
+    return "customButton" + button.charAt(0).toUpperCase() + button.slice(1);
+  }
+  var fragment = comment();
+  var node = first_child(fragment);
+  each(node, 17, () => $$props.buttons, index, ($$anchor2, button) => {
+    var fragment_1 = comment();
+    var node_1 = first_child(fragment_1);
+    var consequent = ($$anchor3) => {
+      var h2 = root$21();
+      attach(h2, () => contentFrom(get(viewTitle2)));
+      template_effect(() => set_class(h2, 1, get(theme).title));
+      append($$anchor3, h2);
+    };
+    var consequent_1 = ($$anchor3) => {
+      var button_1 = root_1$9();
+      var i = only_child(button_1);
+      template_effect(() => {
+        set_class(button_1, 1, `${get(theme).button ?? ""} ec-${get(button) ?? ""}`);
+        set_attribute2(button_1, "aria-label", get(buttonText).prev);
+        set_attribute2(button_1, "title", get(buttonText).prev);
+        button_1.disabled = get(prevDisabled);
+        set_class(i, 1, `${get(theme).icon ?? ""} ec-${get(button) ?? ""}`);
+      });
+      delegated("click", button_1, prev);
+      append($$anchor3, button_1);
+    };
+    var consequent_2 = ($$anchor3) => {
+      var button_2 = root_1$9();
+      var i_1 = only_child(button_2);
+      template_effect(() => {
+        set_class(button_2, 1, `${get(theme).button ?? ""} ec-${get(button) ?? ""}`);
+        set_attribute2(button_2, "aria-label", get(buttonText).next);
+        set_attribute2(button_2, "title", get(buttonText).next);
+        button_2.disabled = get(nextDisabled);
+        set_class(i_1, 1, `${get(theme).icon ?? ""} ec-${get(button) ?? ""}`);
+      });
+      delegated("click", button_2, next2);
+      append($$anchor3, button_2);
+    };
+    var consequent_3 = ($$anchor3) => {
+      var button_3 = root_2$5();
+      var text2 = only_child(button_3, true);
+      template_effect(() => {
+        set_class(button_3, 1, `${get(theme).button ?? ""} ec-${get(button) ?? ""}`);
+        button_3.disabled = get(todayDisabled);
+        set_text(text2, get(buttonText)[get(button)]);
+      });
+      delegated("click", button_3, setToday);
+      append($$anchor3, button_3);
+    };
+    var consequent_4 = ($$anchor3) => {
+      const item = user_derived(() => createContent(get(customButtons)[get(button)]?.content, void 0, void 0, get(snippets)[snippetName(get(button))]));
+      var div = root_3$1();
+      var node_2 = child(div);
+      snippet(node_2, () => get(item).snippet ?? noop);
+      reset(div);
+      attach(div, () => contentFrom(get(item).content, get(item).snippet));
+      template_effect(() => set_class(div, 1, `ec-${get(button) ?? ""}`));
+      append($$anchor3, div);
+    };
+    var d = user_derived(() => get(snippets)[snippetName(get(button))] || get(customButtons)[get(button)]?.content != null);
+    var consequent_5 = ($$anchor3) => {
+      var button_4 = root_4$1();
+      attach(button_4, () => contentFrom(get(customButtons)[get(button)].text));
+      template_effect(() => set_class(button_4, 1, clsx2([
+        get(theme).button,
+        `ec-${get(button)}`,
+        get(customButtons)[get(button)].active && get(theme).active
+      ])));
+      delegated("click", button_4, function(...$$args) {
+        get(customButtons)[get(button)].click?.apply(this, $$args);
+      });
+      append($$anchor3, button_4);
+    };
+    var alternate = ($$anchor3) => {
+      var button_5 = root_2$5();
+      var text_1 = only_child(button_5, true);
+      template_effect(() => {
+        set_class(button_5, 1, clsx2([
+          get(theme).button,
+          `ec-${get(button)}`,
+          get(view2) === get(button) && get(theme).active
+        ]));
+        set_text(text_1, get(buttonText)[get(button)]);
+      });
+      delegated("click", button_5, () => mainState.setOption("view", get(button)));
+      append($$anchor3, button_5);
+    };
+    if_block(node_1, ($$render) => {
+      if (get(button) === "title") $$render(consequent);
+      else if (get(button) === "prev") $$render(consequent_1, 1);
+      else if (get(button) === "next") $$render(consequent_2, 2);
+      else if (get(button) === "today") $$render(consequent_3, 3);
+      else if (get(d)) $$render(consequent_4, 4);
+      else if (get(customButtons)[get(button)]) $$render(consequent_5, 5);
+      else $$render(alternate, -1);
+    });
+    append($$anchor2, fragment_1);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+delegate(["click"]);
+var root$20 = from_html(`<div><!></div>`);
+var root_1$8 = from_html(`<div></div>`);
+var root_2$4 = from_html(`<nav></nav>`);
+function Toolbar($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), headerToolbar = user_derived(() => get($$d).options.headerToolbar), theme = user_derived(() => get($$d).options.theme);
+  let sections = user_derived(() => {
+    let sections2 = {};
+    for (let key2 of [
+      "start",
+      "center",
+      "end"
+    ]) sections2[key2] = get(headerToolbar)[key2]?.split(" ").filter(Boolean).map((group) => group.split(",").filter(Boolean)) ?? [];
+    return sections2;
+  });
+  var nav = root_2$4();
+  each(nav, 21, () => keys(get(sections)), index, ($$anchor2, key2) => {
+    var div = root_1$8();
+    each(div, 21, () => get(sections)[get(key2)], index, ($$anchor3, buttons) => {
+      var fragment = comment();
+      var node = first_child(fragment);
+      var consequent = ($$anchor4) => {
+        var div_1 = root$20();
+        Buttons(child(div_1), { get buttons() {
+          return get(buttons);
+        } });
+        reset(div_1);
+        template_effect(() => set_class(div_1, 1, get(theme).buttonGroup));
+        append($$anchor4, div_1);
+      };
+      var alternate = ($$anchor4) => {
+        Buttons($$anchor4, { get buttons() {
+          return get(buttons);
+        } });
+      };
+      if_block(node, ($$render) => {
+        if (get(buttons).length > 1) $$render(consequent);
+        else $$render(alternate, -1);
+      });
+      append($$anchor3, fragment);
+    });
+    reset(div);
+    template_effect(() => set_class(div, 1, `ec-${get(key2) ?? ""}`));
+    append($$anchor2, div);
+  });
+  reset(nav);
+  template_effect(() => set_class(nav, 1, get(theme).toolbar));
+  append($$anchor, nav);
+  pop();
+}
+var rest_excludes = /* @__PURE__ */ new Set([
+  "$$slots",
+  "$$events",
+  "$$legacy",
+  "plugins",
+  "options"
+]);
+var root$19 = from_html(`<div><!> <!> <!></div>`);
+function Calendar($$anchor, $$props) {
+  push($$props, true);
+  let plugins = prop($$props, "plugins", 19, () => []), options = prop($$props, "options", 19, () => ({})), snippets = rest_props($$props, rest_excludes);
+  let mainState = new State(plugins(), options());
+  mainState.snippets = snippets;
+  setContext("state", mainState);
+  let auxComponents = user_derived(() => mainState.auxComponents), features = user_derived(() => mainState.features), events = user_derived(() => mainState.events), interaction = user_derived(() => mainState.interaction), iClass = user_derived(() => mainState.iClass), offset2 = user_derived(() => mainState.offset), view2 = user_derived(() => mainState.view), View = user_derived(() => mainState.viewComponent), date = user_derived(() => mainState.options.date), dateIncrement = user_derived(() => mainState.options.dateIncrement), duration = user_derived(() => mainState.options.duration), height2 = user_derived(() => mainState.options.height), hiddenDays = user_derived(() => mainState.options.hiddenDays), customScrollbars = user_derived(() => mainState.options.customScrollbars), theme = user_derived(() => mainState.options.theme);
+  let prevOptions = { ...options() };
+  user_pre_effect(() => {
+    for (let [name, value] of diff(options(), prevOptions)) untrack(() => {
+      setOption(name, value);
+    });
+    assign2(prevOptions, options());
+  });
+  function setOption(name, value) {
+    mainState.setOption(name, value, false);
+    return this;
+  }
+  function getOption(name) {
+    let value = mainState.options[name];
+    return isDate(value) ? toLocalDate(value) : value;
+  }
+  function refetchResources() {
+    mainState.fetchedRange.resources = {};
+    return this;
+  }
+  function refetchEvents() {
+    mainState.fetchedRange.events = {};
+    return this;
+  }
+  function getEvents() {
+    return get(events).map(toEventWithLocalDates);
+  }
+  function getEventById(id) {
+    id = String(id);
+    for (let event2 of get(events)) if (event2.id === id) return toEventWithLocalDates(event2);
+    return null;
+  }
+  function addEvent(event2) {
+    event2 = createEvents([event2], get(offset2))[0];
+    get(events).push(event2);
+    return toEventWithLocalDates(event2);
+  }
+  function updateEvent(event2) {
+    let id = String(event2.id);
+    let idx = get(events).findIndex((event3) => event3.id === id);
+    if (idx >= 0) {
+      event2 = createEvents([event2], get(offset2))[0];
+      get(events)[idx] = event2;
+      return toEventWithLocalDates(event2);
+    }
+    return null;
+  }
+  function removeEventById(id) {
+    id = String(id);
+    let idx = get(events).findIndex((event2) => event2.id === id);
+    if (idx >= 0) get(events).splice(idx, 1);
+    return this;
+  }
+  function getView() {
+    return toViewWithLocalDates(get(view2));
+  }
+  function unselect() {
+    get(interaction).action?.unselect();
+    return this;
+  }
+  function dateFromPoint(x, y) {
+    let dayEl = getElementWithPayload(x, y);
+    if (dayEl) {
+      let info = getPayload(dayEl)(x, y);
+      info.date = toLocalDate(info.date);
+      return info;
+    }
+    return null;
+  }
+  function gotoDate(date2) {
+    date2 = setMidnight(createDate(date2));
+    mainState.setOption("date", cloneDate(date2));
+    mainState.scrollDate = date2;
+    return this;
+  }
+  function next2() {
+    mainState.setOption("date", nextDate(cloneDate(get(date)), get(dateIncrement) ?? get(duration), get(hiddenDays)));
+    return this;
+  }
+  function prev() {
+    mainState.setOption("date", prevDate(cloneDate(get(date)), get(dateIncrement) ?? get(duration), get(hiddenDays)));
+    return this;
+  }
+  var $$exports = {
+    setOption,
+    getOption,
+    refetchResources,
+    refetchEvents,
+    getEvents,
+    getEventById,
+    addEvent,
+    updateEvent,
+    removeEventById,
+    getView,
+    unselect,
+    dateFromPoint,
+    gotoDate,
+    next: next2,
+    prev
+  };
+  var div = root$19();
+  let styles;
+  var node = child(div);
+  Toolbar(node, {});
+  var node_1 = sibling(node, 2);
+  component(node_1, () => get(View), ($$anchor2, View_1) => {
+    View_1($$anchor2, {});
+  });
+  var node_2 = sibling(node_1, 2);
+  each(node_2, 17, () => get(auxComponents), index, ($$anchor2, AuxComponent) => {
+    var fragment = comment();
+    var node_3 = first_child(fragment);
+    component(node_3, () => get(AuxComponent), ($$anchor3, AuxComponent_1) => {
+      AuxComponent_1($$anchor3, {});
+    });
+    append($$anchor2, fragment);
+  });
+  reset(div);
+  template_effect(($0) => {
+    set_class(div, 1, clsx2([
+      get(theme).calendar,
+      get(theme).view,
+      get(iClass) && get(theme)[get(iClass)],
+      get(customScrollbars) && get(theme).customScrollbars
+    ]));
+    set_attribute2(div, "role", $0);
+    styles = set_style(div, "", styles, { height: get(height2) });
+  }, [() => get(features).includes("list") ? "list" : "table"]);
+  append($$anchor, div);
+  return pop($$exports);
+}
+function createDROptions(options) {
+  if (!("weekNumbers" in options)) assign2(options, {
+    weekNumbers: false,
+    weekNumberContent: void 0
+  });
+}
+function colsCount(mainState) {
+  return () => {
+    let { viewDates: viewDates2, options: { duration, hiddenDays } } = mainState;
+    let count;
+    untrack(() => count = duration.months || duration.inWeeks ? 7 - hiddenDays.length : viewDates2.length);
+    return count;
+  };
+}
+function grid$3(mainState, viewState) {
+  return () => {
+    let { options: { highlightedDates, validRange }, viewDates: viewDates2 } = mainState;
+    let { colsCount: colsCount2 } = viewState;
+    let grid2 = [];
+    untrack(() => {
+      let days = [];
+      let gridColumn = 1;
+      let gridRow = 1;
+      for (let date of viewDates2) {
+        days.push({
+          gridColumn,
+          gridRow,
+          resource: void 0,
+          dayStart: date,
+          dayEnd: addDay(cloneDate(date)),
+          disabled: outsideRange(date, validRange),
+          highlight: highlightedDates.some((d) => datesEqual(d, date))
+        });
+        if (gridColumn === colsCount2) {
+          grid2.push(days);
+          days = [];
+          gridColumn = 0;
+          ++gridRow;
+        }
+        ++gridColumn;
+      }
+    });
+    return grid2;
+  };
+}
+function eventChunks$2(mainState, viewState) {
+  return () => {
+    let { filteredEvents: filteredEvents2 } = mainState;
+    let { grid: grid2 } = viewState;
+    let chunks = [];
+    let bgChunks = [];
+    untrack(() => {
+      for (let event2 of filteredEvents2) for (let days of grid2) if (bgEvent(event2.display)) {
+        if (event2.allDay) bgChunks = bgChunks.concat(createAllDayChunks(event2, days));
+      } else chunks = chunks.concat(createAllDayChunks(event2, days));
+      prepareAllDayChunks(chunks);
+    });
+    return {
+      chunks,
+      bgChunks
+    };
+  };
+}
+function iEventChunks$2(mainState, viewState) {
+  return () => {
+    let { iEvents } = mainState;
+    let { grid: grid2 } = viewState;
+    let iChunks = [];
+    for (let [, event2] of iEvents) {
+      if (!event2) continue;
+      untrack(() => {
+        for (let days of grid2) iChunks = iChunks.concat(createAllDayChunks(event2, days, false));
+      });
+    }
+    return iChunks;
+  };
+}
+var ViewState$4 = class {
+  #colsCount;
+  get colsCount() {
+    return get(this.#colsCount);
+  }
+  set colsCount(value) {
+    set(this.#colsCount, value);
+  }
+  #grid;
+  get grid() {
+    return get(this.#grid);
+  }
+  set grid(value) {
+    set(this.#grid, value);
+  }
+  #gridEl;
+  get gridEl() {
+    return get(this.#gridEl);
+  }
+  set gridEl(value) {
+    set(this.#gridEl, value, true);
+  }
+  #chunks;
+  get chunks() {
+    return get(this.#chunks);
+  }
+  set chunks(value) {
+    set(this.#chunks, value);
+  }
+  #bgChunks;
+  get bgChunks() {
+    return get(this.#bgChunks);
+  }
+  set bgChunks(value) {
+    set(this.#bgChunks, value);
+  }
+  #iChunks;
+  get iChunks() {
+    return get(this.#iChunks);
+  }
+  set iChunks(value) {
+    set(this.#iChunks, value);
+  }
+  #intlDayCell;
+  get intlDayCell() {
+    return get(this.#intlDayCell);
+  }
+  set intlDayCell(value) {
+    set(this.#intlDayCell, value);
+  }
+  #intlDayPopover;
+  get intlDayPopover() {
+    return get(this.#intlDayPopover);
+  }
+  set intlDayPopover(value) {
+    set(this.#intlDayPopover, value);
+  }
+  #popupDay;
+  get popupDay() {
+    return get(this.#popupDay);
+  }
+  set popupDay(value) {
+    set(this.#popupDay, value, true);
+  }
+  constructor(mainState) {
+    this.#colsCount = user_derived(colsCount(mainState));
+    this.#grid = user_derived(grid$3(mainState, this));
+    this.#gridEl = state();
+    let $$d = user_derived(eventChunks$2(mainState, this)), chunks = user_derived(() => get($$d).chunks), bgChunks = user_derived(() => get($$d).bgChunks);
+    this.#chunks = user_derived(() => get(chunks));
+    this.#bgChunks = user_derived(() => get(bgChunks));
+    this.#iChunks = user_derived(iEventChunks$2(mainState, this));
+    this.hiddenChunks = new SvelteMap();
+    this.#intlDayCell = user_derived(intl(mainState, "dayCellFormat"));
+    this.#intlDayPopover = user_derived(intl(mainState, "dayPopoverFormat"));
+    this.#popupDay = state(null);
+  }
+};
+var root$18 = from_html(`<div><!></div>`);
+function BaseDay($$anchor, $$props) {
+  push($$props, true);
+  let el = prop($$props, "el", 15), allDay = prop($$props, "allDay", 3, false), resource = prop($$props, "resource", 3, void 0), dateFromPoint = prop($$props, "dateFromPoint", 3, () => $$props.date), classes = prop($$props, "classes", 3, identity), disabled = prop($$props, "disabled", 3, false), highlight = prop($$props, "highlight", 3, false), role = prop($$props, "role", 3, "cell"), noIeb = prop($$props, "noIeb", 3, false), noBeb = prop($$props, "noBeb", 3, false), defaultContent = prop($$props, "defaultContent", 3, void 0);
+  let $$d = user_derived(() => getContext("state")), today = user_derived(() => get($$d).today), snippets = user_derived(() => get($$d).snippets), action2 = user_derived(() => get($$d).interaction.action), dayCellContent = user_derived(() => get($$d).options.dayCellContent), theme = user_derived(() => get($$d).options.theme);
+  let $$d_1 = user_derived(() => getContext("view-state")), snap2 = user_derived(() => get($$d_1).snap);
+  let isToday = user_derived(() => datesEqual($$props.date, get(today)));
+  let dayCell = user_derived(() => createContent(get(dayCellContent), () => ({
+    allDay: allDay(),
+    date: toLocalDate($$props.date),
+    isToday: get(isToday),
+    resource: resource()
+  }), defaultContent(), get(snippets).dayCellContent));
+  let classNames = user_derived(() => classes()([
+    get(theme).day,
+    get(theme).weekdays?.[$$props.date.getUTCDay()],
+    get(isToday) && get(theme).today,
+    highlight() && get(theme).highlight,
+    disabled() && get(theme).disabled,
+    noIeb() && get(theme).noIeb,
+    noBeb() && get(theme).noBeb
+  ]));
+  onMount(() => {
+    setPayload(el(), (x, y) => {
+      return {
+        allDay: allDay(),
+        date: dateFromPoint()(x, y),
+        resource: resource(),
+        dayEl: el(),
+        disabled: disabled()
+      };
+    });
+  });
+  let onpointerdown = user_derived(() => !disabled() && get(action2) ? (jsEvent) => get(action2).select(jsEvent, get(snap2)) : void 0);
+  var div = root$18();
+  var node = child(div);
+  var consequent = ($$anchor2) => {
+    var fragment = comment();
+    var node_1 = first_child(fragment);
+    snippet(node_1, () => $$props.content, () => get(dayCell));
+    append($$anchor2, fragment);
+  };
+  var alternate = ($$anchor2) => {
+    var fragment_1 = comment();
+    var node_2 = first_child(fragment_1);
+    snippet(node_2, () => get(dayCell).snippet ?? noop, () => get(dayCell).arg);
+    append($$anchor2, fragment_1);
+  };
+  if_block(node, ($$render) => {
+    if ($$props.content) $$render(consequent);
+    else $$render(alternate, -1);
+  });
+  reset(div);
+  bind_this(div, ($$value) => el($$value), () => el());
+  attach(div, () => $$props.content ? null : contentFrom(get(dayCell).content, get(dayCell).snippet));
+  template_effect(() => {
+    set_class(div, 1, clsx2(get(classNames)));
+    set_attribute2(div, "role", role());
+  });
+  delegated("pointerdown", div, function(...$$args) {
+    get(onpointerdown)?.apply(this, $$args);
+  });
+  append($$anchor, div);
+  pop();
+}
+delegate(["pointerdown"]);
+var root$17 = from_html(`<div><!></div>`);
+var root_1$7 = from_html(`<article><!></article>`);
+function BaseEvent($$anchor, $$props) {
+  push($$props, true);
+  let el = prop($$props, "el", 15), classes = prop($$props, "classes", 3, identity), styles = prop($$props, "styles", 3, identity);
+  let $$d = user_derived(() => getContext("state")), intlEventTime = user_derived(() => get($$d).intlEventTime), resources = user_derived(() => get($$d).resources), snippets = user_derived(() => get($$d).snippets), view2 = user_derived(() => get($$d).view), displayEventEnd = user_derived(() => get($$d).options.displayEventEnd), eventBackgroundColor$1 = user_derived(() => get($$d).options.eventBackgroundColor), eventColor = user_derived(() => get($$d).options.eventColor), eventContent = user_derived(() => get($$d).options.eventContent), eventClick = user_derived(() => get($$d).options.eventClick), eventDidMount = user_derived(() => get($$d).options.eventDidMount), eventClassNames = user_derived(() => get($$d).options.eventClassNames), eventMouseEnter = user_derived(() => get($$d).options.eventMouseEnter), eventMouseLeave = user_derived(() => get($$d).options.eventMouseLeave), eventTextColor$1 = user_derived(() => get($$d).options.eventTextColor), theme = user_derived(() => get($$d).options.theme);
+  let event2 = user_derived(() => $$props.chunk.event);
+  let display = user_derived(() => $$props.chunk.event.display);
+  let bgColor = user_derived(() => get(event2).backgroundColor ?? eventBackgroundColor($$props.chunk.resource ?? findFirstResource(get(event2), get(resources))) ?? get(eventBackgroundColor$1) ?? get(eventColor));
+  let txtColor = user_derived(() => get(event2).textColor ?? eventTextColor($$props.chunk.resource ?? findFirstResource(get(event2), get(resources))) ?? get(eventTextColor$1));
+  let style = user_derived(() => entries(styles()({
+    "background-color": get(bgColor),
+    "color": get(txtColor)
+  })).map((entry) => `${entry[0]}:${entry[1]}`).concat(get(event2).styles).join(";"));
+  let classNames = user_derived(() => {
+    let classNames2 = [bgEvent(get(display)) ? get(theme).bgEvent : get(theme).event];
+    if (get(event2).allDay) {
+      if (!datesEqual(setMidnight(cloneDate($$props.chunk.start)), get(event2).start)) classNames2.push(get(theme).startClipped);
+      let end1 = cloneDate($$props.chunk.end);
+      let end2 = cloneDate(get(event2).end);
+      end1.setUTCSeconds(end1.getUTCSeconds() - 1);
+      end2.setUTCSeconds(end2.getUTCSeconds() - 1);
+      if (!datesEqual(setMidnight(end1), setMidnight(end2))) classNames2.push(get(theme).endClipped);
+    } else {
+      if (!datesEqual($$props.chunk.start, get(event2).start)) classNames2.push(get(theme).startClipped);
+      if (!datesEqual($$props.chunk.end, get(event2).end)) classNames2.push(get(theme).endClipped);
+    }
+    return classes()(classNames2.concat(createEventClasses(get(eventClassNames), get(event2), get(view2))));
+  });
+  let timeText = user_derived(() => createEventTimeText($$props.chunk, get(displayEventEnd), get(intlEventTime)));
+  let content = user_derived(() => createContent(get(eventContent), () => ({
+    event: toEventWithLocalDates(get(event2)),
+    timeText: get(timeText),
+    view: toViewWithLocalDates(get(view2))
+  }), () => createDefaultEventContent($$props.chunk, get(timeText), get(theme)), get(snippets).eventContent));
+  onMount(() => {
+    if (isFunction(get(eventDidMount))) get(eventDidMount)({
+      event: toEventWithLocalDates(get(event2)),
+      timeText: get(timeText),
+      el: el(),
+      view: toViewWithLocalDates(get(view2))
+    });
+  });
+  function createHandler(fn, display2) {
+    return isFunction(fn) && !helperEvent(display2) ? (jsEvent) => fn({
+      event: toEventWithLocalDates(get(event2)),
+      el: el(),
+      jsEvent,
+      view: toViewWithLocalDates(get(view2))
+    }) : void 0;
+  }
+  let onclick = user_derived(() => !bgEvent(get(display)) && createHandler(get(eventClick), get(display)) || void 0);
+  let onkeydown = user_derived(() => get(onclick) && keyEnter(get(onclick)));
+  let onmouseenter = user_derived(() => createHandler(get(eventMouseEnter), get(display)));
+  let onmouseleave = user_derived(() => createHandler(get(eventMouseLeave), get(display)));
+  var article = root_1$7();
+  {
+    const defaultBody = ($$anchor2) => {
+      var div = root$17();
+      var node = child(div);
+      snippet(node, () => get(content).snippet ?? noop, () => get(content).arg);
+      reset(div);
+      attach(div, () => contentFrom(get(content).content, get(content).snippet));
+      template_effect(() => set_class(div, 1, clsx2(get(theme).eventBody)));
+      append($$anchor2, div);
+    };
+    var node_1 = child(article);
+    var consequent = ($$anchor2) => {
+      var fragment = comment();
+      var node_2 = first_child(fragment);
+      snippet(node_2, () => $$props.body, () => defaultBody, () => get(bgColor), () => get(txtColor));
+      append($$anchor2, fragment);
+    };
+    var alternate = ($$anchor2) => {
+      defaultBody($$anchor2);
+    };
+    if_block(node_1, ($$render) => {
+      if ($$props.body) $$render(consequent);
+      else $$render(alternate, -1);
+    });
+    reset(article);
+    bind_this(article, ($$value) => el($$value), () => el());
+  }
+  template_effect(() => {
+    set_class(article, 1, clsx2(get(classNames)));
+    set_style(article, get(style));
+    set_attribute2(article, "role", get(onclick) ? "button" : void 0);
+    set_attribute2(article, "tabindex", get(onclick) ? 0 : void 0);
+  });
+  delegated("click", article, function(...$$args) {
+    get(onclick)?.apply(this, $$args);
+  });
+  delegated("keydown", article, function(...$$args) {
+    get(onkeydown)?.apply(this, $$args);
+  });
+  event("mouseenter", article, function(...$$args) {
+    get(onmouseenter)?.apply(this, $$args);
+  });
+  event("mouseleave", article, function(...$$args) {
+    get(onmouseleave)?.apply(this, $$args);
+  });
+  delegated("pointerdown", article, function(...$$args) {
+    $$props.onpointerdown?.apply(this, $$args);
+  });
+  append($$anchor, article);
+  pop();
+}
+delegate([
+  "click",
+  "keydown",
+  "pointerdown"
+]);
+var root$16 = from_html(`<div><!></div>`);
+function ColHead($$anchor, $$props) {
+  push($$props, true);
+  let weekday = prop($$props, "weekday", 3, true), colSpan = prop($$props, "colSpan", 3, 1), ariaHidden = prop($$props, "ariaHidden", 3, false), disabled = prop($$props, "disabled", 3, false), highlight = prop($$props, "highlight", 3, false), cssSpan = prop($$props, "cssSpan", 3, false);
+  let $$d = user_derived(() => getContext("state")), today = user_derived(() => get($$d).today), theme = user_derived(() => get($$d).options.theme);
+  var div = root$16();
+  let styles;
+  var node = child(div);
+  snippet(node, () => $$props.children);
+  reset(div);
+  template_effect(($0) => {
+    set_class(div, 1, $0);
+    set_attribute2(div, "role", ariaHidden() ? null : "columnheader");
+    set_attribute2(div, "aria-colspan", ariaHidden() || colSpan() <= 1 ? null : colSpan());
+    set_attribute2(div, "aria-colindex", ariaHidden() ? null : $$props.colIndex);
+    set_attribute2(div, "aria-hidden", ariaHidden() ? "true" : null);
+    styles = set_style(div, "", styles, { "--ec-col-group-span": cssSpan() ? colSpan() : void 0 });
+  }, [() => clsx2([
+    $$props.className ?? get(theme).colHead,
+    weekday() && get(theme).weekdays?.[$$props.date.getUTCDay()],
+    weekday() && datesEqual($$props.date, get(today)) && get(theme).today,
+    highlight() && get(theme).highlight,
+    disabled() && get(theme).disabled
+  ])]);
+  append($$anchor, div);
+  pop();
+}
+var root$15 = from_html(`<time></time>`);
+function DayHeader($$anchor, $$props) {
+  push($$props, true);
+  let alPrefix = prop($$props, "alPrefix", 3, "");
+  let $$d = user_derived(() => getContext("state")), intlDayHeader = user_derived(() => get($$d).intlDayHeader), intlDayHeaderAL = user_derived(() => get($$d).intlDayHeaderAL);
+  var time = root$15();
+  attach(time, () => contentFrom(get(intlDayHeader).format($$props.date)));
+  template_effect(($0, $1) => {
+    set_attribute2(time, "datetime", $0);
+    set_attribute2(time, "aria-label", `${alPrefix() ?? ""}${$1 ?? ""}`);
+  }, [() => toISOString($$props.date, 10), () => get(intlDayHeaderAL).format($$props.date)]);
+  append($$anchor, time);
+  pop();
+}
+function InteractableEvent($$anchor, $$props) {
+  push($$props, true);
+  let el = prop($$props, "el", 15);
+  let $$d = user_derived(() => getContext("state")), iClasses = user_derived(() => get($$d).iClasses), action2 = user_derived(() => get($$d).interaction.action), Resizer2 = user_derived(() => get($$d).interaction.resizer);
+  let $$d_1 = user_derived(() => getContext("view-state")), snap2 = user_derived(() => get($$d_1).snap);
+  let event2 = user_derived(() => $$props.chunk.event);
+  let display = user_derived(() => $$props.chunk.event.display);
+  let classes = user_derived(() => (classNames) => get(iClasses)(classNames, get(event2)));
+  function createDragHandler(event3) {
+    return get(action2)?.draggable(event3) ? (jsEvent) => get(action2).drag(event3, jsEvent, $$props.forceDate, $$props.forceMargin, get(snap2)) : get(action2)?.noAction;
+  }
+  let onpointerdown = user_derived(() => !bgEvent(get(display)) && !helperEvent(get(display)) ? createDragHandler(get(event2)) : void 0);
+  {
+    const body = ($$anchor2, defaultBody = noop) => {
+      var fragment_1 = comment();
+      var node = first_child(fragment_1);
+      var consequent = ($$anchor3) => {
+        var fragment_2 = comment();
+        var node_1 = first_child(fragment_2);
+        component(node_1, () => get(Resizer2), ($$anchor4, Resizer_1) => {
+          Resizer_1($$anchor4, {
+            get chunk() {
+              return $$props.chunk;
+            },
+            get axis() {
+              return $$props.axis;
+            },
+            get forceDate() {
+              return $$props.forceDate;
+            },
+            get forceMargin() {
+              return $$props.forceMargin;
+            },
+            children: ($$anchor5, $$slotProps) => {
+              var fragment_3 = comment();
+              var node_2 = first_child(fragment_3);
+              snippet(node_2, defaultBody);
+              append($$anchor5, fragment_3);
+            },
+            $$slots: { default: true }
+          });
+        });
+        append($$anchor3, fragment_2);
+      };
+      var alternate = ($$anchor3) => {
+        var fragment_4 = comment();
+        var node_3 = first_child(fragment_4);
+        snippet(node_3, defaultBody);
+        append($$anchor3, fragment_4);
+      };
+      if_block(node, ($$render) => {
+        if (get(Resizer2)) $$render(consequent);
+        else $$render(alternate, -1);
+      });
+      append($$anchor2, fragment_1);
+    };
+    BaseEvent($$anchor, {
+      get chunk() {
+        return $$props.chunk;
+      },
+      get classes() {
+        return get(classes);
+      },
+      get styles() {
+        return $$props.styles;
+      },
+      get onpointerdown() {
+        return get(onpointerdown);
+      },
+      get el() {
+        return el();
+      },
+      set el($$value) {
+        el($$value);
+      },
+      body,
+      $$slots: { body: true }
+    });
+  }
+  pop();
+}
+var root$14 = from_html(`<span><!></span>`);
+var root_1$6 = from_html(`<a role="button" tabindex="0" aria-haspopup="dialog"><!></a>`);
+var root_2$3 = from_html(`<div><time><!></time> <!></div> <div><!></div>`, 1);
+function Day$3($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  let viewState = getContext("view-state");
+  user_derived(() => mainState.features);
+  let snippets = user_derived(() => mainState.snippets), date = user_derived(() => mainState.options.date), firstDay = user_derived(() => mainState.options.firstDay), moreLinkContent = user_derived(() => mainState.options.moreLinkContent), theme = user_derived(() => mainState.options.theme), weekNumbers = user_derived(() => mainState.options.weekNumbers), weekNumberContent = user_derived(() => mainState.options.weekNumberContent);
+  let hiddenChunks = user_derived(() => viewState.hiddenChunks), intlDayCell = user_derived(() => viewState.intlDayCell);
+  let dayStart = user_derived(() => $$props.day.dayStart), disabled = user_derived(() => $$props.day.disabled), highlight = user_derived(() => $$props.day.highlight);
+  let otherMonth = user_derived(() => get(dayStart).getUTCMonth() !== get(date).getUTCMonth());
+  let classes = user_derived(() => (classNames) => [...classNames, get(otherMonth) && get(theme).otherMonth]);
+  let showWeekNumber = user_derived(() => get(weekNumbers) && get(dayStart).getUTCDay() === (get(firstDay) ? 1 : 0));
+  let weekNumber = user_derived(() => get(showWeekNumber) ? createWeekNumberContent(getWeekNumber(get(dayStart), get(firstDay)), get(dayStart), get(weekNumberContent), get(snippets).weekNumberContent) : {});
+  let dayHiddenChunks = user_derived(() => get(hiddenChunks).get(toTime(get(dayStart))));
+  let moreLink = user_derived(() => {
+    if (!get(dayHiddenChunks)) return {};
+    let num = get(dayHiddenChunks).length;
+    let text2 = "+" + num + " more";
+    return createContent(get(moreLinkContent), () => ({
+      num,
+      text: text2
+    }), text2, get(snippets).moreLinkContent);
+  });
+  function showMore() {
+    viewState.popupDay = $$props.day;
+  }
+  {
+    const content = ($$anchor2, dayCell = noop) => {
+      var fragment_1 = root_2$3();
+      var div = first_child(fragment_1);
+      var time = child(div);
+      var node = child(time);
+      snippet(node, () => dayCell().snippet ?? noop, () => dayCell().arg);
+      reset(time);
+      attach(time, () => contentFrom(dayCell().content, dayCell().snippet));
+      var node_1 = sibling(time, 2);
+      var consequent = ($$anchor3) => {
+        var span = root$14();
+        var node_2 = child(span);
+        snippet(node_2, () => get(weekNumber).snippet ?? noop, () => get(weekNumber).arg);
+        reset(span);
+        attach(span, () => contentFrom(get(weekNumber).content, get(weekNumber).snippet));
+        template_effect(() => set_class(span, 1, get(theme).weekNumber));
+        append($$anchor3, span);
+      };
+      if_block(node_1, ($$render) => {
+        if (get(showWeekNumber)) $$render(consequent);
+      });
+      reset(div);
+      var div_1 = sibling(div, 2);
+      var node_3 = child(div_1);
+      var consequent_1 = ($$anchor3) => {
+        var a = root_1$6();
+        var event_handler = user_derived(() => stopPropagation2(showMore));
+        var event_handler_1 = user_derived(() => keyEnter(showMore));
+        var event_handler_2 = user_derived(stopPropagation2);
+        var node_4 = child(a);
+        snippet(node_4, () => get(moreLink).snippet ?? noop, () => get(moreLink).arg);
+        reset(a);
+        attach(a, () => contentFrom(get(moreLink).content, get(moreLink).snippet));
+        delegated("click", a, function(...$$args) {
+          get(event_handler)?.apply(this, $$args);
+        });
+        delegated("keydown", a, function(...$$args) {
+          get(event_handler_1)?.apply(this, $$args);
+        });
+        delegated("pointerdown", a, function(...$$args) {
+          get(event_handler_2)?.apply(this, $$args);
+        });
+        append($$anchor3, a);
+      };
+      if_block(node_3, ($$render) => {
+        if (get(dayHiddenChunks)) $$render(consequent_1);
+      });
+      reset(div_1);
+      template_effect(($0) => {
+        set_class(div, 1, get(theme).dayHead);
+        set_attribute2(time, "datetime", $0);
+        set_class(div_1, 1, get(theme).dayFoot);
+      }, [() => toISOString(get(dayStart), 10)]);
+      append($$anchor2, fragment_1);
+    };
+    BaseDay($$anchor, {
+      get date() {
+        return get(dayStart);
+      },
+      allDay: true,
+      get classes() {
+        return get(classes);
+      },
+      get disabled() {
+        return get(disabled);
+      },
+      get highlight() {
+        return get(highlight);
+      },
+      get noIeb() {
+        return $$props.noIeb;
+      },
+      get noBeb() {
+        return $$props.noBeb;
+      },
+      defaultContent: () => get(intlDayCell).format(get(dayStart)),
+      content,
+      $$slots: { content: true }
+    });
+  }
+  pop();
+}
+delegate([
+  "click",
+  "keydown",
+  "pointerdown"
+]);
+function Event$3($$anchor, $$props) {
+  push($$props, true);
+  let inPopup = prop($$props, "inPopup", 3, false);
+  let $$d = user_derived(() => getContext("state")), dayMaxEvents = user_derived(() => get($$d).options.dayMaxEvents), eventGap = user_derived(() => get($$d).options.eventGap);
+  let $$d_1 = user_derived(() => getContext("view-state")), colsCount2 = user_derived(() => get($$d_1).colsCount), gridEl = user_derived(() => get($$d_1).gridEl), hiddenChunks = user_derived(() => get($$d_1).hiddenChunks), popupDay = user_derived(() => get($$d_1).popupDay);
+  let el = state(void 0);
+  let margin = state(1);
+  let hidden = state(false);
+  let event2 = user_derived(() => $$props.chunk.event);
+  let display = user_derived(() => $$props.chunk.event.display);
+  function getDayEl() {
+    return get(gridEl).children.item(($$props.chunk.gridRow - 1) * get(colsCount2) + $$props.chunk.gridColumn - 1);
+  }
+  user_effect(() => {
+    if (!inPopup() && (previewEvent(get(display)) || pointerEvent(get(display)))) set(margin, height(getDayEl().firstElementChild) || 1, true);
+  });
+  let styles = user_derived(() => (style) => {
+    style["grid-column"] = `${$$props.chunk.gridColumn} / span ${$$props.chunk.dates.length}`;
+    style["grid-row"] = $$props.chunk.gridRow;
+    if (!bgEvent(get(display))) {
+      let marginTop = inPopup() ? 1 : get(margin);
+      if (get(event2)._margin) {
+        let [_margin, _gridRow] = get(event2)._margin;
+        if (_margin > marginTop && $$props.chunk.gridRow === _gridRow) marginTop = _margin;
+      }
+      style["margin-block-start"] = `${marginTop}px`;
+    }
+    if (get(hidden)) style["visibility"] = "hidden";
+    return style;
+  });
+  function reposition() {
+    set(margin, repositionEvent$1($$props.chunk, height(get(el)), height(getDayEl().firstElementChild) || 1, get(eventGap)), true);
+  }
+  function hide() {
+    if (get(dayMaxEvents) === true) {
+      let dayEl = getDayEl();
+      let h = height(dayEl) - footHeight(dayEl);
+      set(hidden, $$props.chunk.bottom > h);
+      if (get(hidden)) for (let date of $$props.chunk.dates) {
+        let key2 = toTime(date);
+        if (get(hiddenChunks).has(key2)) {
+          let chunks = get(hiddenChunks).get(key2);
+          if (!chunks.includes($$props.chunk)) get(hiddenChunks).set(key2, [...chunks, $$props.chunk]);
+        } else get(hiddenChunks).set(key2, [$$props.chunk]);
+      }
+    } else {
+      set(hidden, false);
+      if (get(hiddenChunks).size) get(hiddenChunks).clear();
+    }
+  }
+  function footHeight(dayEl) {
+    let h = 0;
+    for (let i = 0; i < $$props.chunk.dates.length; ++i) {
+      h = max(h, height(dayEl.lastElementChild));
+      dayEl = dayEl.nextElementSibling;
+      if (!dayEl) break;
+    }
+    return h;
+  }
+  var $$exports = {
+    reposition,
+    hide
+  };
+  {
+    let $0 = user_derived(() => inPopup() && get(popupDay).dayStart);
+    let $1 = user_derived(() => [get(margin), $$props.chunk.gridRow]);
+    InteractableEvent($$anchor, {
+      get chunk() {
+        return $$props.chunk;
+      },
+      get styles() {
+        return get(styles);
+      },
+      axis: "x",
+      get forceDate() {
+        return get($0);
+      },
+      get forceMargin() {
+        return get($1);
+      },
+      get el() {
+        return get(el);
+      },
+      set el($$value) {
+        set(el, $$value, true);
+      }
+    });
+  }
+  return pop($$exports);
+}
+var root$13 = from_html(`<dialog closedby="closerequest"><header><time></time>  <a role="button" tabindex="0">&times;</a></header> <div></div></dialog>`);
+function Popup($$anchor, $$props) {
+  push($$props, true);
+  let viewState = getContext("view-state");
+  let $$d = user_derived(() => getContext("state")), interaction = user_derived(() => get($$d).interaction), buttonText = user_derived(() => get($$d).options.buttonText), theme = user_derived(() => get($$d).options.theme);
+  let colsCount2 = user_derived(() => viewState.colsCount), chunks = user_derived(() => viewState.chunks), gridEl = user_derived(() => viewState.gridEl), intlDayPopover = user_derived(() => viewState.intlDayPopover), popupDay = user_derived(() => viewState.popupDay);
+  let el = state(void 0);
+  let style = state("");
+  let gridColumn = user_derived(() => get(popupDay).gridColumn), gridRow = user_derived(() => get(popupDay).gridRow), dayStart = user_derived(() => get(popupDay).dayStart), dayEnd = user_derived(() => get(popupDay).dayEnd);
+  let popupChunks = user_derived(() => {
+    let result = [];
+    for (let chunk of get(chunks)) if (chunk.gridRow === get(gridRow) && chunk.gridColumn <= get(gridColumn) && chunk.gridColumn + chunk.dates.length > get(gridColumn)) result.push(assign2({}, chunk, createEventChunk(chunk.event, get(dayStart), get(dayEnd))));
+    result.sort((a, b) => a.top - b.top);
+    return result;
+  });
+  onMount(() => {
+    get(el).show();
+  });
+  user_effect(() => {
+    if (get(popupChunks).length) untrack(position);
+    else close();
+  });
+  function position() {
+    let dayEl = get(gridEl).children.item((get(gridRow) - 1) * get(colsCount2) + get(gridColumn) - 1);
+    let popupRect = rect(get(el));
+    let dayRect = rect(dayEl);
+    let gridRect = rect(get(gridEl));
+    set(style, "");
+    let left;
+    if (popupRect.width >= gridRect.width) {
+      left = gridRect.left - dayRect.left;
+      let right = dayRect.right - gridRect.right;
+      set(style, get(style) + `inset-inline-end:${right}px;`);
+    } else {
+      left = (dayRect.width - popupRect.width) / 2;
+      if (dayRect.left + left < gridRect.left) left = gridRect.left - dayRect.left;
+      else if (dayRect.left + left + popupRect.width > gridRect.right) left = gridRect.right - dayRect.left - popupRect.width;
+    }
+    set(style, get(style) + `inset-inline-start:${left}px;`);
+    let top;
+    if (popupRect.height >= gridRect.height) {
+      top = gridRect.top - dayRect.top;
+      set(style, get(style) + `block-size:${gridRect.height}px;`);
+    } else {
+      top = (dayRect.height - popupRect.height) / 2;
+      if (dayRect.top + top < gridRect.top) top = gridRect.top - dayRect.top;
+      else if (dayRect.top + top + popupRect.height > gridRect.bottom) top = gridRect.bottom - dayRect.top - popupRect.height;
+    }
+    set(style, get(style) + `inset-block-start:${top}px;`);
+  }
+  function close() {
+    viewState.popupDay = null;
+  }
+  function handlePointerDownOutside() {
+    close();
+    get(interaction).action?.noClick();
+  }
+  var dialog = root$13();
+  let styles;
+  var header = child(dialog);
+  var time = child(header);
+  attach(time, () => contentFrom(get(intlDayPopover).format(get(dayStart))));
+  var a_1 = sibling(time, 2);
+  autofocus(a_1, true);
+  var event_handler = user_derived(() => stopPropagation2(close));
+  var event_handler_1 = user_derived(() => keyEnter(close));
+  reset(header);
+  var div = sibling(header, 2);
+  each(div, 21, () => get(popupChunks), index, ($$anchor2, chunk) => {
+    Event$3($$anchor2, {
+      get chunk() {
+        return get(chunk);
+      },
+      inPopup: true
+    });
+  });
+  reset(div);
+  reset(dialog);
+  bind_this(dialog, ($$value) => set(el, $$value), () => get(el));
+  attach(dialog, () => outsideEvent("pointerdown"));
+  template_effect(($0) => {
+    set_class(dialog, 1, get(theme).popup);
+    styles = set_style(dialog, get(style), styles, { "grid-area": `${get(gridRow) + 1} / ${get(gridColumn)}` });
+    set_class(header, 1, get(theme).dayHead);
+    set_attribute2(time, "datetime", $0);
+    set_attribute2(a_1, "aria-label", get(buttonText).close);
+    set_class(div, 1, get(theme).events);
+  }, [() => toISOString(get(dayStart), 10)]);
+  event("pointerdownoutside", dialog, handlePointerDownOutside);
+  event("close", dialog, close);
+  delegated("click", a_1, function(...$$args) {
+    get(event_handler)?.apply(this, $$args);
+  });
+  delegated("keydown", a_1, function(...$$args) {
+    get(event_handler_1)?.apply(this, $$args);
+  });
+  append($$anchor, dialog);
+  pop();
+}
+delegate(["click", "keydown"]);
+var root$12 = from_html(`<div role="columnheader"><span></span></div>`);
+var root_1$5 = from_html(`<section><header><div role="row"></div></header> <div><div></div> <div><!> <!> <!></div></div> <!></section>`);
+function View$3($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  let viewState = new ViewState$4(mainState);
+  setContext("view-state", viewState);
+  let intlDayHeader = user_derived(() => mainState.intlDayHeader), intlDayHeaderAL = user_derived(() => mainState.intlDayHeaderAL), dayMaxEvents = user_derived(() => mainState.options.dayMaxEvents), eventGap = user_derived(() => mainState.options.eventGap), theme = user_derived(() => mainState.options.theme);
+  let grid2 = user_derived(() => viewState.grid), chunks = user_derived(() => viewState.chunks), bgChunks = user_derived(() => viewState.bgChunks), iChunks = user_derived(() => viewState.iChunks), hiddenChunks = user_derived(() => viewState.hiddenChunks), popupDay = user_derived(() => viewState.popupDay);
+  let refs = [];
+  function reposition() {
+    runReposition(refs, get(chunks));
+    get(hiddenChunks).clear();
+    tick().then(hide);
+  }
+  function hide() {
+    get(hiddenChunks).size;
+    refs.forEach((ref) => ref?.hide());
+  }
+  user_effect(() => {
+    get(eventGap);
+    reposition();
+  });
+  user_effect(hide);
+  var fragment = comment();
+  var node = first_child(fragment);
+  var consequent_1 = ($$anchor2) => {
+    var section = root_1$5();
+    let styles;
+    var header = child(section);
+    var div = child(header);
+    each(div, 21, () => get(grid2)[0], index, ($$anchor3, $$item, i) => {
+      let dayStart = () => get($$item).dayStart;
+      var div_1 = root$12();
+      set_attribute2(div_1, "aria-colindex", 1 + i);
+      var span = child(div_1);
+      attach(span, () => contentFrom(get(intlDayHeader).format(dayStart())));
+      reset(div_1);
+      template_effect(($0, $1) => {
+        set_class(div_1, 1, $0);
+        set_attribute2(span, "aria-label", $1);
+      }, [() => clsx2([get(theme).colHead, get(theme).weekdays?.[dayStart().getUTCDay()]]), () => get(intlDayHeaderAL).format(dayStart())]);
+      append($$anchor3, div_1);
+    });
+    reset(div);
+    reset(header);
+    var div_2 = sibling(header, 2);
+    var div_3 = child(div_2);
+    each(div_3, 21, () => get(grid2), index, ($$anchor3, days, i) => {
+      var fragment_1 = comment();
+      var node_1 = first_child(fragment_1);
+      each(node_1, 17, () => get(days), index, ($$anchor4, day, j) => {
+        {
+          let $0 = user_derived(() => j + 1 === length(get(days)));
+          let $1 = user_derived(() => i + 1 === length(get(grid2)));
+          Day$3($$anchor4, {
+            get day() {
+              return get(day);
+            },
+            get noIeb() {
+              return get($0);
+            },
+            get noBeb() {
+              return get($1);
+            }
+          });
+        }
+      });
+      append($$anchor3, fragment_1);
+    });
+    reset(div_3);
+    bind_this(div_3, ($$value) => viewState.gridEl = $$value, () => viewState?.gridEl);
+    var div_4 = sibling(div_3, 2);
+    var node_2 = child(div_4);
+    each(node_2, 19, () => get(chunks), (chunk) => chunk.id, ($$anchor3, chunk, i) => {
+      bind_this(Event$3($$anchor3, { get chunk() {
+        return get(chunk);
+      } }), ($$value, i2) => refs[i2] = $$value, (i2) => refs?.[i2], () => [get(i)]);
+    });
+    var node_3 = sibling(node_2, 2);
+    each(node_3, 17, () => get(bgChunks), (chunk) => chunk.id, ($$anchor3, chunk) => {
+      Event$3($$anchor3, { get chunk() {
+        return get(chunk);
+      } });
+    });
+    var node_4 = sibling(node_3, 2);
+    each(node_4, 17, () => get(iChunks), index, ($$anchor3, chunk) => {
+      Event$3($$anchor3, { get chunk() {
+        return get(chunk);
+      } });
+    });
+    reset(div_4);
+    reset(div_2);
+    var node_5 = sibling(div_2, 2);
+    var consequent = ($$anchor3) => {
+      Popup($$anchor3, {});
+    };
+    if_block(node_5, ($$render) => {
+      if (get(popupDay)) $$render(consequent);
+    });
+    reset(section);
+    bind_this(section, ($$value) => mainState.mainEl = $$value, () => mainState?.mainEl);
+    attach(section, () => resizeObserver(reposition));
+    template_effect(($0, $1) => {
+      set_class(section, 1, clsx2([get(theme).main, get(dayMaxEvents) === true && get(theme).uniform]));
+      styles = set_style(section, "", styles, {
+        "--ec-grid-cols": $0,
+        "--ec-grid-rows": $1
+      });
+      set_class(header, 1, get(theme).header);
+      set_class(div, 1, get(theme).grid);
+      set_class(div_2, 1, get(theme).body);
+      set_class(div_3, 1, get(theme).grid);
+      set_class(div_4, 1, get(theme).events);
+    }, [() => length(get(grid2)[0]), () => length(get(grid2))]);
+    append($$anchor2, section);
+  };
+  var d = user_derived(() => !empty(get(grid2)) && !empty(get(grid2)[0]));
+  if_block(node, ($$render) => {
+    if (get(d)) $$render(consequent_1);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+var day_grid_default = { createOptions(options) {
+  createDROptions(options);
+  assign2(options, {
+    dayMaxEvents: false,
+    dayCellFormat: { day: "numeric" },
+    dayPopoverFormat: {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    },
+    moreLinkContent: void 0,
+    view: "dayGridMonth"
+  });
+  assign2(options.buttonText, {
+    dayGridDay: "day",
+    dayGridMonth: "month",
+    dayGridWeek: "week",
+    close: "Close"
+  });
+  assign2(options.theme, {
+    uniform: "ec-uniform",
+    dayFoot: "ec-day-foot",
+    otherMonth: "ec-other-month",
+    popup: "ec-popup"
+  });
+  assign2(options.views, {
+    dayGridDay: {
+      buttonText: btnTextDay,
+      component: () => View$3,
+      dayHeaderFormat: { weekday: "long" },
+      displayEventEnd: false,
+      duration: { days: 1 },
+      theme: themeView("ec-day-grid ec-day-view")
+    },
+    dayGridWeek: {
+      buttonText: btnTextWeek,
+      component: () => View$3,
+      displayEventEnd: false,
+      theme: themeView("ec-day-grid ec-week-view")
+    },
+    dayGridMonth: {
+      buttonText: btnTextMonth,
+      component: initMonthViewComponent$1,
+      dayHeaderFormat: { weekday: "short" },
+      dayHeaderAriaLabelFormat: { weekday: "long" },
+      displayEventEnd: false,
+      duration: { months: 1 },
+      theme: themeView("ec-day-grid ec-month-view"),
+      titleFormat: {
+        year: "numeric",
+        month: "long"
+      }
+    }
+  });
+} };
+function initMonthViewComponent$1(mainState) {
+  mainState.features = ["dayNumber"];
+  mainState.extensions.activeRange = (start, end) => {
+    let { options: { firstDay } } = mainState;
+    return {
+      start: prevClosestDay(start, firstDay),
+      end: nextClosestDay(end, firstDay)
+    };
+  };
+  return View$3;
+}
+function eventDraggable(event2, $eventStartEditable, $editable) {
+  return event2.startEditable ?? $eventStartEditable ?? event2.editable ?? $editable;
+}
+function eventResizable(event2, $eventDurationEditable, $editable) {
+  return event2.durationEditable ?? $eventDurationEditable ?? event2.editable ?? $editable;
+}
+var busy = false;
+function animate(fn) {
+  if (!busy) {
+    busy = true;
+    window.requestAnimationFrame(() => {
+      fn();
+      busy = false;
+    });
+  }
+}
+function limit(value, minLimit, maxLimit) {
+  return max(minLimit, min(maxLimit, value));
+}
+function setIClasses(mainState) {
+  return () => {
+    let { options: { editable, eventStartEditable, theme } } = mainState;
+    mainState.iClasses = (classNames, event2) => {
+      let { display } = event2;
+      return [...classNames, helperEvent(display) ? [theme[display]] : !bgEvent(display) && eventDraggable(event2, eventStartEditable, editable) ? [theme.draggable] : []];
+    };
+  };
+}
+function handleScroll(mainState) {
+  return () => {
+    let { interaction, mainEl } = mainState;
+    if (mainEl) return listen2(mainEl, "scroll", () => {
+      interaction.action.handleScroll();
+      interaction.pointer?.handleScroll();
+    });
+  };
+}
+var AuxState = class {
+  constructor(mainState) {
+    this.#setupEffects(mainState);
+  }
+  #setupEffects(mainState) {
+    user_pre_effect(setIClasses(mainState));
+    user_effect(handleScroll(mainState));
+  }
+};
+function Action($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  let events = user_derived(() => mainState.events), iEvents = user_derived(() => mainState.iEvents), features = user_derived(() => mainState.features), view2 = user_derived(() => mainState.view), mainEl = user_derived(() => mainState.mainEl), dateClick = user_derived(() => mainState.options.dateClick), dragConstraint = user_derived(() => mainState.options.dragConstraint), dragScroll = user_derived(() => mainState.options.dragScroll), editable = user_derived(() => mainState.options.editable), eventStartEditable = user_derived(() => mainState.options.eventStartEditable), eventDragMinDistance = user_derived(() => mainState.options.eventDragMinDistance), eventDragStart = user_derived(() => mainState.options.eventDragStart), eventDragStop = user_derived(() => mainState.options.eventDragStop), eventDrop = user_derived(() => mainState.options.eventDrop), eventLongPressDelay = user_derived(() => mainState.options.eventLongPressDelay), eventResizeStart = user_derived(() => mainState.options.eventResizeStart), eventResizeStop = user_derived(() => mainState.options.eventResizeStop), eventResize = user_derived(() => mainState.options.eventResize), longPressDelay = user_derived(() => mainState.options.longPressDelay), resizeConstraint = user_derived(() => mainState.options.resizeConstraint), selectable = user_derived(() => mainState.options.selectable), selectFn = user_derived(() => mainState.options.select), selectBackgroundColor = user_derived(() => mainState.options.selectBackgroundColor), selectConstraint = user_derived(() => mainState.options.selectConstraint), selectLongPressDelay = user_derived(() => mainState.options.selectLongPressDelay), selectMinDistance = user_derived(() => mainState.options.selectMinDistance), unselectFn = user_derived(() => mainState.options.unselect), unselectAuto = user_derived(() => mainState.options.unselectAuto), unselectCancel = user_derived(() => mainState.options.unselectCancel), validRange = user_derived(() => mainState.options.validRange);
+  const ACTION_DRAG = 1;
+  const ACTION_RESIZE_END = 2;
+  const ACTION_RESIZE_START = 3;
+  const ACTION_SELECT = 4;
+  const ACTION_CLICK = 5;
+  const ACTION_NO_ACTION = 6;
+  let action2;
+  let interacting;
+  let event2;
+  let iEvent;
+  let display;
+  let date;
+  let newDate;
+  let resource;
+  let newResource;
+  let fromX;
+  let fromY;
+  let toX;
+  let toY;
+  let gridEl;
+  let allDaySlot;
+  let delta;
+  let allDay;
+  let iClass;
+  let refused;
+  let minResize;
+  let selectStep;
+  let selected;
+  let noDateClick;
+  let timer;
+  let viewport;
+  let margin;
+  let snapDuration;
+  let extraDuration;
+  function draggable(event3) {
+    return eventDraggable(event3, get(eventStartEditable), get(editable));
+  }
+  function drag(eventToDrag, jsEvent, forceDate, forceMargin, snap2) {
+    if (!action2) {
+      action2 = validJsEvent(jsEvent) ? ACTION_DRAG : ACTION_NO_ACTION;
+      if (complexAction()) {
+        event2 = eventToDrag;
+        common(jsEvent, snap2);
+        if (forceDate) date = forceDate;
+        if (forceMargin) margin = forceMargin;
+        iClass = "dragging";
+        move2(jsEvent);
+      }
+    }
+  }
+  function resize(chunk, jsEvent, start, axis, forceDate, forceMargin, snap2) {
+    if (!action2) {
+      action2 = validJsEvent(jsEvent) ? start ? ACTION_RESIZE_START : ACTION_RESIZE_END : ACTION_NO_ACTION;
+      if (complexAction()) {
+        let { zeroDuration } = chunk;
+        event2 = chunk.event;
+        common(jsEvent, snap2);
+        if (forceMargin) margin = forceMargin;
+        iClass = axis === "x" ? "resizingX" : "resizingY";
+        if (resizingStart()) {
+          minResize = cloneDate(event2.end);
+          if (allDay) {
+            copyTime(minResize, event2.start);
+            if (minResize >= event2.end) subtractDay(minResize);
+          } else {
+            subtractDuration(minResize, snapDuration);
+            if (minResize < event2.start) minResize = event2.start;
+          }
+          date = allDay ? setMidnight(cloneDate(event2.start)) : event2.start;
+        } else {
+          minResize = cloneDate(event2.start);
+          if (allDay) {
+            copyTime(minResize, event2.end);
+            if (minResize <= event2.start && !zeroDuration) addDay(minResize);
+          } else {
+            addDuration(minResize, snapDuration);
+            if (minResize > event2.end) minResize = event2.end;
+          }
+          if (allDay) {
+            date = setMidnight(cloneDate(event2.end));
+            if (!zeroDuration && datesEqual(date, event2.end)) subtractDay(date);
+          } else {
+            date = event2.end;
+            if (!zeroDuration) date = subtractDuration(cloneDate(date), snapDuration);
+          }
+          if (zeroDuration && !allDay) extraDuration = snapDuration;
+        }
+        if (forceDate) date = forceDate;
+        move2(jsEvent);
+      }
+    }
+  }
+  function select(jsEvent, snap2) {
+    if (!action2) {
+      action2 = validJsEvent(jsEvent) ? get(selectable) && !get(features).includes("list") ? ACTION_SELECT : ACTION_CLICK : ACTION_NO_ACTION;
+      if (complexAction()) {
+        common(jsEvent, snap2);
+        iClass = "selecting";
+        selectStep = allDay ? createDuration({ day: 1 }) : snapDuration;
+        event2 = {
+          allDay,
+          start: date,
+          end: addDuration(cloneDate(date), selectStep),
+          resourceIds: resource ? [resource.id] : []
+        };
+        move2(jsEvent);
+      }
+    }
+  }
+  function noAction() {
+    if (!action2) action2 = ACTION_NO_ACTION;
+  }
+  function common(jsEvent, snap2) {
+    window.getSelection().removeAllRanges();
+    fromX = toX = jsEvent.clientX;
+    fromY = toY = jsEvent.clientY;
+    snapDuration = snap2?.duration;
+    let dayEl = getElementWithPayload(toX, toY);
+    ({ allDay, date, resource } = getPayload(dayEl)(toX, toY));
+    allDaySlot = get(mainEl) !== ancestor(dayEl, 3);
+    gridEl = ancestor(dayEl, 1);
+    calcViewport();
+    if (jsEvent.pointerType !== "mouse") timer = setTimeout(() => {
+      if (action2) {
+        interacting = true;
+        move2(jsEvent);
+      }
+    }, (selecting() ? get(selectLongPressDelay) : get(eventLongPressDelay)) ?? get(longPressDelay));
+  }
+  function move2(jsEvent) {
+    if (interacting || jsEvent && jsEvent.pointerType === "mouse" && distance() >= (selecting() ? get(selectMinDistance) : get(eventDragMinDistance))) {
+      interacting = true;
+      unselect(jsEvent);
+      if (!iEvent) {
+        if (selecting()) createIEventSelect();
+        else createIEvent(jsEvent, resizing() ? get(eventResizeStart) : get(eventDragStart));
+      }
+      let payload = findPayload(findDayEl());
+      if (payload) {
+        let newAllDay;
+        ({ allDay: newAllDay, date: newDate, resource: newResource } = payload);
+        if (newAllDay === allDay) {
+          let candidate = copyIEventData({}, iEvent);
+          let constraintFn = get(resizeConstraint);
+          delta = createDuration((newDate - date) / 1e3);
+          if (resizingStart()) {
+            candidate.start = addDuration(cloneDate(event2.start), delta);
+            if (candidate.start > minResize) {
+              candidate.start = minResize;
+              delta = createDuration((minResize - event2.start) / 1e3);
+            }
+          } else {
+            candidate.end = addDuration(cloneDate(event2.end), delta);
+            if (extraDuration) addDuration(candidate.end, extraDuration);
+            if (resizing()) {
+              if (candidate.end < minResize) {
+                candidate.end = minResize;
+                delta = createDuration((minResize - event2.end) / 1e3);
+              }
+            } else if (selecting()) {
+              if (candidate.end < event2.end) {
+                candidate.start = subtractDuration(candidate.end, selectStep);
+                candidate.end = event2.end;
+              } else candidate.start = event2.start;
+              constraintFn = get(selectConstraint);
+            } else {
+              candidate.start = addDuration(cloneDate(event2.start), delta);
+              if (resource) {
+                candidate.resourceIds = event2.resourceIds.filter((id) => id !== resource.id);
+                candidate.resourceIds.push(newResource.id);
+              }
+              constraintFn = get(dragConstraint);
+            }
+          }
+          refused = false;
+          if (constraintFn !== void 0) {
+            candidate = copyIEventData(cloneEvent(event2), candidate);
+            refused = constraintFn(selecting() ? createSelectCallbackInfo(candidate, jsEvent) : createCallbackInfo(candidate, event2, jsEvent)) === false;
+          }
+          if (!refused) updateIEvent(candidate);
+        }
+      }
+      mainState.iClass = refused ? "notAllowed" : iClass;
+    }
+    if (get(dragScroll)) {
+      let thresholdY = 24;
+      let thresholdX = 24;
+      animate(() => {
+        if (viewport) {
+          if (!allDaySlot) {
+            if (toY < viewport.top + thresholdY) get(mainEl).scrollTop += max(-8, (toY - viewport.top - thresholdY) / 3);
+            if (toY > viewport.bottom - thresholdY) get(mainEl).scrollTop += min(8, (toY - viewport.bottom + thresholdY) / 3);
+          }
+          if (toX < viewport.left + thresholdX) get(mainEl).scrollLeft += max(-8, (toX - viewport.left - thresholdX) / 3);
+          if (toX > viewport.right - thresholdX) get(mainEl).scrollLeft += min(8, (toX - viewport.right + thresholdX) / 3);
+          if (toY < thresholdY) window.scrollBy(0, max(-8, (toY - thresholdY) / 3));
+          if (toY > window.innerHeight - thresholdY) window.scrollBy(0, min(8, (toY - window.innerHeight + thresholdY) / 3));
+        }
+      });
+    }
+  }
+  function handleScroll2() {
+    if (complexAction()) {
+      calcViewport();
+      move2();
+    }
+  }
+  function handlePointerMove(jsEvent) {
+    if (complexAction() && jsEvent.isPrimary) {
+      toX = jsEvent.clientX;
+      toY = jsEvent.clientY;
+      move2(jsEvent);
+    }
+  }
+  function handlePointerUp(jsEvent) {
+    if (selected && get(unselectAuto) && !(get(unselectCancel) && jsEvent.target.closest(get(unselectCancel)))) unselect(jsEvent);
+    if (action2 && jsEvent.isPrimary) {
+      if (interacting) {
+        if (selecting()) {
+          if (refused) destroyIEvent();
+          else {
+            selected = true;
+            if (isFunction(get(selectFn))) {
+              let info = createSelectCallbackInfo(iEvent, jsEvent);
+              get(selectFn)(info);
+            }
+          }
+        } else {
+          event2.display = display;
+          let callback = resizing() ? get(eventResizeStop) : get(eventDragStop);
+          if (isFunction(callback)) callback({
+            event: toEventWithLocalDates(event2),
+            jsEvent,
+            view: toViewWithLocalDates(get(view2))
+          });
+          let oldEvent = cloneEvent(event2);
+          updateEvent(event2, refused ? oldEvent : iEvent);
+          destroyIEvent();
+          callback = resizing() ? get(eventResize) : get(eventDrop);
+          if (!refused && isFunction(callback)) {
+            let eventRef = event2;
+            let info = createCallbackInfo(event2, oldEvent, jsEvent);
+            callback(assign2(info, { revert() {
+              updateEvent(eventRef, oldEvent);
+            } }));
+          }
+        }
+      } else if (clicking() || selecting()) {
+        if (isFunction(get(dateClick)) && !noDateClick) {
+          toX = jsEvent.clientX;
+          toY = jsEvent.clientY;
+          let dayEl = getElementWithPayload(toX, toY);
+          if (dayEl) {
+            let { allDay: allDay2, date: date2, resource: resource2 } = getPayload(dayEl)(toX, toY);
+            get(dateClick)({
+              allDay: allDay2,
+              date: toLocalDate(date2),
+              dateStr: toISOString(date2),
+              dayEl,
+              jsEvent,
+              view: toViewWithLocalDates(get(view2)),
+              resource: resource2
+            });
+          }
+        }
+      }
+      handlePointerCancel();
+    }
+    noDateClick = false;
+  }
+  function handlePointerCancel() {
+    interacting = refused = false;
+    action2 = fromX = fromY = toX = toY = event2 = display = date = newDate = resource = newResource = delta = extraDuration = allDay = minResize = selectStep = margin = gridEl = viewport = snapDuration = void 0;
+    mainState.iClass = void 0;
+    if (timer) {
+      clearTimeout(timer);
+      timer = void 0;
+    }
+  }
+  function findDayEl() {
+    return getElementWithPayload(limit(toX, viewport.left, viewport.right), limit(toY, viewport.top, viewport.bottom));
+  }
+  function findPayload(dayEl) {
+    if (dayEl) {
+      let payload = getPayload(dayEl)(toX, toY);
+      if (payload.disabled) {
+        if (!get(validRange).end || payload.date < get(validRange).end) return findPayload(dayEl.nextElementSibling);
+        if (!get(validRange).start || payload.date > get(validRange).start) return findPayload(dayEl.previousElementSibling);
+      } else {
+        if ((selecting() || resizing()) && payload.resource && !iEvent.resourceIds.includes(payload.resource.id) && !get(features).includes("timeline")) {
+          if (toX > fromX) return findPayload(dayEl.previousElementSibling);
+          else return findPayload(dayEl.nextElementSibling);
+        }
+        return payload;
+      }
+    }
+    return null;
+  }
+  function calcViewport() {
+    let mainRect = rect(get(mainEl));
+    let gridRect = rect(gridEl);
+    let scaleX = mainRect.width / get(mainEl).offsetWidth;
+    let scaleY = mainRect.height / get(mainEl).offsetHeight;
+    let rtl = isRtl();
+    viewport = {
+      left: max(0, rtl ? mainRect.right - get(mainEl).clientWidth * scaleX : gridRect.left + get(mainEl).scrollLeft * scaleX),
+      right: min(document.documentElement.clientWidth, rtl ? gridRect.right + get(mainEl).scrollLeft * scaleX : mainRect.left + get(mainEl).clientWidth * scaleX) - 2,
+      top: max(0, gridRect.top + (!allDaySlot ? get(mainEl).scrollTop : 0) * scaleY),
+      bottom: min(document.documentElement.clientHeight, !allDaySlot ? mainRect.top + get(mainEl).clientHeight * scaleY : gridRect.bottom) - 2
+    };
+  }
+  function createIEvent(jsEvent, callback) {
+    if (isFunction(callback)) callback({
+      event: toEventWithLocalDates(event2),
+      jsEvent,
+      view: toViewWithLocalDates(get(view2))
+    });
+    display = event2.display;
+    event2.display = "preview";
+    iEvent = cloneEvent(event2);
+    if (margin !== void 0) iEvent._margin = margin;
+    if (extraDuration) addDuration(iEvent.end, extraDuration);
+    event2.display = "ghost";
+    get(events).length = get(events).length;
+  }
+  function createIEventSelect() {
+    iEvent = {
+      id: "{select}",
+      allDay: event2.allDay,
+      start: event2.start,
+      title: "",
+      display: "preview",
+      extendedProps: {},
+      backgroundColor: get(selectBackgroundColor),
+      resourceIds: event2.resourceIds,
+      classNames: [],
+      styles: []
+    };
+  }
+  function destroyIEvent() {
+    iEvent = void 0;
+    get(iEvents).delete("action");
+  }
+  function copyIEventData(target, source2) {
+    target.start = source2.start;
+    target.end = source2.end;
+    target.resourceIds = source2.resourceIds;
+    return { ...target };
+  }
+  function updateEvent(target, source2) {
+    copyIEventData(target, source2);
+    get(events).length = get(events).length;
+  }
+  function updateIEvent(source2) {
+    iEvent = copyIEventData(iEvent, source2);
+    get(iEvents).set("action", iEvent);
+  }
+  function createSelectCallbackInfo(event3, jsEvent) {
+    let { start, end } = toEventWithLocalDates(event3);
+    return {
+      start,
+      end,
+      startStr: toISOString(event3.start),
+      endStr: toISOString(event3.end),
+      allDay,
+      view: toViewWithLocalDates(get(view2)),
+      resource,
+      jsEvent
+    };
+  }
+  function createCallbackInfo(event3, oldEvent, jsEvent) {
+    let info;
+    if (resizing()) info = resizingStart() ? {
+      startDelta: delta,
+      endDelta: createDuration(0)
+    } : {
+      startDelta: createDuration(0),
+      endDelta: delta
+    };
+    else info = {
+      delta,
+      oldResource: resource !== newResource ? resource : void 0,
+      newResource: resource !== newResource ? newResource : void 0
+    };
+    assign2(info, {
+      event: toEventWithLocalDates(event3),
+      oldEvent: toEventWithLocalDates(oldEvent),
+      view: toViewWithLocalDates(get(view2)),
+      jsEvent
+    });
+    return info;
+  }
+  function distance() {
+    return Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
+  }
+  function resizing() {
+    return action2 === ACTION_RESIZE_END || resizingStart();
+  }
+  function resizingStart() {
+    return action2 === ACTION_RESIZE_START;
+  }
+  function clicking() {
+    return action2 === ACTION_CLICK;
+  }
+  function selecting() {
+    return action2 === ACTION_SELECT;
+  }
+  function complexAction() {
+    return action2 && action2 < ACTION_CLICK;
+  }
+  function validJsEvent(jsEvent) {
+    return jsEvent.isPrimary && (jsEvent.pointerType !== "mouse" || jsEvent.buttons & 1);
+  }
+  function unselect(jsEvent) {
+    if (selected) {
+      selected = false;
+      destroyIEvent();
+      if (isFunction(get(unselectFn))) get(unselectFn)({
+        jsEvent,
+        view: toViewWithLocalDates(get(view2))
+      });
+    }
+  }
+  user_pre_effect(() => {
+    get(view2);
+    unselect();
+  });
+  function noClick() {
+    noDateClick = true;
+  }
+  function handleTouchStart(jsEvent) {
+    if (complexAction()) {
+      let target = jsEvent.target;
+      let stops = [];
+      let stop = () => runAll(stops);
+      stops.push(listen2(target, "touchmove", createPreventDefaultHandler(() => interacting)));
+      stops.push(listen2(target, "touchend", stop));
+      stops.push(listen2(target, "touchcancel", stop));
+    }
+  }
+  function createPreventDefaultHandler(condition) {
+    return (jsEvent) => {
+      if (condition()) jsEvent.preventDefault();
+    };
+  }
+  onMount(() => listen2(window, "touchmove", noop2, { passive: false }));
+  var $$exports = {
+    draggable,
+    drag,
+    resize,
+    select,
+    noAction,
+    handleScroll: handleScroll2,
+    unselect,
+    noClick
+  };
+  event("pointermove", $window, handlePointerMove);
+  event("pointerup", $window, handlePointerUp);
+  event("pointercancel", $window, handlePointerCancel);
+  event("scroll", $window, handleScroll2);
+  var event_handler = user_derived(() => createPreventDefaultHandler(complexAction));
+  event("selectstart", $window, function(...$$args) {
+    get(event_handler)?.apply(this, $$args);
+  });
+  var event_handler_1 = user_derived(() => createPreventDefaultHandler(() => timer));
+  event("contextmenu", $window, function(...$$args) {
+    get(event_handler_1)?.apply(this, $$args);
+  });
+  event("touchstart", $window, handleTouchStart, void 0, true);
+  return pop($$exports);
+}
+function Pointer($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), iEvents = user_derived(() => get($$d).iEvents), slotDuration = user_derived(() => get($$d).options.slotDuration);
+  let x = 0;
+  let y = 0;
+  let iEvent;
+  function move2() {
+    let dayEl = getElementWithPayload(x, y);
+    if (dayEl && !get(iEvents).has("action")) {
+      let { allDay, date, resource, disabled } = getPayload(dayEl)(x, y);
+      if (!disabled) {
+        if (!iEvent) createPointerEvent();
+        iEvent.allDay = allDay;
+        iEvent.start = date;
+        iEvent.end = addDuration(cloneDate(date), get(slotDuration));
+        iEvent.resourceIds = resource ? [resource.id] : [];
+        get(iEvents).set("pointer", { ...iEvent });
+        return;
+      }
+    }
+    removePointerEvent();
+  }
+  function handleScroll2() {
+    move2();
+  }
+  function handlePointerMove(jsEvent) {
+    if (validEvent(jsEvent)) {
+      x = jsEvent.clientX;
+      y = jsEvent.clientY;
+      move2();
+    }
+  }
+  function createPointerEvent() {
+    iEvent = {
+      id: "{pointer}",
+      title: "",
+      display: "pointer",
+      extendedProps: {},
+      backgroundColor: "transparent",
+      classNames: [],
+      styles: []
+    };
+  }
+  function removePointerEvent() {
+    iEvent = void 0;
+    get(iEvents).delete("pointer");
+  }
+  function validEvent(jsEvent) {
+    return jsEvent.isPrimary && jsEvent.pointerType === "mouse";
+  }
+  var $$exports = { handleScroll: handleScroll2 };
+  event("pointermove", $window, handlePointerMove);
+  event("scroll", $window, handleScroll2);
+  return pop($$exports);
+}
+var root$11 = from_html(`<div></div>`);
+var root_1$4 = from_html(`<!> <!> <!>`, 1);
+function Resizer($$anchor, $$props) {
+  push($$props, true);
+  let forceDate = prop($$props, "forceDate", 3, void 0), forceMargin = prop($$props, "forceMargin", 3, void 0);
+  let $$d = user_derived(() => getContext("state")), action2 = user_derived(() => get($$d).interaction.action), editable = user_derived(() => get($$d).options.editable), eventDurationEditable = user_derived(() => get($$d).options.eventDurationEditable), eventResizableFromStart = user_derived(() => get($$d).options.eventResizableFromStart), theme = user_derived(() => get($$d).options.theme);
+  let $$d_1 = user_derived(() => getContext("view-state")), snap2 = user_derived(() => get($$d_1).snap);
+  let event2 = user_derived(() => $$props.chunk.event);
+  let display = user_derived(() => $$props.chunk.event.display);
+  let resizable = user_derived(() => !bgEvent(get(display)) && !helperEvent(get(display)) && eventResizable(get(event2), get(eventDurationEditable), get(editable)));
+  function createResizeHandler(start) {
+    return (jsEvent) => get(action2).resize($$props.chunk, jsEvent, start, $$props.axis, forceDate(), forceMargin(), get(snap2));
+  }
+  var fragment = root_1$4();
+  var node = first_child(fragment);
+  var consequent = ($$anchor2) => {
+    var div = root$11();
+    var event_handler = user_derived(() => createResizeHandler(true));
+    template_effect(() => set_class(div, 1, `${get(theme).resizer ?? ""} ${get(theme).start ?? ""}`));
+    delegated("pointerdown", div, function(...$$args) {
+      get(event_handler)?.apply(this, $$args);
+    });
+    append($$anchor2, div);
+  };
+  if_block(node, ($$render) => {
+    if (get(resizable) && get(eventResizableFromStart)) $$render(consequent);
+  });
+  var node_1 = sibling(node, 2);
+  snippet(node_1, () => $$props.children);
+  var node_2 = sibling(node_1, 2);
+  var consequent_1 = ($$anchor2) => {
+    var div_1 = root$11();
+    var event_handler_1 = user_derived(() => createResizeHandler(false));
+    template_effect(() => set_class(div_1, 1, get(theme).resizer));
+    delegated("pointerdown", div_1, function(...$$args) {
+      get(event_handler_1)?.apply(this, $$args);
+    });
+    append($$anchor2, div_1);
+  };
+  if_block(node_2, ($$render) => {
+    if (get(resizable)) $$render(consequent_1);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+delegate(["pointerdown"]);
+var root$10 = from_html(`<!> <!>`, 1);
+function Auxiliary($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  new AuxState(mainState);
+  let interaction = user_derived(() => mainState.interaction), pointer = user_derived(() => mainState.options.pointer);
+  get(interaction).resizer = Resizer;
+  var fragment = root$10();
+  var node = first_child(fragment);
+  bind_this(Action(node, {}), ($$value) => get(interaction).action = $$value, () => get(interaction)?.action);
+  var node_1 = sibling(node, 2);
+  var consequent = ($$anchor2) => {
+    bind_this(Pointer($$anchor2, {}), ($$value) => get(interaction).pointer = $$value, () => get(interaction)?.pointer);
+  };
+  if_block(node_1, ($$render) => {
+    if (get(pointer)) $$render(consequent);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+var interaction_default = {
+  createOptions(options) {
+    assign2(options, {
+      dateClick: void 0,
+      dragConstraint: void 0,
+      dragScroll: true,
+      editable: false,
+      eventDragMinDistance: 5,
+      eventDragStart: void 0,
+      eventDragStop: void 0,
+      eventDrop: void 0,
+      eventDurationEditable: true,
+      eventLongPressDelay: void 0,
+      eventResizableFromStart: false,
+      eventResizeStart: void 0,
+      eventResizeStop: void 0,
+      eventResize: void 0,
+      eventStartEditable: true,
+      longPressDelay: 1e3,
+      pointer: false,
+      resizeConstraint: void 0,
+      select: void 0,
+      selectBackgroundColor: void 0,
+      selectConstraint: void 0,
+      selectLongPressDelay: void 0,
+      selectMinDistance: 5,
+      snapDuration: void 0,
+      unselect: void 0,
+      unselectAuto: true,
+      unselectCancel: ""
+    });
+    assign2(options.theme, {
+      draggable: "ec-draggable",
+      ghost: "ec-ghost",
+      preview: "ec-preview",
+      pointer: "ec-pointer",
+      resizer: "ec-resizer",
+      start: "ec-start",
+      dragging: "ec-dragging",
+      resizingY: "ec-resizing-y",
+      resizingX: "ec-resizing-x",
+      selecting: "ec-selecting",
+      notAllowed: "ec-not-allowed"
+    });
+  },
+  initState(mainState) {
+    mainState.auxComponents.push(Auxiliary);
+  }
+};
+var ViewState$3 = class {
+  #intlListDay;
+  get intlListDay() {
+    return get(this.#intlListDay);
+  }
+  set intlListDay(value) {
+    set(this.#intlListDay, value);
+  }
+  #intlListDaySide;
+  get intlListDaySide() {
+    return get(this.#intlListDaySide);
+  }
+  set intlListDaySide(value) {
+    set(this.#intlListDaySide, value);
+  }
+  constructor(mainState) {
+    this.#intlListDay = user_derived(intl(mainState, "listDayFormat"));
+    this.#intlListDaySide = user_derived(intl(mainState, "listDaySideFormat"));
+  }
+};
+var root$9 = from_html(`<div></div> <!>`, 1);
+function Event$2($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), interaction = user_derived(() => get($$d).interaction), theme = user_derived(() => get($$d).options.theme);
+  let styles = user_derived(() => (style) => {
+    delete style["background-color"];
+    delete style["color"];
+    return style;
+  });
+  {
+    const body = ($$anchor2, defaultBody = noop, bgColor = noop, txtColor = noop) => {
+      var fragment_1 = root$9();
+      var div = first_child(fragment_1);
+      let styles_1;
+      var node = sibling(div, 2);
+      snippet(node, defaultBody);
+      template_effect(() => {
+        set_class(div, 1, get(theme).eventTag);
+        styles_1 = set_style(div, "", styles_1, { "background-color": bgColor() });
+      });
+      append($$anchor2, fragment_1);
+    };
+    let $0 = user_derived(() => get(interaction).action?.noAction);
+    BaseEvent($$anchor, {
+      get chunk() {
+        return $$props.chunk;
+      },
+      get styles() {
+        return get(styles);
+      },
+      get onpointerdown() {
+        return get($0);
+      },
+      body,
+      $$slots: { body: true }
+    });
+  }
+  pop();
+}
+var root$8 = from_html(`<h4><time><!></time> <time></time></h4> <!>`, 1);
+function Day$2($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), filteredEvents2 = user_derived(() => get($$d).filteredEvents), highlightedDates = user_derived(() => get($$d).options.highlightedDates), theme = user_derived(() => get($$d).options.theme), validRange = user_derived(() => get($$d).options.validRange);
+  let $$d_1 = user_derived(() => getContext("view-state")), intlListDay = user_derived(() => get($$d_1).intlListDay), intlListDaySide = user_derived(() => get($$d_1).intlListDaySide);
+  let highlight = user_derived(() => get(highlightedDates).some((d) => datesEqual(d, $$props.date)));
+  let disabled = user_derived(() => outsideRange($$props.date, get(validRange)));
+  let datetime = user_derived(() => toISOString($$props.date, 10));
+  let chunks = user_derived(() => {
+    let chunks2 = [];
+    if (!get(disabled)) {
+      let start = $$props.date;
+      let end = addDay(cloneDate($$props.date));
+      for (let event2 of get(filteredEvents2)) if (!bgEvent(event2.display) && eventIntersects(event2, start, end)) {
+        let chunk = createEventChunk(event2, start, end);
+        chunks2.push(chunk);
+      }
+    }
+    return chunks2;
+  });
+  var fragment = comment();
+  var node = first_child(fragment);
+  var consequent = ($$anchor2) => {
+    {
+      const content = ($$anchor3, dayCell = noop) => {
+        var fragment_2 = root$8();
+        var h4 = first_child(fragment_2);
+        var time = child(h4);
+        var node_1 = child(time);
+        snippet(node_1, () => dayCell().snippet ?? noop, () => dayCell().arg);
+        reset(time);
+        attach(time, () => contentFrom(dayCell().content, dayCell().snippet));
+        var time_1 = sibling(time, 2);
+        attach(time_1, () => contentFrom(get(intlListDaySide).format($$props.date)));
+        reset(h4);
+        var node_2 = sibling(h4, 2);
+        each(node_2, 17, () => get(chunks), (chunk) => chunk.event, ($$anchor4, chunk) => {
+          Event$2($$anchor4, { get chunk() {
+            return get(chunk);
+          } });
+        });
+        template_effect(() => {
+          set_class(h4, 1, get(theme).dayHead);
+          set_attribute2(time, "datetime", get(datetime));
+          set_class(time_1, 1, get(theme).daySide);
+          set_attribute2(time_1, "datetime", get(datetime));
+        });
+        append($$anchor3, fragment_2);
+      };
+      BaseDay($$anchor2, {
+        get date() {
+          return $$props.date;
+        },
+        allDay: true,
+        role: "listitem",
+        get disabled() {
+          return get(disabled);
+        },
+        get highlight() {
+          return get(highlight);
+        },
+        defaultContent: () => get(intlListDay).format($$props.date),
+        content,
+        $$slots: { content: true }
+      });
+    }
+  };
+  if_block(node, ($$render) => {
+    if (get(chunks).length) $$render(consequent);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+var root$7 = from_html(`<div><!></div>`);
+var root_1$3 = from_html(`<section><!></section>`);
+function View$2($$anchor, $$props) {
+  push($$props, true);
+  let mainState = getContext("state");
+  let viewState = new ViewState$3(mainState);
+  setContext("view-state", viewState);
+  let filteredEvents2 = user_derived(() => mainState.filteredEvents), snippets = user_derived(() => mainState.snippets), view2 = user_derived(() => mainState.view), viewDates2 = user_derived(() => mainState.viewDates), noEventsClick = user_derived(() => mainState.options.noEventsClick), noEventsContent = user_derived(() => mainState.options.noEventsContent), theme = user_derived(() => mainState.options.theme);
+  let noEvents = user_derived(() => {
+    let noEvents2 = true;
+    if (!empty(get(viewDates2))) {
+      let start = get(viewDates2)[0];
+      let end = addDay(cloneDate(get(viewDates2).at(-1)));
+      for (let event2 of get(filteredEvents2)) if (!bgEvent(event2.display) && event2.start < end && event2.end > start) {
+        noEvents2 = false;
+        break;
+      }
+    }
+    return noEvents2;
+  });
+  let content = user_derived(() => createContent(get(noEventsContent), void 0, void 0, get(snippets).noEventsContent));
+  function onclick(jsEvent) {
+    if (isFunction(get(noEventsClick))) get(noEventsClick)({
+      jsEvent,
+      view: toViewWithLocalDates(get(view2))
+    });
+  }
+  var section = root_1$3();
+  var node = child(section);
+  var consequent = ($$anchor2) => {
+    var div = root$7();
+    var node_1 = child(div);
+    snippet(node_1, () => get(content).snippet ?? noop, () => get(content).arg);
+    reset(div);
+    attach(div, () => contentFrom(get(content).content, get(content).snippet));
+    template_effect(() => set_class(div, 1, get(theme).noEvents));
+    delegated("click", div, onclick);
+    append($$anchor2, div);
+  };
+  var alternate = ($$anchor2) => {
+    var fragment = comment();
+    var node_2 = first_child(fragment);
+    each(node_2, 17, () => get(viewDates2), index, ($$anchor3, date) => {
+      Day$2($$anchor3, { get date() {
+        return get(date);
+      } });
+    });
+    append($$anchor2, fragment);
+  };
+  if_block(node, ($$render) => {
+    if (get(noEvents)) $$render(consequent);
+    else $$render(alternate, -1);
+  });
+  reset(section);
+  bind_this(section, ($$value) => mainState.mainEl = $$value, () => mainState?.mainEl);
+  template_effect(() => set_class(section, 1, get(theme).main));
+  append($$anchor, section);
+  pop();
+}
+delegate(["click"]);
+var list_default = { createOptions(options) {
+  assign2(options, {
+    listDayFormat: { weekday: "long" },
+    listDaySideFormat: {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    },
+    noEventsClick: void 0,
+    noEventsContent: "No events",
+    view: "listWeek"
+  });
+  assign2(options.buttonText, {
+    listDay: "day",
+    listWeek: "week",
+    listMonth: "month",
+    listYear: "year"
+  });
+  assign2(options.theme, {
+    daySide: "ec-day-side",
+    eventTag: "ec-event-tag",
+    noEvents: "ec-no-events"
+  });
+  assign2(options.views, {
+    listDay: {
+      buttonText: btnTextDay,
+      component: initViewComponent$3,
+      duration: { days: 1 },
+      theme: themeView("ec-list ec-day-view"),
+      titleFormat: {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
+    },
+    listWeek: {
+      buttonText: btnTextWeek,
+      component: initViewComponent$3,
+      duration: { weeks: 1 },
+      theme: themeView("ec-list ec-week-view")
+    },
+    listMonth: {
+      buttonText: btnTextMonth,
+      component: initViewComponent$3,
+      duration: { months: 1 },
+      theme: themeView("ec-list ec-month-view"),
+      titleFormat: {
+        year: "numeric",
+        month: "long"
+      }
+    },
+    listYear: {
+      buttonText: btnTextYear,
+      component: initViewComponent$3,
+      duration: { years: 1 },
+      theme: themeView("ec-list ec-year-view"),
+      titleFormat: { year: "numeric" }
+    }
+  });
+} };
+function initViewComponent$3(mainState) {
+  mainState.features = ["list"];
+  return View$2;
+}
+function createChunks$1(event2, days, withId = true) {
+  let chunks = [];
+  for (let { gridColumn, gridRow, resource, start, end, disabled } of days) if (!disabled && eventIntersects(event2, start, end, resource)) {
+    let chunk = createEventChunk(event2, start, end);
+    assign2(chunk, {
+      gridColumn,
+      gridRow,
+      resource,
+      top: (chunk.start - start) / 1e3,
+      height: (chunk.end - chunk.start) / 1e3,
+      maxHeight: (end - chunk.start) / 1e3
+    });
+    if (withId) assignChunkId(chunk);
+    chunks.push(chunk);
+  }
+  return chunks;
+}
+function groupChunks(chunks) {
+  let groups = {};
+  for (let chunk of chunks) {
+    let { gridColumn } = chunk;
+    let group = groups[gridColumn];
+    let column = 0;
+    if (group && chunk.start < group.end) {
+      for (; column < group.columns.length; ++column) if (group.columns[column].at(-1).end <= chunk.start) break;
+      if (chunk.end > group.end) group.end = chunk.end;
+    } else group = {
+      columns: [],
+      end: chunk.end
+    };
+    if (group.columns.length < column + 1) group.columns.push([]);
+    group.columns[column].push(chunk);
+    groups[gridColumn] = group;
+    chunk.group = group;
+    chunk.groupColumn = column;
+  }
+}
+function createAllDayContent(allDayContent, snippet2) {
+  let text2 = "all-day";
+  let allDay = createContent(allDayContent, () => ({ text: text2 }), { html: text2 }, snippet2);
+  if (typeof allDay.content === "string") allDay.content = { html: allDay.content };
+  return allDay;
+}
+function setExtensions(mainState) {
+  mainState.extensions.activeRange = (start, end) => {
+    let { options: { slotMaxTime } } = mainState;
+    if (slotMaxTime.days || slotMaxTime.seconds > 86400) {
+      addDuration(subtractDay(end), slotMaxTime);
+      let start2 = subtractDay(cloneDate(end));
+      if (start2 < start) start = start2;
+    }
+    return {
+      start,
+      end
+    };
+  };
+}
+function createTRROptions(options) {
+  if (!("scrollTime" in options)) {
+    assign2(options, {
+      columnWidth: void 0,
+      flexibleSlotTimeLimits: false,
+      nowIndicator: false,
+      scrollTime: "06:00:00",
+      slotDuration: "00:30:00",
+      slotHeight: 24,
+      slotLabelInterval: void 0,
+      slotLabelFormat: {
+        hour: "numeric",
+        minute: "2-digit"
+      },
+      slotMaxTime: "24:00:00",
+      slotMinTime: "00:00:00",
+      snapDuration: void 0
+    });
+    assign2(options.theme, {
+      nowIndicator: "ec-now-indicator",
+      sidebar: "ec-sidebar",
+      slot: "ec-slot"
+    });
+  }
+}
+function createTROptions(options) {
+  if (!("allDaySlot" in options)) {
+    assign2(options, {
+      allDayContent: void 0,
+      allDaySlot: true,
+      slotEventOverlap: true
+    });
+    assign2(options.theme, { allDay: "ec-all-day" });
+  }
+}
+function createTRRParsers(parsers) {
+  if (!("scrollTime" in parsers)) assign2(parsers, {
+    scrollTime: createDuration,
+    slotDuration: createDuration,
+    slotLabelInterval: undefinedOr(createDuration),
+    slotMaxTime: createDuration,
+    slotMinTime: createDuration,
+    snapDuration: undefinedOr(createDuration)
+  });
+}
+function grid$2(mainState, viewState) {
+  return () => {
+    let { viewDates: viewDates2, options: { highlightedDates, validRange } } = mainState;
+    let { slotTimeLimits: slotTimeLimits2 } = viewState;
+    let days = [];
+    untrack(() => {
+      let gridColumn = 1;
+      for (let date of viewDates2) {
+        days.push({
+          gridColumn,
+          gridRow: 1,
+          resource: void 0,
+          start: addDuration(cloneDate(date), slotTimeLimits2.min),
+          end: addDuration(cloneDate(date), slotTimeLimits2.max),
+          dayStart: date,
+          dayEnd: addDay(cloneDate(date)),
+          disabled: outsideRange(date, validRange),
+          highlight: highlightedDates.some((d) => datesEqual(d, date))
+        });
+        ++gridColumn;
+      }
+    });
+    return [days];
+  };
+}
+function eventChunks$1(mainState, viewState) {
+  return () => {
+    let { filteredEvents: filteredEvents2 } = mainState;
+    let { grid: grid2 } = viewState;
+    let chunks = [];
+    let bgChunks = [];
+    let allDayChunks = [];
+    let allDayBgChunks = [];
+    untrack(() => {
+      for (let event2 of filteredEvents2) for (let days of grid2) if (bgEvent(event2.display)) {
+        bgChunks = bgChunks.concat(createChunks$1(event2, days));
+        if (event2.allDay) allDayBgChunks = allDayBgChunks.concat(createAllDayChunks(event2, days));
+      } else if (event2.allDay) allDayChunks = allDayChunks.concat(createAllDayChunks(event2, days));
+      else chunks = chunks.concat(createChunks$1(event2, days));
+      groupChunks(chunks);
+      prepareAllDayChunks(allDayChunks);
+    });
+    return {
+      chunks,
+      bgChunks,
+      allDayChunks,
+      allDayBgChunks
+    };
+  };
+}
+function iEventChunks$1(mainState, viewState) {
+  return () => {
+    let { iEvents } = mainState;
+    let { grid: grid2 } = viewState;
+    let iChunks = [];
+    let allDayIChunks = [];
+    for (let [, event2] of iEvents) {
+      if (!event2) continue;
+      untrack(() => {
+        for (let days of grid2) if (event2.allDay) allDayIChunks = allDayIChunks.concat(createAllDayChunks(event2, days, false));
+        else iChunks = iChunks.concat(createChunks$1(event2, days, false));
+      });
+    }
+    return {
+      iChunks,
+      allDayIChunks
+    };
+  };
+}
+function slotTimeLimits(mainState) {
+  return () => {
+    let { filteredEvents: filteredEvents2, viewDates: viewDates2, options: { flexibleSlotTimeLimits, slotMinTime, slotMaxTime } } = mainState;
+    let limits;
+    untrack(() => {
+      limits = createSlotTimeLimits(slotMinTime, slotMaxTime, flexibleSlotTimeLimits, viewDates2, filteredEvents2);
+    });
+    return limits;
+  };
+}
+function slotLabelPeriodicity(mainState) {
+  return () => {
+    let { options: { slotDuration, slotLabelInterval } } = mainState;
+    let periodicity;
+    untrack(() => {
+      periodicity = slotLabelInterval === void 0 ? toSeconds(slotDuration) < 3600 ? 2 : 1 : ceil(toSeconds(slotLabelInterval) / toSeconds(slotDuration)) || 1;
+    });
+    return periodicity;
+  };
+}
+function slots(mainState, viewState) {
+  return () => {
+    let { offset: offset2, options: { slotDuration } } = mainState;
+    let { intlSlotLabel, slotLabelPeriodicity: slotLabelPeriodicity2, slotTimeLimits: slotTimeLimits2 } = viewState;
+    let slots2;
+    untrack(() => {
+      slots2 = createSlots(setMidnight(createDate(void 0, offset2)), slotDuration, slotLabelPeriodicity2, slotTimeLimits2, intlSlotLabel);
+    });
+    return slots2;
+  };
+}
+function snap(mainState) {
+  return () => {
+    let { options: { slotDuration, snapDuration } } = mainState;
+    snapDuration ??= slotDuration;
+    return {
+      duration: snapDuration,
+      ratio: toSeconds(snapDuration) / toSeconds(slotDuration)
+    };
+  };
+}
+function TRRState() {
+  return class {
+    #intlSlotLabel;
+    get intlSlotLabel() {
+      return get(this.#intlSlotLabel);
+    }
+    set intlSlotLabel(value) {
+      set(this.#intlSlotLabel, value);
+    }
+    #slotLabelPeriodicity;
+    get slotLabelPeriodicity() {
+      return get(this.#slotLabelPeriodicity);
+    }
+    set slotLabelPeriodicity(value) {
+      set(this.#slotLabelPeriodicity, value);
+    }
+    #sidebarWidth;
+    get sidebarWidth() {
+      return get(this.#sidebarWidth);
+    }
+    set sidebarWidth(value) {
+      set(this.#sidebarWidth, value, true);
+    }
+    #snap;
+    get snap() {
+      return get(this.#snap);
+    }
+    set snap(value) {
+      set(this.#snap, value);
+    }
+    constructor(mainState) {
+      this.#intlSlotLabel = user_derived(intl(mainState, "slotLabelFormat"));
+      this.#slotLabelPeriodicity = user_derived(slotLabelPeriodicity(mainState));
+      this.#sidebarWidth = state(0);
+      this.#snap = user_derived(snap(mainState));
+    }
+  };
+}
+function TRState(Base) {
+  return class extends Base {
+    #slotTimeLimits;
+    get slotTimeLimits() {
+      return get(this.#slotTimeLimits);
+    }
+    set slotTimeLimits(value) {
+      set(this.#slotTimeLimits, value);
+    }
+    #slots;
+    get slots() {
+      return get(this.#slots);
+    }
+    set slots(value) {
+      set(this.#slots, value);
+    }
+    #chunks;
+    get chunks() {
+      return get(this.#chunks);
+    }
+    set chunks(value) {
+      set(this.#chunks, value);
+    }
+    #bgChunks;
+    get bgChunks() {
+      return get(this.#bgChunks);
+    }
+    set bgChunks(value) {
+      set(this.#bgChunks, value);
+    }
+    #allDayChunks;
+    get allDayChunks() {
+      return get(this.#allDayChunks);
+    }
+    set allDayChunks(value) {
+      set(this.#allDayChunks, value);
+    }
+    #allDayBgChunks;
+    get allDayBgChunks() {
+      return get(this.#allDayBgChunks);
+    }
+    set allDayBgChunks(value) {
+      set(this.#allDayBgChunks, value);
+    }
+    #iChunks;
+    get iChunks() {
+      return get(this.#iChunks);
+    }
+    set iChunks(value) {
+      set(this.#iChunks, value);
+    }
+    #allDayIChunks;
+    get allDayIChunks() {
+      return get(this.#allDayIChunks);
+    }
+    set allDayIChunks(value) {
+      set(this.#allDayIChunks, value);
+    }
+    constructor(mainState) {
+      super(mainState);
+      this.#slotTimeLimits = user_derived(slotTimeLimits(mainState));
+      this.#slots = user_derived(slots(mainState, this));
+      let $$d = user_derived(eventChunks$1(mainState, this)), chunks = user_derived(() => get($$d).chunks), bgChunks = user_derived(() => get($$d).bgChunks), allDayChunks = user_derived(() => get($$d).allDayChunks), allDayBgChunks = user_derived(() => get($$d).allDayBgChunks);
+      this.#chunks = user_derived(() => get(chunks));
+      this.#bgChunks = user_derived(() => get(bgChunks));
+      this.#allDayChunks = user_derived(() => get(allDayChunks));
+      this.#allDayBgChunks = user_derived(() => get(allDayBgChunks));
+      let $$d_1 = user_derived(iEventChunks$1(mainState, this)), iChunks = user_derived(() => get($$d_1).iChunks), allDayIChunks = user_derived(() => get($$d_1).allDayIChunks);
+      this.#iChunks = user_derived(() => get(iChunks));
+      this.#allDayIChunks = user_derived(() => get(allDayIChunks));
+    }
+  };
+}
+var ViewState$2 = class extends TRState(TRRState()) {
+  #grid;
+  get grid() {
+    return get(this.#grid);
+  }
+  set grid(value) {
+    set(this.#grid, value);
+  }
+  constructor(mainState) {
+    super(mainState);
+    this.#grid = user_derived(grid$2(mainState, this));
+  }
+};
+var placeholderResources;
+function viewResources(mainState) {
+  return () => {
+    let { activeRange: activeRange2, filteredEvents: filteredEvents2, resources, options: { filterResourcesWithEvents }, extensions: { viewResources: viewResources2 } } = mainState;
+    let result = viewResources2 ? viewResources2(resources) : resources;
+    untrack(() => {
+      if (filterResourcesWithEvents) result = resources.filter((resource) => filteredEvents2.some((event2) => !bgEvent(event2.display) && eventIntersects(event2, activeRange2.start, activeRange2.end, resource)));
+      if (!result.length) result = placeholderResources ??= createResources([{}]);
+    });
+    return result;
+  };
+}
+function grid$1(mainState, viewState) {
+  return () => {
+    let { viewDates: viewDates2, options: { datesAboveResources, highlightedDates, validRange } } = mainState;
+    let { slotTimeLimits: slotTimeLimits2, viewResources: viewResources2 } = viewState;
+    let grid2 = [];
+    untrack(() => {
+      let gridColumn = 1;
+      let loop2 = [viewResources2, viewDates2];
+      let keys2 = [uid2, toTime];
+      if (datesAboveResources) {
+        loop2.reverse();
+        keys2.reverse();
+      }
+      for (let item0 of loop2[0]) {
+        let days = [];
+        let groupKey = keys2[0](item0);
+        for (let item1 of loop2[1]) {
+          let date = datesAboveResources ? item0 : item1;
+          let resource = datesAboveResources ? item1 : item0;
+          days.push({
+            gridColumn,
+            gridRow: 1,
+            resource,
+            key: keys2[1](item1),
+            groupKey,
+            start: addDuration(cloneDate(date), slotTimeLimits2.min),
+            end: addDuration(cloneDate(date), slotTimeLimits2.max),
+            dayStart: date,
+            dayEnd: addDay(cloneDate(date)),
+            disabled: outsideRange(date, validRange),
+            highlight: highlightedDates.some((d) => datesEqual(d, date))
+          });
+          ++gridColumn;
+        }
+        grid2.push(days);
+      }
+    });
+    return grid2;
+  };
+}
+function RRState(Base) {
+  return class extends Base {
+    #viewResources;
+    get viewResources() {
+      return get(this.#viewResources);
+    }
+    set viewResources(value) {
+      set(this.#viewResources, value);
+    }
+    constructor(mainState) {
+      super(mainState);
+      this.#viewResources = user_derived(viewResources(mainState));
+    }
+  };
+}
+var ViewState$1 = class extends RRState(TRState(TRRState())) {
+  #grid;
+  get grid() {
+    return get(this.#grid);
+  }
+  set grid(value) {
+    set(this.#grid, value);
+  }
+  constructor(mainState) {
+    super(mainState);
+    this.#grid = user_derived(grid$1(mainState, this));
+  }
+};
+var root$6 = from_html(`<span><!></span>`);
+function Day$1($$anchor, $$props) {
+  push($$props, true);
+  let allDay = prop($$props, "allDay", 3, false);
+  let $$d = user_derived(() => getContext("state")), slotHeight = user_derived(() => get($$d).options.slotHeight);
+  let $$d_1 = user_derived(() => getContext("view-state")), snap2 = user_derived(() => get($$d_1).snap);
+  let date = user_derived(() => $$props.day.dayStart), start = user_derived(() => $$props.day.start), resource = user_derived(() => $$props.day.resource), disabled = user_derived(() => $$props.day.disabled), highlight = user_derived(() => $$props.day.highlight);
+  let el = state(void 0);
+  function dateFromPoint(x, y) {
+    if (allDay()) return get(date);
+    else {
+      let dayRect = rect(get(el));
+      let scaleY = dayRect.height / get(el).offsetHeight;
+      return addDuration(cloneDate(get(start)), get(snap2).duration, floor((y - dayRect.top) / (get(slotHeight) * get(snap2).ratio * scaleY)));
+    }
+  }
+  BaseDay($$anchor, {
+    get date() {
+      return get(date);
+    },
+    get allDay() {
+      return allDay();
+    },
+    get resource() {
+      return get(resource);
+    },
+    dateFromPoint,
+    get disabled() {
+      return get(disabled);
+    },
+    get highlight() {
+      return get(highlight);
+    },
+    get noIeb() {
+      return $$props.noIeb;
+    },
+    get noBeb() {
+      return $$props.noBeb;
+    },
+    get el() {
+      return get(el);
+    },
+    set el($$value) {
+      set(el, $$value, true);
+    }
+  });
+  pop();
+}
+function Event$1($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), slotEventOverlap = user_derived(() => get($$d).options.slotEventOverlap), slotDuration = user_derived(() => get($$d).options.slotDuration), slotHeight = user_derived(() => get($$d).options.slotHeight);
+  let styles = user_derived(() => (style) => {
+    let step = toSeconds(get(slotDuration));
+    let top = $$props.chunk.top / step * get(slotHeight);
+    let height2 = $$props.chunk.height / step * get(slotHeight) || get(slotHeight);
+    let maxHeight = $$props.chunk.maxHeight / step * get(slotHeight);
+    style["grid-column"] = $$props.chunk.gridColumn;
+    style["inset-block-start"] = `${top}px`;
+    style["min-block-size"] = `${height2}px`;
+    style["block-size"] = `${height2}px`;
+    style["max-block-size"] = `${maxHeight}px`;
+    let maxWidth = "100% - var(--ec-event-col-gap)";
+    if ($$props.chunk.group) {
+      let groupColumns = $$props.chunk.group.columns.length;
+      style["z-index"] = `${$$props.chunk.groupColumn + 1}`;
+      style["inset-inline-start"] = `calc((${maxWidth}) / ${groupColumns} * ${$$props.chunk.groupColumn})`;
+      style["inline-size"] = `calc((${maxWidth}) / ${groupColumns} * ${get(slotEventOverlap) ? 0.5 * (1 + groupColumns - $$props.chunk.groupColumn) : 1})`;
+    }
+    return style;
+  });
+  InteractableEvent($$anchor, {
+    get chunk() {
+      return $$props.chunk;
+    },
+    get styles() {
+      return get(styles);
+    },
+    axis: "y"
+  });
+  pop();
+}
+function AllDayEvent($$anchor, $$props) {
+  push($$props, true);
+  let $$d = user_derived(() => getContext("state")), eventGap = user_derived(() => get($$d).options.eventGap);
+  let el = state(void 0);
+  let margin = state(0);
+  let event2 = user_derived(() => $$props.chunk.event);
+  let styles = user_derived(() => (style) => {
+    style["grid-column"] = `${$$props.chunk.gridColumn} / span ${$$props.chunk.dates.length}`;
+    if (get(margin) || get(event2)._margin) style["margin-block-start"] = `${get(event2)._margin ?? get(margin)}px`;
+    return style;
+  });
+  function reposition() {
+    set(margin, repositionEvent$1($$props.chunk, height(get(el)), 1, get(eventGap)), true);
+  }
+  var $$exports = { reposition };
+  InteractableEvent($$anchor, {
+    get chunk() {
+      return $$props.chunk;
+    },
+    get styles() {
+      return get(styles);
+    },
+    axis: "x",
+    get forceMargin() {
+      return get(margin);
+    },
+    get el() {
+      return get(el);
+    },
+    set el($$value) {
+      set(el, $$value, true);
+    }
+  });
+  return pop($$exports);
+}
+var root$5 = from_html(`<div></div>`);
+function NowIndicator$1($$anchor, $$props) {
+  push($$props, true);
+  let span = prop($$props, "span", 3, 1);
+  let $$d = user_derived(() => getContext("state")), mainEl = user_derived(() => get($$d).mainEl), now = user_derived(() => get($$d).now), today = user_derived(() => get($$d).today), slotDuration = user_derived(() => get($$d).options.slotDuration), slotHeight = user_derived(() => get($$d).options.slotHeight), theme = user_derived(() => get($$d).options.theme);
+  let $$d_1 = user_derived(() => getContext("view-state")), sidebarWidth = user_derived(() => get($$d_1).sidebarWidth);
+  let $$d_2 = user_derived(() => {
+    for (let day of $$props.days) if (datesEqual(day.dayStart, get(today))) return day;
+    return {};
+  }), gridColumn = user_derived(() => get($$d_2).gridColumn), start = user_derived(() => get($$d_2).start), end = user_derived(() => get($$d_2).end);
+  let top = user_derived(() => {
+    if (get(now) < get(start) || get(now) > get(end)) return null;
+    let step = toSeconds(get(slotDuration));
+    return (get(now) - get(start)) / 1e3 / step * get(slotHeight);
+  });
+  let observerOptions = user_derived(() => ({
+    root: get(mainEl),
+    rootMargin: isRtl() ? `0px -${get(sidebarWidth) + 5.5}px 0px 0px` : `0px 0px 0px -${get(sidebarWidth) + 5.5}px`,
+    threshold: 0
+  }));
+  function onIntersect(el, entry) {
+    el.classList.toggle(get(theme).hidden, !entry.isIntersecting);
+  }
+  var fragment = comment();
+  var node = first_child(fragment);
+  var consequent = ($$anchor2) => {
+    var div = root$5();
+    let styles;
+    attach(div, () => intersectionObserver(onIntersect, get(observerOptions)));
+    template_effect(() => {
+      set_class(div, 1, get(theme).nowIndicator);
+      styles = set_style(div, "", styles, {
+        "grid-column": `${get(gridColumn) + 1} / span ${span() ?? ""}`,
+        "inset-block-start": `${get(top) ?? ""}px`
+      });
+    });
+    append($$anchor2, div);
+  };
+  if_block(node, ($$render) => {
+    if (get(gridColumn) && get(top) !== null) $$render(consequent);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+var root$4 = from_html(`<div><aside><!></aside> <div role="row"></div> <div><!> <!> <!></div></div>`);
+var root_1$2 = from_html(`<div><time></time></div>`);
+var root_2$2 = from_html(`<section><header><aside></aside> <div role="row"><!></div> <!></header> <div role="rowgroup"><aside aria-hidden="true"></aside> <div role="row"></div> <div><!> <!> <!></div></div> <!></section>`);
+function View$1($$anchor, $$props) {
+  push($$props, true);
+  let viewState = prop($$props, "viewState", 7);
+  let mainState = getContext("state");
+  if (!viewState()) viewState(new ViewState$2(mainState));
+  setContext("view-state", viewState());
+  let mainEl = user_derived(() => mainState.mainEl), snippets = user_derived(() => mainState.snippets), viewDates2 = user_derived(() => mainState.viewDates), allDayContent = user_derived(() => mainState.options.allDayContent), allDaySlot = user_derived(() => mainState.options.allDaySlot), columnWidth = user_derived(() => mainState.options.columnWidth), eventGap = user_derived(() => mainState.options.eventGap), showNowIndicator = user_derived(() => mainState.options.nowIndicator), scrollTime = user_derived(() => mainState.options.scrollTime), slotHeight = user_derived(() => mainState.options.slotHeight), slotDuration = user_derived(() => mainState.options.slotDuration), theme = user_derived(() => mainState.options.theme);
+  let allDayChunks = user_derived(() => viewState().allDayChunks), allDayBgChunks = user_derived(() => viewState().allDayBgChunks), allDayIChunks = user_derived(() => viewState().allDayIChunks), bgChunks = user_derived(() => viewState().bgChunks), chunks = user_derived(() => viewState().chunks), iChunks = user_derived(() => viewState().iChunks), grid2 = user_derived(() => viewState().grid), sidebarWidth = user_derived(() => viewState().sidebarWidth), slots2 = user_derived(() => viewState().slots), slotLabelPeriodicity2 = user_derived(() => viewState().slotLabelPeriodicity), slotTimeLimits2 = user_derived(() => viewState().slotTimeLimits);
+  let headerHeight = state(0);
+  let allDay = user_derived(() => createAllDayContent(get(allDayContent), get(snippets).allDayContent));
+  user_effect(() => {
+    get(scrollTime);
+    if (!empty(get(viewDates2))) tick().then(scrollToTime);
+  });
+  function scrollToTime() {
+    get(mainEl).scrollTop = ((toSeconds(get(scrollTime)) - toSeconds(get(slotTimeLimits2).min)) / toSeconds(get(slotDuration)) - 0.5) * get(slotHeight);
+  }
+  let refs = [];
+  function reposition() {
+    runReposition(refs, get(allDayChunks));
+  }
+  user_effect(() => {
+    get(eventGap);
+    reposition();
+  });
+  var fragment = comment();
+  var node = first_child(fragment);
+  var consequent_4 = ($$anchor2) => {
+    var section = root_2$2();
+    let styles;
+    var header_1 = child(section);
+    var aside = child(header_1);
+    var div = sibling(aside, 2);
+    var node_1 = child(div);
+    var consequent = ($$anchor3) => {
+      var fragment_1 = comment();
+      var node_2 = first_child(fragment_1);
+      snippet(node_2, () => $$props.header);
+      append($$anchor3, fragment_1);
+    };
+    var alternate = ($$anchor3) => {
+      var fragment_2 = comment();
+      var node_3 = first_child(fragment_2);
+      each(node_3, 17, () => get(grid2)[0], index, ($$anchor4, $$item, i) => {
+        let date = () => get($$item).dayStart;
+        let disabled = () => get($$item).disabled;
+        let highlight = () => get($$item).highlight;
+        ColHead($$anchor4, {
+          get date() {
+            return date();
+          },
+          colIndex: 1 + i,
+          get disabled() {
+            return disabled();
+          },
+          get highlight() {
+            return highlight();
+          },
+          children: ($$anchor5, $$slotProps) => {
+            DayHeader($$anchor5, { get date() {
+              return date();
+            } });
+          },
+          $$slots: { default: true }
+        });
+      });
+      append($$anchor3, fragment_2);
+    };
+    if_block(node_1, ($$render) => {
+      if ($$props.header) $$render(consequent);
+      else $$render(alternate, -1);
+    });
+    reset(div);
+    var node_4 = sibling(div, 2);
+    var consequent_1 = ($$anchor3) => {
+      var div_1 = root$4();
+      var aside_1 = child(div_1);
+      var node_5 = child(aside_1);
+      snippet(node_5, () => get(allDay).snippet ?? noop, () => get(allDay).arg);
+      reset(aside_1);
+      attach(aside_1, () => contentFrom(get(allDay).content, get(allDay).snippet));
+      var div_2 = sibling(aside_1, 2);
+      each(div_2, 21, () => get(grid2), index, ($$anchor4, days, i) => {
+        var fragment_5 = comment();
+        var node_6 = first_child(fragment_5);
+        each(node_6, 17, () => get(days), index, ($$anchor5, day, j) => {
+          {
+            let $0 = user_derived(() => i + 1 === length(get(grid2)) && j + 1 === length(get(days)));
+            Day$1($$anchor5, {
+              get day() {
+                return get(day);
+              },
+              allDay: true,
+              get noIeb() {
+                return get($0);
+              }
+            });
+          }
+        });
+        append($$anchor4, fragment_5);
+      });
+      reset(div_2);
+      var div_3 = sibling(div_2, 2);
+      var node_7 = child(div_3);
+      each(node_7, 19, () => get(allDayChunks), (chunk) => chunk.id, ($$anchor4, chunk, i) => {
+        bind_this(AllDayEvent($$anchor4, { get chunk() {
+          return get(chunk);
+        } }), ($$value, i2) => refs[i2] = $$value, (i2) => refs?.[i2], () => [get(i)]);
+      });
+      var node_8 = sibling(node_7, 2);
+      each(node_8, 17, () => get(allDayBgChunks), (chunk) => chunk.id, ($$anchor4, chunk) => {
+        AllDayEvent($$anchor4, { get chunk() {
+          return get(chunk);
+        } });
+      });
+      var node_9 = sibling(node_8, 2);
+      each(node_9, 17, () => get(allDayIChunks), index, ($$anchor4, chunk) => {
+        AllDayEvent($$anchor4, { get chunk() {
+          return get(chunk);
+        } });
+      });
+      reset(div_3);
+      reset(div_1);
+      template_effect(() => {
+        set_class(div_1, 1, get(theme).allDay);
+        set_class(aside_1, 1, get(theme).sidebar);
+        set_class(div_2, 1, get(theme).grid);
+        set_class(div_3, 1, get(theme).events);
+      });
+      append($$anchor3, div_1);
+    };
+    if_block(node_4, ($$render) => {
+      if (get(allDaySlot)) $$render(consequent_1);
+    });
+    reset(header_1);
+    var div_4 = sibling(header_1, 2);
+    var aside_2 = child(div_4);
+    each(aside_2, 21, () => get(slots2), index, ($$anchor3, slot2, i) => {
+      var div_5 = root_1$2();
+      let styles_1;
+      var time = child(div_5);
+      attach(time, () => contentFrom(get(slot2)[1]));
+      reset(div_5);
+      template_effect(() => {
+        set_class(div_5, 1, clsx2([get(theme).slot, !i && get(theme).hidden]));
+        styles_1 = set_style(div_5, "", styles_1, { "--ec-slot-label-periodicity": get(slot2)[2] });
+        set_attribute2(time, "datetime", get(slot2)[0]);
+      });
+      append($$anchor3, div_5);
+    });
+    reset(aside_2);
+    var div_6 = sibling(aside_2, 2);
+    each(div_6, 21, () => get(grid2), index, ($$anchor3, days, i) => {
+      var fragment_10 = comment();
+      var node_10 = first_child(fragment_10);
+      each(node_10, 17, () => get(days), index, ($$anchor4, day, j) => {
+        {
+          let $0 = user_derived(() => i + 1 === length(get(grid2)) && j + 1 === length(get(days)));
+          Day$1($$anchor4, {
+            get day() {
+              return get(day);
+            },
+            get noIeb() {
+              return get($0);
+            },
+            noBeb: true
+          });
+        }
+      });
+      append($$anchor3, fragment_10);
+    });
+    reset(div_6);
+    var div_7 = sibling(div_6, 2);
+    var node_11 = child(div_7);
+    each(node_11, 17, () => get(chunks), (chunk) => chunk.id, ($$anchor3, chunk) => {
+      Event$1($$anchor3, { get chunk() {
+        return get(chunk);
+      } });
+    });
+    var node_12 = sibling(node_11, 2);
+    each(node_12, 17, () => get(bgChunks), (chunk) => chunk.id, ($$anchor3, chunk) => {
+      Event$1($$anchor3, { get chunk() {
+        return get(chunk);
+      } });
+    });
+    var node_13 = sibling(node_12, 2);
+    each(node_13, 17, () => get(iChunks), index, ($$anchor3, chunk) => {
+      Event$1($$anchor3, { get chunk() {
+        return get(chunk);
+      } });
+    });
+    reset(div_7);
+    reset(div_4);
+    var node_14 = sibling(div_4, 2);
+    var consequent_3 = ($$anchor3) => {
+      var fragment_15 = comment();
+      var node_15 = first_child(fragment_15);
+      var consequent_2 = ($$anchor4) => {
+        var fragment_16 = comment();
+        var node_16 = first_child(fragment_16);
+        snippet(node_16, () => $$props.nowIndicator);
+        append($$anchor4, fragment_16);
+      };
+      var alternate_1 = ($$anchor4) => {
+        NowIndicator$1($$anchor4, { get days() {
+          return get(grid2)[0];
+        } });
+      };
+      if_block(node_15, ($$render) => {
+        if ($$props.nowIndicator) $$render(consequent_2);
+        else $$render(alternate_1, -1);
+      });
+      append($$anchor3, fragment_15);
+    };
+    if_block(node_14, ($$render) => {
+      if (get(showNowIndicator)) $$render(consequent_3);
+    });
+    reset(section);
+    bind_this(section, ($$value) => mainState.mainEl = $$value, () => mainState?.mainEl);
+    attach(section, () => resizeObserver(reposition));
+    template_effect(($0, $1) => {
+      set_class(section, 1, get(theme).main);
+      styles = set_style(section, "", styles, {
+        "--ec-grid-cols": $0,
+        "--ec-col-group-span": $1,
+        "--ec-col-width": get(columnWidth) ?? "minmax(0, 1fr)",
+        "--ec-slot-label-periodicity": get(slotLabelPeriodicity2),
+        "--ec-slot-height": `${get(slotHeight) ?? ""}px`,
+        "--ec-header-height": `${get(headerHeight) ?? ""}px`,
+        "--ec-sidebar-width": `${get(sidebarWidth) ?? ""}px`
+      });
+      set_class(header_1, 1, get(theme).header);
+      set_class(aside, 1, get(theme).sidebar);
+      set_class(div, 1, get(theme).grid);
+      set_class(div_4, 1, get(theme).body);
+      set_class(aside_2, 1, get(theme).sidebar);
+      set_class(div_6, 1, get(theme).grid);
+      set_class(div_7, 1, get(theme).events);
+    }, [() => length(get(grid2)) * length(get(grid2)[0]), () => length(get(grid2)[0])]);
+    bind_element_size(aside, "offsetWidth", ($$value) => viewState().sidebarWidth = $$value);
+    bind_element_size(header_1, "offsetHeight", ($$value) => set(headerHeight, $$value));
+    append($$anchor2, section);
+  };
+  var d = user_derived(() => !empty(get(grid2)) && !empty(get(grid2)[0]));
+  if_block(node, ($$render) => {
+    if (get(d)) $$render(consequent_4);
+  });
+  append($$anchor, fragment);
+  pop();
+}
+var root$3 = from_html(`<!> <!>`, 1);
+function firstDayIndex(event2, days) {
+  let low = 0;
+  let high = days.length;
+  while (low < high) {
+    let mid = low + high >> 1;
+    if (days[mid].dayEnd > event2.start) high = mid;
+    else low = mid + 1;
+  }
+  while (low > 0 && days[low - 1].end > event2.start) --low;
+  return low;
+}
+function createChunks(event2, days, monthView2, withId = true) {
+  let dates = [];
+  let firstStart;
+  let lastEnd;
+  let gridColumn;
+  let gridRow;
+  let resource;
+  let left;
+  let width = 0;
+  for (let i = firstDayIndex(event2, days); i < days.length; ++i) {
+    let { gridColumn: column, gridRow: row, resource: dayResource, dayStart, dayEnd, start, end, disabled } = days[i];
+    if (dayStart >= event2.end) break;
+    if (!disabled) {
+      if (monthView2) {
+        if (eventIntersects(event2, dayStart, dayEnd, dayResource)) {
+          if (!dates.length) {
+            firstStart = dayStart;
+            gridColumn = column;
+            gridRow = row;
+            resource = dayResource;
+          }
+          dates.push(dayStart);
+          lastEnd = dayEnd;
+        }
+      } else if (eventIntersects(event2, start, end, dayResource)) {
+        if (!dates.length) {
+          firstStart = start;
+          gridColumn = column;
+          gridRow = row;
+          resource = dayResource;
+          left = max(event2.start - start, 0) / 1e3;
+        }
+        dates.push(dayStart);
+        lastEnd = end;
+        width += (min(end, event2.end) - max(start, event2.start)) / 1e3;
+      }
+    }
+  }
+  if (dates.length) {
+    let chunk = createEventChunk(event2, firstStart, lastEnd);
+    assign2(chunk, {
+      gridColumn,
+      gridRow,
+      resource,
+      dates,
+      left,
+      width
+    });
+    if (withId) assignChunkId(chunk);
+    return chunk;
+  }
+  return null;
+}
+function eventInRow(event2, days) {
+  let resource = days[0]?.resource;
+  return !resource || event2.resourceIds.includes(resource.id);
+}
+function prepareChunks(chunks, strict) {
+  let dayChunks = {};
+  for (let i = 0; i < chunks.length; ++i) {
+    let chunk = chunks[i];
+    let { gridColumn, gridRow } = chunk;
+    chunk.order = i;
+    let cells = [];
+    for (let j = 0; j < chunk.dates.length; ++j) {
+      let key2 = `${gridRow}_${gridColumn + j}`;
+      let cell = dayChunks[key2] ??= {
+        pass: 0,
+        placed: [],
+        chunks: []
+      };
+      cell.chunks.push(chunk);
+      cells.push(cell);
+    }
+    chunk.cells = cells;
+  }
+  if (strict) {
+    let layoutGroups = {};
+    for (let chunk of chunks) {
+      let { gridColumn, gridRow } = chunk;
+      let seen2 = /* @__PURE__ */ new Set([chunk]);
+      let rivals = [];
+      for (let j = 0; j < chunk.dates.length; ++j) for (let other of dayChunks[`${gridRow}_${gridColumn + j}`].chunks) if (!seen2.has(other)) {
+        seen2.add(other);
+        rivals.push(other);
+      }
+      chunk.rivals = rivals;
+      let { layoutGroup } = chunk.event;
+      if (layoutGroup !== void 0) {
+        chunk.mates = layoutGroups[`${gridRow}_${layoutGroup}`] ??= [];
+        chunk.mates.push(chunk);
+      }
+    }
+  }
+}
+function grid(mainState, viewState) {
+  return () => {
+    let { viewDates: viewDates2, options: { highlightedDates, validRange } } = mainState;
+    let { dayTimeLimits: dayTimeLimits2, viewResources: viewResources2 } = viewState;
+    let grid2 = [];
+    untrack(() => {
+      let gridRow = 1;
+      for (let resource of viewResources2) {
+        let days = [];
+        let gridColumn = 1;
+        for (let date of viewDates2) {
+          let slotTimeLimits2 = dayTimeLimits2[toTime(date)];
+          days.push({
+            gridColumn,
+            gridRow,
+            resource,
+            start: addDuration(cloneDate(date), slotTimeLimits2.min),
+            end: addDuration(cloneDate(date), slotTimeLimits2.max),
+            dayStart: date,
+            dayEnd: addDay(cloneDate(date)),
+            disabled: outsideRange(date, validRange),
+            highlight: highlightedDates.some((d) => datesEqual(d, date))
+          });
+          ++gridColumn;
+        }
+        grid2.push(days);
+        ++gridRow;
+      }
+    });
+    return grid2;
+  };
+}
+function oneMonth(duration) {
+  return duration.months === 1 && !duration.years && !duration.days && !duration.seconds;
+}
+function oneWeek(duration) {
+  return duration.inWeeks && duration.days === 7 && !duration.years && !duration.months && !duration.seconds;
+}
+function extraHeads(mainState, viewState) {
+  return () => {
+    let { features, options: { duration, firstDay, weekNumbers } } = mainState;
+    let { grid: grid2 } = viewState;
+    let months = [];
+    let weeks = [];
+    untrack(() => {
+      let month;
+      let week;
+      if (!empty(grid2)) for (let { dayStart, gridColumn } of grid2[0]) {
+        if (features.includes("month")) {
+          if (month && month.date.getUTCMonth() === dayStart.getUTCMonth()) ++month.span;
+          else {
+            month = {
+              date: dayStart,
+              gridColumn,
+              span: 1
+            };
+            months.push(month);
+          }
+        }
+        if (weekNumbers) {
+          let number = getWeekNumber(dayStart, firstDay);
+          if (week && week.number === number) ++week.span;
+          else {
+            week = {
+              number,
+              date: dayStart,
+              gridColumn,
+              span: 1
+            };
+            weeks.push(week);
+          }
+        }
+      }
+      if (length(months) === 1 && oneMonth(duration)) months = [];
+      if (length(weeks) === 1 && oneWeek(duration)) weeks = [];
+    });
+    return {
+      months,
+      weeks
+    };
+  };
+}
+function eventChunks(mainState, viewState) {
+  return () => {
+    let { filteredEvents: filteredEvents2, options: { eventOrderStrict } } = mainState;
+    let { grid: grid2, monthView: monthView2 } = viewState;
+    let chunks = [];
+    let bgChunks = [];
+    untrack(() => {
+      for (let event2 of filteredEvents2) {
+        let bg = bgEvent(event2.display);
+        if (bg && monthView2 && !event2.allDay) continue;
+        let target = bg ? bgChunks : chunks;
+        for (let days of grid2) {
+          if (!eventInRow(event2, days)) continue;
+          let chunk = createChunks(event2, days, monthView2);
+          if (chunk) target.push(chunk);
+        }
+      }
+      prepareChunks(chunks, eventOrderStrict);
+    });
+    return {
+      chunks,
+      bgChunks
+    };
+  };
+}
+function iEventChunks(mainState, viewState) {
+  return () => {
+    let { iEvents } = mainState;
+    let { grid: grid2, monthView: monthView2 } = viewState;
+    let iChunks = [];
+    for (let [, event2] of iEvents) {
+      if (!event2) continue;
+      untrack(() => {
+        for (let days of grid2) {
+          if (!eventInRow(event2, days)) continue;
+          let chunk = createChunks(event2, days, monthView2, false);
+          if (chunk) iChunks.push(chunk);
+        }
+      });
+    }
+    return iChunks;
+  };
+}
+function dayTimeLimits(mainState) {
+  return () => {
+    let { filteredEvents: filteredEvents2, viewDates: viewDates2, options: { flexibleSlotTimeLimits, slotMinTime, slotMaxTime } } = mainState;
+    let dayTimeLimits2 = {};
+    untrack(() => {
+      for (let date of viewDates2) dayTimeLimits2[toTime(date)] = createSlotTimeLimits(slotMinTime, slotMaxTime, flexibleSlotTimeLimits, [date], filteredEvents2);
+    });
+    return dayTimeLimits2;
+  };
+}
+function daySlots(mainState, viewState) {
+  return () => {
+    let { viewDates: viewDates2, options: { slotDuration } } = mainState;
+    let { dayTimeLimits: dayTimeLimits2, intlSlotLabel, slotLabelPeriodicity: slotLabelPeriodicity2 } = viewState;
+    let slots2 = {};
+    untrack(() => {
+      for (let date of viewDates2) {
+        let key2 = toTime(date);
+        slots2[key2] = key2 in dayTimeLimits2 ? createSlots(date, slotDuration, slotLabelPeriodicity2, dayTimeLimits2[key2], intlSlotLabel) : [];
+      }
+    });
+    return slots2;
+  };
+}
+function nestedResources(mainState) {
+  return () => {
+    let { resources } = mainState;
+    let nested;
+    untrack(() => {
+      nested = resources.some((resource) => getPayload(resource).children.length);
+    });
+    return nested;
+  };
+}
+function monthView(mainState) {
+  return () => {
+    let { options: { slotDuration } } = mainState;
+    let monthView2;
+    untrack(() => {
+      monthView2 = !toSeconds(slotDuration);
+    });
+    return monthView2;
+  };
+}
+var ViewState = class extends RRState(TRRState()) {
+  #dayTimeLimits;
+  get dayTimeLimits() {
+    return get(this.#dayTimeLimits);
+  }
+  set dayTimeLimits(value) {
+    set(this.#dayTimeLimits, value);
+  }
+  #daySlots;
+  get daySlots() {
+    return get(this.#daySlots);
+  }
+  set daySlots(value) {
+    set(this.#daySlots, value);
+  }
+  #grid;
+  get grid() {
+    return get(this.#grid);
+  }
+  set grid(value) {
+    set(this.#grid, value);
+  }
+  #extraHeads;
+  get extraHeads() {
+    return get(this.#extraHeads);
+  }
+  set extraHeads(value) {
+    set(this.#extraHeads, value);
+  }
+  #intlMonthHeader;
+  get intlMonthHeader() {
+    return get(this.#intlMonthHeader);
+  }
+  set intlMonthHeader(value) {
+    set(this.#intlMonthHeader, value);
+  }
+  #monthView;
+  get monthView() {
+    return get(this.#monthView);
+  }
+  set monthView(value) {
+    set(this.#monthView, value);
+  }
+  #chunks;
+  get chunks() {
+    return get(this.#chunks);
+  }
+  set chunks(value) {
+    set(this.#chunks, value);
+  }
+  #bgChunks;
+  get bgChunks() {
+    return get(this.#bgChunks);
+  }
+  set bgChunks(value) {
+    set(this.#bgChunks, value);
+  }
+  #iChunks;
+  get iChunks() {
+    return get(this.#iChunks);
+  }
+  set iChunks(value) {
+    set(this.#iChunks, value);
+  }
+  #nestedResources;
+  get nestedResources() {
+    return get(this.#nestedResources);
+  }
+  set nestedResources(value) {
+    set(this.#nestedResources, value);
+  }
+  constructor(mainState) {
+    super(mainState);
+    this.#dayTimeLimits = user_derived(dayTimeLimits(mainState));
+    this.#daySlots = user_derived(daySlots(mainState, this));
+    this.#grid = user_derived(grid(mainState, this));
+    this.#extraHeads = user_derived(extraHeads(mainState, this));
+    this.#intlMonthHeader = user_derived(intl(mainState, "monthHeaderFormat"));
+    this.#monthView = user_derived(monthView(mainState));
+    let $$d = user_derived(eventChunks(mainState, this)), chunks = user_derived(() => get($$d).chunks), bgChunks = user_derived(() => get($$d).bgChunks);
+    this.#chunks = user_derived(() => get(chunks));
+    this.#bgChunks = user_derived(() => get(bgChunks));
+    this.#iChunks = user_derived(iEventChunks(mainState, this));
+    this.#nestedResources = user_derived(nestedResources(mainState));
+  }
+};
+var root$2 = from_html(`<span></span>`);
+var root_1$1 = from_html(`<button></button>`);
+var root_2$1 = from_html(`<!> <span><!></span>`, 1);
+delegate(["click"]);
+var root$1 = from_html(`<div></div>`);
+var root = from_html(`<time></time>`);
+var root_1 = from_html(`<span><!></span>`);
+var root_2 = from_html(`<div><time></time></div>`);
+var root_3 = from_html(`<div role="rowheader"><!> <!></div>`);
+var root_4 = from_html(`<section><header><aside></aside> <div role="row"><!> <!> <!> <!></div></header> <div role="rowgroup"><aside></aside> <div role="row"></div> <div><!> <!> <!></div></div> <!></section>`);
+var time_grid_default = {
+  createOptions(options) {
+    createTRROptions(options);
+    createTROptions(options);
+    assign2(options.buttonText, {
+      timeGridDay: "day",
+      timeGridWeek: "week"
+    });
+    assign2(options, { view: "timeGridWeek" });
+    assign2(options.views, {
+      timeGridDay: {
+        buttonText: btnTextDay,
+        component: initViewComponent,
+        dayHeaderFormat: { weekday: "long" },
+        duration: { days: 1 },
+        theme: themeView("ec-time-grid ec-day-view"),
+        titleFormat: {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }
+      },
+      timeGridWeek: {
+        buttonText: btnTextWeek,
+        component: initViewComponent,
+        duration: { weeks: 1 },
+        theme: themeView("ec-time-grid ec-week-view")
+      }
+    });
+  },
+  createParsers(parsers) {
+    createTRRParsers(parsers);
+  }
+};
+function initViewComponent(mainState) {
+  setExtensions(mainState);
+  return View$1;
+}
+function createCalendar(target, plugins, options) {
+  return mount(Calendar, {
+    target,
+    props: {
+      plugins,
+      options
+    }
+  });
+}
+function destroyCalendar(calendar) {
+  return unmount(calendar);
+}
+
+// Resources/Private/TypeScript/calendar.ts
+import AjaxRequest2 from "@typo3/core/ajax/ajax-request.js";
+import DocumentService from "@typo3/core/document-service.js";
+import Notification2 from "@typo3/backend/notification.js";
+
+// Resources/Private/TypeScript/Event/calendar-event-creation.ts
+import AjaxRequest from "@typo3/core/ajax/ajax-request.js";
+import Notification from "@typo3/backend/notification.js";
+import Viewport from "@typo3/backend/viewport.js";
+
+// Resources/Private/TypeScript/Event/calendar-creation-modal.ts
+import Modal from "@typo3/backend/modal.js";
+import { html as html2 } from "lit";
+var formatDateTimeLocal = (date) => {
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+};
+var getInitialEnd = (date, allDay) => {
+  if (!allDay) {
+    return date;
+  }
+  const end = new Date(date);
+  end.setDate(end.getDate() - 1);
+  end.setHours(23, 59, 0, 0);
+  return end;
+};
+function chooseCalendarCreationType(labels, calendars, initialStart, initialEnd, initialAllDay) {
+  return new Promise((resolve) => {
+    const modal = Modal.advanced({
+      title: labels.title,
+      content: html2`
                 <form class="xima-calendar-creation-form">
                     <div class="form-group" style="margin-bottom:2.5rem">
-                        <label class="form-label" for="xima-calendar-creation-type">${e.title}</label>
+                        <label class="form-label" for="xima-calendar-creation-type">${labels.title}</label>
                         <select id="xima-calendar-creation-type" class="form-select">
-                            <option value="event">${e.event}</option>
-                            <option value="event-appointment">${e.appointment}</option>
+                            <option value="event">${labels.event}</option>
+                            <option value="event-appointment">${labels.appointment}</option>
                         </select>
                     </div>
-                    ${t.length>0?Ao`
+                    ${calendars.length > 0 ? html2`
                         <div class="form-group">
-                            <label class="form-label" for="xima-calendar-creation-calendar">${e.calendar}</label>
-                            <select id="xima-calendar-creation-calendar" class="form-select" ?disabled=${t.length===1}>
-                                ${t.length>1?Ao`<option value="">${e.selectCalendar}</option>`:""}
-                                ${t.map(l=>Ao`
-                                    <option value=${l.uid} ?selected=${t.length===1}>${l.title}</option>
+                            <label class="form-label" for="xima-calendar-creation-calendar">${labels.calendar}</label>
+                            <select id="xima-calendar-creation-calendar" class="form-select" ?disabled=${calendars.length === 1}>
+                                ${calendars.length > 1 ? html2`<option value="">${labels.selectCalendar}</option>` : ""}
+                                ${calendars.map((calendar) => html2`
+                                    <option value=${calendar.uid} ?selected=${calendars.length === 1}>${calendar.title}</option>
                                 `)}
                             </select>
                         </div>
-                    `:""}
+                    ` : ""}
                     <hr class="xima-calendar-creation-form__separator" style="margin:0 0 1rem">
                     <div class="xima-calendar-creation-form__fields" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;align-items:end">
                         <div class="form-group">
-                            <label class="form-label" for="xima-calendar-creation-start">${e.start}</label>
-                            <input id="xima-calendar-creation-start" class="form-control" type="datetime-local" value=${lc(r)}>
+                            <label class="form-label" for="xima-calendar-creation-start">${labels.start}</label>
+                            <input id="xima-calendar-creation-start" class="form-control" type="datetime-local" value=${formatDateTimeLocal(initialStart)}>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="xima-calendar-creation-end">${e.end}</label>
-                            <input id="xima-calendar-creation-end" class="form-control" type="datetime-local" value=${lc(Ov(n,o))}>
+                            <label class="form-label" for="xima-calendar-creation-end">${labels.end}</label>
+                            <input id="xima-calendar-creation-end" class="form-control" type="datetime-local" value=${formatDateTimeLocal(getInitialEnd(initialEnd, initialAllDay))}>
                         </div>
                     </div>
                     <div class="form-check xima-calendar-creation-form__all-day">
-                        <input id="xima-calendar-creation-all-day" class="form-check-input" type="checkbox" ?checked=${o}>
-                        <label class="form-check-label" for="xima-calendar-creation-all-day">${e.allDay}</label>
+                        <input id="xima-calendar-creation-all-day" class="form-check-input" type="checkbox" ?checked=${initialAllDay}>
+                        <label class="form-check-label" for="xima-calendar-creation-all-day">${labels.allDay}</label>
                     </div>
                 </form>
-            `,size:"default",additionalCssClasses:["xima-calendar-creation-modal"],buttons:[{text:e.create,btnClass:"btn-primary",name:"create"}]});a.addEventListener("typo3-modal-shown",()=>{let l=a.querySelector(".modal-content");l&&(l.style.setProperty("height","auto","important"),l.style.setProperty("max-height","none","important"));let d=a.querySelector(".xima-calendar-creation-form");if(!d)return;let f=d.querySelector("#xima-calendar-creation-all-day"),v=d.querySelector("#xima-calendar-creation-start"),h=d.querySelector("#xima-calendar-creation-end"),u=()=>{let g=f?.checked??!1;v&&(v.readOnly=g,v.classList.toggle("xima-calendar-creation-form__date-disabled",g),v.setAttribute("aria-disabled",String(g))),h&&(h.readOnly=g,h.classList.toggle("xima-calendar-creation-form__date-disabled",g),h.setAttribute("aria-disabled",String(g)))},p=()=>{f?.checked&&(f.checked=!1,u())};v?.addEventListener("click",p),h?.addEventListener("click",p),f?.addEventListener("change",u),u(),d.elements.namedItem("xima-calendar-creation-type")?.focus()}),a.addEventListener("button.clicked",l=>{if(l.target.getAttribute("name")!=="create")return;let f=a.querySelector("#xima-calendar-creation-type")?.value,v=a.querySelector("#xima-calendar-creation-calendar")?.value,h=a.querySelector("#xima-calendar-creation-start")?.value,u=a.querySelector("#xima-calendar-creation-end")?.value,p=a.querySelector("#xima-calendar-creation-all-day")?.checked??!1,g=h?new Date(h):null,_=u?new Date(u):null,m=v?Number(v):null;f!=="event"&&f!=="event-appointment"||!g||!_||Number.isNaN(g.getTime())||Number.isNaN(_.getTime())||_<=g||t.length>0&&!m||(s({type:f,start:g,end:_,allDay:p,calendarUid:m}),a.hideModal())}),a.addEventListener("typo3-modal-hidden",()=>{s(null)})})}var cc=(e,t)=>{let r=t.match(/^(\d{1,2}):(\d{2})$/);r&&e.setHours(Number(r[1]),Number(r[2]),0,0)},fc=(e,t,r=!1)=>{let n=new Date(e.start),o=new Date(e.end),s=r||e.allDay&&t.allDay;return e.allDay&&(s?(n.setHours(0,0,0,0),o=new Date(o),o.setHours(0,0,0,0)):(cc(n,t.startTime),o=new Date(o),o.setDate(o.getDate()-1),cc(o,t.endTime),o<=n&&o.setDate(o.getDate()+1))),{start:n,end:o,allDay:s}},uc=e=>{let t=new Date(e.start),r=new Date(e.end);return t.setHours(0,0,0,0),r.setHours(0,0,0,0),Math.round((r.getTime()-t.getTime())/864e5)};var vc="tx_ximatypo3calendar_domain_model_event",hc="xima_calendar_pending_event",mc="xima_calendar_pending_entry",ua="ximaCalendarPendingEvent",pa="ximaCalendarPendingEntry";function gc(e,t,r){let n=!1,o,s=m=>!!r.createEventUrl&&(m==="event"?r.canCreateEvent&&r.canCreateAppointment:r.canCreateAppointment),a=()=>e.querySelector(".ec-day-grid")!==null,l=r.labels,d=(m,y)=>{let b=new URLSearchParams;b.set(`edit[${m}][${y}]`,"edit"),b.set("module",t.TYPO3.ModuleMenu.App.getCurrentModule());let x=new URL(document.location.href);x.searchParams.delete(ua),x.searchParams.delete(pa),x.searchParams.set(m===vc?ua:pa,String(y)),b.set("returnUrl",x.pathname+x.search);let E=t.TYPO3.settings.FormEngine.moduleUrl;Pv.ContentContainer.setUrl(`${E}&${b.toString()}`)},f=()=>{Iv.error("Error","The event could not be created. Please try again.")},v=async m=>{if(!s(m.type))return;let b=await(await new pc(r.createEventUrl).post({start:Math.floor(m.start.getTime()/1e3),end:Math.floor(m.end.getTime()/1e3),allDay:m.allDay?1:0,type:m.type,...m.calendarUid===null?{}:{calendarUid:m.calendarUid}})).resolve();if(!b.success)throw new Error("Event creation failed");if(m.type==="event-appointment"&&b.entryUid)sessionStorage.setItem(mc,String(b.entryUid)),d("tx_ximatypo3calendar_domain_model_entry",b.entryUid);else if(b.eventUid)sessionStorage.setItem(hc,String(b.eventUid)),d(vc,b.eventUid);else throw new Error("Creation response is incomplete")},h=(m,y,b)=>{e.classList.add("xima-calendar-selection-dialog-open"),dc(l,r.calendars,m,y,b).then(x=>{if(x!==null)return v(x)}).catch(f).finally(()=>{o?.(),e.classList.remove("xima-calendar-selection-dialog-open")})},u=async(m,y,b)=>{let x=r.cleanupEventUrl,E=sessionStorage.getItem(y)??new URLSearchParams(document.location.search).get(b);if(!E||!x)return!1;try{let D=new URL(x,document.location.origin);if(D.searchParams.set(m,E),(await(await new pc(D).get()).resolve()).success){sessionStorage.removeItem(y);let A=new URL(document.location.href);return A.searchParams.get(b)===E&&(A.searchParams.delete(b),window.history.replaceState({},"",A)),!0}}catch{}return!1},p=async()=>{let[m,y]=await Promise.all([u("eventUid",hc,ua),u("entryUid",mc,pa)]);return m||y},g=()=>{n=!0},_=(m,y=!1)=>fc(m,{startTime:r.defaultStartTime,endTime:r.defaultEndTime,allDay:r.defaultAllDay},y);return{select:m=>{if(n){n=!1;return}let y=a()&&m.allDay&&uc(m)>=2,b=_(m,y);h(b.start,b.end,b.allDay)},dateClick:m=>{let y=new Date(m.date),b=new Date(y.getTime()+(m.allDay?864e5:18e5)),x=_({start:y,end:b,allDay:m.allDay});h(x.start,x.end,x.allDay)},cleanupPendingCreation:p,cancelSelection:g,setClearCalendarSelection:m=>{o=m}}}import Fv from"@typo3/backend/viewport.js";function _c(e,t){let n=e.closest(".xima-calendar-content")?.querySelector(".xima-calendar-event-detail"),o=n?.querySelector(".xima-calendar-event-detail__title"),s=null,a=null,l=()=>{s?.remove(),s=null,a=null},d=f=>{let v=f.event.extendedProps.eventUid;if(typeof v!="number"&&typeof v!="string")return;let h="tx_ximatypo3calendar_domain_model_event",u=document.location.pathname+document.location.search;Fv.ContentContainer.setUrl(t.TYPO3.settings.FormEngine.moduleUrl+"&edit["+h+"]["+v+"]=edit&module="+encodeURIComponent(t.TYPO3.ModuleMenu.App.getCurrentModule())+"&returnUrl="+u)};return{datesSet:l,eventClick:f=>{let v=f.event.id??null;if(s&&a===v){l();return}if(l(),f.view?.type?.startsWith("list")){s=document.createElement("div"),s.className="xima-calendar-inline-event-detail",s.textContent=f.event.title??"",f.el.insertAdjacentElement("afterend",s),a=v;return}if(o&&n?.offsetParent!==null&&window.innerHeight>=930){o.textContent=f.event.title??"";return}d(f)}}}function Hv(e,t,r){let n=e[t];return n?n.items.find(o=>String(o.value)===String(r))??null:null}function $c(e,t,r){let n=Hv(e,t,r);return n?`xima-calendar-event--${n.appearance||"default"}`:""}function yc(e,t,r){let n=!1;return o=>{if(!r||o.buttons===0){n=!1;return}let s=e.querySelector(".ec.ec-selecting"),a=s?.querySelector(".ec-body");if(!s||!a){n=!1;return}let l=a.getBoundingClientRect(),d=Array.from(s.querySelectorAll(".ec-body .ec-day")).map(p=>p.getBoundingClientRect());if(d.length===0){n=!1;return}let f=!1,v=!1;if(s.classList.contains("ec-time-grid")){let p=o.clientY>=l.top&&o.clientY<=l.bottom;f=o.clientX>=l.right&&p,v=o.clientX<=l.left&&p}else{let p=new Map;d.forEach(x=>{let E=Math.round(x.top);p.set(E,[...p.get(E)??[],x])});let g=Array.from(p.entries()).sort(([x],[E])=>x-E),_=g[0][1],m=g[g.length-1][1],y=o.clientY>=Math.min(..._.map(x=>x.top))&&o.clientY<=Math.max(..._.map(x=>x.bottom)),b=o.clientY>=Math.min(...m.map(x=>x.top))&&o.clientY<=Math.max(...m.map(x=>x.bottom));f=o.clientX>=l.right&&b,v=o.clientX<=l.left&&y}if(!f&&!v){n=!1;return}if(n)return;let h=t.getView().currentStart;if(!h)return;let u=new Date(h);s.classList.contains("ec-time-grid")?u.setDate(u.getDate()+(f?7:-7)):u.setMonth(u.getMonth()+(f?1:-1)),n=!0,t.gotoDate(u)}}function bc(e){let t,r=()=>{document.querySelectorAll(".xima-calendar-selection-overlay").forEach(d=>d.remove())},n=()=>{e.classList.add("xima-calendar-selection-cancelled"),e.querySelectorAll(".ec-event.ec-preview").forEach(d=>d.remove()),r()},o=()=>{e.classList.remove("xima-calendar-selection-cancelled")},s=(d,f,v,h)=>{let u=document.createElement("div");u.className="xima-calendar-selection-overlay",u.style.left=`${d}px`,u.style.top=`${f}px`,u.style.width=`${v-d}px`,u.style.height=`${h-f}px`,document.body.appendChild(u)},a=()=>{r();let d=e.querySelector(".ec.ec-selecting");if(!d)return;if(d.classList.contains("ec-time-grid")){let u=Array.from(d.querySelectorAll(".ec-body .ec-event.ec-preview")),p=d.querySelector(".ec-body")?.getBoundingClientRect(),g=d.querySelector(".ec-main")?.getBoundingClientRect();if(u.length===0||!p||!g)return;let _={left:Math.max(p.left,g.left),right:Math.min(p.right,g.right),top:Math.max(p.top,g.top),bottom:Math.min(p.bottom,g.bottom)},m=u.map(b=>b.getBoundingClientRect()),y=Array.from(d.querySelectorAll(".ec-body .ec-day")).filter(b=>{let x=b.getBoundingClientRect();return m.some(E=>x.right>E.left&&x.left<E.right)});u.forEach((b,x)=>{let E=m[x],D=y.find(se=>{let X=se.getBoundingClientRect();return X.right>E.left&&X.left<E.right});if(!D)return;let $=D.getBoundingClientRect(),k=Math.max($.left,_.left),A=Math.min($.right,_.right),N=Math.max(E.top,_.top),G=Math.min(E.bottom,_.bottom);A>k&&G>N&&s(k,N,A,G)});return}if(!d.classList.contains("ec-day-grid"))return;let f=Array.from(d.querySelectorAll(".ec-events > .ec-event.ec-preview"));if(f.length===0)return;let v=f.map(u=>u.getBoundingClientRect()),h=new Map;Array.from(d.querySelectorAll(".ec-body .ec-day")).filter(u=>{let p=u.getBoundingClientRect();return v.some(g=>p.right>g.left&&p.left<g.right&&p.bottom>g.top&&p.top<g.bottom)}).forEach(u=>{let p=u.getBoundingClientRect(),g=Math.round(p.top);h.set(g,[...h.get(g)??[],p])}),h.forEach(u=>s(Math.min(...u.map(p=>p.left)),Math.min(...u.map(p=>p.top)),Math.max(...u.map(p=>p.right)),Math.max(...u.map(p=>p.bottom))))};return{clear:r,hidePreview:n,resetPreview:o,scheduleUpdate:()=>{t===void 0&&(t=requestAnimationFrame(()=>{t=void 0,a()}))},destroy:()=>{t!==void 0&&cancelAnimationFrame(t),r()}}}function wc(e,t,r,n){let o=bc(e),s=yc(e,t,n.enableDragNewEvent),a=new MutationObserver(o.scheduleUpdate),l=()=>{window.setTimeout(()=>{o.clear(),o.resetPreview()},0)},d=()=>{o.clear(),o.resetPreview()},f=v=>{v.key!=="Escape"||!e.querySelector(".ec.ec-selecting")||(r.cancelSelection(),o.hidePreview(),t.unselect(),window.dispatchEvent(new PointerEvent("pointercancel",{isPrimary:!0})),v.preventDefault(),v.stopPropagation())};return a.observe(e,{childList:!0,subtree:!0}),e.addEventListener("pointermove",o.scheduleUpdate),document.addEventListener("pointermove",s),e.addEventListener("pointerup",l),e.addEventListener("pointercancel",d),document.addEventListener("keydown",f,!0),{destroy:()=>{a.disconnect(),o.destroy(),e.removeEventListener("pointermove",o.scheduleUpdate),document.removeEventListener("pointermove",s),e.removeEventListener("pointerup",l),e.removeEventListener("pointercancel",d),document.removeEventListener("keydown",f,!0)}}}var An=e=>typeof e=="string",Uv=e=>typeof e=="boolean",xc=e=>typeof e=="number"&&Number.isInteger(e),Rn=(e,t,r)=>t.every(n=>r(e[n])),Vv=e=>!e||typeof e!="object"?!1:Rn(e,["title","event","appointment","calendar","selectCalendar","start","end","allDay","create"],An),Bv=e=>Array.isArray(e)&&e.every(t=>!!t&&typeof t=="object"&&xc(t.uid)&&An(t.title)),Yv=e=>!!e&&typeof e=="object"&&!Array.isArray(e)&&Object.values(e).every(t=>!!t&&typeof t=="object"&&!Array.isArray(t)&&Object.values(t).every(An)),qv=e=>!!e&&typeof e=="object"&&!Array.isArray(e)&&Rn(e,["iconSource","appearanceSource","colorSource"],An),zv=e=>{if(!e||typeof e!="object")return!1;let t=e;return Rn(t,["ajaxUrl","createEventUrl","cleanupEventUrl","viewStateUrl","initialView","locale"],An)&&["dayGridMonth","timeGridWeek","listMonth"].includes(t.initialView)&&Rn(t,["canCreateEvent","canCreateAppointment","enableDragNewEvent","enableClickNewEvent","defaultAllDay"],Uv)&&Rn(t,["defaultStartTime","defaultEndTime"],An)&&Rn(t,["timeSlotMinutes"],xc)&&Rn(t,["scrollStartTime"],An)&&Bv(t.calendars)&&Yv(t.filterColors)&&qv(t.eventAppearance)&&Vv(t.labels)};function Ec(e){let t;try{t=JSON.parse(e.dataset.calendarConfig??"null")}catch{return null}return zv(t)?t:null}var No=(e,t,r={})=>{let n=r[e]?.[String(t)];if(n)return n;let o=[...`${e}:${t}`].reduce((a,l)=>a*31+l.charCodeAt(0)>>>0,0);return`hsl(${Math.round(o*137.508%360)} 68% 46%)`},va=(e,t,r={})=>{let n=No(e,t,r),o=Gv(n);if(o===null)return"#ffffff";let s=Wv(o),a=(1+.05)/(s+.05),l=(s+.05)/.05;return a>=l?"#ffffff":"#000000"},Gv=e=>{let t=e.match(/^#([0-9a-f]{6})$/i);if(t)return[Number.parseInt(t[1].slice(0,2),16),Number.parseInt(t[1].slice(2,4),16),Number.parseInt(t[1].slice(4,6),16)];let r=e.match(/^hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*\)$/i);if(!r)return null;let n=Number(r[1])%360/360,o=Number(r[2])/100,s=Number(r[3])/100,a=(1-Math.abs(2*s-1))*o,l=n*6,d=a*(1-Math.abs(l%2-1)),f=l<1?[a,d,0]:l<2?[d,a,0]:l<3?[0,a,d]:l<4?[0,d,a]:l<5?[d,0,a]:[a,0,d],v=s-a/2;return f.map(h=>Math.round((h+v)*255))},Wv=([e,t,r])=>{let n=o=>{let s=o/255;return s<=.03928?s/12.92:((s+.055)/1.055)**2.4};return .2126*n(e)+.7152*n(t)+.0722*n(r)};var Lo=(e,t)=>{let r=e.extendedProps?.filterValues;if(!r||typeof r!="object")return;let n=r[t];return typeof n=="string"||typeof n=="number"?n:void 0},ha=new WeakMap,ga=e=>{let t=e.extendedProps?.appointmentCanceled;return t===!0||t===1||t==="1"},Mo=e=>{if(!e)return null;let t=e instanceof Date?e.getTime():Date.parse(e);return Number.isFinite(t)?t:null},Zv=(e,t)=>{let r=Mo(e.start),n=Mo(e.end);return r===null||n===null?!1:t.some(o=>{if(o===e||o.id!==void 0&&e.id!==void 0&&o.id===e.id)return!1;let s=Mo(o.start),a=Mo(o.end);return s!==null&&a!==null&&r<a&&n>s})},Jv=(e,t,r,n)=>{let o=Lo(e,n);if(o===void 0)return;let s=No(n,o,r),a=va(n,o,r);t.dataset.ximaEventColor=s,t.dataset.ximaEventTextColor=a,t.style.setProperty("--xima-event-color",s),t.style.setProperty("--xima-event-text-color",a)},Qv=(e,t,r,n)=>e.map(o=>{let s=ga(o)?o.title?`${ma(t)} \xB7 ${o.title}`:ma(t):o.title,a=Lo(o,n);if(a===void 0)return{...o,title:s};let l=No(n,a,r),d=va(n,a,r),f=o.styles??o.style??[],v=Array.isArray(f)?f:[f];return{...o,title:s,backgroundColor:l,textColor:d,styles:[...v,`--xima-event-color:${l}`,`--xima-event-text-color:${d}`]}}),ma=e=>e.startsWith("de")?"Abgesagt":"Canceled",eh=(e,t,r,n)=>{let o=Lo(e,n),s=Lo(e,r),a=s===void 0?"":$c(t,r,s);return[...o!==void 0?["xima-calendar-event--color-coded"]:[],...ga(e)?["xima-calendar-event--canceled"]:[],...a?[a]:[]]};Xv.ready().then(async()=>{let e=document.getElementById("xima-calendar-mount");if(!e)return;await ha.get(e)?.();let t=Ec(e);if(!t){Kv.error("Configuration error","The calendar configuration is invalid.");return}let r=t.enableDragNewEvent,n=t.enableClickNewEvent,o=`00:${String(t.timeSlotMinutes).padStart(2,"0")}:00`,s={firstDay:0},a=window.top,l=window.top,d=l.ximaCalendarFilterState??{filters:{}},f=l.ximaCalendarFilterConfiguration??{},v=[],h=_c(e,a),u=gc(e,a,t),p=t.initialView,g=$=>{$!==p&&(p=$,new jv(t.viewStateUrl).post({view:$}).then(k=>k.resolve()).catch(k=>console.error("Calendar view could not be saved",k)))},_=sc(e,[Zd,oc,ec,Qd],{...s,locale:t.locale,eventGap:3,height:"100%",nowIndicator:!0,selectable:r,dayMaxEvents:!0,moreLinkContent:({num:$})=>`+${$} ${t.locale.startsWith("de")?"weitere":"more"}`,view:t.initialView,views:{timeGridWeek:{scrollTime:t.scrollStartTime,slotMinTime:"00:00:00",slotMaxTime:"24:00:00",slotDuration:o,slotLabelInterval:"01:00:00",snapDuration:o,slotEventOverlap:!1}},theme:$=>({...$,button:"btn btn-default",buttonGroup:"btn-group",active:"active"}),buttonText:$=>({...$,dayGridMonth:t.locale.startsWith("de")?"Monat":"Month",timeGridWeek:t.locale.startsWith("de")?"Woche":"Week",listMonth:t.locale.startsWith("de")?"Liste":"List",today:t.locale.startsWith("de")?"Heute":"Today"}),headerToolbar:{start:"prev next today",center:"title",end:"dayGridMonth,timeGridWeek,listMonth"},datesSet:({view:$})=>{h.datesSet(),g($.type)},select:r?u.select:void 0,dateClick:n?u.dateClick:void 0,eventSources:[{events:async $=>{let k=new URL(t.ajaxUrl,document.location.origin);k.searchParams.set("start",$.startStr),k.searchParams.set("end",$.endStr),k.searchParams.set("filters",JSON.stringify(d.filters));let A=await fetch(k,{credentials:"same-origin"});if(!A.ok)throw new Error("Calendar events could not be loaded");let N=await A.json();return v=Qv(N,t.locale,t.filterColors,t.eventAppearance.colorSource),v}}],eventClassNames:({event:$})=>eh($,f,t.eventAppearance.appearanceSource,t.eventAppearance.colorSource),eventDidMount:({event:$,el:k})=>{if(Jv($,k,t.filterColors,t.eventAppearance.colorSource),ga($)&&Zv($,v)){let A=k.querySelector(".ec-event-title");if(A){let N=ma(t.locale),G=t.locale.startsWith("de")?"[A]":"[C]";A.textContent=A.textContent?.replace(new RegExp(`^${N}\\s*\xB7\\s*`),`${G} `)??G}}},eventClick:h.eventClick}),m=$=>{f=$.detail,_.refetchEvents()};l.addEventListener("xima-calendar-filter-configuration-loaded",m,{once:!0});let y=wc(e,_,u,{enableDragNewEvent:r});u.setClearCalendarSelection(()=>_.unselect());let b=!1,x=()=>{u.cleanupPendingCreation().then($=>{$&&!b&&_.refetchEvents()})},E=$=>{let k=$.detail;k&&(d=k,_.refetchEvents())};x(),window.addEventListener("pageshow",x),window.addEventListener("popstate",x),window.top.document.addEventListener("typo3-module-loaded",x,!0),l.addEventListener("xima-calendar-filter-changed",E);let D=async()=>{b||(b=!0,window.removeEventListener("pageshow",x),window.removeEventListener("popstate",x),window.top.document.removeEventListener("typo3-module-loaded",x,!0),l.removeEventListener("xima-calendar-filter-changed",E),y.destroy(),ha.delete(e),await ac(_))};ha.set(e,D)});
+            `,
+      size: "default",
+      additionalCssClasses: ["xima-calendar-creation-modal"],
+      buttons: [
+        {
+          text: labels.create,
+          btnClass: "btn-primary",
+          name: "create"
+        }
+      ]
+    });
+    modal.addEventListener("typo3-modal-shown", () => {
+      const modalContent = modal.querySelector(".modal-content");
+      if (modalContent) {
+        modalContent.style.setProperty("height", "auto", "important");
+        modalContent.style.setProperty("max-height", "none", "important");
+      }
+      const form = modal.querySelector(".xima-calendar-creation-form");
+      if (!form) {
+        return;
+      }
+      const allDayInput = form.querySelector("#xima-calendar-creation-all-day");
+      const startInput = form.querySelector("#xima-calendar-creation-start");
+      const endInput = form.querySelector("#xima-calendar-creation-end");
+      const updateDateFields = () => {
+        const disabled = allDayInput?.checked ?? false;
+        if (startInput) {
+          startInput.readOnly = disabled;
+          startInput.classList.toggle("xima-calendar-creation-form__date-disabled", disabled);
+          startInput.setAttribute("aria-disabled", String(disabled));
+        }
+        if (endInput) {
+          endInput.readOnly = disabled;
+          endInput.classList.toggle("xima-calendar-creation-form__date-disabled", disabled);
+          endInput.setAttribute("aria-disabled", String(disabled));
+        }
+      };
+      const enableDateFields = () => {
+        if (allDayInput?.checked) {
+          allDayInput.checked = false;
+          updateDateFields();
+        }
+      };
+      startInput?.addEventListener("click", enableDateFields);
+      endInput?.addEventListener("click", enableDateFields);
+      allDayInput?.addEventListener("change", updateDateFields);
+      updateDateFields();
+      form.elements.namedItem("xima-calendar-creation-type")?.focus();
+    });
+    modal.addEventListener("button.clicked", (event2) => {
+      const name = event2.target.getAttribute("name");
+      if (name !== "create") {
+        return;
+      }
+      const type = modal.querySelector("#xima-calendar-creation-type")?.value;
+      const calendarValue = modal.querySelector("#xima-calendar-creation-calendar")?.value;
+      const startValue = modal.querySelector("#xima-calendar-creation-start")?.value;
+      const endValue = modal.querySelector("#xima-calendar-creation-end")?.value;
+      const allDay = modal.querySelector("#xima-calendar-creation-all-day")?.checked ?? false;
+      const start = startValue ? new Date(startValue) : null;
+      const end = endValue ? new Date(endValue) : null;
+      const calendarUid = calendarValue ? Number(calendarValue) : null;
+      if (type !== "event" && type !== "event-appointment" || !start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) {
+        return;
+      }
+      if (calendars.length > 0 && !calendarUid) {
+        return;
+      }
+      resolve({ type, start, end, allDay, calendarUid });
+      modal.hideModal();
+    });
+    modal.addEventListener("typo3-modal-hidden", () => {
+      resolve(null);
+    });
+  });
+}
+
+// Resources/Private/TypeScript/Interaction/calendar-selection.ts
+var setTime = (date, value) => {
+  const match = value.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) {
+    return;
+  }
+  date.setHours(Number(match[1]), Number(match[2]), 0, 0);
+};
+var prepareCalendarSelection = (selection, defaults, forceAllDay = false) => {
+  let start = new Date(selection.start);
+  let end = new Date(selection.end);
+  const allDay = forceAllDay || selection.allDay && defaults.allDay;
+  if (selection.allDay) {
+    if (allDay) {
+      start.setHours(0, 0, 0, 0);
+      end = new Date(end);
+      end.setHours(0, 0, 0, 0);
+    } else {
+      setTime(start, defaults.startTime);
+      end = new Date(end);
+      end.setDate(end.getDate() - 1);
+      setTime(end, defaults.endTime);
+      if (end <= start) {
+        end.setDate(end.getDate() + 1);
+      }
+    }
+  }
+  return { start, end, allDay };
+};
+var getSelectedDayCount = (selection) => {
+  const start = new Date(selection.start);
+  const end = new Date(selection.end);
+  start.setHours(0, 0, 0, 0);
+  end.setHours(0, 0, 0, 0);
+  return Math.round((end.getTime() - start.getTime()) / 864e5);
+};
+
+// Resources/Private/TypeScript/Event/calendar-event-creation.ts
+var EVENT_TABLE = "tx_ximatypo3calendar_domain_model_event";
+var PENDING_EVENT_STORAGE_KEY = "xima_calendar_pending_event";
+var PENDING_ENTRY_STORAGE_KEY = "xima_calendar_pending_entry";
+var PENDING_EVENT_QUERY_PARAM = "ximaCalendarPendingEvent";
+var PENDING_ENTRY_QUERY_PARAM = "ximaCalendarPendingEntry";
+function createCalendarCreationController(container, typo3Top, calendarConfig) {
+  let selectionCancelled = false;
+  let clearCalendarSelection;
+  const canCreate = (type) => Boolean(calendarConfig.createEventUrl) && (type === "event" ? calendarConfig.canCreateEvent && calendarConfig.canCreateAppointment : calendarConfig.canCreateAppointment);
+  const isMonthView = () => container.querySelector(".ec-day-grid") !== null;
+  const modalLabels = calendarConfig.labels;
+  const openRecordForm = (table, uid3) => {
+    const params = new URLSearchParams();
+    params.set(`edit[${table}][${uid3}]`, "edit");
+    params.set("module", typo3Top.TYPO3.ModuleMenu.App.getCurrentModule());
+    const returnUrl = new URL(document.location.href);
+    returnUrl.searchParams.delete(PENDING_EVENT_QUERY_PARAM);
+    returnUrl.searchParams.delete(PENDING_ENTRY_QUERY_PARAM);
+    returnUrl.searchParams.set(
+      table === EVENT_TABLE ? PENDING_EVENT_QUERY_PARAM : PENDING_ENTRY_QUERY_PARAM,
+      String(uid3)
+    );
+    params.set("returnUrl", returnUrl.pathname + returnUrl.search);
+    const moduleUrl = typo3Top.TYPO3.settings.FormEngine.moduleUrl;
+    Viewport.ContentContainer.setUrl(`${moduleUrl}&${params.toString()}`);
+  };
+  const showCreationError = () => {
+    Notification.error(
+      "Error",
+      "The event could not be created. Please try again."
+    );
+  };
+  const createEvent = async (selection) => {
+    if (!canCreate(selection.type)) {
+      return;
+    }
+    const response = await new AjaxRequest(calendarConfig.createEventUrl).post({
+      start: Math.floor(selection.start.getTime() / 1e3),
+      end: Math.floor(selection.end.getTime() / 1e3),
+      allDay: selection.allDay ? 1 : 0,
+      type: selection.type,
+      ...selection.calendarUid === null ? {} : { calendarUid: selection.calendarUid }
+    });
+    const result = await response.resolve();
+    if (!result.success) {
+      throw new Error("Event creation failed");
+    }
+    if (selection.type === "event-appointment" && result.entryUid) {
+      sessionStorage.setItem(PENDING_ENTRY_STORAGE_KEY, String(result.entryUid));
+      openRecordForm("tx_ximatypo3calendar_domain_model_entry", result.entryUid);
+    } else if (result.eventUid) {
+      sessionStorage.setItem(PENDING_EVENT_STORAGE_KEY, String(result.eventUid));
+      openRecordForm(EVENT_TABLE, result.eventUid);
+    } else {
+      throw new Error("Creation response is incomplete");
+    }
+  };
+  const openCreationDialog = (start, end, allDay) => {
+    container.classList.add("xima-calendar-selection-dialog-open");
+    void chooseCalendarCreationType(modalLabels, calendarConfig.calendars, start, end, allDay).then((creation) => {
+      if (creation !== null) {
+        return createEvent(creation);
+      }
+    }).catch(showCreationError).finally(() => {
+      clearCalendarSelection?.();
+      container.classList.remove("xima-calendar-selection-dialog-open");
+    });
+  };
+  const cleanupRecord = async (parameter, storageKey, queryParameter) => {
+    const cleanupUrl = calendarConfig.cleanupEventUrl;
+    const uid3 = sessionStorage.getItem(storageKey) ?? new URLSearchParams(document.location.search).get(queryParameter);
+    if (!uid3 || !cleanupUrl) {
+      return false;
+    }
+    try {
+      const url = new URL(cleanupUrl, document.location.origin);
+      url.searchParams.set(parameter, uid3);
+      const response = await new AjaxRequest(url).get();
+      const result = await response.resolve();
+      if (result.success) {
+        sessionStorage.removeItem(storageKey);
+        const currentUrl = new URL(document.location.href);
+        if (currentUrl.searchParams.get(queryParameter) === uid3) {
+          currentUrl.searchParams.delete(queryParameter);
+          window.history.replaceState({}, "", currentUrl);
+        }
+        return true;
+      }
+    } catch {
+    }
+    return false;
+  };
+  const cleanupPendingCreation = async () => {
+    const [eventCleanedUp, entryCleanedUp] = await Promise.all([
+      cleanupRecord("eventUid", PENDING_EVENT_STORAGE_KEY, PENDING_EVENT_QUERY_PARAM),
+      cleanupRecord("entryUid", PENDING_ENTRY_STORAGE_KEY, PENDING_ENTRY_QUERY_PARAM)
+    ]);
+    return eventCleanedUp || entryCleanedUp;
+  };
+  const cancelSelection = () => {
+    selectionCancelled = true;
+  };
+  const prepareSelection = (selection, forceAllDay = false) => prepareCalendarSelection(selection, {
+    startTime: calendarConfig.defaultStartTime,
+    endTime: calendarConfig.defaultEndTime,
+    allDay: calendarConfig.defaultAllDay
+  }, forceAllDay);
+  return {
+    select: (selection) => {
+      if (selectionCancelled) {
+        selectionCancelled = false;
+        return;
+      }
+      const forceAllDay = isMonthView() && selection.allDay && getSelectedDayCount(selection) >= 2;
+      const preparedSelection = prepareSelection(selection, forceAllDay);
+      openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay);
+    },
+    dateClick: (click) => {
+      const start = new Date(click.date);
+      const end = new Date(start.getTime() + (click.allDay ? 864e5 : 18e5));
+      const preparedSelection = prepareSelection({ start, end, allDay: click.allDay });
+      openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay);
+    },
+    cleanupPendingCreation,
+    cancelSelection,
+    setClearCalendarSelection: (clearSelection) => {
+      clearCalendarSelection = clearSelection;
+    }
+  };
+}
+
+// Resources/Private/TypeScript/Event/calendar-details.ts
+import Viewport2 from "@typo3/backend/viewport.js";
+
+// Resources/Private/TypeScript/Rendering/calendar-event-data.ts
+var contentToText = (content) => {
+  if (typeof content === "string") {
+    return content;
+  }
+  if (content && "html" in content) {
+    return content.html;
+  }
+  if (content && "domNodes" in content) {
+    return content.domNodes.map((node) => node.textContent ?? "").join("");
+  }
+  return "";
+};
+var getFilterValue = (event2, identifier) => {
+  const filterValues = event2.extendedProps?.filterValues;
+  if (!filterValues || typeof filterValues !== "object") {
+    return void 0;
+  }
+  const value = filterValues[identifier];
+  return typeof value === "string" || typeof value === "number" ? value : void 0;
+};
+
+// Resources/Private/TypeScript/Event/calendar-details.ts
+function createCalendarDetailsController(container, typo3Top) {
+  const content = container.closest(".xima-calendar-content");
+  const detailPanel = content?.querySelector(".xima-calendar-event-detail");
+  const detailTitle = detailPanel?.querySelector(".xima-calendar-event-detail__title");
+  let inlineDetail = null;
+  let inlineDetailEventId = null;
+  const clearInlineDetail = () => {
+    inlineDetail?.remove();
+    inlineDetail = null;
+    inlineDetailEventId = null;
+  };
+  const openEventEditor = (info) => {
+    const eventUid = info.event.extendedProps.eventUid;
+    if (typeof eventUid !== "number" && typeof eventUid !== "string") {
+      return;
+    }
+    const table = "tx_ximatypo3calendar_domain_model_event";
+    const returnUrl = document.location.pathname + document.location.search;
+    Viewport2.ContentContainer.setUrl(
+      typo3Top.TYPO3.settings.FormEngine.moduleUrl + "&edit[" + table + "][" + eventUid + "]=edit&module=" + encodeURIComponent(typo3Top.TYPO3.ModuleMenu.App.getCurrentModule()) + "&returnUrl=" + returnUrl
+    );
+  };
+  return {
+    datesSet: clearInlineDetail,
+    eventClick: (info) => {
+      const eventId2 = info.event.id ?? null;
+      if (inlineDetail && inlineDetailEventId === eventId2) {
+        clearInlineDetail();
+        return;
+      }
+      clearInlineDetail();
+      if (info.view?.type?.startsWith("list")) {
+        inlineDetail = document.createElement("div");
+        inlineDetail.className = "xima-calendar-inline-event-detail";
+        inlineDetail.textContent = contentToText(info.event.title);
+        info.el.insertAdjacentElement("afterend", inlineDetail);
+        inlineDetailEventId = eventId2;
+        return;
+      }
+      if (detailTitle && detailPanel?.offsetParent !== null && window.innerHeight >= 930) {
+        detailTitle.textContent = contentToText(info.event.title);
+        return;
+      }
+      openEventEditor(info);
+    }
+  };
+}
+
+// Resources/Private/TypeScript/Event/calendar-event-appearance.ts
+function findFilterItem(configuration, identifier, value) {
+  const filter = configuration[identifier];
+  if (!filter) {
+    return null;
+  }
+  return filter.items.find(
+    (item) => String(item.value) === String(value)
+  ) ?? null;
+}
+function getAppearanceClass(configuration, source2, value) {
+  const item = findFilterItem(configuration, source2, value);
+  if (!item) {
+    return "";
+  }
+  const appearance = item.appearance || "default";
+  return `xima-calendar-event--${appearance}`;
+}
+
+// Resources/Private/TypeScript/Interaction/calendar-selection-navigation.ts
+function createCalendarSelectionNavigation(container, calendar, enableDragNewEvent) {
+  let navigationLocked = false;
+  return (event2) => {
+    if (!enableDragNewEvent || event2.buttons === 0) {
+      navigationLocked = false;
+      return;
+    }
+    const calendarElement = container.querySelector(".ec.ec-selecting");
+    const body = calendarElement?.querySelector(".ec-body");
+    if (!calendarElement || !body) {
+      navigationLocked = false;
+      return;
+    }
+    const bodyRect = body.getBoundingClientRect();
+    const dayRects = Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).map((day) => day.getBoundingClientRect());
+    if (dayRects.length === 0) {
+      navigationLocked = false;
+      return;
+    }
+    let passedRightEdge = false;
+    let passedLeftEdge = false;
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      const pointerInBody = event2.clientY >= bodyRect.top && event2.clientY <= bodyRect.bottom;
+      passedRightEdge = event2.clientX >= bodyRect.right && pointerInBody;
+      passedLeftEdge = event2.clientX <= bodyRect.left && pointerInBody;
+    } else {
+      const rows = /* @__PURE__ */ new Map();
+      dayRects.forEach((rect2) => {
+        const row = Math.round(rect2.top);
+        rows.set(row, [...rows.get(row) ?? [], rect2]);
+      });
+      const rowBounds = Array.from(rows.entries()).sort(([first], [second]) => first - second);
+      const firstRow = rowBounds[0][1];
+      const lastRow = rowBounds[rowBounds.length - 1][1];
+      const pointerInFirstRow = event2.clientY >= Math.min(...firstRow.map((rect2) => rect2.top)) && event2.clientY <= Math.max(...firstRow.map((rect2) => rect2.bottom));
+      const pointerInLastRow = event2.clientY >= Math.min(...lastRow.map((rect2) => rect2.top)) && event2.clientY <= Math.max(...lastRow.map((rect2) => rect2.bottom));
+      passedRightEdge = event2.clientX >= bodyRect.right && pointerInLastRow;
+      passedLeftEdge = event2.clientX <= bodyRect.left && pointerInFirstRow;
+    }
+    if (!passedRightEdge && !passedLeftEdge) {
+      navigationLocked = false;
+      return;
+    }
+    if (navigationLocked) {
+      return;
+    }
+    const currentStart = calendar.getView().currentStart;
+    if (!currentStart) {
+      return;
+    }
+    const nextDate2 = new Date(currentStart);
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      nextDate2.setDate(nextDate2.getDate() + (passedRightEdge ? 7 : -7));
+    } else {
+      nextDate2.setMonth(nextDate2.getMonth() + (passedRightEdge ? 1 : -1));
+    }
+    navigationLocked = true;
+    calendar.gotoDate(nextDate2);
+  };
+}
+
+// Resources/Private/TypeScript/Interaction/calendar-selection-overlay.ts
+function createCalendarSelectionOverlay(container) {
+  let selectionOverlayFrame;
+  const clear = () => {
+    document.querySelectorAll(".xima-calendar-selection-overlay").forEach((overlay) => overlay.remove());
+  };
+  const hidePreview = () => {
+    container.classList.add("xima-calendar-selection-cancelled");
+    container.querySelectorAll(".ec-event.ec-preview").forEach((preview) => preview.remove());
+    clear();
+  };
+  const resetPreview = () => {
+    container.classList.remove("xima-calendar-selection-cancelled");
+  };
+  const append2 = (left, top, right, bottom) => {
+    const overlay = document.createElement("div");
+    overlay.className = "xima-calendar-selection-overlay";
+    overlay.style.left = `${left}px`;
+    overlay.style.top = `${top}px`;
+    overlay.style.width = `${right - left}px`;
+    overlay.style.height = `${bottom - top}px`;
+    document.body.appendChild(overlay);
+  };
+  const update2 = () => {
+    clear();
+    const calendarElement = container.querySelector(".ec.ec-selecting");
+    if (!calendarElement) {
+      return;
+    }
+    if (calendarElement.classList.contains("ec-time-grid")) {
+      const previews2 = Array.from(calendarElement.querySelectorAll(".ec-body .ec-event.ec-preview"));
+      const bodyRect = calendarElement.querySelector(".ec-body")?.getBoundingClientRect();
+      const viewportRect = calendarElement.querySelector(".ec-main")?.getBoundingClientRect();
+      if (previews2.length === 0 || !bodyRect || !viewportRect) {
+        return;
+      }
+      const visibleRect = {
+        left: Math.max(bodyRect.left, viewportRect.left),
+        right: Math.min(bodyRect.right, viewportRect.right),
+        top: Math.max(bodyRect.top, viewportRect.top),
+        bottom: Math.min(bodyRect.bottom, viewportRect.bottom)
+      };
+      const previewRects2 = previews2.map((preview) => preview.getBoundingClientRect());
+      const selectedDays = Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).filter((day) => {
+        const dayRect = day.getBoundingClientRect();
+        return previewRects2.some((previewRect) => dayRect.right > previewRect.left && dayRect.left < previewRect.right);
+      });
+      previews2.forEach((preview, index2) => {
+        const previewRect = previewRects2[index2];
+        const day = selectedDays.find((candidate) => {
+          const dayRect2 = candidate.getBoundingClientRect();
+          return dayRect2.right > previewRect.left && dayRect2.left < previewRect.right;
+        });
+        if (!day) {
+          return;
+        }
+        const dayRect = day.getBoundingClientRect();
+        const left = Math.max(dayRect.left, visibleRect.left);
+        const right = Math.min(dayRect.right, visibleRect.right);
+        const top = Math.max(previewRect.top, visibleRect.top);
+        const bottom = Math.min(previewRect.bottom, visibleRect.bottom);
+        if (right > left && bottom > top) {
+          append2(left, top, right, bottom);
+        }
+      });
+      return;
+    }
+    if (!calendarElement.classList.contains("ec-day-grid")) {
+      return;
+    }
+    const previews = Array.from(calendarElement.querySelectorAll(".ec-events > .ec-event.ec-preview"));
+    if (previews.length === 0) {
+      return;
+    }
+    const previewRects = previews.map((preview) => preview.getBoundingClientRect());
+    const rows = /* @__PURE__ */ new Map();
+    Array.from(calendarElement.querySelectorAll(".ec-body .ec-day")).filter((day) => {
+      const dayRect = day.getBoundingClientRect();
+      return previewRects.some(
+        (previewRect) => dayRect.right > previewRect.left && dayRect.left < previewRect.right && dayRect.bottom > previewRect.top && dayRect.top < previewRect.bottom
+      );
+    }).forEach((day) => {
+      const rect2 = day.getBoundingClientRect();
+      const row = Math.round(rect2.top);
+      rows.set(row, [...rows.get(row) ?? [], rect2]);
+    });
+    rows.forEach((rects) => append2(
+      Math.min(...rects.map((rect2) => rect2.left)),
+      Math.min(...rects.map((rect2) => rect2.top)),
+      Math.max(...rects.map((rect2) => rect2.right)),
+      Math.max(...rects.map((rect2) => rect2.bottom))
+    ));
+  };
+  const scheduleUpdate = () => {
+    if (selectionOverlayFrame !== void 0) {
+      return;
+    }
+    selectionOverlayFrame = requestAnimationFrame(() => {
+      selectionOverlayFrame = void 0;
+      update2();
+    });
+  };
+  return {
+    clear,
+    hidePreview,
+    resetPreview,
+    scheduleUpdate,
+    destroy: () => {
+      if (selectionOverlayFrame !== void 0) {
+        cancelAnimationFrame(selectionOverlayFrame);
+      }
+      clear();
+    }
+  };
+}
+
+// Resources/Private/TypeScript/Interaction/calendar-interaction.ts
+function createCalendarInteractionController(container, calendar, creationController, options) {
+  const overlay = createCalendarSelectionOverlay(container);
+  const navigateSelection = createCalendarSelectionNavigation(
+    container,
+    calendar,
+    options.enableDragNewEvent
+  );
+  const calendarObserver = new MutationObserver(overlay.scheduleUpdate);
+  const onPointerUp = () => {
+    window.setTimeout(() => {
+      overlay.clear();
+      overlay.resetPreview();
+    }, 0);
+  };
+  const onPointerCancel = () => {
+    overlay.clear();
+    overlay.resetPreview();
+  };
+  const cancelSelectionOnEscape = (event2) => {
+    if (event2.key !== "Escape" || !container.querySelector(".ec.ec-selecting")) {
+      return;
+    }
+    creationController.cancelSelection();
+    overlay.hidePreview();
+    calendar.unselect();
+    window.dispatchEvent(new PointerEvent("pointercancel", { isPrimary: true }));
+    event2.preventDefault();
+    event2.stopPropagation();
+  };
+  calendarObserver.observe(container, { childList: true, subtree: true });
+  container.addEventListener("pointermove", overlay.scheduleUpdate);
+  document.addEventListener("pointermove", navigateSelection);
+  container.addEventListener("pointerup", onPointerUp);
+  container.addEventListener("pointercancel", onPointerCancel);
+  document.addEventListener("keydown", cancelSelectionOnEscape, true);
+  return {
+    destroy: () => {
+      calendarObserver.disconnect();
+      overlay.destroy();
+      container.removeEventListener("pointermove", overlay.scheduleUpdate);
+      document.removeEventListener("pointermove", navigateSelection);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerCancel);
+      document.removeEventListener("keydown", cancelSelectionOnEscape, true);
+    }
+  };
+}
+
+// Resources/Private/TypeScript/Configuration/calendar-runtime-config.ts
+var isString = (value) => typeof value === "string";
+var isBoolean = (value) => typeof value === "boolean";
+var isNumber = (value) => typeof value === "number" && Number.isInteger(value);
+var hasValues = (record, keys2, predicate) => keys2.every((key2) => predicate(record[key2]));
+var isCalendarModalLabels = (value) => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+  const labels = value;
+  return hasValues(
+    labels,
+    ["title", "event", "appointment", "calendar", "selectCalendar", "start", "end", "allDay", "create"],
+    isString
+  );
+};
+var isCalendarOptions = (value) => Array.isArray(value) && value.every((option) => Boolean(option) && typeof option === "object" && isNumber(option.uid) && isString(option.title));
+var isFilterColors = (value) => Boolean(value) && typeof value === "object" && !Array.isArray(value) && Object.values(value).every((scope) => Boolean(scope) && typeof scope === "object" && !Array.isArray(scope) && Object.values(scope).every(isString));
+var isEventAppearanceConfiguration = (value) => Boolean(value) && typeof value === "object" && !Array.isArray(value) && hasValues(
+  value,
+  ["iconSource", "appearanceSource", "colorSource"],
+  isString
+);
+var isCalendarConfig = (value) => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+  const config = value;
+  return hasValues(config, ["ajaxUrl", "createEventUrl", "cleanupEventUrl", "viewStateUrl", "initialView", "locale"], isString) && ["dayGridMonth", "timeGridWeek", "listMonth"].includes(config.initialView) && hasValues(
+    config,
+    ["canCreateEvent", "canCreateAppointment", "enableDragNewEvent", "enableClickNewEvent", "defaultAllDay"],
+    isBoolean
+  ) && hasValues(config, ["defaultStartTime", "defaultEndTime"], isString) && hasValues(config, ["timeSlotMinutes"], isNumber) && hasValues(config, ["scrollStartTime"], isString) && isCalendarOptions(config.calendars) && isFilterColors(config.filterColors) && isEventAppearanceConfiguration(config.eventAppearance) && isCalendarModalLabels(config.labels);
+};
+function readCalendarConfig(container) {
+  let rawConfig;
+  try {
+    rawConfig = JSON.parse(container.dataset.calendarConfig ?? "null");
+  } catch {
+    return null;
+  }
+  return isCalendarConfig(rawConfig) ? rawConfig : null;
+}
+
+// Resources/Private/TypeScript/Utils/color-utils.ts
+var getColor = (identifier, value, overrides = {}) => {
+  const override = overrides[identifier]?.[String(value)];
+  if (override) {
+    return override;
+  }
+  const seed = [...`${identifier}:${value}`].reduce(
+    (hash2, character) => hash2 * 31 + character.charCodeAt(0) >>> 0,
+    0
+  );
+  const hue = Math.round(seed * 137.508 % 360);
+  return `hsl(${hue} 68% 46%)`;
+};
+var getTextColor = (identifier, value, overrides = {}) => {
+  const background = getColor(identifier, value, overrides);
+  const rgb = parseColor(background);
+  if (rgb === null) {
+    return "#ffffff";
+  }
+  const luminance = getLuminance(rgb);
+  const whiteContrast = (1 + 0.05) / (luminance + 0.05);
+  const darkContrast = (luminance + 0.05) / 0.05;
+  return whiteContrast >= darkContrast ? "#ffffff" : "#000000";
+};
+var parseColor = (color) => {
+  const hex = color.match(/^#([0-9a-f]{6})$/i);
+  if (hex) {
+    return [
+      Number.parseInt(hex[1].slice(0, 2), 16),
+      Number.parseInt(hex[1].slice(2, 4), 16),
+      Number.parseInt(hex[1].slice(4, 6), 16)
+    ];
+  }
+  const hsl = color.match(/^hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*\)$/i);
+  if (!hsl) {
+    return null;
+  }
+  const hue = Number(hsl[1]) % 360 / 360;
+  const saturation = Number(hsl[2]) / 100;
+  const lightness = Number(hsl[3]) / 100;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const huePart = hue * 6;
+  const x = chroma * (1 - Math.abs(huePart % 2 - 1));
+  const match = huePart < 1 ? [chroma, x, 0] : huePart < 2 ? [x, chroma, 0] : huePart < 3 ? [0, chroma, x] : huePart < 4 ? [0, x, chroma] : huePart < 5 ? [x, 0, chroma] : [chroma, 0, x];
+  const lightnessAdjustment = lightness - chroma / 2;
+  return match.map((value) => Math.round((value + lightnessAdjustment) * 255));
+};
+var getLuminance = ([red, green, blue]) => {
+  const toLinear = (value) => {
+    const channel = value / 255;
+    return channel <= 0.03928 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * toLinear(red) + 0.7152 * toLinear(green) + 0.0722 * toLinear(blue);
+};
+
+// Resources/Private/TypeScript/Rendering/calendar-event-colors.ts
+var applyEventColor = (event2, element2, filterColors, colorSource) => {
+  const value = getFilterValue(event2, colorSource);
+  if (value === void 0) {
+    return;
+  }
+  const eventColor = getColor(colorSource, value, filterColors);
+  const eventTextColor2 = getTextColor(colorSource, value, filterColors);
+  element2.dataset.ximaEventColor = eventColor;
+  element2.dataset.ximaEventTextColor = eventTextColor2;
+  element2.style.setProperty("--xima-event-color", eventColor);
+  element2.style.setProperty("--xima-event-text-color", eventTextColor2);
+};
+var applyEventColorsToEvents = (events, filterColors, colorSource) => events.map((event2) => {
+  const value = getFilterValue(event2, colorSource);
+  if (value === void 0) {
+    return event2;
+  }
+  const eventColor = getColor(colorSource, value, filterColors);
+  const eventTextColor2 = getTextColor(colorSource, value, filterColors);
+  const existingStyles = event2.styles ?? event2.style ?? [];
+  const styles = Array.isArray(existingStyles) ? existingStyles : [existingStyles];
+  return {
+    ...event2,
+    backgroundColor: eventColor,
+    textColor: eventTextColor2,
+    styles: [
+      ...styles,
+      `--xima-event-color:${eventColor}`,
+      `--xima-event-text-color:${eventTextColor2}`
+    ]
+  };
+});
+
+// Resources/Private/TypeScript/calendar.ts
+var calendarCleanups = /* @__PURE__ */ new WeakMap();
+var isCanceledEvent = (event2) => {
+  const canceled = event2.extendedProps?.appointmentCanceled;
+  return canceled === true || canceled === 1 || canceled === "1";
+};
+var eventTime = (value) => {
+  if (!value) {
+    return null;
+  }
+  const timestamp = value instanceof Date ? value.getTime() : Date.parse(value);
+  return Number.isFinite(timestamp) ? timestamp : null;
+};
+var hasConcurrentEvent = (event2, events) => {
+  const start = eventTime(event2.start);
+  const end = eventTime(event2.end);
+  if (start === null || end === null) {
+    return false;
+  }
+  return events.some((other) => {
+    if (other === event2 || other.id !== void 0 && event2.id !== void 0 && other.id === event2.id) {
+      return false;
+    }
+    const otherStart = eventTime(other.start);
+    const otherEnd = eventTime(other.end);
+    return otherStart !== null && otherEnd !== null && start < otherEnd && end > otherStart;
+  });
+};
+var getCanceledLabel = (locale) => locale.startsWith("de") ? "Abgesagt" : "Canceled";
+var getEventStatusClass = (event2, filterConfiguration, appearanceSource, colorSource) => {
+  const colorValue = getFilterValue(event2, colorSource);
+  const appearanceValue = getFilterValue(event2, appearanceSource);
+  const appearanceClass = appearanceValue === void 0 ? "" : getAppearanceClass(filterConfiguration, appearanceSource, appearanceValue);
+  return [
+    ...colorValue !== void 0 ? ["xima-calendar-event--color-coded"] : [],
+    ...isCanceledEvent(event2) ? ["xima-calendar-event--canceled"] : [],
+    ...appearanceClass ? [appearanceClass] : []
+  ];
+};
+DocumentService.ready().then(async () => {
+  const container = document.getElementById("xima-calendar-mount");
+  if (!container) {
+    return;
+  }
+  await calendarCleanups.get(container)?.();
+  const calendarConfig = readCalendarConfig(container);
+  if (!calendarConfig) {
+    Notification2.error(
+      "Configuration error",
+      "The calendar configuration is invalid."
+    );
+    return;
+  }
+  const enableDragNewEvent = calendarConfig.enableDragNewEvent;
+  const enableClickNewEvent = calendarConfig.enableClickNewEvent;
+  const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, "0")}:00`;
+  const calendarOptions = {
+    firstDay: 0
+  };
+  const typo3Top = window.top;
+  const filterWindow = window.top;
+  let activeFilters = filterWindow.ximaCalendarFilterState ?? {
+    filters: {}
+  };
+  let filterConfiguration = filterWindow.ximaCalendarFilterConfiguration ?? {};
+  let currentEvents = [];
+  const detailsController = createCalendarDetailsController(container, typo3Top);
+  const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
+  let currentView = calendarConfig.initialView;
+  const persistCalendarView = (view2) => {
+    if (view2 === currentView) {
+      return;
+    }
+    currentView = view2;
+    void new AjaxRequest2(calendarConfig.viewStateUrl).post({ view: view2 }).then((response) => response.resolve()).catch((error) => console.error("Calendar view could not be saved", error));
+  };
+  const ec = createCalendar(
+    container,
+    [day_grid_default, time_grid_default, list_default, interaction_default],
+    {
+      ...calendarOptions,
+      locale: calendarConfig.locale,
+      eventGap: 3,
+      height: "100%",
+      nowIndicator: true,
+      selectable: enableDragNewEvent,
+      dayMaxEvents: true,
+      moreLinkContent: ({ num }) => `+${num} ${calendarConfig.locale.startsWith("de") ? "weitere" : "more"}`,
+      view: calendarConfig.initialView,
+      views: {
+        timeGridWeek: {
+          scrollTime: calendarConfig.scrollStartTime,
+          slotMinTime: "00:00:00",
+          slotMaxTime: "24:00:00",
+          slotDuration: timeSlotDuration,
+          slotLabelInterval: "01:00:00",
+          snapDuration: timeSlotDuration,
+          slotEventOverlap: false
+        }
+      },
+      theme: (theme) => ({
+        ...theme,
+        button: "btn btn-default",
+        buttonGroup: "btn-group",
+        active: "active"
+      }),
+      buttonText: (buttonText) => ({
+        ...buttonText,
+        dayGridMonth: calendarConfig.locale.startsWith("de") ? "Monat" : "Month",
+        timeGridWeek: calendarConfig.locale.startsWith("de") ? "Woche" : "Week",
+        listMonth: calendarConfig.locale.startsWith("de") ? "Liste" : "List",
+        today: calendarConfig.locale.startsWith("de") ? "Heute" : "Today"
+      }),
+      headerToolbar: {
+        start: "prev next today",
+        center: "title",
+        end: "dayGridMonth,timeGridWeek,listMonth"
+      },
+      datesSet: ({ view: view2 }) => {
+        detailsController.datesSet();
+        persistCalendarView(view2.type);
+      },
+      select: enableDragNewEvent ? creationController.select : void 0,
+      dateClick: enableClickNewEvent ? creationController.dateClick : void 0,
+      eventSources: [
+        {
+          events: async (fetchInfo) => {
+            const url = new URL(calendarConfig.ajaxUrl, document.location.origin);
+            url.searchParams.set("start", fetchInfo.startStr);
+            url.searchParams.set("end", fetchInfo.endStr);
+            url.searchParams.set("filters", JSON.stringify(activeFilters.filters));
+            const response = await fetch(url, { credentials: "same-origin" });
+            if (!response.ok) {
+              throw new Error("Calendar events could not be loaded");
+            }
+            const events = await response.json();
+            currentEvents = applyEventColorsToEvents(
+              events,
+              calendarConfig.filterColors,
+              calendarConfig.eventAppearance.colorSource
+            );
+            return currentEvents;
+          }
+        }
+      ],
+      eventClassNames: ({ event: event2 }) => getEventStatusClass(
+        event2,
+        filterConfiguration,
+        calendarConfig.eventAppearance.appearanceSource,
+        calendarConfig.eventAppearance.colorSource
+      ),
+      eventDidMount: ({ event: event2, el }) => {
+        applyEventColor(event2, el, calendarConfig.filterColors, calendarConfig.eventAppearance.colorSource);
+        if (isCanceledEvent(event2) && hasConcurrentEvent(event2, currentEvents)) {
+          const titleElement = el.querySelector(".ec-event-title");
+          if (titleElement) {
+            const canceledLabel = getCanceledLabel(calendarConfig.locale);
+            const canceledMarker = calendarConfig.locale.startsWith("de") ? "[A]" : "[C]";
+            titleElement.textContent = titleElement.textContent?.replace(
+              new RegExp(`^${canceledLabel}\\s*\xB7\\s*`),
+              `${canceledMarker} `
+            ) ?? canceledMarker;
+          }
+        }
+      },
+      eventClick: detailsController.eventClick
+    }
+  );
+  const handleFilterConfigurationLoaded = (event2) => {
+    const configurationEvent = event2;
+    filterConfiguration = configurationEvent.detail;
+    ec.refetchEvents();
+  };
+  filterWindow.addEventListener(
+    "xima-calendar-filter-configuration-loaded",
+    handleFilterConfigurationLoaded,
+    { once: true }
+  );
+  const interactionController = createCalendarInteractionController(container, ec, creationController, {
+    enableDragNewEvent
+  });
+  creationController.setClearCalendarSelection(() => ec.unselect());
+  let destroyed = false;
+  const cleanupPendingCreation = () => {
+    void creationController.cleanupPendingCreation().then((cleanedUp) => {
+      if (cleanedUp && !destroyed) {
+        ec.refetchEvents();
+      }
+    });
+  };
+  const onFilterChanged = (event2) => {
+    const selection = event2.detail;
+    if (!selection) {
+      return;
+    }
+    activeFilters = selection;
+    ec.refetchEvents();
+  };
+  cleanupPendingCreation();
+  window.addEventListener("pageshow", cleanupPendingCreation);
+  window.addEventListener("popstate", cleanupPendingCreation);
+  filterWindow.document.addEventListener("typo3-module-loaded", cleanupPendingCreation, true);
+  filterWindow.addEventListener("xima-calendar-filter-changed", onFilterChanged);
+  const cleanup = async () => {
+    if (destroyed) {
+      return;
+    }
+    destroyed = true;
+    window.removeEventListener("pageshow", cleanupPendingCreation);
+    window.removeEventListener("popstate", cleanupPendingCreation);
+    filterWindow.document.removeEventListener("typo3-module-loaded", cleanupPendingCreation, true);
+    filterWindow.removeEventListener("xima-calendar-filter-changed", onFilterChanged);
+    interactionController.destroy();
+    calendarCleanups.delete(container);
+    await destroyCalendar(ec);
+  };
+  calendarCleanups.set(container, cleanup);
+});
 /*! Bundled license information:
 
 @event-calendar/core/dist/index.js:
@@ -92,3 +12603,4 @@ ${o}
    * https://github.com/vkurko/calendar
    *)
 */
+//# sourceMappingURL=calendar.js.map
