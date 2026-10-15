@@ -20,7 +20,7 @@ TCEMAIN.preview {
 mod.tx_ximatypo3calendar {
     filterOrder = recordTypes, categories, statuses
 
-    enableEventPreview = 1
+    enableEventPreview = 0
 
     weekViewGrid {
         timeSlotMinutes = 15 # Supported values: 15, 30 or 60
