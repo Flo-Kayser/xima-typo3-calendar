@@ -60,6 +60,7 @@ DocumentService.ready().then(async () => {
         filterColors: calendarConfig.filterColors,
         appearanceSource: calendarConfig.eventAppearance.appearanceSource,
         colorSource: calendarConfig.eventAppearance.colorSource,
+        iconSource: calendarConfig.eventAppearance.iconSource,
         getFilterConfiguration: () => filterConfiguration,
     });
 

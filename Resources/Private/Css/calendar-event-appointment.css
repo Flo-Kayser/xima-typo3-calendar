@@ -5,6 +5,14 @@
         font-size: .9rem;
     }
 
+    .ec-event-body .xima-calendar-event__icon {
+        flex: 0 0 auto;
+        align-self: center;
+        inline-size: 1em;
+        block-size: 1em;
+        filter: drop-shadow(0 1px 1px rgb(0 0 0 / 35%));
+    }
+
     .ec-event.xima-calendar-event--hatched {
         position: relative;
         overflow: hidden;
