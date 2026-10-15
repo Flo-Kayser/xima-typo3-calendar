@@ -8,12 +8,13 @@ import {createCalendarInteractionController} from './interaction/calendar-intera
 import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
 import {type ColorOverrides, getColor, getTextColor} from './color-utils';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
+import {getAppearanceClass} from './calendar-event-appearance';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
 type CalendarFilterWindow = Window & {
     ximaCalendarFilterState?: CalendarFilterSelection;
-  ximaCalendarFilterConfiguration?: CalendarFilterConfiguration;
+    ximaCalendarFilterConfiguration?: CalendarFilterConfiguration;
 };
 
 type CalendarEventData = {
@@ -116,22 +117,24 @@ const applyCategoryColorsToEvents = (
 
 const getCanceledLabel = (locale: string): string => locale.startsWith('de') ? 'Abgesagt' : 'Canceled';
 
-const getEventStatusClass = (event: CalendarEventData): string[] => {
+const getEventStatusClass = (
+    event: CalendarEventData,
+    filterConfiguration: CalendarFilterConfiguration,
+    appearanceSource: string,
+): string[] => {
     const categoryUid = Number(event.extendedProps?.eventCategoryId);
     const status = Number(event.extendedProps?.eventStatus);
-    const statusClass = {
-        0: 'xima-calendar-event--draft',
-        1: 'xima-calendar-event--review',
-        2: 'xima-calendar-event--live',
-        3: 'xima-calendar-event--rejected',
-    }[status];
-
+    const appearanceClass = getAppearanceClass(
+        filterConfiguration,
+        appearanceSource,
+        status,
+    );
     return [
         ...(Number.isInteger(categoryUid) && categoryUid > 0
             ? ['xima-calendar-event--categorized']
             : []),
         ...(isCanceledEvent(event) ? ['xima-calendar-event--canceled'] : []),
-        ...(statusClass ? [statusClass] : []),
+        ...(appearanceClass ? [appearanceClass] : []),
     ];
 };
 
@@ -250,7 +253,11 @@ DocumentService.ready().then(async () => {
                     },
                 },
             ],
-            eventClassNames: ({event}: {event: CalendarEventData}) => getEventStatusClass(event),
+            eventClassNames: ({event}: {event: CalendarEventData}) => getEventStatusClass(
+                event,
+                filterConfiguration,
+                calendarConfig.eventAppearance.appearanceSource,
+            ),
             eventDidMount: ({event, el}: {
                 event: CalendarEventData;
                 el: HTMLElement;

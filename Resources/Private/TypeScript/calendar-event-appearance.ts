@@ -18,3 +18,18 @@ export function findFilterItem(
         (item) => String(item.value) === String(value),
     ) ?? null;
 }
+
+export function getAppearanceClass(
+    configuration: CalendarFilterConfiguration,
+    source: string,
+    value: string | number,
+): string {
+    const item = findFilterItem(configuration, source, value);
+
+    if (!item) {
+        return '';
+    }
+
+    const appearance = item.appearance || 'default';
+    return `xima-calendar-event--${appearance}`;
+}
