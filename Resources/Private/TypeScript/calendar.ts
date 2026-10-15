@@ -4,18 +4,14 @@ import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './Event/calendar-event-creation';
 import {createCalendarDetailsController} from './Event/calendar-details';
-import {getAppearanceClass} from './Event/calendar-event-appearance';
 import {createCalendarInteractionController} from './Interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
 
+import type {CalendarEventData} from './Rendering/calendar-event-data';
 import {
-  type CalendarEventData,
-  getFilterValue} from './Rendering/calendar-event-data';
-import {
-    applyEventColor,
-    applyEventColorsToEvents,
-} from './Rendering/calendar-event-colors';
+    createCalendarEventRenderer,
+} from './Rendering/calendar-event-renderer';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
@@ -25,64 +21,6 @@ type CalendarFilterWindow = Window & {
 };
 
 const calendarCleanups = new WeakMap<HTMLElement, () => Promise<void>>();
-
-const isCanceledEvent = (event: CalendarEventData): boolean => {
-    const canceled = event.extendedProps?.appointmentCanceled;
-    return canceled === true || canceled === 1 || canceled === '1';
-};
-
-const eventTime = (value: string | Date | undefined): number | null => {
-    if (!value) {
-        return null;
-    }
-
-    const timestamp = value instanceof Date ? value.getTime() : Date.parse(value);
-    return Number.isFinite(timestamp) ? timestamp : null;
-};
-
-const hasConcurrentEvent = (
-    event: CalendarEventData,
-    events: CalendarEventData[],
-): boolean => {
-    const start = eventTime(event.start);
-    const end = eventTime(event.end);
-    if (start === null || end === null) {
-        return false;
-    }
-
-    return events.some((other) => {
-        if (other === event || (other.id !== undefined && event.id !== undefined && other.id === event.id)) {
-            return false;
-        }
-
-        const otherStart = eventTime(other.start);
-        const otherEnd = eventTime(other.end);
-        return otherStart !== null && otherEnd !== null && start < otherEnd && end > otherStart;
-    });
-};
-
-const getCanceledLabel = (locale: string): string => locale.startsWith('de') ? 'Abgesagt' : 'Canceled';
-
-const getEventStatusClass = (
-    event: CalendarEventData,
-    filterConfiguration: CalendarFilterConfiguration,
-    appearanceSource: string,
-    colorSource: string,
-): string[] => {
-    const colorValue = getFilterValue(event, colorSource);
-    const appearanceValue = getFilterValue(event, appearanceSource);
-    const appearanceClass = appearanceValue === undefined
-        ? ''
-        : getAppearanceClass(filterConfiguration, appearanceSource, appearanceValue);
-
-    return [
-        ...(colorValue !== undefined
-            ? ['xima-calendar-event--color-coded']
-            : []),
-        ...(isCanceledEvent(event) ? ['xima-calendar-event--canceled'] : []),
-        ...(appearanceClass ? [appearanceClass] : []),
-    ];
-};
 
 DocumentService.ready().then(async () => {
     const container = document.getElementById('xima-calendar-mount');
@@ -117,6 +55,14 @@ DocumentService.ready().then(async () => {
         filterWindow.ximaCalendarFilterConfiguration ?? {};
 
     let currentEvents: CalendarEventData[] = [];
+    const eventRenderer = createCalendarEventRenderer({
+        locale: calendarConfig.locale,
+        filterColors: calendarConfig.filterColors,
+        appearanceSource: calendarConfig.eventAppearance.appearanceSource,
+        colorSource: calendarConfig.eventAppearance.colorSource,
+        getFilterConfiguration: () => filterConfiguration,
+    });
+
     const detailsController = createCalendarDetailsController(container, typo3Top);
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
     let currentView = calendarConfig.initialView;
@@ -194,38 +140,17 @@ DocumentService.ready().then(async () => {
                         }
 
                         const events = await response.json() as CalendarEventData[];
-                        currentEvents = applyEventColorsToEvents(
-                            events,
-                            calendarConfig.filterColors,
-                            calendarConfig.eventAppearance.colorSource,
-                        );
+                        currentEvents = eventRenderer.prepareEvents(events);
                         return currentEvents;
                     },
                 },
             ],
-            eventClassNames: ({event}: {event: CalendarEventData}) => getEventStatusClass(
-                event,
-                filterConfiguration,
-                calendarConfig.eventAppearance.appearanceSource,
-                calendarConfig.eventAppearance.colorSource,
-            ),
+            eventClassNames: ({event}: {event: CalendarEventData}) => eventRenderer.getClassNames(event),
             eventDidMount: ({event, el}: {
                 event: CalendarEventData;
                 el: HTMLElement;
             }) => {
-                applyEventColor(event, el, calendarConfig.filterColors, calendarConfig.eventAppearance.colorSource);
-
-                if (isCanceledEvent(event) && hasConcurrentEvent(event, currentEvents)) {
-                    const titleElement = el.querySelector<HTMLElement>('.ec-event-title');
-                    if (titleElement) {
-                        const canceledLabel = getCanceledLabel(calendarConfig.locale);
-                        const canceledMarker = calendarConfig.locale.startsWith('de') ? '[A]' : '[C]';
-                        titleElement.textContent = titleElement.textContent?.replace(
-                            new RegExp(`^${canceledLabel}\\s*·\\s*`),
-                            `${canceledMarker} `,
-                        ) ?? canceledMarker;
-                    }
-                }
+                eventRenderer.didMount(event, el, currentEvents);
             },
             eventClick: detailsController.eventClick,
         },
