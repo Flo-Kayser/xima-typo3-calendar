@@ -12,6 +12,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
@@ -43,6 +44,37 @@ final readonly class CalendarFilterCategory
         }
 
         $event->addFilter($filter);
+    }
+
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-category',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void {
+        $queryBuilder = $event->getQueryBuilder();
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT cat.title FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_title'
+        );
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT cat.uid FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_id'
+        );
     }
 
     #[AsEventListener(
