@@ -7,6 +7,7 @@ import {createCalendarDetailsController} from './Event/calendar-details';
 import {createCalendarInteractionController} from './Interaction/calendar-interaction';
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
+import {createCalendarEventSource} from './Data/calendar-event-source';
 
 import type {CalendarEventData} from './Rendering/calendar-event-data';
 import {
@@ -127,25 +128,14 @@ DocumentService.ready().then(async () => {
             },
             select: enableDragNewEvent ? creationController.select : undefined,
             dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
-            eventSources: [
-                {
-                    events: async (fetchInfo: {startStr: string; endStr: string}) => {
-                        const url = new URL(calendarConfig.ajaxUrl, document.location.origin);
-                        url.searchParams.set('start', fetchInfo.startStr);
-                        url.searchParams.set('end', fetchInfo.endStr);
-                        url.searchParams.set('filters', JSON.stringify(activeFilters.filters));
-
-                        const response = await fetch(url, {credentials: 'same-origin'});
-                        if (!response.ok) {
-                            throw new Error('Calendar events could not be loaded');
-                        }
-
-                        const events = await response.json() as CalendarEventData[];
-                        currentEvents = eventRenderer.prepareEvents(events);
-                        return currentEvents;
-                    },
+            eventSources: [createCalendarEventSource({
+                ajaxUrl: calendarConfig.ajaxUrl,
+                getActiveFilters: () => activeFilters,
+                renderer: eventRenderer,
+                onEventsLoaded: (events) => {
+                    currentEvents = events;
                 },
-            ],
+            })],
             eventClassNames: ({event}: {event: CalendarEventData}) => eventRenderer.getClassNames(event),
             eventDidMount: ({event, el}: {
                 event: CalendarEventData;
