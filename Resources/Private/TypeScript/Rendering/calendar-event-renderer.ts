@@ -1,7 +1,6 @@
 import type {CalendarFilterConfiguration} from '../Filter/calendar-filter-state';
 import {getAppearanceClass} from '../Event/calendar-event-appearance';
 import {
-    applyEventColor,
     applyEventColorsToEvents,
 } from './calendar-event-colors';
 import {
@@ -132,13 +131,6 @@ export const createCalendarEventRenderer = (
 
     didMount(event, element, events): void {
         const filterConfiguration = configuration.getFilterConfiguration();
-
-        applyEventColor(
-            event,
-            element,
-            configuration.filterColors,
-            configuration.colorSource,
-        );
 
         const eventBody = element.querySelector<HTMLElement>(
             '.ec-event-body',

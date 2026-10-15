@@ -8,28 +8,6 @@ import {
   getTextColor,
 } from '../Utils/color-utils';
 
-export const applyEventColor = (
-  event: CalendarEventData,
-  element: HTMLElement,
-  filterColors: ColorOverrides,
-  colorSource: string,
-): void => {
-  const value = getFilterValue(event, colorSource);
-
-  if (value === undefined) {
-    return;
-  }
-
-  const eventColor = getColor(colorSource, value, filterColors);
-  const eventTextColor = getTextColor(colorSource, value, filterColors);
-
-  element.dataset.ximaEventColor = eventColor;
-  element.dataset.ximaEventTextColor = eventTextColor;
-
-  element.style.setProperty('--xima-event-color', eventColor);
-  element.style.setProperty('--xima-event-text-color', eventTextColor);
-};
-
 export const applyEventColorsToEvents = (
   events: CalendarEventData[],
   filterColors: ColorOverrides,
