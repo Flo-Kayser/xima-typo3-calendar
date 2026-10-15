@@ -2,13 +2,13 @@ import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import Notification from '@typo3/backend/notification.js';
 import Viewport from '@typo3/backend/viewport.js';
 import {chooseCalendarCreationType, type CalendarCreationValues} from './calendar-creation-modal';
-import type {CalendarConfig, Typo3TopWindow} from './calendar-runtime-config';
+import type {CalendarConfig, Typo3TopWindow} from '../Configuration/calendar-runtime-config';
 import {
     getSelectedDayCount,
     prepareCalendarSelection,
     type CalendarDateClick,
     type CalendarSelection,
-} from './interaction/calendar-selection';
+} from '../Interaction/calendar-selection';
 type CreateEventResponse = { success: boolean; eventUid?: number; entryUid?: number };
 
 const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';

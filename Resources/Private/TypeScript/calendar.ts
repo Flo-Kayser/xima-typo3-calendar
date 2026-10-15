@@ -2,13 +2,13 @@ import {createCalendar, DayGrid, destroyCalendar, Interaction, List, TimeGrid,} 
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
-import {createCalendarCreationController} from './calendar-event-creation';
-import {createCalendarDetailsController} from './calendar-details';
-import {createCalendarInteractionController} from './interaction/calendar-interaction';
-import {readCalendarConfig, type Typo3TopWindow} from './calendar-runtime-config';
-import {type ColorOverrides, getColor, getTextColor} from './color-utils';
+import {createCalendarCreationController} from './Event/calendar-event-creation';
+import {createCalendarDetailsController} from './Event/calendar-details';
+import {getAppearanceClass} from './Event/calendar-event-appearance';
+import {createCalendarInteractionController} from './Interaction/calendar-interaction';
+import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
+import {type ColorOverrides, getColor, getTextColor} from './Utils/color-utils';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
-import {getAppearanceClass} from './calendar-event-appearance';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;

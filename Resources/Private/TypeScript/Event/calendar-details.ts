@@ -1,5 +1,5 @@
 import Viewport from '@typo3/backend/viewport.js';
-import type {Typo3TopWindow} from './calendar-runtime-config';
+import type {Typo3TopWindow} from '../Configuration/calendar-runtime-config';
 
 type EventCalendarEventClickInfo = {
     event: {

@@ -1,6 +1,6 @@
 import Modal from '@typo3/backend/modal.js';
 import {html} from 'lit';
-import type {CalendarModalLabels, CalendarOption} from './calendar-runtime-config';
+import type {CalendarModalLabels, CalendarOption} from '../Configuration/calendar-runtime-config';
 
 export type CalendarCreationType = 'event' | 'event-appointment';
 

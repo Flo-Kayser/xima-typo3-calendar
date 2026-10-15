@@ -1,6 +1,6 @@
-import type {CheckboxListChangePayload} from '../components/calendar-filter-checkbox-list';
+import type {CheckboxListChangePayload} from '../Components/calendar-filter-checkbox-list';
 import type {CalendarFilterSelection, CalendarFilterState} from '../calendar-filter-state';
-import type {TreeStateChangePayload} from '../components/calendar-filter-tree';
+import type {TreeStateChangePayload} from '../Components/calendar-filter-tree';
 
 export function updateCheckboxListState(
   state: CalendarFilterState,

@@ -1,7 +1,7 @@
 import type {
     CalendarFilterConfiguration,
     CalendarFilterItem,
-} from './Filter/calendar-filter-state';
+} from '../Filter/calendar-filter-state';
 
 export function findFilterItem(
     configuration: CalendarFilterConfiguration,

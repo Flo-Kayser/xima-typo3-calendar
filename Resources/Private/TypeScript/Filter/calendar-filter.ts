@@ -1,18 +1,18 @@
 import {html, LitElement, nothing} from 'lit';
-import {type ColorOverrides, getColor} from '../color-utils';
+import {type ColorOverrides, getColor} from '../Utils/color-utils';
 
-import './components/calendar-filter-toolbar';
-import './components/calendar-filter-tree';
-import './components/calendar-filter-checkbox-list';
-import type {TreeStateChangePayload} from './components/calendar-filter-tree';
-import type {CheckboxListChangePayload} from './components/calendar-filter-checkbox-list';
-import {CalendarFilterStatePersistence} from './services/calendar-filter-state-persistence';
-import {isCalendarFilterResponse, requestCalendarFilterConfiguration,} from './services/calendar-filter-configuration';
+import './Components/calendar-filter-toolbar';
+import './Components/calendar-filter-tree';
+import './Components/calendar-filter-checkbox-list';
+import type {TreeStateChangePayload} from './Components/calendar-filter-tree';
+import type {CheckboxListChangePayload} from './Components/calendar-filter-checkbox-list';
+import {CalendarFilterStatePersistence} from './Services/calendar-filter-state-persistence';
+import {isCalendarFilterResponse, requestCalendarFilterConfiguration,} from './Services/calendar-filter-configuration';
 import {
   createFilterSelection,
   updateCheckboxListState,
   updateTreeState,
-} from './services/calendar-filter-state-manager';
+} from './Services/calendar-filter-state-manager';
 
 import type {
   CalendarFilter,
