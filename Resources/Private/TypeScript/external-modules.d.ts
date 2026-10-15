@@ -1,8 +1,8 @@
 /**
- * TYPO3 provides these modules at runtime through its JavaScript import map.
- * These declarations provide the local TypeScript/IDE information without
- * adding TYPO3 runtime packages or Lit as npm dependencies.
- */
+* TYPO3 provides these modules at runtime through its JavaScript import map.
+* These declarations provide the local TypeScript/IDE information without
+* adding TYPO3 runtime packages or Lit as npm dependencies.
+*/
 declare module '@typo3/*';
 
 declare module 'lit/decorators.js';

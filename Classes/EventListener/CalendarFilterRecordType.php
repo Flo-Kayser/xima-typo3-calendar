@@ -22,7 +22,6 @@ final readonly class CalendarFilterRecordType
     )]
     public function build(ConfigureCalendarFilterEvent $event): void
     {
-
         $items = $GLOBALS['TCA']
             ['tx_ximatypo3calendar_domain_model_event']
             ['columns']
@@ -89,7 +88,7 @@ final readonly class CalendarFilterRecordType
 
         $recordTypes = array_values(array_filter(
             $recordTypes,
-            static fn(mixed $recordType): bool => is_string($recordType) && $recordType !== '',
+            static fn (mixed $recordType): bool => is_string($recordType) && $recordType !== '',
         ));
 
         if ($recordTypes === []) {

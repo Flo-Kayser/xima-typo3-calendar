@@ -32,12 +32,11 @@ final readonly class CalendarFilterCategory
         $filter = new TreeCalendarFilter(
             identifier: 'categories',
             title: LocalizationUtility::translate(
-            'filter.categories.title',
-            'xima_typo3_calendar',
-        ) ?? 'Categories',
+                'filter.categories.title',
+                'xima_typo3_calendar',
+            ) ?? 'Categories',
             supportsColorCoding: true,
         );
-
 
         foreach ($this->getCategories() as $item) {
             $filter->addItem($item);
@@ -65,7 +64,6 @@ final readonly class CalendarFilterCategory
 
         $this->joinCategoryTable($queryBuilder);
         $this->addCategoryFilterCondition($queryBuilder, $categories);
-
     }
 
     #[AsEventListener(
@@ -208,7 +206,7 @@ final readonly class CalendarFilterCategory
             ->fetchFirstColumn();
 
         return array_map(
-            static fn(mixed $value): int => (int)$value,
+            static fn (mixed $value): int => (int)$value,
             $rows,
         );
     }
@@ -233,7 +231,7 @@ final readonly class CalendarFilterCategory
                 'intval',
                 array_filter($categories, 'is_numeric'),
             ),
-            static fn(int $category): bool => $category > 0,
+            static fn (int $category): bool => $category > 0,
         )));
     }
 
@@ -333,9 +331,6 @@ final readonly class CalendarFilterCategory
                     Connection::PARAM_INT,
                 ),
             ),
-
         );
     }
-
-
 }

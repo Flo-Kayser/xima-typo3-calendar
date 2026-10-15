@@ -26,9 +26,9 @@ final readonly class CalendarFilterStatus
         $filter = new CheckboxCalendarFilter(
             identifier: 'statuses',
             title: LocalizationUtility::translate(
-            'filter.status.title',
-            'xima_typo3_calendar',
-        ) ?? 'Status',
+                'filter.status.title',
+                'xima_typo3_calendar',
+            ) ?? 'Status',
         );
 
         $statuses = [
@@ -42,10 +42,10 @@ final readonly class CalendarFilterStatus
             $filter->addItem(
                 new CheckboxCalendarFilterItem(
                     label: LocalizationUtility::translate(
-                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.'
-                    . $status->value
-                    . '.label',
-                    'xima_typo3_calendar',
+                        'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/RecordTypes/event/labels.xlf:status.items.'
+                        . $status->value
+                        . '.label',
+                        'xima_typo3_calendar',
                     ) ?? (string)$status->value,
                     value: $status->value,
                     appearance: match ($status) {
@@ -61,9 +61,9 @@ final readonly class CalendarFilterStatus
         $filter->addItem(
             new CheckboxCalendarFilterItem(
                 label: LocalizationUtility::translate(
-                'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
-                'xima_typo3_calendar',
-            ) ?? 'Canceled [C]',
+                    'LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:filter.canceled',
+                    'xima_typo3_calendar',
+                ) ?? 'Canceled [C]',
                 value: 'canceled',
             ),
         );
@@ -91,7 +91,7 @@ final readonly class CalendarFilterStatus
 
         $eventStatuses = array_values(array_filter(
             $statuses,
-            static fn(mixed $status): bool => is_int($status) || is_numeric($status),
+            static fn (mixed $status): bool => is_int($status) || is_numeric($status),
         ));
 
         $includeCanceled = in_array('canceled', $statuses, true);
@@ -128,8 +128,7 @@ final readonly class CalendarFilterStatus
     )]
     public function serialize(
         CalendarEntrySerializationEvent $event,
-    ): void
-    {
+    ): void {
         $status = $event->getSourceRow()['event_status'] ?? null;
 
         if (!is_int($status) && !is_numeric($status)) {

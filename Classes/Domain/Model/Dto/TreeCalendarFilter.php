@@ -6,7 +6,6 @@ namespace Xima\XimaTypo3Calendar\Domain\Model\Dto;
 
 final class TreeCalendarFilter extends AbstractCalendarFilter
 {
-
     public function __construct(
         private readonly string $identifier,
         private readonly string $title = '',
