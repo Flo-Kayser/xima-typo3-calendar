@@ -10,6 +10,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
 
@@ -72,6 +73,20 @@ final readonly class CalendarFilterRecordType
     }
 
     #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-record-type',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
+    public function buildQuery(
+        BuildCalendarEntriesQueryEvent $event,
+    ): void
+    {
+        $event->getQueryBuilder()->addSelectLiteral(
+            'v.record_type AS record_type',
+        );
+    }
+
+    #[AsEventListener(
         identifier: 'xima-typo3-calendar/apply-filter-record-type',
         event: ApplyCalendarFilterEvent::class,
         method: 'apply',
@@ -127,7 +142,7 @@ final readonly class CalendarFilterRecordType
         }
 
         $event->addFilterValue(
-            'recordType',
+            'recordTypes',
             $recordType,
         );
     }
