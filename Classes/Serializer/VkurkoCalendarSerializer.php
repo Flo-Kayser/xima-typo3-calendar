@@ -35,19 +35,10 @@ class VkurkoCalendarSerializer
         $timeZone = new \DateTimeZone(date_default_timezone_get());
 
         $events = array_map(function (array $row) use ($timeZone): array {
-            $start = ($row['start_date'] && $row['start_date'] > 0)
-                ? (new \DateTime('@' . $row['start_date']))->setTimezone($timeZone)->format('Y-m-d\TH:i:s')
-                : null;
-            $end = ($row['end_date'] && $row['end_date'] > 0)
-                ? (new \DateTime('@' . $row['end_date']))->setTimezone($timeZone)->format('Y-m-d\TH:i:s')
-                : null;
-
-            // If end date is missing, assume the default duration, even if it's an all day event (vkurko/calendar needs it!)
-            if ($end === null && $start) {
-                $end = new \DateTime($start);
-                $end->modify('+' . AppointmentDateUtility::DEFAULT_DURATION_MINUTES . ' minutes');
-                $end = $end->format('Y-m-d\TH:i:s');
-            }
+            $startDate = AppointmentDateUtility::getStartFromRow($row);
+            $endDate = AppointmentDateUtility::getEndFromRow($row);
+            $start = $startDate?->setTimezone($timeZone)->format('Y-m-d\TH:i:s');
+            $end = $endDate?->setTimezone($timeZone)->format('Y-m-d\TH:i:s');
 
             $title = $row['title'] ?? null;
             if ($title && ($row['event_title'] ?? null)) {

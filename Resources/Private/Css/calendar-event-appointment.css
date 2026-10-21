@@ -9,41 +9,36 @@
         font-size: .9rem;
     }
 
-    .ec-event:not(.ec-preview):not(.ec-pointer) {
+    .ec-day-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event),
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event) {
         cursor: pointer;
         transform-origin: center;
         clip-path: inset(0);
         transition: scale 120ms ease, box-shadow 120ms ease, clip-path 120ms ease;
     }
 
-    .ec-event:not(.ec-preview):not(.ec-pointer):hover,
-    .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+    .ec-day-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):hover,
+    .ec-day-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):focus-visible,
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):hover,
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):focus-visible {
         z-index: 2;
         scale: 1 .95;
         inline-size: calc(100% - var(--ec-event-col-gap) - 6px);
         margin-inline: calc(var(--ec-event-col-gap) / 2 + 3px) !important;
     }
 
-    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):hover,
-    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):hover,
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):focus-visible {
         scale: 1;
         inline-size: calc(100% - var(--ec-event-col-gap));
         margin-inline-start: 0 !important;
         margin-inline-end: var(--ec-event-col-gap) !important;
     }
 
-    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):hover,
-    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):hover,
+    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):not(.xima-calendar-list__multi-day-event):focus-visible {
         clip-path: inset(3px 0);
     }
-
-    .ec-list .ec-event:not(.ec-preview):not(.ec-pointer):hover,
-    .ec-list .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
-        scale: 1;
-        inline-size: 100%;
-        margin-inline: 0 !important;
-    }
-
 
     .ec-event-body .xima-calendar-event__icon {
         flex: 0 0 auto;

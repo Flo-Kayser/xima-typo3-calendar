@@ -1,4 +1,5 @@
 import type {CalendarEventData} from '../Rendering/calendar-event-data';
+import {isMultiDayCalendarEvent} from '../Rendering/calendar-list-layout';
 
 type CalendarListScrollConfiguration = {
     container: HTMLElement;
@@ -54,6 +55,7 @@ export const scrollCalendarListToRelevantDate = (
     const monthStart = startOfDay(configuration.viewStart);
     const today = startOfDay(configuration.today ?? new Date());
     const monthEvents = configuration.events
+        .filter(event => !isMultiDayCalendarEvent(event))
         .map(event => ({event, start: getEventStart(event)}))
         .filter(({start}) => start !== null && isSameMonth(start, monthStart))
         .sort((first, second) => first.start!.getTime() - second.start!.getTime());

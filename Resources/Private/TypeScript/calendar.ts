@@ -1,4 +1,4 @@
-import {createCalendar, DayGrid, destroyCalendar, Interaction, List, TimeGrid,} from '@event-calendar/core';
+import {createCalendar, DayGrid, destroyCalendar, Interaction, List, TimeGrid} from '@event-calendar/core';
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import DocumentService from '@typo3/core/document-service.js';
 import Notification from '@typo3/backend/notification.js';
@@ -14,8 +14,9 @@ import {miniCalendarEvents} from './Filter/Services/calendar-mini-calendar-event
 import {createCalendarEventSource} from './Data/calendar-event-source';
 
 import type {CalendarEventData} from './Rendering/calendar-event-data';
-import {createCalendarEventRenderer,} from './Rendering/calendar-event-renderer';
+import {createCalendarEventRenderer} from './Rendering/calendar-event-renderer';
 import {createCalendarEventTooltip} from './Rendering/calendar-event-tooltip';
+import {isMultiDayCalendarEvent} from './Rendering/calendar-list-layout';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
@@ -46,9 +47,6 @@ DocumentService.ready().then(async () => {
     const enableDragNewEvent = calendarConfig.enableDragNewEvent;
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
-    const calendarOptions = {
-    };
-
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const filterWindow = window.top as unknown as CalendarFilterWindow;
     const initialFilters: CalendarFilterSelection = filterWindow.ximaCalendarFilterState ?? {
@@ -59,7 +57,6 @@ DocumentService.ready().then(async () => {
 
     let currentEvents: CalendarEventData[] = [];
     let refetchEvents = (): void => undefined;
-    const listScrollController = createCalendarListScrollController(container);
     const filterSync = createCalendarFilterSync({
         filterWindow,
         initialSelection: initialFilters,
@@ -80,8 +77,20 @@ DocumentService.ready().then(async () => {
         getFilterConfiguration: filterSync.getFilterConfiguration,
         tooltipOrder: calendarConfig.tooltipOrder,
     });
-
     const detailsController = createCalendarDetailsController(container, typo3Top);
+    const listScrollController = createCalendarListScrollController(
+        container,
+        eventRenderer,
+        (event, element) => detailsController.eventClick({
+            event: {
+                id: event.id,
+                extendedProps: event.extendedProps ?? {},
+            },
+            el: element,
+        }),
+        (event, element) => eventTooltip.attach(event, element),
+    );
+
     const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
     let currentView = calendarConfig.initialView;
     const persistCalendarView = (view: string): void => {
@@ -100,7 +109,6 @@ DocumentService.ready().then(async () => {
         container,
         [DayGrid, TimeGrid, List, Interaction],
         {
-            ...calendarOptions,
             locale: calendarConfig.locale,
             eventGap: 3,
             height: '100%',
@@ -161,11 +169,19 @@ DocumentService.ready().then(async () => {
                     listScrollController.eventsLoaded(events);
                 },
             })],
-            eventClassNames: ({event}: {event: CalendarEventData}) => eventRenderer.getClassNames(event),
+            eventClassNames: ({event}: {event: CalendarEventData}) => [
+                ...eventRenderer.getClassNames(event),
+                ...(currentView.startsWith('list') && isMultiDayCalendarEvent(event)
+                    ? ['xima-calendar-list__multi-day-source']
+                    : []),
+            ],
             eventDidMount: ({event, el}: {
                 event: CalendarEventData;
                 el: HTMLElement;
             }) => {
+                if (event.id !== undefined) {
+                    el.dataset.ximaEventId = String(event.id);
+                }
                 eventRenderer.didMount(event, el, currentEvents);
                 eventTooltip.attach(event, el);
             },
