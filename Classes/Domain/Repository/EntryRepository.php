@@ -64,6 +64,7 @@ class EntryRepository extends Repository
         int $endTime,
         array $calendarUids = [],
         array $filters = [],
+        int $languageId = 0,
     ): array {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $entryEndDateExpression = 'COALESCE(NULLIF('
@@ -92,6 +93,27 @@ class EntryRepository extends Repository
                 'v.language as event_language',
                 'v.owner as event_owner',
                 'loc.name as location_name',
+            )
+            ->addSelectLiteral(
+                '(SELECT COALESCE(l10n.title, cat.title) FROM sys_category cat'
+                . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+                . ' LEFT JOIN sys_category l10n ON l10n.l10n_parent = cat.uid'
+                . ' AND l10n.sys_language_uid = ' . $languageId
+                . ' AND l10n.deleted = 0 AND l10n.hidden = 0'
+                . ' WHERE mm.uid_foreign = v.uid'
+                . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+                . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+                . ' AND cat.deleted = 0'
+                . ' ORDER BY mm.sorting LIMIT 1) as event_category_title'
+            )
+            ->addSelectLiteral(
+                '(SELECT cat.uid FROM sys_category cat'
+                . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+                . ' WHERE mm.uid_foreign = v.uid'
+                . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+                . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+                . ' AND cat.deleted = 0'
+                . ' ORDER BY mm.sorting LIMIT 1) as event_category_id'
             )
             ->from(self::TABLE, 'e')
             ->leftJoin('e', 'tx_ximatypo3calendar_domain_model_calendar', 'c', 'e.calendar = c.uid')

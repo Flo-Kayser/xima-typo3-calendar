@@ -212,7 +212,7 @@ class EventsController extends AbstractBackendController
     {
         parent::modifyPaginatedRecords();
 
-        if (in_array($this->getTableName(), ['tx_ximatypo3calendar_domain_model_event', 'tx_ximatypo3calendar_domain_model_entry'])) {
+        if (in_array($this->getTableName(), ['tx_ximatypo3calendar_domain_model_event', 'tx_ximatypo3calendar_domain_model_entry'], true)) {
             foreach ($this->records as &$record) {
                 foreach ($record as $key => &$value) {
                     if (str_starts_with($key, '_')) {
@@ -246,6 +246,30 @@ class EventsController extends AbstractBackendController
             }
             unset($record);
         }
+
+        if ($this->getTableName() !== self::EVENT_TABLE) {
+            return;
+        }
+
+        foreach ($this->records as &$record) {
+            foreach ($record['_appointments'] ?? [] as $table => $appointments) {
+                $labelField = $GLOBALS['TCA'][$table]['ctrl']['label'] ?? null;
+                if ($labelField === null) {
+                    continue;
+                }
+
+                foreach ($appointments as $index => $appointment) {
+                    $record['_appointments'][$table][$index]['label'] = BackendUtility::getProcessedValue(
+                        table: $table,
+                        col: $labelField,
+                        value: $appointment['label'],
+                        uid: (int)$appointment['value'],
+                        pid: $this->getRecordPid()
+                    );
+                }
+            }
+        }
+        unset($record);
     }
 
     protected function modifyTableConfiguration(): void

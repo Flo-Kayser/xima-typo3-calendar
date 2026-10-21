@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use Xima\XimaTypo3Calendar\Database\DataHandlerWriteScope;
 use Xima\XimaTypo3Calendar\Database\EventRestriction;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
@@ -43,6 +44,7 @@ final class EventRestrictionTest extends AbstractCalendarFunctionalTestCase
             $connectionPool,
             $this->get(ExtensionConfiguration::class),
             new CalendarPermissionService(),
+            new DataHandlerWriteScope(),
         );
         $this->expressionBuilder = $connectionPool
             ->getQueryBuilderForTable(self::TABLE_EVENT)
@@ -98,6 +100,25 @@ final class EventRestrictionTest extends AbstractCalendarFunctionalTestCase
      * Without a global request — routeEnhancer resolving, some CLI paths — the
      * restriction cannot tell frontend from backend and must not filter anything.
      */
+    #[Test]
+    public function producesNoConditionWhileDataHandlerProcessesAWrite(): void
+    {
+        $this->givenFrontendRequest();
+        $writeScope = new DataHandlerWriteScope();
+        $writeScope->enter();
+        $subject = new EventRestriction(
+            $this->get(Context::class),
+            $this->get(ConnectionPool::class),
+            $this->get(ExtensionConfiguration::class),
+            new CalendarPermissionService(),
+            $writeScope,
+        );
+
+        $expression = $subject->buildExpression($this->queriedTables(), $this->expressionBuilder);
+
+        self::assertSame('', (string)$expression);
+    }
+
     #[Test]
     public function producesNoConditionWithoutAGlobalRequest(): void
     {
@@ -165,6 +186,38 @@ final class EventRestrictionTest extends AbstractCalendarFunctionalTestCase
         $this->getConnectionPool()->getConnectionForTable(self::TABLE_EVENT)
             ->update(self::TABLE_EVENT, ['record_type' => 'private-event'], ['uid' => 3]);
         $this->givenUnrestrictedRecordTypes('private-event');
+        $this->givenFrontendRequest();
+
+        self::assertSame([1, 3], $this->fetchVisibleEventUids());
+    }
+
+    #[Test]
+    public function anEventWithoutStatusIsHiddenFromAnonymousVisitors(): void
+    {
+        $this->getConnectionPool()->getConnectionForTable(self::TABLE_EVENT)
+            ->update(self::TABLE_EVENT, ['record_type' => 'plain-event', 'status' => null], ['uid' => 3]);
+        $this->givenFrontendRequest();
+
+        self::assertSame([1], $this->fetchVisibleEventUids());
+    }
+
+    #[Test]
+    public function anEventWithoutStatusIsHiddenFromBackendUsersWithoutThePermission(): void
+    {
+        $this->getConnectionPool()->getConnectionForTable(self::TABLE_EVENT)
+            ->update(self::TABLE_EVENT, ['record_type' => 'plain-event', 'status' => null], ['uid' => 3]);
+        $GLOBALS['BE_USER'] = $this->backendUser(5);
+        $this->givenBackendRequest();
+
+        self::assertSame([1], $this->fetchVisibleEventUids());
+    }
+
+    #[Test]
+    public function anEventWithoutStatusOfAnUnrestrictedRecordTypeStaysVisible(): void
+    {
+        $this->getConnectionPool()->getConnectionForTable(self::TABLE_EVENT)
+            ->update(self::TABLE_EVENT, ['record_type' => 'plain-event', 'status' => null], ['uid' => 3]);
+        $this->givenUnrestrictedRecordTypes('plain-event');
         $this->givenFrontendRequest();
 
         self::assertSame([1, 3], $this->fetchVisibleEventUids());
@@ -360,6 +413,7 @@ final class EventRestrictionTest extends AbstractCalendarFunctionalTestCase
             $this->get(ConnectionPool::class),
             $extensionConfiguration,
             new CalendarPermissionService(),
+            new DataHandlerWriteScope(),
         );
     }
 

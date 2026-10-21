@@ -27,18 +27,31 @@ class VkurkoCalendarSerializer
      */
     private static array $siteCache = [];
 
-    public static function serializeBackendEntries(array $backendEntries): array
+    public static function serializeBackendEntries(array $backendEntries, int $languageId = 0): array
     {
         // The event contract carries no offset, so the consumer reads the string as local
         // time. '@<timestamp>' yields a UTC DateTime, which would shift every time by the
         // installation's offset — convert before formatting.
         $timeZone = new \DateTimeZone(date_default_timezone_get());
 
-        $events = array_map(function (array $row) use ($timeZone): array {
+        $events = array_map(function (array $row) use ($timeZone, $languageId): array {
             $startDate = AppointmentDateUtility::getStartFromRow($row);
             $endDate = AppointmentDateUtility::getEndFromRow($row);
             $start = $startDate?->setTimezone($timeZone)->format('Y-m-d\TH:i:s');
             $end = $endDate?->setTimezone($timeZone)->format('Y-m-d\TH:i:s');
+
+            // Event Calendar needs an end date for timed events without one.
+            if ($end === null && $start) {
+                $endDate = new \DateTime($start);
+                $endDate->modify('+' . AppointmentDateUtility::DEFAULT_DURATION_MINUTES . ' minutes');
+                $end = $endDate->format('Y-m-d\TH:i:s');
+            }
+            // If end date is missing, assume the default duration, even if it's an all day event (vkurko/calendar needs it!)
+            if ($end === null && $start) {
+                $end = new \DateTime($start);
+                $end->modify('+' . AppointmentDateUtility::DEFAULT_DURATION_MINUTES . ' minutes');
+                $end = $end->format('Y-m-d\TH:i:s');
+            }
 
             $title = $row['title'] ?? null;
             if ($title && ($row['event_title'] ?? null)) {
@@ -54,7 +67,7 @@ class VkurkoCalendarSerializer
                 'end' => $end,
                 'allDay' => (bool)$row['all_day'],
                 'extendedProps' => [
-                    'url' => self::buildEventSingleUrl($row),
+                    'url' => self::buildEventSingleUrl($row, $languageId),
                     'calendarUid' => (int)$row['calendar'],
                     'calendarTitle' => $row['calendar_title'] ?? '',
                     'eventUid' => $row['event_uid'] ?? null,
@@ -90,7 +103,7 @@ class VkurkoCalendarSerializer
      * `xima_typo3_calendar.eventShowPid` site setting. The `event` argument (and cHash) are
      * handled by the CalendarEventDetailPlugin route enhancer / page router.
      */
-    private static function buildEventSingleUrl(array $row): ?string
+    private static function buildEventSingleUrl(array $row, int $languageId): ?string
     {
         $pid = (int)($row['pid'] ?? 0);
         $eventUid = (int)($row['event_uid'] ?? 0);
@@ -117,6 +130,7 @@ class VkurkoCalendarSerializer
                     'event' => $eventUid,
                     'appointment' => (int)$row['uid'],
                 ],
+                '_language' => $languageId,
             ]
         );
     }

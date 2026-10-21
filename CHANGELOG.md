@@ -13,20 +13,38 @@ All notable changes to this extension are documented here. The format follows
   plugins. The frontend follows the v5 CSS Grid/DOM structure; custom integrations that relied
   on the old v2 plugin packages or selectors such as `.ec-days` need to be reviewed. The JSON
   feed contract remains unchanged.
+- **Dashboard preset.** A *Calendar* preset with all calendar widgets, selectable when adding
+  a dashboard and assignable to new users via `options.dashboard.dashboardPresetsForNewUsers`.
 - **Calendar export.** Appointments and whole events can be taken into a visitor's own
   calendar as an RFC 5545 `.ics` download; Google and Outlook deep links accompany it wherever
   the export covers a single appointment, since those services compose one entry. New
   `.ics` routes on the event detail plugin, a `CalendarExportService` returning the links as
   data, and an `exportLinks` ViewHelper — so a Fluid site and an API-driven frontend both get
   them without reimplementing date handling. See [Calendar Export](Documentation/Ics.md).
+- **Location tree.** Locations get a *Parent location* field, picked from a tree in the
+  backend form, so venues can be nested (city → building → room). `Location::getParent()`
+  exposes it to Extbase.
 - Test suite: 75 unit and 147 functional tests, with coverage reporting to Codecov.
 - Documentation set — [Access Control](Documentation/AccessControl.md),
   [Notifications](Documentation/Notifications.md), [Calendar Feed](Documentation/CalendarFeed.md),
   [Extending](Documentation/Extending.md) — and a [CONTRIBUTING](CONTRIBUTING.md) guide covering
   local setup, tests, static analysis, and the asset build.
 
+### Changed
+
+- The event `status` column is nullable and defaults to `NULL`, so a custom record type that
+  does not show the status field stores no status. New events of a record type that shows it
+  still start as *Draft*. Existing rows keep their value; set it to `NULL` in the consuming
+  project for record types without a status. See
+  [Extending](Documentation/Extending.md#custom-event-record-types).
+
 ### Fixed
 
+- Appointments written through DataHandler in a **frontend** request (e.g. by an API creating
+  events for website users) were stored with `event = 0` (#52). Sorting the inline children by
+  `start_date` re-reads them through the enforced entry restriction, which hides an appointment
+  that has no event yet. The event and entry restrictions now stand aside while DataHandler
+  processes a write; who may write is checked before DataHandler runs.
 - Backend users viewing an event or appointment in the **frontend** were answered with a 404
   whenever the event was not `LIVE`. The frontend branch of the restrictions only ever knew about
   frontend users, so neither the `view_all_events` permission nor event ownership via
