@@ -36,8 +36,8 @@
 			<trans-unit id="filter.hideSubcategories" resname="filter.hideSubcategories"><source /><target>Unterkategorien ausblenden</target></trans-unit>
 			<trans-unit id="filter.showSubcategories" resname="filter.showSubcategories"><source /><target>Unterkategorien anzeigen</target></trans-unit>
 			<trans-unit id="filter.moreActions" resname="filter.moreActions"><source /><target>Weitere Aktionen</target></trans-unit>
-			<trans-unit id="filter.selectAllChildren" resname="filter.selectAllChildren"><source /><target>Alle untergeordneten ###name### auswählen</target></trans-unit>
-			<trans-unit id="filter.deselectAllChildren" resname="filter.deselectAllChildren"><source /><target>Alle untergeordneten ###name### abwählen</target></trans-unit>
+			<trans-unit id="filter.selectAllChildren" resname="filter.selectAllChildren"><source /><target>Alle Unter-###name### auswählen</target></trans-unit>
+			<trans-unit id="filter.deselectAllChildren" resname="filter.deselectAllChildren"><source /><target>Alle Unter-###name### abwählen</target></trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source />
 				<target>Was möchten Sie erstellen?</target>

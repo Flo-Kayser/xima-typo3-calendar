@@ -5,6 +5,7 @@ import {
   updateTreeSelection,
   type TreeValue,
 } from './tree-utils';
+import type {CalendarFilterActionLabels} from '../calendar-filter-state';
 
 export type {TreeValue} from './tree-utils';
 
@@ -12,12 +13,6 @@ export type TreeStateChangePayload = {
   identifier: string;
   activeItems: TreeValue[];
   expandedItems: Record<TreeValue, boolean>;
-};
-
-type Typo3TopWindow = Window & {
-  TYPO3?: {
-    lang?: Record<string, string>;
-  };
 };
 
 export type TreeCalendarFilterItem = {
@@ -32,6 +27,7 @@ export class CalendarFilterTree extends LitElement {
   static properties = {
     identifier: {attribute: false},
     treeTitle: {attribute: false},
+    actionLabels: {attribute: false},
     items: {attribute: false},
     activeItems: {attribute: false},
     expandedItems: {attribute: false},
@@ -39,6 +35,7 @@ export class CalendarFilterTree extends LitElement {
 
   public identifier = '';
   public treeTitle = '';
+  public actionLabels: CalendarFilterActionLabels | null = null;
   public items: TreeCalendarFilterItem[] = [];
   public activeItems: TreeValue[] = [];
   public expandedItems: Record<TreeValue, boolean> = {};
@@ -52,17 +49,14 @@ export class CalendarFilterTree extends LitElement {
     const moreActionsLabel = this.getLanguageLabel(
       'filter.moreActions',
       'More actions',
-      'Weitere Aktionen',
     );
     const selectAllChildrenLabel = this.getLanguageLabel(
       'filter.selectAllChildren',
       'Select all nested ###name###',
-      'Alle Unter-###name### auswählen',
     );
     const deselectAllChildrenLabel = this.getLanguageLabel(
       'filter.deselectAllChildren',
       'Deselect all nested ###name###',
-      'Alle Unter-###name### abwählen',
     );
 
     return html`
@@ -209,13 +203,9 @@ export class CalendarFilterTree extends LitElement {
   private getLanguageLabel(
     key: string,
     fallback: string,
-    germanFallback: string,
   ): string {
-    const typo3Top = window.top as unknown as Typo3TopWindow;
-    const locale = document.documentElement.lang || navigator.language;
-    const label = locale.toLowerCase().startsWith('de')
-      ? germanFallback
-      : typo3Top.TYPO3?.lang?.[key] ?? fallback;
+    const actionKey = key.replace('filter.', '') as keyof CalendarFilterActionLabels;
+    const label = this.actionLabels?.[actionKey] ?? fallback;
 
     return label.replace('###name###', this.treeTitle);
   }

@@ -50,4 +50,11 @@ export type CalendarFilterResponse = {
   filters: CalendarFilterConfiguration;
   filterColors: Record<string, Record<string, string>>;
   state: CalendarFilterState;
+  labels: CalendarFilterActionLabels;
+};
+
+export type CalendarFilterActionLabels = {
+  moreActions: string;
+  selectAllChildren: string;
+  deselectAllChildren: string;
 };

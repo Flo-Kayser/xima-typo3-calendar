@@ -23,6 +23,7 @@ export function isCalendarFilterResponse(
   const filters = response.filters;
   const filterColors = response.filterColors;
   const state = response.state;
+  const labels = response.labels;
 
   if (
     response.success !== true
@@ -32,6 +33,8 @@ export function isCalendarFilterResponse(
     || typeof filterColors !== 'object'
     || !state
     || typeof state !== 'object'
+    || !labels
+    || typeof labels !== 'object'
   ) {
     return false;
   }

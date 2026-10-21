@@ -16,6 +16,7 @@ import {
 
 import type {
   CalendarFilter,
+  CalendarFilterActionLabels,
   CalendarFilterConfiguration,
   CalendarFilterSelection,
   CalendarFilterState,
@@ -51,6 +52,8 @@ export class CalendarFilterElement extends LitElement {
   private filterColors: ColorOverrides = {};
 
   private filterState: CalendarFilterState | null = null;
+
+  private filterLabels: CalendarFilterActionLabels | null = null;
 
   private filterLoadError = false;
 
@@ -112,6 +115,7 @@ export class CalendarFilterElement extends LitElement {
         <xima-calendar-filter-tree
           .identifier=${tree.identifier}
           .treeTitle=${tree.title}
+          .actionLabels=${this.filterLabels}
           .items=${items}
           .activeItems=${treeState.activeItems}
           .expandedItems=${treeState.expandedItems}
@@ -179,6 +183,7 @@ export class CalendarFilterElement extends LitElement {
       this.filterConfiguration = data.filters;
       this.filterColors = data.filterColors;
       this.filterState = data.state;
+      this.filterLabels = data.labels;
       this.publishFilterConfiguration();
       this.publishFilterState();
     } catch (error) {
