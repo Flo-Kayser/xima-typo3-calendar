@@ -46,11 +46,38 @@ final readonly class CalendarFilterCategory implements CalendarFilterListenerInt
         $event->addFilter($filter);
     }
 
+    #[AsEventListener(
+        identifier: 'xima-typo3-calendar/build-query-category',
+        event: BuildCalendarEntriesQueryEvent::class,
+        method: 'buildQuery',
+    )]
     public function buildQuery(BuildCalendarEntriesQueryEvent $event): void
     {
-        // Category data is selected by EntryRepository so the requested
-        // language can be applied consistently. Do not add the same aliases
-        // here, as that would overwrite the translated category title.
+        $queryBuilder = $event->getQueryBuilder();
+        $languageId = $event->getLanguageId();
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT COALESCE(l10n.title, cat.title) FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' LEFT JOIN sys_category l10n ON l10n.l10n_parent = cat.uid'
+            . ' AND l10n.sys_language_uid = ' . $languageId
+            . ' AND l10n.deleted = 0 AND l10n.hidden = 0'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_title'
+        );
+
+        $queryBuilder->addSelectLiteral(
+            '(SELECT cat.uid FROM sys_category cat'
+            . ' JOIN sys_category_record_mm mm ON mm.uid_local = cat.uid'
+            . ' WHERE mm.uid_foreign = v.uid'
+            . ' AND mm.tablenames = ' . $queryBuilder->quote('tx_ximatypo3calendar_domain_model_event')
+            . ' AND mm.fieldname = ' . $queryBuilder->quote('categories')
+            . ' AND cat.deleted = 0'
+            . ' ORDER BY mm.sorting LIMIT 1) AS event_category_id'
+        );
     }
 
     #[AsEventListener(

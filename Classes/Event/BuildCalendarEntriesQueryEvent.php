@@ -10,6 +10,7 @@ final class BuildCalendarEntriesQueryEvent
 {
     public function __construct(
         private QueryBuilder $queryBuilder,
+        private int $languageId = 0,
     ) {
     }
 
@@ -21,5 +22,10 @@ final class BuildCalendarEntriesQueryEvent
     public function setQueryBuilder(QueryBuilder $queryBuilder): void
     {
         $this->queryBuilder = $queryBuilder;
+    }
+
+    public function getLanguageId(): int
+    {
+        return $this->languageId;
     }
 }
