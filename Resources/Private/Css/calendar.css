@@ -27,7 +27,8 @@
             z-index: 1;
             flex-direction: row;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            text-align: start;
             gap: 0.35rem;
             min-width: 0;
         }
@@ -46,6 +47,12 @@
 
         .ec-event-title {
             min-width: 0;
+        }
+
+        .ec-event-title {
+            position: static;
+            inset-inline-start: auto;
+            text-align: start;
         }
     }
 
@@ -88,11 +95,24 @@
     padding-block-start: 3px;
 }
 
+#xima-calendar-mount .ec-day-grid .ec-event-body,
+#xima-calendar-mount .ec-time-grid .ec-event-body {
+    justify-content: flex-start !important;
+    text-align: left !important;
+}
+
+#xima-calendar-mount .ec-day-grid .ec-event-title,
+#xima-calendar-mount .ec-time-grid .ec-event-title {
+    position: static !important;
+    inset-inline-start: auto !important;
+    text-align: left !important;
+}
+
 @container calendar-content (max-height: 800px) {
     #xima-calendar-mount {
         .ec-day-grid .ec-event .ec-event-body,
         .ec-time-grid .ec-event {
-            font-size: .7rem;
+            font-size: .6rem;
         }
 
         .ec-day-grid .ec-event-time {

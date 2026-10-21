@@ -2,6 +2,10 @@
     .ec-event {
         --xima-event-color: var(--ec-event-bg-color);
         --xima-event-text-color: var(--ec-event-text-color);
+        font-size: .8rem;
+    }
+
+    .ec-list .ec-event-title {
         font-size: .9rem;
     }
 
