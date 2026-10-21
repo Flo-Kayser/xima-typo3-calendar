@@ -23,7 +23,7 @@ final class CalendarFilterController
 
     public function optionsAction(ServerRequestInterface $request): ResponseInterface
     {
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        $pageId = $this->getPageId($request);
 
         return new JsonResponse([
             'success' => true,
@@ -56,16 +56,12 @@ final class CalendarFilterController
 
     public function saveStateAction(ServerRequestInterface $request): ResponseInterface
     {
-        $state = $request->getParsedBody();
-        if (!is_array($state) || $state === []) {
-            $state = json_decode((string)$request->getBody(), true);
-        }
-
-        if (!is_array($state)) {
+        $state = $this->getRequestBody($request);
+        if ($state === null) {
             return new JsonResponse(['success' => false], 400);
         }
 
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        $pageId = $this->getPageId($request);
         $this->filterService->saveState($state, $pageId);
 
         return new JsonResponse(['success' => true]);
@@ -73,14 +69,32 @@ final class CalendarFilterController
 
     public function saveViewAction(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $request->getParsedBody();
-        if (!is_array($body) || !is_string($body['view'] ?? null)) {
+        $body = $this->getRequestBody($request);
+        if (!is_string($body['view'] ?? null)) {
             return new JsonResponse(['success' => false], 400);
         }
 
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        $pageId = $this->getPageId($request);
         $this->filterService->saveView($body['view'], $pageId);
 
         return new JsonResponse(['success' => true]);
+    }
+
+    private function getPageId(ServerRequestInterface $request): int
+    {
+        return (int)($request->getQueryParams()['id'] ?? 0);
+    }
+
+    /** @return array<string, mixed>|null */
+    private function getRequestBody(ServerRequestInterface $request): ?array
+    {
+        $parsedBody = $request->getParsedBody();
+        if (is_array($parsedBody) && $parsedBody !== []) {
+            return $parsedBody;
+        }
+
+        $decodedBody = json_decode((string)$request->getBody(), true);
+
+        return is_array($decodedBody) ? $decodedBody : null;
     }
 }
