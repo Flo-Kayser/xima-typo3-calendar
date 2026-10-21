@@ -138,20 +138,22 @@ import{html as T,LitElement as G,nothing as D}from"lit";var w=(n,i,e={})=>{let t
         >‹</button>
         <div class="xima-calendar-filter__mini-calendar-title">
           <h3>${t}</h3>
-          <select
-            class="xima-calendar-filter__mini-calendar-year"
-            name="calendar-year"
-            aria-label=${e.startsWith("de")?"Jahr ausw\xE4hlen":"Select year"}
-            value=${String(this.displayedMonth.getFullYear())}
-            @change=${a=>this.changeYear(a)}
-          >
-            ${this.getYearOptions().map(a=>m`
-              <option
-                value=${a}
-                ?selected=${a===this.displayedMonth.getFullYear()}
-              >${a}</option>
-            `)}
-          </select>
+          <span class="xima-calendar-filter__mini-calendar-year-select">
+            <select
+              class="xima-calendar-filter__mini-calendar-year"
+              name="calendar-year"
+              aria-label=${e.startsWith("de")?"Jahr ausw\xE4hlen":"Select year"}
+              value=${String(this.displayedMonth.getFullYear())}
+              @change=${a=>this.changeYear(a)}
+            >
+              ${this.getYearOptions().map(a=>m`
+                <option
+                  value=${a}
+                  ?selected=${a===this.displayedMonth.getFullYear()}
+                >${a}</option>
+              `)}
+            </select>
+          </span>
         </div>
         <button
           type="button"

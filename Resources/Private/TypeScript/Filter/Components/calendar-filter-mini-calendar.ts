@@ -123,20 +123,22 @@ export class CalendarFilterMiniCalendar extends LitElement {
         >‹</button>
         <div class="xima-calendar-filter__mini-calendar-title">
           <h3>${monthLabel}</h3>
-          <select
-            class="xima-calendar-filter__mini-calendar-year"
-            name="calendar-year"
-            aria-label=${locale.startsWith('de') ? 'Jahr auswählen' : 'Select year'}
-            value=${String(this.displayedMonth.getFullYear())}
-            @change=${(event: Event) => this.changeYear(event)}
-          >
-            ${this.getYearOptions().map((year) => html`
-              <option
-                value=${year}
-                ?selected=${year === this.displayedMonth.getFullYear()}
-              >${year}</option>
-            `)}
-          </select>
+          <span class="xima-calendar-filter__mini-calendar-year-select">
+            <select
+              class="xima-calendar-filter__mini-calendar-year"
+              name="calendar-year"
+              aria-label=${locale.startsWith('de') ? 'Jahr auswählen' : 'Select year'}
+              value=${String(this.displayedMonth.getFullYear())}
+              @change=${(event: Event) => this.changeYear(event)}
+            >
+              ${this.getYearOptions().map((year) => html`
+                <option
+                  value=${year}
+                  ?selected=${year === this.displayedMonth.getFullYear()}
+                >${year}</option>
+              `)}
+            </select>
+          </span>
         </div>
         <button
           type="button"
