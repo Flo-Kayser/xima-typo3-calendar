@@ -177,6 +177,7 @@ final class VkurkoCalendarSerializerTest extends TestCase
 
         self::assertSame(3, $result[0]['extendedProps']['calendarUid']);
         self::assertSame(9, $result[0]['extendedProps']['eventCategoryId']);
+        self::assertSame(9, $result[0]['extendedProps']['filterValues']['categories']);
         self::assertSame(2, $result[0]['extendedProps']['eventStatus']);
     }
 
@@ -193,6 +194,7 @@ final class VkurkoCalendarSerializerTest extends TestCase
         $result = VkurkoCalendarSerializer::serializeBackendEntries([$row]);
 
         self::assertNull($result[0]['extendedProps']['eventCategoryId']);
+        self::assertNull($result[0]['extendedProps']['filterValues']['categories']);
         self::assertNull($result[0]['extendedProps']['eventStatus']);
     }
 

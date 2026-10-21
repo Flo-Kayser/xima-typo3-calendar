@@ -71,7 +71,9 @@ class VkurkoCalendarSerializer
                     'eventCategoryId' => self::toNullableInt($row['event_category_id'] ?? null),
                     'eventCategoryTitle' => $row['event_category_title'] ?? null,
                     'eventStatus' => self::toNullableInt($row['event_status'] ?? null),
-                    'filterValues' => [],
+                    'filterValues' => [
+                        'categories' => self::toNullableInt($row['event_category_id'] ?? null),
+                    ],
                     'eventUid' => $row['event_uid'] ?? null,
                     'eventTitle' => $row['event_title'] ?? null,
                     'eventDescription' => $row['event_description'] ?? null,
