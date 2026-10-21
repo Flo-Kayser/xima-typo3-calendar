@@ -145,7 +145,6 @@ class CalendarController extends ActionController
 
         $moduleTemplate->assignMultiple([
             'calendarConfig' => $calendarConfig,
-            'enableEventPreview' => $this->pageConfigurationService->isEventPreviewEnabled($request),
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');

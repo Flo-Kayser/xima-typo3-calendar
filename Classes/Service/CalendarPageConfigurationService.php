@@ -21,14 +21,6 @@ final class CalendarPageConfigurationService
     /** @var array<int, array<string, mixed>> */
     private array $pageTsConfig = [];
 
-    public function isEventPreviewEnabled(RequestInterface $request): bool
-    {
-        return $this->isEnabled(
-            $this->getCalendarPageTsConfig($request)['enableEventPreview'] ?? null,
-            false,
-        );
-    }
-
     /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool, timeSlotMinutes: int, scrollStartTime: string} */
     public function getNewEventConfiguration(RequestInterface $request): array
     {
