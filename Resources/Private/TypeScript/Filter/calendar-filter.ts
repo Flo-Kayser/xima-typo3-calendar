@@ -110,17 +110,25 @@ export class CalendarFilterElement extends LitElement {
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>${tree.title}</h3>
+        <details
+          .open=${this.filterState?.sections[tree.identifier] ?? true}
+          @toggle=${(event: Event) => this.handleSectionToggle(tree.identifier, event)}
+        >
+          <summary>
+            <span class="xima-calendar-filter__section-toggle" aria-hidden="true"></span>
+            <h3>${tree.title}</h3>
+          </summary>
 
-        <xima-calendar-filter-tree
-          .identifier=${tree.identifier}
-          .treeTitle=${tree.title}
-          .actionLabels=${this.filterLabels}
-          .items=${items}
-          .activeItems=${treeState.activeItems}
-          .expandedItems=${treeState.expandedItems}
-          @tree-state-change=${this.handleTreeStateChange}
-        ></xima-calendar-filter-tree>
+          <xima-calendar-filter-tree
+            .identifier=${tree.identifier}
+            .treeTitle=${tree.title}
+            .actionLabels=${this.filterLabels}
+            .items=${items}
+            .activeItems=${treeState.activeItems}
+            .expandedItems=${treeState.expandedItems}
+            @tree-state-change=${this.handleTreeStateChange}
+          ></xima-calendar-filter-tree>
+        </details>
       </section>
     `;
   }
@@ -152,13 +160,21 @@ export class CalendarFilterElement extends LitElement {
 
     return html`
       <section class="xima-calendar-filter__section">
-        <h3>${filter.title}</h3>
-        <xima-calendar-filter-checkbox-list
-          .identifier=${filter.identifier}
-          .items=${filter.items}
-          .activeItems=${activeItems}
-          @checkbox-list-change=${this.handleCheckboxListChange}
-        ></xima-calendar-filter-checkbox-list>
+        <details
+          .open=${this.filterState?.sections[filter.identifier] ?? true}
+          @toggle=${(event: Event) => this.handleSectionToggle(filter.identifier, event)}
+        >
+          <summary>
+            <span class="xima-calendar-filter__section-toggle" aria-hidden="true"></span>
+            <h3>${filter.title}</h3>
+          </summary>
+          <xima-calendar-filter-checkbox-list
+            .identifier=${filter.identifier}
+            .items=${filter.items}
+            .activeItems=${activeItems}
+            @checkbox-list-change=${this.handleCheckboxListChange}
+          ></xima-calendar-filter-checkbox-list>
+        </details>
       </section>
     `;
   }
@@ -202,6 +218,21 @@ export class CalendarFilterElement extends LitElement {
     }
     this.updateFilterState((state) =>
       updateCheckboxListState(state, event.detail));
+  }
+
+  private handleSectionToggle(identifier: string, event: Event): void {
+    const details = event.currentTarget;
+    if (!(details instanceof HTMLDetailsElement) || this.filterState === null) {
+      return;
+    }
+
+    this.updateFilterState((state) => ({
+      ...state,
+      sections: {
+        ...state.sections,
+        [identifier]: details.open,
+      },
+    }));
   }
 
   private publishFilterConfiguration(): void {

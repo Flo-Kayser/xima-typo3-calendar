@@ -97,6 +97,7 @@ final class CalendarFilterService
      * @return array{
      *     checkboxLists: array<string, list<int|string>>,
      *     trees: array<string, array{activeItems: list<int|string>, expandedItems: array<string, bool>}>,
+     *     sections: array<string, bool>,
      *     view: string,
      * }
      */
@@ -164,6 +165,17 @@ final class CalendarFilterService
             ), static fn (int|string|null $value): bool => $value !== null));
         }
         $trees = $this->normalizeTreeStates($state['trees'] ?? null, $categories);
+        $storedSections = is_array($state['sections'] ?? null)
+            ? $state['sections']
+            : [];
+        $sections = [];
+        foreach ($filters as $identifier => $filter) {
+            if (is_string($identifier) && is_array($filter)) {
+                $sections[$identifier] = is_bool($storedSections[$identifier] ?? null)
+                    ? $storedSections[$identifier]
+                    : true;
+            }
+        }
 
         if (!array_key_exists('trees', $state)) {
             $legacyExpanded = is_array($state['expanded'] ?? null)
@@ -184,6 +196,7 @@ final class CalendarFilterService
         return [
             'checkboxLists' => $checkboxLists,
             'trees' => $trees,
+            'sections' => $sections,
             'view' => $this->normalizeView($state['view'] ?? null),
         ];
     }

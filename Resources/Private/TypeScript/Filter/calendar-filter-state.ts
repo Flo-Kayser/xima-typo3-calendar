@@ -34,6 +34,7 @@ export type CalendarFilterConfiguration = {
 export type CalendarFilterState = {
   checkboxLists: Record<string, Array<string | number>>;
   trees: Record<string, CalendarFilterTreeState>;
+  sections: Record<string, boolean>;
 };
 
 export type CalendarFilterTreeState = {

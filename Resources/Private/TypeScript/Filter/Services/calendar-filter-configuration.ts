@@ -48,5 +48,7 @@ export function isCalendarFilterResponse(
     && Boolean(filterState.checkboxLists)
     && typeof filterState.checkboxLists === 'object'
     && Boolean(filterState.trees)
-    && typeof filterState.trees === 'object';
+    && typeof filterState.trees === 'object'
+    && Boolean(filterState.sections)
+    && typeof filterState.sections === 'object';
 }
