@@ -26,7 +26,9 @@ export class CalendarFilterCheckboxList extends LitElement {
 
   public render() {
     return html`
-      <div class="xima-calendar-filter__checkbox-list">
+      <div class="xima-calendar-filter__checkbox-list ${this.identifier === 'statuses'
+        ? 'xima-calendar-filter__checkbox-list--statuses'
+        : ''}">
           ${this.items.map((item) => html`
           <label class="form-check">
             <input
@@ -39,7 +41,7 @@ export class CalendarFilterCheckboxList extends LitElement {
                 (event.target as HTMLInputElement).checked,
               )}
             />
-            <span class="form-check-label xima-calendar-filter__checkbox-label ${this.getItemClass(item.appearance)}">
+            <span class="form-check-label xima-calendar-filter__checkbox-label">
               ${item.icon
                 ? html`
                     <typo3-backend-icon
@@ -50,6 +52,21 @@ export class CalendarFilterCheckboxList extends LitElement {
                 : nothing}
               ${item.label}
             </span>
+            ${item.marker
+              ? html`<span class="xima-calendar-filter__checkbox-appearance xima-calendar-filter__checkbox-appearance--marker">
+                  ${item.marker}
+                </span>`
+              : item.appearance
+              ? html`<span
+                  class="xima-calendar-filter__checkbox-appearance ${this.getItemClass(item.appearance)}"
+                  aria-hidden="true"
+                ></span>`
+              : this.identifier === 'statuses'
+                ? html`<span
+                    class="xima-calendar-filter__checkbox-appearance xima-calendar-filter__checkbox-appearance--empty"
+                    aria-hidden="true"
+                  ></span>`
+              : nothing}
           </label>
         `)}
       </div>
@@ -75,7 +92,7 @@ export class CalendarFilterCheckboxList extends LitElement {
 
   private getItemClass(appearance: string | undefined): string {
     return appearance
-      ? `xima-calendar-filter__checkbox-label--${appearance}`
+      ? `xima-calendar-filter__checkbox-appearance--${appearance}`
       : '';
   }
 }

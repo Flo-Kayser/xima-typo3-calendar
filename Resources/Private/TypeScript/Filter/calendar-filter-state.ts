@@ -3,6 +3,7 @@ export type CalendarFilterItem = {
   label: string;
   appearance?: string;
   icon?: string;
+  marker?: string;
 };
 
 export type TreeFilterItem = CalendarFilterItem & {

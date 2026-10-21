@@ -32,7 +32,7 @@ final class CheckboxCalendarFilter extends AbstractCalendarFilter
      *     type: 'checkbox-list',
      *     identifier: string,
      *     title: string,
-     *     items: list<array{label: string, value: int|string, selected: bool, appearance: string, icon: ?string}>,
+     *     items: list<array{label: string, value: int|string, selected: bool, appearance: string, icon: ?string, marker: ?string}>,
      * }
      */
     public function jsonSerialize(): array
