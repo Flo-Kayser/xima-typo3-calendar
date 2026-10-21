@@ -81,6 +81,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
+    background: transparent;
     font-size: 0.8rem;
     white-space: nowrap;
 }
