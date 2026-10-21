@@ -141,66 +141,82 @@ final class CalendarFilterService
     private function normalizeState(array $state, int $pageId): array
     {
         $filters = $this->getFilters($pageId);
+
+        return [
+            'checkboxLists' => $this->normalizeCheckboxLists($state, $filters),
+            'trees' => $this->normalizeTrees($state, $filters),
+            'sections' => $this->normalizeSections($state, $filters),
+            'view' => $this->normalizeView($state['view'] ?? null),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     * @param array<string, array<string, mixed>> $filters
+     * @return array<string, list<int|string>>
+     */
+    private function normalizeCheckboxLists(array $state, array $filters): array
+    {
         $checkboxLists = [];
-        $treeValues = [];
+        $storedCheckboxLists = is_array($state['checkboxLists'] ?? null)
+            ? $state['checkboxLists']
+            : [];
+
         foreach ($filters as $identifier => $filter) {
-            if (!is_string($identifier) || !is_array($filter)) {
-                continue;
-            }
-
-            if (($filter['type'] ?? null) === 'tree') {
-                $treeValues[$identifier] = $this->getFilterValues($filter);
-                continue;
-            }
-
             if (($filter['type'] ?? null) !== 'checkbox-list') {
                 continue;
             }
 
             $allowedValues = $this->getFilterValues($filter);
+            $values = $this->getTreeValueList($storedCheckboxLists[$identifier] ?? null);
 
             $checkboxLists[$identifier] = array_values(array_filter(array_map(
                 static fn (int|string $value): int|string|null => $allowedValues[(string)$value] ?? null,
-                $this->getTreeValueList($state['checkboxLists'][$identifier] ?? null),
+                $values,
             ), static fn (int|string|null $value): bool => $value !== null));
         }
+
+        return $checkboxLists;
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     * @param array<string, array<string, mixed>> $filters
+     * @return array<string, array{activeItems: list<int|string>, expandedItems: array<string, bool>}>
+     */
+    private function normalizeTrees(array $state, array $filters): array
+    {
+        $treeValues = [];
+        foreach ($filters as $identifier => $filter) {
+            if (($filter['type'] ?? null) === 'tree') {
+                $treeValues[$identifier] = $this->getFilterValues($filter);
+            }
+        }
+
         $trees = $this->normalizeTreeStates($state['trees'] ?? null, $treeValues);
+
+        return $trees;
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     * @param array<string, array<string, mixed>> $filters
+     * @return array<string, bool>
+     */
+    private function normalizeSections(array $state, array $filters): array
+    {
         $storedSections = is_array($state['sections'] ?? null)
             ? $state['sections']
             : [];
         $sections = [];
+
         foreach ($filters as $identifier => $filter) {
-            if (is_string($identifier) && is_array($filter)) {
-                $sections[$identifier] = is_bool($storedSections[$identifier] ?? null)
-                    ? $storedSections[$identifier]
-                    : true;
-            }
+            $sections[$identifier] = is_bool($storedSections[$identifier] ?? null)
+                ? $storedSections[$identifier]
+                : true;
         }
 
-        if (!array_key_exists('trees', $state)) {
-            $legacyExpanded = is_array($state['expanded'] ?? null)
-                ? ($state['expanded']['categoryNodes'] ?? null)
-                : null;
-            if (isset($treeValues['categories'])) {
-                $trees['categories'] = [
-                    'activeItems' => array_values(array_filter(
-                        $this->getIntList($state['activeCategories'] ?? null),
-                        static fn (int $category): bool => isset($treeValues['categories'][(string)$category]),
-                    )),
-                    'expandedItems' => array_intersect_key(
-                        $this->getExpandedTreeItems($legacyExpanded),
-                        $treeValues['categories'],
-                    ),
-                ];
-            }
-        }
-
-        return [
-            'checkboxLists' => $checkboxLists,
-            'trees' => $trees,
-            'sections' => $sections,
-            'view' => $this->normalizeView($state['view'] ?? null),
-        ];
+        return $sections;
     }
 
     private function getStoredState(): array
@@ -234,17 +250,6 @@ final class CalendarFilterService
         }
 
         return $values;
-    }
-
-    private function getIntList(mixed $value, bool $allowZero = false): array
-    {
-        $values = is_array($value) ? $value : [$value];
-        $minimum = $allowZero ? 0 : 1;
-
-        return array_values(array_filter(array_map(
-            static fn (mixed $item): int => is_numeric($item) ? (int)$item : -1,
-            $values,
-        ), static fn (int $item): bool => $item >= $minimum));
     }
 
     /**
