@@ -18,6 +18,7 @@ export type CalendarEventData = {
   title?: CalendarEventContent;
   start?: string | Date;
   end?: string | Date;
+  allDay?: boolean;
   extendedProps?: Record<string, unknown>;
   backgroundColor?: string;
   textColor?: string;

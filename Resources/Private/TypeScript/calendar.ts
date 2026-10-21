@@ -13,9 +13,8 @@ import {miniCalendarEvents} from './Filter/Services/calendar-mini-calendar-event
 import {createCalendarEventSource} from './Data/calendar-event-source';
 
 import type {CalendarEventData} from './Rendering/calendar-event-data';
-import {
-    createCalendarEventRenderer,
-} from './Rendering/calendar-event-renderer';
+import {createCalendarEventRenderer,} from './Rendering/calendar-event-renderer';
+import {createCalendarEventTooltip} from './Rendering/calendar-event-tooltip';
 
 type EventCalendarTheme = Record<string, string | string[]>;
 type EventCalendarButtonText = Record<string, string>;
@@ -47,7 +46,6 @@ DocumentService.ready().then(async () => {
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
     const calendarOptions = {
-        firstDay: 1 as const,
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -74,6 +72,11 @@ DocumentService.ready().then(async () => {
         colorSource: calendarConfig.eventAppearance.colorSource,
         iconSource: calendarConfig.eventAppearance.iconSource,
         getFilterConfiguration: filterSync.getFilterConfiguration,
+    });
+    const eventTooltip = createCalendarEventTooltip({
+        locale: calendarConfig.locale,
+        getFilterConfiguration: filterSync.getFilterConfiguration,
+        tooltipOrder: calendarConfig.tooltipOrder,
     });
 
     const detailsController = createCalendarDetailsController(container, typo3Top);
@@ -104,6 +107,7 @@ DocumentService.ready().then(async () => {
             dayMaxEvents: true,
             moreLinkContent: ({num}: {num: number}) => `+${num} ${calendarConfig.locale.startsWith('de') ? 'weitere' : 'more'}`,
             view: calendarConfig.initialView,
+            firstDay: 1,
             views: {
                 timeGridWeek: {
             scrollTime: calendarConfig.scrollStartTime,
@@ -159,6 +163,7 @@ DocumentService.ready().then(async () => {
                 el: HTMLElement;
             }) => {
                 eventRenderer.didMount(event, el, currentEvents);
+                eventTooltip.attach(event, el);
             },
             eventClick: detailsController.eventClick,
         },
@@ -199,6 +204,7 @@ DocumentService.ready().then(async () => {
         miniCalendarSync.destroy();
         filterSync.destroy();
         interactionController.destroy();
+        eventTooltip.destroy();
         calendarCleanups.delete(container);
         await destroyCalendar(ec);
     };

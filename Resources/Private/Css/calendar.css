@@ -1,6 +1,7 @@
 @import '@event-calendar/core/index.css';
 @import '../../Public/Css/calendar-base.css';
 @import './calendar-event-appointment.css';
+@import './calendar-event-tooltip.css';
 
 #xima-calendar-mount {
     .ec-time-grid {
