@@ -5,6 +5,7 @@ import Notification from '@typo3/backend/notification.js';
 import {createCalendarCreationController} from './Event/calendar-event-creation';
 import {createCalendarDetailsController} from './Event/calendar-details';
 import {createCalendarInteractionController} from './Interaction/calendar-interaction';
+import {createCalendarListScrollController} from './Interaction/calendar-list-scroll-controller';
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
 import {createCalendarFilterSync} from './Filter/calendar-filter-sync';
@@ -58,6 +59,7 @@ DocumentService.ready().then(async () => {
 
     let currentEvents: CalendarEventData[] = [];
     let refetchEvents = (): void => undefined;
+    const listScrollController = createCalendarListScrollController(container);
     const filterSync = createCalendarFilterSync({
         filterWindow,
         initialSelection: initialFilters,
@@ -140,6 +142,7 @@ DocumentService.ready().then(async () => {
             datesSet: ({view}: {view: {type: string; currentStart: Date}}) => {
                 detailsController.datesSet();
                 persistCalendarView(view.type);
+                listScrollController.viewChanged(view);
                 filterWindow.dispatchEvent(new CustomEvent(miniCalendarEvents.mainDateChange, {
                     detail: {
                         date: view.currentStart.toISOString(),
@@ -155,6 +158,7 @@ DocumentService.ready().then(async () => {
                 renderer: eventRenderer,
                 onEventsLoaded: (events) => {
                     currentEvents = events;
+                    listScrollController.eventsLoaded(events);
                 },
             })],
             eventClassNames: ({event}: {event: CalendarEventData}) => eventRenderer.getClassNames(event),
@@ -205,6 +209,7 @@ DocumentService.ready().then(async () => {
         filterSync.destroy();
         interactionController.destroy();
         eventTooltip.destroy();
+        listScrollController.destroy();
         calendarCleanups.delete(container);
         await destroyCalendar(ec);
     };
