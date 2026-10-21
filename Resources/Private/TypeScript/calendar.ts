@@ -110,6 +110,9 @@ DocumentService.ready().then(async () => {
         [DayGrid, TimeGrid, List, Interaction],
         {
             locale: calendarConfig.locale,
+            noEventsContent: calendarConfig.locale.startsWith('de')
+                ? 'Noch keine Events für diesen Monat'
+                : 'No events for this month yet',
             eventGap: 3,
             height: '100%',
             nowIndicator: true,
