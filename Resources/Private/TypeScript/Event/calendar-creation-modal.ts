@@ -1,6 +1,10 @@
 import Modal from '@typo3/backend/modal.js';
 import {html} from 'lit';
-import type {CalendarModalLabels, CalendarOption} from '../Configuration/calendar-runtime-config';
+import type {
+    CalendarModalLabels,
+    CalendarOption,
+    CalendarRecordTypeOption,
+} from '../Configuration/calendar-runtime-config';
 
 export type CalendarCreationType = 'event' | 'event-appointment';
 
@@ -10,6 +14,7 @@ export type CalendarCreationValues = {
     end: Date;
     allDay: boolean;
     calendarUid: number | null;
+    recordType: string | null;
 };
 
 const formatDateTimeLocal = (date: Date): string => {
@@ -36,8 +41,28 @@ export function chooseCalendarCreationType(
     initialStart: Date,
     initialEnd: Date,
     initialAllDay: boolean,
+    recordTypes: CalendarRecordTypeOption[],
+    defaultRecordType: string | null,
 ): Promise<CalendarCreationValues | null> {
     return new Promise((resolve) => {
+        const initialRecordType = defaultRecordType && recordTypes.some(option => option.value === defaultRecordType)
+            ? defaultRecordType
+            : recordTypes[0]?.value ?? '';
+        const renderRecordTypeField = (): unknown => (recordTypes.length > 1 ? html`
+                <div
+                    class="form-group xima-calendar-creation-form__record-type"
+                    data-record-type-field
+                >
+                    <label class="form-label" for="xima-calendar-creation-record-type">${labels.recordType}</label>
+                    <select id="xima-calendar-creation-record-type" class="form-select">
+                        ${recordTypes.map(option => html`
+                            <option value=${option.value} ?selected=${option.value === initialRecordType}>
+                                ${option.label}
+                            </option>
+                        `)}
+                    </select>
+                </div>
+            ` : '');
         const modal = Modal.advanced({
             title: labels.title,
             content: html`
@@ -49,6 +74,7 @@ export function chooseCalendarCreationType(
                             <option value="event-appointment">${labels.appointment}</option>
                         </select>
                     </div>
+                    ${renderRecordTypeField()}
                     ${calendars.length > 0 ? html`
                         <div class="form-group">
                             <label class="form-label" for="xima-calendar-creation-calendar">${labels.calendar}</label>
@@ -101,6 +127,19 @@ export function chooseCalendarCreationType(
             const allDayInput = form.querySelector<HTMLInputElement>('#xima-calendar-creation-all-day');
             const startInput = form.querySelector<HTMLInputElement>('#xima-calendar-creation-start');
             const endInput = form.querySelector<HTMLInputElement>('#xima-calendar-creation-end');
+            const typeInput = form.querySelector<HTMLSelectElement>('#xima-calendar-creation-type');
+            const recordTypeField = form.querySelector<HTMLElement>('[data-record-type-field]');
+            const recordTypeInput = form.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type');
+            const updateRecordTypeField = (): void => {
+                const visible = typeInput?.value === 'event';
+                if (recordTypeField) {
+                    recordTypeField.style.visibility = visible ? 'visible' : 'hidden';
+                    recordTypeField.setAttribute('aria-hidden', String(!visible));
+                }
+                if (recordTypeInput) {
+                    recordTypeInput.tabIndex = visible ? 0 : -1;
+                }
+            };
             const updateDateFields = (): void => {
                 const disabled = allDayInput?.checked ?? false;
                 if (startInput) {
@@ -123,7 +162,9 @@ export function chooseCalendarCreationType(
             startInput?.addEventListener('click', enableDateFields);
             endInput?.addEventListener('click', enableDateFields);
             allDayInput?.addEventListener('change', updateDateFields);
+            typeInput?.addEventListener('change', updateRecordTypeField);
             updateDateFields();
+            updateRecordTypeField();
             (form.elements.namedItem('xima-calendar-creation-type') as HTMLSelectElement | null)?.focus();
         });
 
@@ -134,6 +175,9 @@ export function chooseCalendarCreationType(
             }
 
             const type = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-type')?.value;
+            const recordType = type === 'event'
+                ? modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type')?.value ?? null
+                : null;
             const calendarValue = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar')?.value;
             const startValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-start')?.value;
             const endValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-end')?.value;
@@ -148,7 +192,7 @@ export function chooseCalendarCreationType(
                 return;
             }
 
-            resolve({type, start, end, allDay, calendarUid});
+            resolve({type, start, end, allDay, calendarUid, recordType});
             modal.hideModal();
         });
         modal.addEventListener('typo3-modal-hidden', () => {

@@ -2,12 +2,18 @@ export type CalendarModalLabels = {
     title: string;
     event: string;
     appointment: string;
+    recordType: string;
     calendar: string;
     selectCalendar: string;
     start: string;
     end: string;
     allDay: string;
     create: string;
+};
+
+export type CalendarRecordTypeOption = {
+    value: string;
+    label: string;
 };
 
 export type CalendarOption = {
@@ -40,9 +46,11 @@ export type CalendarConfig = {
     defaultStartTime: string;
     defaultEndTime: string;
     defaultAllDay: boolean;
+    defaultRecordType: string | null;
     timeSlotMinutes: number;
     scrollStartTime: string;
     calendars: CalendarOption[];
+    recordTypes: CalendarRecordTypeOption[];
     tooltipOrder: string[];
   filterColors: Record<string, Record<string, string>>; eventAppearance: EventAppearanceConfiguration;
     labels: CalendarModalLabels;
@@ -65,10 +73,20 @@ const isCalendarModalLabels = (value: unknown): value is CalendarModalLabels => 
     const labels = value as Record<string, unknown>;
     return hasValues(
         labels,
-        ['title', 'event', 'appointment', 'calendar', 'selectCalendar', 'start', 'end', 'allDay', 'create'],
+        ['title', 'event', 'appointment', 'recordType', 'calendar', 'selectCalendar', 'start', 'end', 'allDay', 'create'],
         isString,
     );
 };
+
+const isRecordTypeOptions = (value: unknown): value is CalendarRecordTypeOption[] => (
+    Array.isArray(value)
+    && value.every(option => (
+        Boolean(option)
+        && typeof option === 'object'
+        && isString((option as Record<string, unknown>).value)
+        && isString((option as Record<string, unknown>).label)
+    ))
+);
 
 const isCalendarOptions = (value: unknown): value is CalendarOption[] => (
     Array.isArray(value)
@@ -121,9 +139,11 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
             isBoolean,
         )
         && hasValues(config, ['defaultStartTime', 'defaultEndTime'], isString)
+        && (config.defaultRecordType === null || isString(config.defaultRecordType))
         && hasValues(config, ['timeSlotMinutes'], isNumber)
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
+        && isRecordTypeOptions(config.recordTypes)
         && isStringArray(config.tooltipOrder)
         && isFilterColors(config.filterColors)
         && isEventAppearanceConfiguration(config.eventAppearance)

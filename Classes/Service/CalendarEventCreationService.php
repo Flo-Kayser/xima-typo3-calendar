@@ -25,11 +25,18 @@ final class CalendarEventCreationService
     /**
      * @return array{success: bool, eventUid?: int, entryUid?: int, errors?: array<int, mixed>, message?: string}
      */
-    public function create(int $pid, int $start, int $end, bool $allDay, ?int $calendarUid = null): array
+    public function create(
+        int $pid,
+        int $start,
+        int $end,
+        bool $allDay,
+        ?int $calendarUid = null,
+        ?string $recordType = null,
+    ): array
     {
         $newEventId = StringUtility::getUniqueId('NEW');
         $eventData = ['pid' => $pid];
-        $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
+        $eventRecordType = $this->resolveRecordType(self::EVENT_TABLE, $recordType);
         if ($eventRecordType !== null) {
             $eventData['record_type'] = $eventRecordType;
         }
@@ -94,7 +101,13 @@ final class CalendarEventCreationService
      *
      * @return array{success: bool, entryUid?: int, errors?: array<int, mixed>, message?: string}
      */
-    public function createAppointment(int $pid, int $start, int $end, bool $allDay, ?int $calendarUid = null): array
+    public function createAppointment(
+        int $pid,
+        int $start,
+        int $end,
+        bool $allDay,
+        ?int $calendarUid = null,
+    ): array
     {
         $eventUid = $this->findFirstEventUid($pid);
         if ($eventUid <= 0) {
@@ -156,5 +169,14 @@ final class CalendarEventCreationService
             ->setMaxResults(1)
             ->executeQuery()
             ->fetchOne();
+    }
+
+    private function resolveRecordType(string $table, ?string $recordType): ?string
+    {
+        if ($recordType !== null && RecordTypeUtility::isAvailable($table, $recordType)) {
+            return $recordType;
+        }
+
+        return RecordTypeUtility::getDefault($table);
     }
 }

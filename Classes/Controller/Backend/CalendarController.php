@@ -115,6 +115,7 @@ class CalendarController extends ActionController
         );
 
         $newEventConfiguration = $this->pageConfigurationService->getNewEventConfiguration($request);
+        $recordTypes = $this->getCreationRecordTypes(self::EVENT_TABLE, 'event');
         $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
             'createEventUrl' => $createEventUrl,
@@ -127,12 +128,14 @@ class CalendarController extends ActionController
             'calendars' => $calendars,
             'filterColors' => $filterColors,
             'eventAppearance' => $eventAppearance,
+            'recordTypes' => $recordTypes,
             'tooltipOrder' => $this->pageConfigurationService->getTooltipOrder($request),
             ...$newEventConfiguration,
             'labels' => [
                 'title' => $this->getLanguageLabel('newEventType.title', 'Create new record'),
                 'event' => $this->getLanguageLabel('newEventType.event', 'Event'),
                 'appointment' => $this->getLanguageLabel('newEventType.appointment', 'Event Appointment'),
+                'recordType' => $this->getLanguageLabel('newEventType.recordType', 'Record type'),
                 'calendar' => $this->getLanguageLabel('newEventType.calendar', 'Calendar'),
                 'selectCalendar' => $this->getLanguageLabel('newEventType.selectCalendar', 'Select a calendar'),
                 'start' => $this->getLanguageLabel('newEventType.start', 'Start'),
@@ -192,5 +195,27 @@ class CalendarController extends ActionController
         );
 
         return $label === '' || str_starts_with($label, 'LLL:') ? $fallback : $label;
+    }
+
+    /** @return list<array{value: string, label: string}> */
+    private function getCreationRecordTypes(string $table, string $defaultValue): array
+    {
+        return array_map(
+            fn (array $item): array => [
+                'value' => $item['value'],
+                'label' => $this->resolveLanguageLabel($item['label'], $item['value']),
+            ],
+            RecordTypeUtility::getAdditionalItems($table, $defaultValue),
+        );
+    }
+
+    private function resolveLanguageLabel(string $label, string $fallback): string
+    {
+        if (!str_starts_with($label, 'LLL:')) {
+            return $label !== '' ? $label : $fallback;
+        }
+
+        $resolved = $GLOBALS['LANG']->sL($label);
+        return $resolved === '' || str_starts_with($resolved, 'LLL:') ? $fallback : $resolved;
     }
 }

@@ -12,6 +12,7 @@ use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
+use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
 final class CalendarEventCreationController
 {
@@ -37,12 +38,21 @@ final class CalendarEventCreationController
         $end = (int)($data['end'] ?? 0);
         $allDay = (int)($data['allDay'] ?? 0) === 1;
         $creationType = (string)($data['type'] ?? 'event-appointment');
+        $recordType = isset($data['recordType']) && (is_string($data['recordType']) || is_int($data['recordType']))
+            ? trim((string)$data['recordType'])
+            : null;
         $calendarUid = isset($data['calendarUid']) ? (int)$data['calendarUid'] : null;
         $calendarUid = $calendarUid > 0 ? $calendarUid : null;
         $pid = $this->storagePidResolver->resolveStoragePid();
 
         if (!in_array($creationType, self::CREATION_TYPES, true)) {
             return new JsonResponse(['success' => false, 'message' => 'Invalid creation type.'], 400);
+        }
+
+        if ($creationType === 'event'
+            && $recordType !== null
+            && !RecordTypeUtility::isAvailable('tx_ximatypo3calendar_domain_model_event', $recordType)) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid record type.'], 400);
         }
 
         if ($pid <= 0 || $start <= 0 || $end <= $start) {
@@ -63,7 +73,7 @@ final class CalendarEventCreationController
         }
 
         $result = $creationType === 'event'
-            ? $this->eventCreationService->create($pid, $start, $end, $allDay, $calendarUid)
+            ? $this->eventCreationService->create($pid, $start, $end, $allDay, $calendarUid, $recordType)
             : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay, $calendarUid);
         return new JsonResponse($result, $result['success'] ? 200 : 500);
     }

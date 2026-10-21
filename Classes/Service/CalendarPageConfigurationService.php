@@ -22,7 +22,7 @@ final class CalendarPageConfigurationService
     ) {
     }
 
-    /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool, timeSlotMinutes: int, scrollStartTime: string} */
+    /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool, defaultRecordType: ?string, timeSlotMinutes: int, scrollStartTime: string} */
     public function getNewEventConfiguration(RequestInterface $request): array
     {
         $config = $this->configurationReader->read($request);
@@ -52,6 +52,7 @@ final class CalendarPageConfigurationService
                 $defaults['allDay'] ?? null,
                 self::DEFAULT_ALL_DAY,
             ),
+            'defaultRecordType' => $this->getRecordType($defaults['recordType'] ?? null),
             'timeSlotMinutes' => $this->getValidTimeSlotMinutes(
                 $weekViewGrid['timeSlotMinutes'] ?? $config['timeSlotMinutes'] ?? null,
             ),
@@ -185,6 +186,16 @@ final class CalendarPageConfigurationService
         }
 
         return $default;
+    }
+
+    private function getRecordType(mixed $value): ?string
+    {
+        if (is_string($value) || is_int($value)) {
+            $value = trim((string)$value);
+            return $value !== '' ? $value : null;
+        }
+
+        return null;
     }
 
     private function getValidTimeSlotMinutes(mixed $value): int

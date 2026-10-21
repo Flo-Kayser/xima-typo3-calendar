@@ -74,6 +74,7 @@ export function createCalendarCreationController(
             end: Math.floor(selection.end.getTime() / 1000),
             allDay: selection.allDay ? 1 : 0,
             type: selection.type,
+            ...(selection.recordType === null ? {} : {recordType: selection.recordType}),
             ...(selection.calendarUid === null ? {} : {calendarUid: selection.calendarUid}),
         });
         const result = await response.resolve() as CreateEventResponse;
@@ -99,7 +100,15 @@ export function createCalendarCreationController(
         allDay: boolean,
     ): void => {
         container.classList.add('xima-calendar-selection-dialog-open');
-        void chooseCalendarCreationType(modalLabels, calendarConfig.calendars, start, end, allDay)
+        void chooseCalendarCreationType(
+            modalLabels,
+            calendarConfig.calendars,
+            start,
+            end,
+            allDay,
+            calendarConfig.recordTypes,
+            calendarConfig.defaultRecordType,
+        )
             .then((creation) => {
                 if (creation !== null) {
                     return createEvent(creation);
