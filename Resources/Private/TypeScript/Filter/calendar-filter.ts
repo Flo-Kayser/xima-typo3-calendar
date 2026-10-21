@@ -111,6 +111,7 @@ export class CalendarFilterElement extends LitElement {
 
         <xima-calendar-filter-tree
           .identifier=${tree.identifier}
+          .treeTitle=${tree.title}
           .items=${items}
           .activeItems=${treeState.activeItems}
           .expandedItems=${treeState.expandedItems}

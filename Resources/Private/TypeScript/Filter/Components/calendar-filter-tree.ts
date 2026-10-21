@@ -1,5 +1,6 @@
 import {html, LitElement, nothing} from 'lit';
 import {
+  updateDescendantSelection,
   updateTreeExpansion,
   updateTreeSelection,
   type TreeValue,
@@ -13,6 +14,12 @@ export type TreeStateChangePayload = {
   expandedItems: Record<TreeValue, boolean>;
 };
 
+type Typo3TopWindow = Window & {
+  TYPO3?: {
+    lang?: Record<string, string>;
+  };
+};
+
 export type TreeCalendarFilterItem = {
   label: string;
   value: TreeValue;
@@ -24,30 +31,58 @@ export type TreeCalendarFilterItem = {
 export class CalendarFilterTree extends LitElement {
   static properties = {
     identifier: {attribute: false},
+    treeTitle: {attribute: false},
     items: {attribute: false},
     activeItems: {attribute: false},
     expandedItems: {attribute: false},
   };
 
   public identifier = '';
+  public treeTitle = '';
   public items: TreeCalendarFilterItem[] = [];
   public activeItems: TreeValue[] = [];
   public expandedItems: Record<TreeValue, boolean> = {};
+  private openActionValue: TreeValue | null = null;
 
   public createRenderRoot(): HTMLElement {
     return this;
   }
 
   public render() {
+    const moreActionsLabel = this.getLanguageLabel(
+      'filter.moreActions',
+      'More actions',
+      'Weitere Aktionen',
+    );
+    const selectAllChildrenLabel = this.getLanguageLabel(
+      'filter.selectAllChildren',
+      'Select all nested ###name###',
+      'Alle Unter-###name### auswählen',
+    );
+    const deselectAllChildrenLabel = this.getLanguageLabel(
+      'filter.deselectAllChildren',
+      'Deselect all nested ###name###',
+      'Alle Unter-###name### abwählen',
+    );
+
     return html`
       <div class="xima-calendar-filter__tree">
-        ${this.renderTreeNodes(null)}
+        ${this.renderTreeNodes(
+          null,
+          moreActionsLabel,
+          selectAllChildrenLabel,
+          deselectAllChildrenLabel,
+        )}
       </div>
     `;
   }
 
-
-  private renderTreeNodes(parentUid: TreeValue | null): unknown [] {
+  private renderTreeNodes(
+    parentUid: TreeValue | null,
+    moreActionsLabel: string,
+    selectAllChildrenLabel: string,
+    deselectAllChildrenLabel: string,
+  ): unknown [] {
     const items = this.items.filter(
       (item) => item.parentUid === parentUid,
     );
@@ -103,18 +138,86 @@ export class CalendarFilterTree extends LitElement {
         ${item.label}
       </span>
             </label>
+
+            ${hasChildren
+              ? html`
+                <div class="xima-calendar-filter__tree-actions">
+                  <button
+                    type="button"
+                    class="xima-calendar-filter__tree-actions-toggle"
+                    aria-label=${moreActionsLabel}
+                    aria-haspopup="menu"
+                    aria-expanded=${this.openActionValue === item.value}
+                    title=${moreActionsLabel}
+                    @click=${(event: Event) => {
+                      event.stopPropagation();
+                      this.toggleActionMenu(item.value);
+                    }}
+                  >
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                  </button>
+
+                  ${this.openActionValue === item.value
+                    ? html`
+                      <div
+                        class="xima-calendar-filter__tree-actions-menu"
+                        role="menu"
+                      >
+                        <button
+                          type="button"
+                          role="menuitem"
+                          @click=${(event: Event) => {
+                            event.stopPropagation();
+                            this.handleDescendantSelection(item.value, true);
+                          }}
+                        >${selectAllChildrenLabel}</button>
+                        <button
+                          type="button"
+                          role="menuitem"
+                          @click=${(event: Event) => {
+                            event.stopPropagation();
+                            this.handleDescendantSelection(item.value, false);
+                          }}
+                        >${deselectAllChildrenLabel}</button>
+                      </div>
+                    `
+                    : nothing}
+                </div>
+              `
+              : nothing}
           </div>
 
           ${hasChildren && isExpanded
             ? html`
               <div class="xima-calendar-filter__tree-children">
-                ${this.renderTreeNodes(item.value)}
+                ${this.renderTreeNodes(
+                  item.value,
+                  moreActionsLabel,
+                  selectAllChildrenLabel,
+                  deselectAllChildrenLabel,
+                )}
               </div>
             `
             : nothing}
         </div>
       `;
     })
+  }
+
+  private getLanguageLabel(
+    key: string,
+    fallback: string,
+    germanFallback: string,
+  ): string {
+    const typo3Top = window.top as unknown as Typo3TopWindow;
+    const locale = document.documentElement.lang || navigator.language;
+    const label = locale.toLowerCase().startsWith('de')
+      ? germanFallback
+      : typo3Top.TYPO3?.lang?.[key] ?? fallback;
+
+    return label.replace('###name###', this.treeTitle);
   }
 
   private handleSelectionChange(
@@ -126,6 +229,35 @@ export class CalendarFilterTree extends LitElement {
       value,
       selected,
     );
+
+    this.dispatchEvent(
+      new CustomEvent<TreeStateChangePayload>('tree-state-change', {
+        detail: {
+          identifier: this.identifier,
+          activeItems: this.activeItems,
+          expandedItems: this.expandedItems,
+        },
+        bubbles: true,
+      })
+    );
+  }
+
+  private toggleActionMenu(value: TreeValue): void {
+    this.openActionValue = this.openActionValue === value ? null : value;
+    this.requestUpdate();
+  }
+
+  private handleDescendantSelection(
+    value: TreeValue,
+    selected: boolean,
+  ): void {
+    this.activeItems = updateDescendantSelection(
+      this.activeItems,
+      this.items,
+      value,
+      selected,
+    );
+    this.openActionValue = null;
 
     this.dispatchEvent(
       new CustomEvent<TreeStateChangePayload>('tree-state-change', {

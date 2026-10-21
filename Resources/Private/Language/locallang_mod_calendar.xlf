@@ -29,6 +29,9 @@
 			<trans-unit id="filter.error" resname="filter.error"><source>Filters could not be loaded.</source></trans-unit>
 			<trans-unit id="filter.hideSubcategories" resname="filter.hideSubcategories"><source>Hide subcategories</source></trans-unit>
 			<trans-unit id="filter.showSubcategories" resname="filter.showSubcategories"><source>Show subcategories</source></trans-unit>
+			<trans-unit id="filter.moreActions" resname="filter.moreActions"><source>More actions</source></trans-unit>
+			<trans-unit id="filter.selectAllChildren" resname="filter.selectAllChildren"><source>Select all nested ###name###</source></trans-unit>
+			<trans-unit id="filter.deselectAllChildren" resname="filter.deselectAllChildren"><source>Deselect all nested ###name###</source></trans-unit>
 			<trans-unit id="newEventType.title" resname="newEventType.title">
 				<source>What do you want to create?</source>
 			</trans-unit>
