@@ -4,6 +4,7 @@ import {type ColorOverrides, getColor} from '../Utils/color-utils';
 import './Components/calendar-filter-toolbar';
 import './Components/calendar-filter-tree';
 import './Components/calendar-filter-checkbox-list';
+import './Components/calendar-filter-mini-calendar';
 import type {TreeStateChangePayload} from './Components/calendar-filter-tree';
 import type {CheckboxListChangePayload} from './Components/calendar-filter-checkbox-list';
 import {CalendarFilterStatePersistence} from './Services/calendar-filter-state-persistence';
@@ -88,6 +89,13 @@ export class CalendarFilterElement extends LitElement {
             ? nothing
             : Object.values(this.filterConfiguration).map((filter) => this.renderFilter(filter))}
         </div>
+
+        <section
+          class="xima-calendar-filter__mini-calendar"
+          aria-label="Mini calendar"
+        >
+          <xima-calendar-filter-mini-calendar></xima-calendar-filter-mini-calendar>
+        </section>
       </div>
     `;
   }
