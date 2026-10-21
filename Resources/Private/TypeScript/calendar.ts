@@ -8,6 +8,8 @@ import {createCalendarInteractionController} from './Interaction/calendar-intera
 import {readCalendarConfig, type Typo3TopWindow} from './Configuration/calendar-runtime-config';
 import type {CalendarFilterConfiguration, CalendarFilterSelection} from './Filter/calendar-filter-state';
 import {createCalendarFilterSync} from './Filter/calendar-filter-sync';
+import {createCalendarMiniCalendarSync} from './Filter/Services/calendar-mini-calendar-sync';
+import {miniCalendarEvents} from './Filter/Services/calendar-mini-calendar-events';
 import {createCalendarEventSource} from './Data/calendar-event-source';
 
 import type {CalendarEventData} from './Rendering/calendar-event-data';
@@ -45,7 +47,7 @@ DocumentService.ready().then(async () => {
     const enableClickNewEvent = calendarConfig.enableClickNewEvent;
     const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
     const calendarOptions = {
-        firstDay: 0 as const,
+        firstDay: 1 as const,
     };
 
     const typo3Top = window.top as unknown as Typo3TopWindow;
@@ -131,9 +133,15 @@ DocumentService.ready().then(async () => {
                 center: 'title',
                 end: 'dayGridMonth,timeGridWeek,listMonth',
             },
-            datesSet: ({view}: {view: {type: string}}) => {
+            datesSet: ({view}: {view: {type: string; currentStart: Date}}) => {
                 detailsController.datesSet();
                 persistCalendarView(view.type);
+                filterWindow.dispatchEvent(new CustomEvent(miniCalendarEvents.mainDateChange, {
+                    detail: {
+                        date: view.currentStart.toISOString(),
+                        viewType: view.type,
+                    },
+                }));
             },
             select: enableDragNewEvent ? creationController.select : undefined,
             dateClick: enableClickNewEvent ? creationController.dateClick : undefined,
@@ -157,6 +165,7 @@ DocumentService.ready().then(async () => {
     );
 
     refetchEvents = () => ec.refetchEvents();
+    const miniCalendarSync = createCalendarMiniCalendarSync(ec, filterWindow);
     filterSync.start();
 
     const interactionController = createCalendarInteractionController(container, ec, creationController, {
@@ -187,6 +196,7 @@ DocumentService.ready().then(async () => {
         window.removeEventListener('pageshow', cleanupPendingCreation);
         window.removeEventListener('popstate', cleanupPendingCreation);
         filterWindow.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
+        miniCalendarSync.destroy();
         filterSync.destroy();
         interactionController.destroy();
         calendarCleanups.delete(container);
