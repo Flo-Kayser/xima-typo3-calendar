@@ -124,14 +124,16 @@ const getDateRange = (
 
     const dateFormatter = new Intl.DateTimeFormat(locale, {
         weekday: 'long',
-        day: '2-digit',
-        month: '2-digit',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
     });
     const timeFormatter = new Intl.DateTimeFormat(locale, {
         hour: '2-digit',
         minute: '2-digit',
     });
     const allDayLabel = locale.startsWith('de') ? 'Ganztägig' : 'All-day';
+    const rangeLabel = locale.startsWith('de') ? 'bis' : 'to';
 
     if (!end || event.allDay) {
         const lastDay = end ? new Date(end) : start;
@@ -141,14 +143,14 @@ const getDateRange = (
 
         return isSameDay(start, lastDay)
             ? `${dateFormatter.format(start)}\n${allDayLabel}`
-            : `${dateFormatter.format(start)} – ${dateFormatter.format(lastDay)}`;
+            : `${dateFormatter.format(start)} ${rangeLabel} ${dateFormatter.format(lastDay)}`;
     }
 
     if (isSameDay(start, end)) {
-        return `${dateFormatter.format(start)}\n${timeFormatter.format(start)} – ${timeFormatter.format(end)}`;
+        return `${dateFormatter.format(start)}\n${timeFormatter.format(start)} ${rangeLabel} ${timeFormatter.format(end)}`;
     }
 
-    return `${dateFormatter.format(start)}, ${timeFormatter.format(start)} – ${dateFormatter.format(end)}, ${timeFormatter.format(end)}`;
+    return `${dateFormatter.format(start)}, ${timeFormatter.format(start)} ${rangeLabel} ${dateFormatter.format(end)}, ${timeFormatter.format(end)}`;
 };
 
 const appendRow = (

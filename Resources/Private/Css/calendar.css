@@ -96,6 +96,29 @@
     padding-block-start: 3px;
 }
 
+#xima-calendar-mount .ec-day-grid .ec-day-foot a {
+    display: block;
+    inline-size: 100%;
+    box-sizing: border-box;
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--typo3-component-border-radius, 0.25rem);
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    text-align: start;
+    transform: translateY(6px);
+    transition: background-color 120ms ease, outline-color 120ms ease;
+}
+
+#xima-calendar-mount .ec-day-grid .ec-day-foot a:hover,
+#xima-calendar-mount .ec-day-grid .ec-day-foot a:focus-visible {
+    outline-color: var(--typo3-component-hover-border-color, currentColor);
+    background-color: color-mix(
+        in srgb,
+        var(--typo3-component-bg, transparent),
+        var(--typo3-component-color, currentColor) 10%
+    );
+}
+
 #xima-calendar-mount .ec-day-grid .ec-event-body,
 #xima-calendar-mount .ec-time-grid .ec-event-body {
     justify-content: flex-start !important;

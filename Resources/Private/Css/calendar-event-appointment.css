@@ -9,12 +9,45 @@
         font-size: .9rem;
     }
 
+    .ec-event:not(.ec-preview):not(.ec-pointer) {
+        cursor: pointer;
+        transform-origin: center;
+        clip-path: inset(0);
+        transition: scale 120ms ease, box-shadow 120ms ease, clip-path 120ms ease;
+    }
+
+    .ec-event:not(.ec-preview):not(.ec-pointer):hover,
+    .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+        z-index: 2;
+        scale: 1 .95;
+        inline-size: calc(100% - var(--ec-event-col-gap) - 6px);
+        margin-inline: calc(var(--ec-event-col-gap) / 2 + 3px) !important;
+    }
+
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):hover,
+    .ec-time-grid .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+        scale: 1;
+        inline-size: calc(100% - var(--ec-event-col-gap));
+        margin-inline-start: 0 !important;
+        margin-inline-end: var(--ec-event-col-gap) !important;
+    }
+
+    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):hover,
+    .ec-time-grid .ec-body .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+        clip-path: inset(3px 0);
+    }
+
+
     .ec-event-body .xima-calendar-event__icon {
         flex: 0 0 auto;
         align-self: center;
         inline-size: 1em;
         block-size: 1em;
         filter: drop-shadow(0 1px 1px rgb(0 0 0 / 35%));
+    }
+
+    .ec-time-grid .ec-event-body .xima-calendar-event__icon {
+        align-self: flex-start;
     }
 
     .ec-event.xima-calendar-event--hatched {

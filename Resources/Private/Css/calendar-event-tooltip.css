@@ -30,6 +30,7 @@
 }
 
 .xima-calendar-event-tooltip__row--time {
+    justify-content: flex-start;
     margin-block-start: 0;
     padding-block-end: 0.65rem;
     border-block-end: 1px solid color-mix(in srgb, currentColor 25%, transparent);
@@ -40,6 +41,10 @@
     inline-size: 1.15rem;
     block-size: 1.15rem;
     color: currentColor;
+}
+
+.xima-calendar-event-tooltip__row--time .xima-calendar-event-tooltip__value {
+    text-align: start;
 }
 
 .xima-calendar-event-tooltip__clock svg {
