@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3Calendar\Service;
 
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 final class CalendarPageConfigurationService
@@ -18,13 +17,15 @@ final class CalendarPageConfigurationService
     private const DEFAULT_TIME_SLOT_MINUTES = 15;
     private const DEFAULT_SCROLL_TIME = '08:00:00';
 
-    /** @var array<int, array<string, mixed>> */
-    private array $pageTsConfig = [];
+    public function __construct(
+        private readonly CalendarPageConfigurationReader $configurationReader,
+    ) {
+    }
 
     /** @return array{enableDragNewEvent: bool, enableClickNewEvent: bool, defaultStartTime: string, defaultEndTime: string, defaultAllDay: bool, timeSlotMinutes: int, scrollStartTime: string} */
     public function getNewEventConfiguration(RequestInterface $request): array
     {
-        $config = $this->getCalendarPageTsConfig($request);
+        $config = $this->configurationReader->read($request);
         $weekViewGrid = $this->asArray($config['weekViewGrid.'] ?? $config['weekViewGrid'] ?? []);
         $newEvent = $this->asArray($config['newEvent.'] ?? $config['newEvent'] ?? []);
         $interaction = $this->asArray($newEvent['interaction.'] ?? $newEvent['interaction'] ?? []);
@@ -70,7 +71,7 @@ final class CalendarPageConfigurationService
      */
     public function getTooltipOrder(RequestInterface $request): array
     {
-        $config = $this->getCalendarPageTsConfig($request);
+        $config = $this->configurationReader->read($request);
         $configuredOrder = $config['tooltipOrder'] ?? '';
 
         if (is_array($configuredOrder)) {
@@ -93,7 +94,7 @@ final class CalendarPageConfigurationService
     /** @return array<string, array<string, string>> */
     public function getFilterColors(RequestInterface|ServerRequestInterface $request): array
     {
-        $config = $this->getCalendarPageTsConfig($request);
+        $config = $this->configurationReader->read($request);
         $filterColors = $this->asArray($config['filterColors.'] ?? $config['filterColors'] ?? []);
         $result = [];
 
@@ -128,7 +129,7 @@ final class CalendarPageConfigurationService
     public function getEventAppearanceConfiguration(
         RequestInterface $request,
     ): array {
-        $config = $this->getCalendarPageTsConfig($request);
+        $config = $this->configurationReader->read($request);
         $eventAppearance = $this->asArray(
             $config['eventAppearance.'] ?? $config['eventAppearance'] ?? [],
         );
@@ -213,17 +214,4 @@ final class CalendarPageConfigurationService
         return is_array($value) ? $value : [];
     }
 
-    /** @return array<string, mixed> */
-    private function getCalendarPageTsConfig(RequestInterface|ServerRequestInterface $request): array
-    {
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
-        if (!array_key_exists($pageId, $this->pageTsConfig)) {
-            $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
-            $this->pageTsConfig[$pageId] = is_array($pageTsConfig['mod.']['tx_ximatypo3calendar.'] ?? null)
-                ? $pageTsConfig['mod.']['tx_ximatypo3calendar.']
-                : [];
-        }
-
-        return $this->pageTsConfig[$pageId];
-    }
 }

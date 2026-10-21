@@ -41,14 +41,18 @@ final class CalendarFeedRequestUtilityTest extends TestCase
     }
 
     #[Test]
-    public function parsesCalendarFilterValues(): void
+    public function parsesGenericFilterValues(): void
     {
         $queryParams = [
-            'categories' => '4,9,invalid',
-            'statuses' => '0,2,2,canceled,invalid',
+            'filters' => json_encode([
+                'categories' => [1, '2', '2'],
+                'statuses' => ['live', 'canceled'],
+            ], JSON_THROW_ON_ERROR),
         ];
 
-        self::assertSame([4, 9], CalendarFeedRequestUtility::getCategoryUids($queryParams));
-        self::assertSame([0, 2, 'canceled'], CalendarFeedRequestUtility::getStatuses($queryParams));
+        self::assertSame([
+            'categories' => [1, 2],
+            'statuses' => ['live', 'canceled'],
+        ], CalendarFeedRequestUtility::getTreeFilters($queryParams));
     }
 }

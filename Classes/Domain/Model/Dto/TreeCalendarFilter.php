@@ -33,7 +33,12 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
      *     identifier: string,
      *     title: string,
      *     supportsColorCoding: bool,
-     *     items: list<TreeCalendarFilterItem>
+     *     items: list<array{
+     *         label: string,
+     *         value: int|string,
+     *         selected: bool,
+     *         parentUid: int|null
+     *     }>
      *         }
      */
     public function jsonSerialize(): array
@@ -43,7 +48,10 @@ final class TreeCalendarFilter extends AbstractCalendarFilter
             'identifier' => $this->identifier,
             'title' => $this->title,
             'supportsColorCoding' => $this->supportsColorCoding,
-            'items' => $this->items,
+            'items' => array_map(
+                static fn (TreeCalendarFilterItem $item): array => $item->jsonSerialize(),
+                $this->items,
+            ),
         ];
     }
 }
