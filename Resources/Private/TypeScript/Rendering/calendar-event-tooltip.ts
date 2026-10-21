@@ -272,7 +272,7 @@ export const createCalendarEventTooltip = (
         ) {
             appendRow(
                 tooltip,
-                configuration.locale.startsWith('de') ? 'Ort' : 'Location',
+                configuration.locale.startsWith('de') ? 'Ort:' : 'Location:',
                 location,
             );
         }
