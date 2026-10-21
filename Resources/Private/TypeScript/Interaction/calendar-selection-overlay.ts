@@ -34,17 +34,13 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
     const update = (): void => {
         clear();
         const calendarElement = container.querySelector<HTMLElement>('.ec.ec-selecting');
-        if (!calendarElement) {
-            return;
-        }
+        if (!calendarElement) return;
 
         if (calendarElement.classList.contains('ec-time-grid')) {
             const previews = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-body .ec-event.ec-preview'));
             const bodyRect = calendarElement.querySelector<HTMLElement>('.ec-body')?.getBoundingClientRect();
             const viewportRect = calendarElement.querySelector<HTMLElement>('.ec-main')?.getBoundingClientRect();
-            if (previews.length === 0 || !bodyRect || !viewportRect) {
-                return;
-            }
+            if (previews.length === 0 || !bodyRect || !viewportRect) return;
 
             const visibleRect = {
                 left: Math.max(bodyRect.left, viewportRect.left),
@@ -52,7 +48,6 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
                 top: Math.max(bodyRect.top, viewportRect.top),
                 bottom: Math.min(bodyRect.bottom, viewportRect.bottom),
             };
-
             const previewRects = previews.map(preview => preview.getBoundingClientRect());
             const selectedDays = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-body .ec-day'))
                 .filter(day => {
@@ -65,58 +60,41 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
                     const dayRect = candidate.getBoundingClientRect();
                     return dayRect.right > previewRect.left && dayRect.left < previewRect.right;
                 });
-                if (!day) {
-                    return;
-                }
-
+                if (!day) return;
                 const dayRect = day.getBoundingClientRect();
                 const left = Math.max(dayRect.left, visibleRect.left);
                 const right = Math.min(dayRect.right, visibleRect.right);
                 const top = Math.max(previewRect.top, visibleRect.top);
                 const bottom = Math.min(previewRect.bottom, visibleRect.bottom);
-                if (right > left && bottom > top) {
-                    append(left, top, right, bottom);
-                }
+                if (right > left && bottom > top) append(left, top, right, bottom);
             });
             return;
         }
 
-        if (!calendarElement.classList.contains('ec-day-grid')) {
-            return;
-        }
-
+        if (!calendarElement.classList.contains('ec-day-grid')) return;
         const previews = Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-events > .ec-event.ec-preview'));
-        if (previews.length === 0) {
-            return;
-        }
+        if (previews.length === 0) return;
         const previewRects = previews.map(preview => preview.getBoundingClientRect());
         const rows = new Map<number, DOMRect[]>();
         Array.from(calendarElement.querySelectorAll<HTMLElement>('.ec-body .ec-day'))
             .filter(day => {
                 const dayRect = day.getBoundingClientRect();
-                return previewRects.some(previewRect =>
-                    dayRect.right > previewRect.left && dayRect.left < previewRect.right
-                    && dayRect.bottom > previewRect.top && dayRect.top < previewRect.bottom,
-                );
+                return previewRects.some(previewRect => dayRect.right > previewRect.left && dayRect.left < previewRect.right
+                    && dayRect.bottom > previewRect.top && dayRect.top < previewRect.bottom);
             })
             .forEach(day => {
                 const rect = day.getBoundingClientRect();
                 const row = Math.round(rect.top);
                 rows.set(row, [...(rows.get(row) ?? []), rect]);
             });
-
         rows.forEach(rects => append(
-            Math.min(...rects.map(rect => rect.left)),
-            Math.min(...rects.map(rect => rect.top)),
-            Math.max(...rects.map(rect => rect.right)),
-            Math.max(...rects.map(rect => rect.bottom)),
+            Math.min(...rects.map(rect => rect.left)), Math.min(...rects.map(rect => rect.top)),
+            Math.max(...rects.map(rect => rect.right)), Math.max(...rects.map(rect => rect.bottom)),
         ));
     };
 
     const scheduleUpdate = (): void => {
-        if (selectionOverlayFrame !== undefined) {
-            return;
-        }
+        if (selectionOverlayFrame !== undefined) return;
         selectionOverlayFrame = requestAnimationFrame(() => {
             selectionOverlayFrame = undefined;
             update();
@@ -129,9 +107,7 @@ export function createCalendarSelectionOverlay(container: HTMLElement): {
         resetPreview,
         scheduleUpdate,
         destroy: (): void => {
-            if (selectionOverlayFrame !== undefined) {
-                cancelAnimationFrame(selectionOverlayFrame);
-            }
+            if (selectionOverlayFrame !== undefined) cancelAnimationFrame(selectionOverlayFrame);
             clear();
         },
     };

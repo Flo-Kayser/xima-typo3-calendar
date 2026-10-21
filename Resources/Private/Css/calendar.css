@@ -96,6 +96,48 @@
     padding-block-start: 3px;
 }
 
+#xima-calendar-mount .ec-list {
+    .ec-day {
+        background: var(--typo3-component-bg);
+    }
+
+    .ec-day-head {
+        padding: 0.65rem 1rem;
+        background: var(--typo3-component-bg);
+        color: var(--typo3-component-color);
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .ec-event {
+        align-items: center;
+        min-block-size: 3rem;
+        padding: 0.65rem 1rem;
+        border-block-end: 1px solid var(--typo3-component-border-color);
+        border-radius: 0;
+    }
+
+    .ec-event-body {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+    }
+
+    .ec-event-time {
+        flex: 0 0 7rem;
+        margin: 0;
+        color: color-mix(in srgb, currentColor 72%, transparent);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .ec-event-title {
+        min-width: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 #xima-calendar-mount .ec-day-grid .ec-day-foot a {
     display: block;
     inline-size: 100%;

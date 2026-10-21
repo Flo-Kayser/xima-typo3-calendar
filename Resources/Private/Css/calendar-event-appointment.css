@@ -37,6 +37,13 @@
         clip-path: inset(3px 0);
     }
 
+    .ec-list .ec-event:not(.ec-preview):not(.ec-pointer):hover,
+    .ec-list .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+        scale: 1;
+        inline-size: 100%;
+        margin-inline: 0 !important;
+    }
+
 
     .ec-event-body .xima-calendar-event__icon {
         flex: 0 0 auto;
