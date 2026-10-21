@@ -265,7 +265,11 @@ export const createCalendarEventTooltip = (
         });
 
         const location = getExtendedProperty(event, 'appointmentLocation');
-        if (typeof location === 'string' && location.trim() !== '') {
+        if (
+            configuration.tooltipOrder.includes('location')
+            && typeof location === 'string'
+            && location.trim() !== ''
+        ) {
             appendRow(
                 tooltip,
                 configuration.locale.startsWith('de') ? 'Ort' : 'Location',

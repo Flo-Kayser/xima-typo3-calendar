@@ -79,9 +79,20 @@
 }
 
 #xima-calendar-mount .ec-time-grid .ec-event-body {
+    box-sizing: border-box;
+    min-inline-size: 0;
     align-self: flex-start;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
+    padding: 0.15rem 0.35rem;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-event-title {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-body {

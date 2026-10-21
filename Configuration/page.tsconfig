@@ -19,7 +19,7 @@ TCEMAIN.preview {
 
 mod.tx_ximatypo3calendar {
     filterOrder = recordTypes, categories, statuses
-    tooltipOrder = recordTypes, categories, statuses
+    tooltipOrder = recordTypes, categories, statuses, location
 
     weekViewGrid {
         timeSlotMinutes = 15 # Supported values: 15, 30 or 60

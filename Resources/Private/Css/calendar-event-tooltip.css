@@ -58,10 +58,13 @@
 }
 
 .xima-calendar-event-tooltip__label {
+    flex: 0 0 auto;
     opacity: 0.7;
+    white-space: nowrap;
 }
 
 .xima-calendar-event-tooltip__value {
+    flex: 1 1 auto;
     min-inline-size: 0;
     white-space: pre-line;
     text-align: end;
