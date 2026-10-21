@@ -174,7 +174,7 @@ DocumentService.ready().then(async () => {
             })],
             eventClassNames: ({event}: {event: CalendarEventData}) => [
                 ...eventRenderer.getClassNames(event),
-                ...(currentView.startsWith('list') && isMultiDayCalendarEvent(event)
+                ...(isMultiDayCalendarEvent(event)
                     ? ['xima-calendar-list__multi-day-source']
                     : []),
             ],
