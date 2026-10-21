@@ -37,7 +37,7 @@ class VkurkoCalendarSerializer
         // installation's offset — convert before formatting.
         $timeZone = new \DateTimeZone(date_default_timezone_get());
 
-        $events = array_map(function (array $row) use ($timeZone, $languageId): array {
+        $events = array_map(function (array $row) use ($timeZone, $languageId, $eventDispatcher): array {
             $startDate = AppointmentDateUtility::getStartFromRow($row);
             $endDate = AppointmentDateUtility::getEndFromRow($row);
             $start = $startDate?->setTimezone($timeZone)->format('Y-m-d\TH:i:s');
