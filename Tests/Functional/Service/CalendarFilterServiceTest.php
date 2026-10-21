@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationReader;
 use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
 
@@ -50,7 +51,10 @@ final class CalendarFilterServiceTest extends AbstractCalendarFunctionalTestCase
         $GLOBALS['BE_USER'] = $backendUser;
 
         try {
-            $service = new CalendarFilterService($eventDispatcher);
+            $service = new CalendarFilterService(
+                $eventDispatcher,
+                $this->get(CalendarPageConfigurationReader::class),
+            );
             $service->saveState([
                 'trees' => [
                     'categories' => [

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
@@ -18,6 +17,7 @@ final class CalendarFilterService
 
     public function __construct(
         private readonly EventDispatcher $eventDispatcher,
+        private readonly CalendarPageConfigurationReader $configurationReader,
     ) {
     }
 
@@ -75,8 +75,7 @@ final class CalendarFilterService
     /** @return list<string> */
     private function getFilterOrder(int $pageId): array
     {
-        $tsConfig = BackendUtility::getPagesTSconfig($pageId);
-        $configuredOrder = $tsConfig['mod.']['tx_ximatypo3calendar.']['filterOrder'] ?? '';
+        $configuredOrder = $this->configurationReader->readForPageId($pageId)['filterOrder'] ?? '';
         $values = is_array($configuredOrder)
             ? $configuredOrder
             : explode(',', (string)$configuredOrder);

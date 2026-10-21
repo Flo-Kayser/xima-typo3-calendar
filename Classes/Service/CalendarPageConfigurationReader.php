@@ -16,8 +16,12 @@ final class CalendarPageConfigurationReader
     /** @return array<string, mixed> */
     public function read(RequestInterface|ServerRequestInterface $request): array
     {
-        $pageId = (int)($request->getQueryParams()['id'] ?? 0);
+        return $this->readForPageId((int)($request->getQueryParams()['id'] ?? 0));
+    }
 
+    /** @return array<string, mixed> */
+    public function readForPageId(int $pageId): array
+    {
         if (!array_key_exists($pageId, $this->configByPageId)) {
             $pageTsConfig = BackendUtility::getPagesTSconfig($pageId);
             $this->configByPageId[$pageId] = is_array($pageTsConfig['mod.']['tx_ximatypo3calendar.'] ?? null)
