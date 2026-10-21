@@ -25,8 +25,7 @@ class CalendarApi implements MiddlewareInterface
     public function __construct(
         protected EntryRepository $entryRepository,
         protected EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

@@ -31,8 +31,7 @@ class VkurkoCalendarSerializer
         array $backendEntries,
         int $languageId = 0,
         ?EventDispatcherInterface $eventDispatcher = null,
-    ): array
-    {
+    ): array {
         // The event contract carries no offset, so the consumer reads the string as local
         // time. '@<timestamp>' yields a UTC DateTime, which would shift every time by the
         // installation's offset — convert before formatting.
