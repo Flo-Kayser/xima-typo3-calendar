@@ -32,8 +32,7 @@ final class CalendarEventCreationService
         bool $allDay,
         ?int $calendarUid = null,
         ?string $recordType = null,
-    ): array
-    {
+    ): array {
         $newEventId = StringUtility::getUniqueId('NEW');
         $eventData = ['pid' => $pid];
         $eventRecordType = $this->resolveRecordType(self::EVENT_TABLE, $recordType);
@@ -107,8 +106,7 @@ final class CalendarEventCreationService
         int $end,
         bool $allDay,
         ?int $calendarUid = null,
-    ): array
-    {
+    ): array {
         $eventUid = $this->findFirstEventUid($pid);
         if ($eventUid <= 0) {
             return ['success' => false, 'message' => 'No event exists for the appointment.'];

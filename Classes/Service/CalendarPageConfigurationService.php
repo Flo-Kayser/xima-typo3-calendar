@@ -224,5 +224,4 @@ final class CalendarPageConfigurationService
     {
         return is_array($value) ? $value : [];
     }
-
 }
