@@ -3,9 +3,9 @@
 namespace Xima\XimaTypo3Calendar\Domain\Repository;
 
 use Doctrine\DBAL\Exception;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
 use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
@@ -13,6 +13,12 @@ use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 class EntryRepository extends Repository
 {
     private const TABLE = 'tx_ximatypo3calendar_domain_model_entry';
+
+    public function __construct(
+        private readonly ConnectionPool $connectionPool,
+        protected EventDispatcherInterface $eventDispatcher,
+    ) {
+    }
 
     /**
      * Returns the last-write timestamps of the given entries, keyed by uid.
@@ -30,7 +36,7 @@ class EntryRepository extends Repository
             return [];
         }
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $queryBuilder->getRestrictions()->removeAll();
 
         $rows = $queryBuilder
@@ -59,7 +65,7 @@ class EntryRepository extends Repository
         array $calendarUids = [],
         array $filters = [],
     ): array {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $entryEndDateExpression = 'COALESCE(NULLIF('
             . $queryBuilder->quoteIdentifier('e.end_date')
             . ', 0), '
