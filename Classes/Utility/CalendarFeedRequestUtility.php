@@ -34,21 +34,6 @@ final class CalendarFeedRequestUtility
         return array_map('intval', (array)($queryParams['calendars'] ?? []));
     }
 
-    public static function getCategoryUids(array $queryParams): array
-    {
-        return self::getIntegerList($queryParams['categories'] ?? []);
-    }
-
-    public static function getStatuses(array $queryParams): array
-    {
-        $values = self::getListValues($queryParams['statuses'] ?? []);
-
-        return array_values(array_unique(array_filter(
-            array_map(static fn (string $item): int|string => is_numeric($item) ? (int)$item : $item, $values),
-            static fn (int|string $item): bool => is_int($item) ? $item >= 0 : $item === 'canceled',
-        )));
-    }
-
     /**
      * @param array<string, mixed> $queryParams
      * @return array<string, list<int|string>>
@@ -99,16 +84,6 @@ final class CalendarFeedRequestUtility
         }
 
         return $result;
-    }
-
-    private static function getIntegerList(mixed $value): array
-    {
-        $values = self::getListValues($value);
-
-        return array_values(array_unique(array_filter(
-            array_map(static fn (string $item): int => is_numeric($item) ? (int)$item : 0, $values),
-            static fn (int $item): bool => $item > 0,
-        )));
     }
 
     private static function parseTimestamp(mixed $value, int $default): int

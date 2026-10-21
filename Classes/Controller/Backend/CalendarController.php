@@ -7,12 +7,9 @@ namespace Xima\XimaTypo3Calendar\Controller\Backend;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
@@ -22,6 +19,7 @@ use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
+use Xima\XimaTypo3Calendar\Service\CalendarRecordButtonService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
@@ -30,10 +28,8 @@ use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 class CalendarController extends ActionController
 {
     private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
-    private const ENTRY_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
 
     public function __construct(
-        protected IconFactory $iconFactory,
         protected PageRenderer $pageRenderer,
         protected UriBuilder $backendUriBuilder,
         protected ModuleTemplateFactory $moduleTemplateFactory,
@@ -44,6 +40,7 @@ class CalendarController extends ActionController
         protected CalendarSelectionService $calendarSelectionService,
         protected CalendarPendingCreationService $pendingCreationService,
         protected CalendarFilterService $filterService,
+        protected CalendarRecordButtonService $recordButtonService,
     ) {
     }
 
@@ -77,13 +74,15 @@ class CalendarController extends ActionController
         $canCreateAppointment = $appointmentPid > 0
             && $this->permissionService->canCreateAppointmentAtPid($appointmentPid);
 
-        $this->addNewRecordButtons(
+        $this->recordButtonService->addButtons(
             $moduleTemplate,
             $request,
             $appointmentPid,
             $eventRecordType,
             $canCreateEvent,
             $canCreateAppointment,
+            $this->getLanguageLabel('newEvent', 'New Event'),
+            $this->getLanguageLabel('newEventAppointment', 'New Event Appointment'),
         );
 
         $this->pageRenderer->loadJavaScriptModule('@xima/xima-typo3-calendar/calendar.js');
@@ -174,74 +173,16 @@ class CalendarController extends ActionController
         $endDatetime = CalendarFeedRequestUtility::getEndTimestamp($params);
         $calendarUids = CalendarFeedRequestUtility::getCalendarUids($params);
         $activeFilters = CalendarFeedRequestUtility::getTreeFilters($params);
-        $filters = [
-            'categories' => $activeFilters['categories']
-                ?? CalendarFeedRequestUtility::getCategoryUids($params),
-            'statuses' => $activeFilters['statuses']
-                ?? CalendarFeedRequestUtility::getStatuses($params),
-            'filters' => $activeFilters,
-        ];
-
         $rows = $this->entryRepository->getBackendCalendarEntries(
             $startDatetime,
             $endDatetime,
             $calendarUids,
-            $filters,
+            ['filters' => $activeFilters],
         );
 
         $events = VkurkoCalendarSerializer::serializeBackendEntries($rows);
 
         return new JsonResponse($events);
-    }
-
-    private function addNewRecordButtons(
-        ModuleTemplate $moduleTemplate,
-        RequestInterface $request,
-        int $pid,
-        ?string $eventRecordType,
-        bool $canCreateEvent,
-        bool $canCreateAppointment,
-    ): void {
-        $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
-        $returnUrl = (string)$request->getUri();
-
-        if ($canCreateEvent) {
-            $eventUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
-                'edit' => [self::EVENT_TABLE => [$pid => 'new']],
-                'defVals' => $eventRecordType === null ? [] : [
-                    self::EVENT_TABLE => ['record_type' => $eventRecordType],
-                ],
-                'returnUrl' => $returnUrl,
-            ]);
-            $this->addNewRecordButton(
-                $buttonBar,
-                (string)$eventUrl,
-                $this->getLanguageLabel('newEvent', 'New Event'),
-            );
-        }
-
-        if ($canCreateAppointment) {
-            $appointmentUrl = $this->backendUriBuilder->buildUriFromRoute('record_edit', [
-                'edit' => [self::ENTRY_TABLE => [$pid => 'new']],
-                'defVals' => [self::ENTRY_TABLE => ['record_type' => 'event-appointment']],
-                'returnUrl' => $returnUrl,
-            ]);
-            $this->addNewRecordButton(
-                $buttonBar,
-                (string)$appointmentUrl,
-                $this->getLanguageLabel('newEventAppointment', 'New Event Appointment'),
-            );
-        }
-    }
-
-    private function addNewRecordButton(ButtonBar $buttonBar, string $url, string $title): void
-    {
-        $button = $buttonBar->makeLinkButton()
-            ->setHref($url)
-            ->setTitle($title)
-            ->setShowLabelText(true)
-            ->setIcon($this->iconFactory->getIcon('actions-plus', IconSize::SMALL));
-        $buttonBar->addButton($button, ButtonBar::BUTTON_POSITION_RIGHT, 1);
     }
 
     private function getLanguageLabel(string $key, string $fallback): string
