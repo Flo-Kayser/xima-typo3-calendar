@@ -43,6 +43,7 @@ export type CalendarConfig = {
     timeSlotMinutes: number;
     scrollStartTime: string;
     calendars: CalendarOption[];
+    tooltipOrder: string[];
   filterColors: Record<string, Record<string, string>>; eventAppearance: EventAppearanceConfiguration;
     labels: CalendarModalLabels;
 };
@@ -103,6 +104,9 @@ const isEventAppearanceConfiguration = (
     isString,
   )
 );
+const isStringArray = (value: unknown): value is string[] => (
+    Array.isArray(value) && value.every(isString)
+);
 const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     if (!value || typeof value !== 'object') {
         return false;
@@ -120,6 +124,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         && hasValues(config, ['timeSlotMinutes'], isNumber)
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
+        && isStringArray(config.tooltipOrder)
         && isFilterColors(config.filterColors)
         && isEventAppearanceConfiguration(config.eventAppearance)
         && isCalendarModalLabels(config.labels);

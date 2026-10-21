@@ -214,6 +214,14 @@ mod.tx_ximatypo3calendar.weekViewGrid {
 
 `timeSlotMinutes` controls the duration of one time-grid slot. Supported values are `15`, `30`, and `60`; the default is `15`. `scrollStartTime` controls the initial scroll position and accepts `HH:MM` or `HH:MM:SS`; the default is `08:00`.
 
+`tooltipOrder` controls the order of filter information in event tooltips. Use the filter identifiers as a comma-separated list. Filters that are not listed are appended automatically.
+
+```typoscript
+mod.tx_ximatypo3calendar {
+    tooltipOrder = recordTypes, categories, statuses
+}
+```
+
 | Surface | Key |
 |---------|-----|
 | Module identifiers | `calendar_modules` (group), `calendar_events`, `calendar_calendar` |

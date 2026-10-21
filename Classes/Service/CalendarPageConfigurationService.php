@@ -73,6 +73,31 @@ final class CalendarPageConfigurationService
         ];
     }
 
+    /**
+     * @return list<string>
+     */
+    public function getTooltipOrder(RequestInterface $request): array
+    {
+        $config = $this->getCalendarPageTsConfig($request);
+        $configuredOrder = $config['tooltipOrder'] ?? '';
+
+        if (is_array($configuredOrder)) {
+            $configuredOrder = implode(',', array_map('strval', $configuredOrder));
+        }
+
+        if (!is_string($configuredOrder)) {
+            return [];
+        }
+
+        $identifiers = array_map('trim', explode(',', $configuredOrder));
+        $identifiers = array_filter(
+            $identifiers,
+            static fn (string $identifier): bool => $identifier !== '',
+        );
+
+        return array_values(array_unique($identifiers));
+    }
+
     /** @return array<string, array<string, string>> */
     public function getFilterColors(RequestInterface|ServerRequestInterface $request): array
     {
