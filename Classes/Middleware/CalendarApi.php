@@ -2,6 +2,7 @@
 
 namespace Xima\XimaTypo3Calendar\Middleware;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -21,7 +22,10 @@ use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
  */
 class CalendarApi implements MiddlewareInterface
 {
-    public function __construct(protected EntryRepository $entryRepository)
+    public function __construct(
+        protected EntryRepository $entryRepository,
+        protected EventDispatcherInterface $eventDispatcher,
+    )
     {
     }
 
@@ -52,7 +56,11 @@ class CalendarApi implements MiddlewareInterface
             $languageId,
         );
 
-        $events = VkurkoCalendarSerializer::serializeBackendEntries($rows, $languageId);
+        $events = VkurkoCalendarSerializer::serializeBackendEntries(
+            $rows,
+            $languageId,
+            $this->eventDispatcher,
+        );
 
         return new JsonResponse($events);
     }

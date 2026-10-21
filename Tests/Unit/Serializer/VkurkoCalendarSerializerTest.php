@@ -62,7 +62,7 @@ final class VkurkoCalendarSerializerTest extends TestCase
 
     /**
      * vkurko/calendar refuses to render an entry without an end, so a missing one
-     * is filled with a 30 minute default — even for all-day entries.
+     * is filled with a 30 minute default.
      */
     #[Test]
     public function fallsBackToThirtyMinutesWhenTheEndDateIsMissing(): void
@@ -83,7 +83,7 @@ final class VkurkoCalendarSerializerTest extends TestCase
         ]);
 
         self::assertTrue($result[0]['allDay']);
-        self::assertSame('2025-01-01T00:30:00', $result[0]['end']);
+        self::assertSame('2025-01-02T00:00:00', $result[0]['end']);
     }
 
     #[Test]

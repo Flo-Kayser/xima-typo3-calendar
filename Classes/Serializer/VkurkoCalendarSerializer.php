@@ -27,7 +27,11 @@ class VkurkoCalendarSerializer
      */
     private static array $siteCache = [];
 
-    public static function serializeBackendEntries(array $backendEntries, int $languageId = 0): array
+    public static function serializeBackendEntries(
+        array $backendEntries,
+        int $languageId = 0,
+        ?EventDispatcherInterface $eventDispatcher = null,
+    ): array
     {
         // The event contract carries no offset, so the consumer reads the string as local
         // time. '@<timestamp>' yields a UTC DateTime, which would shift every time by the
@@ -45,12 +49,6 @@ class VkurkoCalendarSerializer
                 $endDate = new \DateTime($start);
                 $endDate->modify('+' . AppointmentDateUtility::DEFAULT_DURATION_MINUTES . ' minutes');
                 $end = $endDate->format('Y-m-d\TH:i:s');
-            }
-            // If end date is missing, assume the default duration, even if it's an all day event (vkurko/calendar needs it!)
-            if ($end === null && $start) {
-                $end = new \DateTime($start);
-                $end->modify('+' . AppointmentDateUtility::DEFAULT_DURATION_MINUTES . ' minutes');
-                $end = $end->format('Y-m-d\TH:i:s');
             }
 
             $title = $row['title'] ?? null;
@@ -70,6 +68,11 @@ class VkurkoCalendarSerializer
                     'url' => self::buildEventSingleUrl($row, $languageId),
                     'calendarUid' => (int)$row['calendar'],
                     'calendarTitle' => $row['calendar_title'] ?? '',
+                    'recordType' => is_string($row['record_type'] ?? null) ? $row['record_type'] : '',
+                    'eventCategoryId' => self::toNullableInt($row['event_category_id'] ?? null),
+                    'eventCategoryTitle' => $row['event_category_title'] ?? null,
+                    'eventStatus' => self::toNullableInt($row['event_status'] ?? null),
+                    'filterValues' => [],
                     'eventUid' => $row['event_uid'] ?? null,
                     'eventTitle' => $row['event_title'] ?? null,
                     'eventDescription' => $row['event_description'] ?? null,
@@ -87,13 +90,17 @@ class VkurkoCalendarSerializer
                 $row,
             );
 
-            GeneralUtility::makeInstance(EventDispatcherInterface::class)
-                ->dispatch($serializationEvent);
+            $eventDispatcher?->dispatch($serializationEvent);
 
             return $serializationEvent->getEventData();
         }, $backendEntries);
 
         return $events;
+    }
+
+    private static function toNullableInt(mixed $value): ?int
+    {
+        return is_int($value) || is_numeric($value) ? (int)$value : null;
     }
 
     /**

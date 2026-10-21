@@ -6,6 +6,7 @@ namespace Xima\XimaTypo3Calendar\Controller\Backend;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\JsonResponse;
@@ -40,6 +41,7 @@ class CalendarController extends ActionController
         protected CalendarPendingCreationService $pendingCreationService,
         protected CalendarFilterService $filterService,
         protected CalendarRecordButtonService $recordButtonService,
+        protected EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -182,7 +184,7 @@ class CalendarController extends ActionController
             ['filters' => $activeFilters],
         );
 
-        $events = VkurkoCalendarSerializer::serializeBackendEntries($rows);
+        $events = VkurkoCalendarSerializer::serializeBackendEntries($rows, 0, $this->eventDispatcher);
 
         return new JsonResponse($events);
     }
