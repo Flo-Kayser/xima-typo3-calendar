@@ -28,7 +28,7 @@ export class CalendarFilterToolbar extends LitElement {
     return html`
       <div class="tree-toolbar">
         <div class="tree-toolbar__menu">
-          <div class="tree-toolbar__search">
+          <div class="tree-toolbar__search" hidden>
             <label
               for="xima-calendar-filter-search"
               class="visually-hidden"

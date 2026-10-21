@@ -1,7 +1,7 @@
 import{html as T,LitElement as G,nothing as D}from"lit";var w=(n,i,e={})=>{let t=e[n]?.[String(i)];if(t)return t;let a=[...`${n}:${i}`].reduce((l,s)=>l*31+s.charCodeAt(0)>>>0,0);return`hsl(${Math.round(a*137.508%360)} 68% 46%)`};import{html as R,LitElement as W}from"lit";var g=class extends W{createRenderRoot(){return this}render(){let i=window.top,t=(i.TYPO3?.settings?.ximaCalendar?.locale??document.documentElement.lang??navigator.language)?.startsWith("de")?"Suchbegriff eingeben":i.TYPO3?.lang?.["filter.search"]??"Enter search term";return R`
       <div class="tree-toolbar">
         <div class="tree-toolbar__menu">
-          <div class="tree-toolbar__search">
+          <div class="tree-toolbar__search" hidden>
             <label
               for="xima-calendar-filter-search"
               class="visually-hidden"
