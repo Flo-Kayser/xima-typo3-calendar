@@ -111,6 +111,20 @@ final class CalendarEventCreationServiceTest extends AbstractCalendarFunctionalT
     }
 
     #[Test]
+    public function cleanupKeepsAnAppointmentThatWasSavedWithoutOwnContent(): void
+    {
+        $result = $this->subject->createAppointment(2, 1767225600, 1767229200, false);
+        $entryUid = (int)$result['entryUid'];
+
+        $this->get(ConnectionPool::class)
+            ->getConnectionForTable(self::TABLE_ENTRY)
+            ->update(self::TABLE_ENTRY, ['tstamp' => time() + 1], ['uid' => $entryUid]);
+
+        self::assertTrue($this->get(CalendarPendingCreationService::class)->cleanupEntry($entryUid, 2));
+        self::assertSame(1, $this->countRecords(self::TABLE_ENTRY, $entryUid));
+    }
+
+    #[Test]
     public function cleanupRemovesAnUntitledEventAndItsAppointment(): void
     {
         $result = $this->subject->create(2, 1767225600, 1767229200, false);

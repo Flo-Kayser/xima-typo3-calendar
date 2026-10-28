@@ -29,7 +29,13 @@ final class CalendarPendingCreationService
 
     public function registerEntry(int $entryUid, int $pid): void
     {
-        $this->register(self::PENDING_ENTRIES_SESSION_KEY, $entryUid, $pid);
+        $entry = $this->fetchRecord(self::ENTRY_TABLE, $entryUid, $pid, ['tstamp']);
+        $this->register(
+            self::PENDING_ENTRIES_SESSION_KEY,
+            $entryUid,
+            $pid,
+            is_array($entry) ? (int)($entry['tstamp'] ?? 0) : null,
+        );
     }
 
     public function cleanupEvent(int $eventUid, int $expectedPid): bool
@@ -92,10 +98,10 @@ final class CalendarPendingCreationService
         }
 
         $entry = $this->fetchRecord(self::ENTRY_TABLE, $entryUid, $expectedPid, [
-            'title', 'description', 'online_link', 'ticket_link', 'address', 'directions',
+            'tstamp', 'title', 'description', 'online_link', 'ticket_link', 'address', 'directions',
         ]);
 
-        if ($entry === false || $this->hasContent($entry, [
+        if ($entry === false || $this->wasModifiedAfterCreation(self::PENDING_ENTRIES_SESSION_KEY, $entryUid, $entry['tstamp'] ?? null) || $this->hasContent($entry, [
             'title', 'description', 'online_link', 'ticket_link', 'address', 'directions',
         ])) {
             $this->forget(self::PENDING_ENTRIES_SESSION_KEY, $entryUid);
@@ -139,7 +145,7 @@ final class CalendarPendingCreationService
             ->fetchAssociative();
     }
 
-    private function register(string $key, int $uid, int $pid): void
+    private function register(string $key, int $uid, int $pid, ?int $tstamp = null): void
     {
         $backendUser = $this->getBackendUser();
         if ($uid <= 0 || $pid <= 0 || $backendUser === null) {
@@ -148,14 +154,28 @@ final class CalendarPendingCreationService
 
         $pending = $backendUser->getSessionData($key);
         $pending = is_array($pending) ? $pending : [];
-        $pending[$uid] = $pid;
+        $pending[$uid] = $tstamp === null ? $pid : ['pid' => $pid, 'tstamp' => $tstamp];
         $backendUser->setAndSaveSessionData($key, $pending);
     }
 
     private function isPending(string $key, int $uid, int $pid): bool
     {
         $pending = $this->getBackendUser()?->getSessionData($key);
-        return is_array($pending) && (int)($pending[$uid] ?? 0) === $pid;
+        $value = is_array($pending) ? ($pending[$uid] ?? null) : null;
+        return is_int($value) || is_string($value)
+            ? (int)$value === $pid
+            : is_array($value) && (int)($value['pid'] ?? 0) === $pid;
+    }
+
+    private function wasModifiedAfterCreation(string $key, int $uid, mixed $tstamp): bool
+    {
+        $pending = $this->getBackendUser()?->getSessionData($key);
+        $value = is_array($pending) ? ($pending[$uid] ?? null) : null;
+        if (!is_array($value) || !is_numeric($value['tstamp'] ?? null) || !is_numeric($tstamp)) {
+            return false;
+        }
+
+        return (int)$tstamp > (int)$value['tstamp'];
     }
 
     private function forget(string $key, int $uid): void
