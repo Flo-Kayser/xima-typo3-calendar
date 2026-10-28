@@ -69,23 +69,6 @@ final class CalendarFeedRequestUtility
         return $result;
     }
 
-    private static function getListValues(mixed $value): array
-    {
-        $values = is_array($value) ? $value : [$value];
-        $result = [];
-        foreach ($values as $item) {
-            if (!is_scalar($item)) {
-                continue;
-            }
-
-            foreach (explode(',', (string)$item) as $part) {
-                $result[] = trim($part);
-            }
-        }
-
-        return $result;
-    }
-
     private static function parseTimestamp(mixed $value, int $default): int
     {
         if (!is_scalar($value) || trim((string)$value) === '') {

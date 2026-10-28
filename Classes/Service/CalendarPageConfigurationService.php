@@ -92,7 +92,7 @@ final class CalendarPageConfigurationService
         return array_values(array_unique($identifiers));
     }
 
-    /** @return array<string, array<string, string>> */
+    /** @return array<string, array<int, string>> */
     public function getFilterColors(RequestInterface|ServerRequestInterface $request): array
     {
         $config = $this->configurationReader->read($request);

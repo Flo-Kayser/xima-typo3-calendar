@@ -131,9 +131,6 @@ final class EventStatusItemsProcessorTest extends TestCase
             'row' => ['status' => EventStatus::DRAFT->value],
         ];
 
-        // The subject reads $item[1], but its own param docblock only describes
-        // the modern array<string, mixed> item shape.
-        // @phpstan-ignore-next-line argument.type
         $this->subject->removeUnauthorizedItems($params);
 
         self::assertCount(1, $params['items']);
@@ -224,7 +221,15 @@ final class EventStatusItemsProcessorTest extends TestCase
     private static function itemValues(array $params): array
     {
         return array_map(
-            static fn (array $item): int => (int)($item['value'] ?? $item[1] ?? -1),
+            static function (array $item): int {
+                $value = $item['value'] ?? null;
+                if ($value === null) {
+                    $values = array_values($item);
+                    $value = $values[1] ?? -1;
+                }
+
+                return (int)$value;
+            },
             array_values($params['items'])
         );
     }

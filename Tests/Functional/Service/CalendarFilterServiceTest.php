@@ -64,7 +64,10 @@ final class CalendarFilterServiceTest extends AbstractCalendarFunctionalTestCase
                 ],
             ]);
 
-            self::assertTrue($service->getState()['trees']['categories']['expandedItems']['1']);
+            self::assertSame(
+                ['1' => true],
+                $service->getState()['trees']['categories']['expandedItems'],
+            );
         } finally {
             $GLOBALS['BE_USER'] = $previousBackendUser;
         }

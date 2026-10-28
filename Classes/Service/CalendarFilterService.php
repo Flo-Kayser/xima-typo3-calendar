@@ -319,9 +319,7 @@ final class CalendarFilterService
 
         $expanded = [];
         foreach ($value as $uid => $isExpanded) {
-            if (is_string($uid) || is_int($uid)) {
-                $expanded[(string)$uid] = $this->toBool($isExpanded, false);
-            }
+            $expanded[(string)$uid] = $this->toBool($isExpanded, false);
         }
 
         return $expanded;

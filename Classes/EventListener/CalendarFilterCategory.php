@@ -110,7 +110,7 @@ final readonly class CalendarFilterCategory implements CalendarFilterListenerInt
         CalendarEntrySerializationEvent $event,
     ): void {
         $categoryValue = $event->getSourceRow()['event_category_id'] ?? null;
-        $categoryUid = is_int($categoryValue) || is_numeric($categoryValue)
+        $categoryUid = is_numeric($categoryValue)
             ? (int)$categoryValue
             : null;
 
