@@ -206,8 +206,11 @@ mod.tx_ximatypo3calendar {
 ```
 
 `filterOrder` controls the order of registered filters in the filter panel.
-`tooltipOrder` controls the order of filter information in event tooltips; omitted
-filters are appended automatically. Both values are comma-separated filter identifiers.
+`tooltipOrder` controls the order of filter information in event tooltips. Only filters
+listed in these comma-separated values are shown. Filters referenced by
+`eventAppearance.iconSource`, `eventAppearance.appearanceSource`, or
+`eventAppearance.colorSource` are included automatically because they are used to
+render the event.
 
 `weekViewGrid.timeSlotMinutes` accepts `15`, `30`, or `60`. `scrollStartTime` accepts
 `HH:MM` or `HH:MM:SS`. The default scroll position is `08:00`.
