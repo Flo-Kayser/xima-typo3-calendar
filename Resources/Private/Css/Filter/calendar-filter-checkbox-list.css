@@ -21,7 +21,7 @@
     margin: 0;
 }
 
-.xima-calendar-filter__checkbox-list--statuses .form-check {
+.xima-calendar-filter__checkbox-list--with-appearance .form-check {
     grid-template-columns: 1.5rem minmax(0, 1fr) 2.25rem;
 }
 

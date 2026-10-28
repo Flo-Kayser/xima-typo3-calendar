@@ -28,6 +28,8 @@ export class CalendarFilterCheckboxList extends LitElement {
     return html`
       <div class="xima-calendar-filter__checkbox-list ${this.identifier === 'statuses'
         ? 'xima-calendar-filter__checkbox-list--statuses'
+        : ''} ${this.hasAppearance()
+        ? 'xima-calendar-filter__checkbox-list--with-appearance'
         : ''}">
           ${this.items.map((item) => html`
           <label class="form-check">
@@ -94,6 +96,10 @@ export class CalendarFilterCheckboxList extends LitElement {
     return appearance
       ? `xima-calendar-filter__checkbox-appearance--${appearance}`
       : '';
+  }
+
+  private hasAppearance(): boolean {
+    return this.items.some(item => Boolean(item.appearance || item.marker));
   }
 }
 
