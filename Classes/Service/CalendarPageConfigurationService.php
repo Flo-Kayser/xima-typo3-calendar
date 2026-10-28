@@ -89,6 +89,12 @@ final class CalendarPageConfigurationService
             static fn (string $identifier): bool => $identifier !== '',
         );
 
+        foreach ($this->getEventAppearanceConfiguration($request) as $identifier) {
+            if ($identifier !== '') {
+                $identifiers[] = $identifier;
+            }
+        }
+
         return array_values(array_unique($identifiers));
     }
 

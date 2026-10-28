@@ -63,30 +63,38 @@ final class CalendarFilterService
             }
         }
 
-        foreach ($filters as $identifier => $filter) {
-            if (!isset($sortedFilters[$identifier])) {
-                $sortedFilters[$identifier] = $filter;
-            }
-        }
-
         return $sortedFilters;
     }
 
     /** @return list<string> */
     private function getFilterOrder(int $pageId): array
     {
-        $configuredOrder = $this->configurationReader->readForPageId($pageId)['filterOrder'] ?? '';
+        $config = $this->configurationReader->readForPageId($pageId);
+        $configuredOrder = $config['filterOrder'] ?? '';
         $values = is_array($configuredOrder)
             ? $configuredOrder
             : explode(',', (string)$configuredOrder);
 
-        return array_values(array_filter(
+        $identifiers = array_values(array_filter(
             array_map(
                 static fn (mixed $value): string => is_scalar($value) ? trim((string)$value) : '',
                 $values,
             ),
             static fn (string $value): bool => $value !== '',
         ));
+
+        $eventAppearance = is_array($config['eventAppearance.'] ?? null)
+            ? $config['eventAppearance.']
+            : (is_array($config['eventAppearance'] ?? null) ? $config['eventAppearance'] : []);
+
+        foreach (['iconSource', 'appearanceSource', 'colorSource'] as $source) {
+            $identifier = $eventAppearance[$source] ?? null;
+            if (is_string($identifier) && trim($identifier) !== '') {
+                $identifiers[] = trim($identifier);
+            }
+        }
+
+        return array_values(array_unique($identifiers));
     }
 
     private const DEFAULT_VIEW = 'dayGridMonth';

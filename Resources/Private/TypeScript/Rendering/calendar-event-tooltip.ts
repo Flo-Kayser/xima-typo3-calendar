@@ -242,14 +242,7 @@ export const createCalendarEventTooltip = (
         }
 
         const filterConfiguration = configuration.getFilterConfiguration();
-        const filterIdentifiers = [
-            ...configuration.tooltipOrder,
-            ...Object.keys(filterConfiguration).filter(
-                identifier => !configuration.tooltipOrder.includes(identifier),
-            ),
-        ];
-
-        filterIdentifiers.forEach(identifier => {
+        configuration.tooltipOrder.forEach(identifier => {
             const filter = filterConfiguration[identifier];
             const value = getFilterValue(event, identifier);
             const formattedValue = formatFilterValue(filterConfiguration, identifier, value);
