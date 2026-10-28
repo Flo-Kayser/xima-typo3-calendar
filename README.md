@@ -161,6 +161,67 @@ on event and appointment records.
 | `restrictions.unrestrictedRecordTypes` | string  | Comma-separated `record_type` values exempt from the visibility restrictions. |
 | `features.requirementsManagement`      | boolean | Enables the requirements-management layer (off by default).                   |
 
+### Backend Module Page TSconfig
+
+The calendar backend module can be configured per page module through
+`Configuration/page.tsconfig`. The following example shows the available options and
+the shipped defaults:
+
+```typoscript
+mod.tx_ximatypo3calendar {
+    filterOrder = recordTypes, categories, statuses
+    tooltipOrder = recordTypes, categories, statuses, location
+
+    weekViewGrid {
+        timeSlotMinutes = 15
+        scrollStartTime = 07:00
+    }
+
+    eventAppearance {
+        iconSource = recordTypes
+        appearanceSource = statuses
+        colorSource = categories
+    }
+
+    filterColors {
+        categories {
+            1 = #1976D2
+        }
+    }
+
+    newEvent {
+        interaction {
+            enableDrag = 1
+            enableClick = 1
+        }
+
+        defaults {
+            startTime = 10:00
+            endTime = 15:30
+            allDay = 0
+            recordType = event
+        }
+    }
+}
+```
+
+`filterOrder` controls the order of registered filters in the filter panel.
+`tooltipOrder` controls the order of filter information in event tooltips; omitted
+filters are appended automatically. Both values are comma-separated filter identifiers.
+
+`weekViewGrid.timeSlotMinutes` accepts `15`, `30`, or `60`. `scrollStartTime` accepts
+`HH:MM` or `HH:MM:SS`. The default scroll position is `08:00`.
+
+`eventAppearance` selects the registered filter that supplies the event icon,
+appearance class, and color. `filterColors` optionally assigns a six-digit hexadecimal
+color (`#RRGGBB`) to a numeric filter item value, grouped by filter identifier.
+
+Under `newEvent.interaction`, `enableDrag` and `enableClick` use `0` to disable and `1`
+to enable creation from the calendar. `newEvent.defaults` defines the initial start and
+end time (`HH:MM`), whether the event is all-day (`0` or `1`), and the preselected
+record type. The service defaults are `09:00`, `09:30`, timed event, and no fixed record
+type.
+
 ### Template overrides
 
 TypoScript constants take an override path for each Fluid root:
