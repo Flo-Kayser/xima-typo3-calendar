@@ -117,6 +117,9 @@ DocumentService.ready().then(async () => {
             height: '100%',
             nowIndicator: true,
             selectable: enableDragNewEvent,
+            // Moving or resizing an appointment is not saved, so the calendar must not offer it.
+            eventStartEditable: false,
+            eventDurationEditable: false,
             dayMaxEvents: true,
             moreLinkContent: ({num}: {num: number}) => `+${num} ${calendarConfig.locale.startsWith('de') ? 'weitere' : 'more'}`,
             view: calendarConfig.initialView,
