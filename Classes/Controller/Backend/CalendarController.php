@@ -181,7 +181,7 @@ class CalendarController extends ActionController
             $startDatetime,
             $endDatetime,
             $calendarUids,
-            ['filters' => $activeFilters],
+            filters: ['filters' => $activeFilters],
         );
 
         $events = VkurkoCalendarSerializer::serializeBackendEntries($rows, 0, $this->eventDispatcher);

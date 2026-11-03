@@ -39,7 +39,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['statuses' => [2]],
+            filters: ['statuses' => [2]],
         );
 
         self::assertSame([1], array_map('intval', array_column($rows, 'uid')));
@@ -52,7 +52,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['statuses' => ['canceled']],
+            filters: ['statuses' => ['canceled']],
         );
 
         self::assertSame([2], array_map('intval', array_column($rows, 'uid')));
@@ -65,7 +65,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['statuses' => [2, 'canceled']],
+            filters: ['statuses' => [2, 'canceled']],
         );
 
         self::assertSame([], $rows);
@@ -78,7 +78,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            [
+            filters: [
                 'filters' => [
                     'recordTypes' => ['event'],
                 ],
@@ -91,7 +91,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            [
+            filters: [
                 'filters' => [
                     'recordTypes' => ['event-appointment'],
                 ],
@@ -108,7 +108,7 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
             1767225600,
             1767229200,
             [],
-            ['categories' => [2]],
+            filters: ['categories' => [2]],
         );
 
         self::assertSame([2], array_map('intval', array_column($rows, 'uid')));
@@ -132,7 +132,6 @@ final class EntryRepositoryTest extends AbstractCalendarFunctionalTestCase
         $rows = $this->get(EntryRepository::class)->getBackendCalendarEntries(
             1767227400,
             1767231000,
-            [],
             [],
             $languageId,
         );

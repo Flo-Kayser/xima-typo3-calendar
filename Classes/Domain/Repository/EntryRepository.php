@@ -59,12 +59,17 @@ class EntryRepository extends Repository
         return $timestamps;
     }
 
+    /**
+     * @param int[] $calendarUids
+     * @param array<string, mixed> $filters
+     * @throws Exception
+     */
     public function getBackendCalendarEntries(
         int $startTime,
         int $endTime,
         array $calendarUids = [],
-        array $filters = [],
         int $languageId = 0,
+        array $filters = [],
     ): array {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $entryEndDateExpression = 'COALESCE(NULLIF('

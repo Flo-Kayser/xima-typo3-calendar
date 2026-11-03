@@ -51,7 +51,6 @@ class CalendarApi implements MiddlewareInterface
             $startDatetime,
             $endDatetime,
             $calendarUids,
-            [],
             $languageId,
         );
 
