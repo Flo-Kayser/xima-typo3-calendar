@@ -4,6 +4,10 @@ The extension dispatches typed PSR-14 events when calendar records are created, 
 deleted, reactivated, or when their location or date range changes. All of it comes from
 `Hooks\DataHandlerEventDispatcherHook`, synchronously inside the DataHandler run.
 
+Creating an event or appointment from the [calendar module](BackendModule.md#creating-events-and-appointments)
+only opens the record form. `CREATED` fires when the editor saves it, like for any other new
+record; cancelling the form fires nothing.
+
 ## Payload
 
 Every event carries the same four properties (from `Event\AbstractRecordChangedEvent`):

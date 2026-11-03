@@ -8,11 +8,32 @@ All notable changes to this extension are documented here. The format follows
 
 ### Added
 
-- **Event Calendar v5 migration.** The backend calendar now uses `@event-calendar/core` v5
-  with `createCalendar()` and the bundled `DayGrid`, `TimeGrid`, `List`, and `Interaction`
-  plugins. The frontend follows the v5 CSS Grid/DOM structure; custom integrations that relied
-  on the old v2 plugin packages or selectors such as `.ec-days` need to be reviewed. The JSON
-  feed contract remains unchanged.
+- **Calendar module as a planning surface.** The *Calendar* backend module fills the viewport
+  and gets a filter sidebar as navigation component: a mini calendar, a category tree, status
+  and record type. Appointments are coloured by category (fixed colours via `filterColors`),
+  styled by status, marked when canceled, and carry the record type's icon; the sidebar doubles
+  as legend. View, filters and sidebar sections are remembered per backend user. See
+  [Calendar Module](Documentation/BackendModule.md).
+- **Creating records from the calendar.** Click or drag over days or time slots, or use the new
+  *New Event* / *New Event Appointment* buttons, pick the calendar and the dates, and the native
+  record form opens prefilled. Nothing is stored until the editor saves. The record lands on the
+  page of the chosen calendar. Only calendars and record types the editor may write to are
+  offered (web mounts, page and table permissions, page TSconfig and `authMode` of the record
+  type); without any, the module offers no creation. See
+  [Access Control](Documentation/AccessControl.md#creating-records-in-the-calendar-module).
+- **Page TSconfig for the calendar module** under `mod.tx_ximatypo3calendar`: `filterOrder`,
+  `tooltipOrder`, `weekViewGrid` (`timeSlotMinutes`, `scrollStartTime`), `eventAppearance`
+  (`iconSource`, `appearanceSource`, `colorSource`), `filterColors` and `newEvent`
+  (`interaction.enableClick|enableDrag`, `defaults.startTime|endTime|allDay|recordType`). See
+  [Calendar Module → Page TSconfig](Documentation/BackendModule.md#page-tsconfig).
+- **PSR-14 events for calendar module filters:** `ConfigureCalendarFilterEvent`,
+  `BuildCalendarEntriesQueryEvent`, `ApplyCalendarFilterEvent` and
+  `CalendarEntrySerializationEvent`. The shipped filters are built on them, so other extensions
+  can add their own. `EntryRepository::getBackendCalendarEntries()` takes the selected filters as
+  a new, optional last argument. See
+  [Extending → Calendar module filters](Documentation/Extending.md#calendar-module-filters).
+- The calendar feed entries carry `extendedProps.filterValues`, see
+  [Calendar Feed](Documentation/CalendarFeed.md).
 - **Dashboard preset.** A *Calendar* preset with all calendar widgets, selectable when adding
   a dashboard and assignable to new users via `options.dashboard.dashboardPresetsForNewUsers`.
 - **Calendar export.** Appointments and whole events can be taken into a visitor's own
@@ -40,6 +61,21 @@ All notable changes to this extension are documented here. The format follows
   `xima_typo3_calendar.internalApiResources` keep the preview rules for their collections too;
   anonymous requests never see draft, review or rejected events. See
   [Access Control](Documentation/AccessControl.md#frontend-api-visibility).
+- **Upgrade: Event Calendar v5 in the calendar module.** The module now uses
+  `@event-calendar/core` v5 (`createCalendar()`, bundled `DayGrid`, `TimeGrid`, `List` and
+  `Interaction` plugins). Its DOM is CSS Grid based; selectors of the old version such as
+  `.ec-days` are gone. This only matters if you style the backend module yourself.
+- **Upgrade: calendar feed.** Both feeds (backend module and `type=1778227923`) now send an
+  exclusive `end`: all-day appointments end at midnight after their last day instead of
+  `start + 30 minutes` or the stored end. `extendedProps.recordType` is the record type of the
+  event, no longer the appointment's. See [Calendar Feed](Documentation/CalendarFeed.md).
+- **Upgrade: CSS path.** The module CSS moved from `Resources/Public/JavaScript/calendar.css`
+  to `Resources/Public/Css/calendar.css`. Update direct includes of the old file.
+- **Upgrade: event title is required** in the record form. Existing events without a title
+  can only be saved once a title is entered.
+- `CalendarApi` (the `type=1778227923` feed) dispatches `BuildCalendarEntriesQueryEvent`,
+  `ApplyCalendarFilterEvent` and `CalendarEntrySerializationEvent` too, so listeners for the
+  calendar module filters also shape that feed.
 
 - The event `status` column is nullable and defaults to `NULL`, so a custom record type that
   does not show the status field stores no status. New events of a record type that shows it

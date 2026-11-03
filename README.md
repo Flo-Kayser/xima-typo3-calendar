@@ -30,7 +30,7 @@ application is left to the consuming project — see
 - [Requirements](#requirements) · [Installation](#installation) · [Features](#features)
 - [Record Types](#record-types) · [Backend Modules](#backend-modules) · [Frontend Plugins](#frontend-plugins)
 - [Configuration](#configuration) · [Access Control](#access-control) · [Notifications](#notifications) · [Dashboard Widgets](#dashboard-widgets)
-- Guides: [Access Control](Documentation/AccessControl.md) · [Notifications](Documentation/Notifications.md) · [Calendar Feed](Documentation/CalendarFeed.md) · [Calendar Export](Documentation/Ics.md) · [XML Sitemap](Documentation/Sitemap.md) · [ke_search](Documentation/KeSearch.md) · [Extending](Documentation/Extending.md) · [DataHandler Events](Documentation/DataHandlerEvents.md) · [Contributing](CONTRIBUTING.md)
+- Guides: [Calendar Module](Documentation/BackendModule.md) · [Access Control](Documentation/AccessControl.md) · [Notifications](Documentation/Notifications.md) · [Calendar Feed](Documentation/CalendarFeed.md) · [Calendar Export](Documentation/Ics.md) · [XML Sitemap](Documentation/Sitemap.md) · [ke_search](Documentation/KeSearch.md) · [Extending](Documentation/Extending.md) · [DataHandler Events](Documentation/DataHandlerEvents.md) · [Contributing](CONTRIBUTING.md)
 
 ## Requirements
 
@@ -66,8 +66,8 @@ Then, per site:
 - **Structured event model** — events, their appointments (dates/occurrences), organizers,
   locations, and optional requirements as first-class record types; speakers are captured as
   free text on each appointment.
-- **Backend modules** — a record-list module for the calendar records and an interactive
-  calendar overview.
+- **Backend modules** — a record-list module for the calendar records and a calendar planning
+  surface with filters, colour coding and creation from the calendar.
 - **Frontend plugins** — event list and combined event/appointment detail view, with clean
   URLs via the shipped route enhancers.
 - **Calendar export** — RFC 5545 `.ics` download of an appointment or a whole event, plus
@@ -112,8 +112,10 @@ The extension registers a **Calendar** module group with two modules:
   requirements feature enabled — requirement. Records are collected from all pages whose page
   module is set to `events`, including one level of subpages. Requirement bookings are edited
   inline on the appointment.
-- **Calendar** — an interactive month/week/list overview of all appointments, backed by the
-  AJAX route `ajax_xima_calendar_events`. Clicking an entry opens its event edit form.
+- **Calendar** — a planning surface for all appointments: month/week/list views, a filter
+  sidebar (categories, status, record type) with colour coding, view and filters remembered
+  per user, and creation of events and appointments straight from the calendar. Configured
+  through page TSconfig; see **[Calendar Module](Documentation/BackendModule.md)**.
 
 ## Frontend Plugins
 
@@ -160,70 +162,6 @@ on event and appointment records.
 | `notifications.parentCategory`         | int     | Parent category whose children are offered as the notification filter.        |
 | `restrictions.unrestrictedRecordTypes` | string  | Comma-separated `record_type` values exempt from the visibility restrictions. |
 | `features.requirementsManagement`      | boolean | Enables the requirements-management layer (off by default).                   |
-
-### Backend Module Page TSconfig
-
-The calendar backend module can be configured per page module through
-`Configuration/page.tsconfig`. The following example shows the available options and
-the shipped defaults:
-
-```typoscript
-mod.tx_ximatypo3calendar {
-    filterOrder = recordTypes, categories, statuses
-    tooltipOrder = recordTypes, categories, statuses, location
-
-    weekViewGrid {
-        timeSlotMinutes = 15
-        scrollStartTime = 07:00
-    }
-
-    eventAppearance {
-        iconSource = recordTypes
-        appearanceSource = statuses
-        colorSource = categories
-    }
-
-    filterColors {
-        categories {
-            1 = #1976D2
-        }
-    }
-
-    newEvent {
-        interaction {
-            enableDrag = 1
-            enableClick = 1
-        }
-
-        defaults {
-            startTime = 10:00
-            endTime = 15:30
-            allDay = 0
-            recordType = event
-        }
-    }
-}
-```
-
-`filterOrder` controls the order of registered filters in the filter panel.
-`tooltipOrder` controls the order of filter information in event tooltips. Only filters
-listed in these comma-separated values are shown. Filters referenced by
-`eventAppearance.iconSource`, `eventAppearance.appearanceSource`, or
-`eventAppearance.colorSource` are included automatically because they are used to
-render the event.
-
-`weekViewGrid.timeSlotMinutes` accepts `15`, `30`, or `60`. `scrollStartTime` accepts
-`HH:MM` or `HH:MM:SS`. The default scroll position is `08:00`.
-
-`eventAppearance` selects the registered filter that supplies the event icon,
-appearance class, and color. `filterColors` optionally assigns a six-digit hexadecimal
-color (`#RRGGBB`) to a numeric filter item value, grouped by filter identifier.
-
-Under `newEvent.interaction`, `enableDrag` and `enableClick` use `0` to disable and `1`
-to enable creation from the calendar. `newEvent.defaults` defines the initial start and
-end time (`HH:MM`), whether the event is all-day (`0` or `1`), and the preselected
-record type. The service defaults are `09:00`, `09:30`, timed event, and no fixed record
-type.
 
 ### Template overrides
 
@@ -292,13 +230,14 @@ Widget queries are mutable from other extensions via `BeforeWidgetItemsFetchedEv
 
 | Guide | Contents |
 |-------|----------|
+| [Calendar Module](Documentation/BackendModule.md) | Views, filters, creation from the calendar, page TSconfig |
 | [Access Control](Documentation/AccessControl.md) | Permissions, query restrictions, record-type exemptions |
 | [Notifications](Documentation/Notifications.md) | Workflow transitions, recipients, templates |
 | [Calendar Feed](Documentation/CalendarFeed.md) | The vkurko/calendar JSON feed; building your own frontend API |
 | [Calendar Export](Documentation/Ics.md) | ICS download and provider deep links; what belongs to the project |
 | [XML Sitemap](Documentation/Sitemap.md) | The shipped sitemap definition, what it lists, how to narrow or disable it |
 | [ke_search](Documentation/KeSearch.md) | The optional event indexer: what it selects, setup, project hooks |
-| [Extending](Documentation/Extending.md) | PSR-14 events, extension points, template overrides |
+| [Extending](Documentation/Extending.md) | PSR-14 events, calendar module filters, extension points, template overrides |
 | [DataHandler Events](Documentation/DataHandlerEvents.md) | Record change events in detail |
 | [Contributing](CONTRIBUTING.md) | Local setup, tests, static analysis, asset build |
 | [Changelog](CHANGELOG.md) | Notable changes, incl. breaking ones and upgrade notes |
