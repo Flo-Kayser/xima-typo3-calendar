@@ -89,4 +89,9 @@ trim_trailing_whitespace = unset
 indent_style = unset
 indent_size = unset
 
+[/Resources/Public/{Css/calendar.css,Css/calendar-filter.css,JavaScript/calendar.js,JavaScript/Filter/calendar-filter.js}]
+indent_style = unset
+indent_size = unset
+trim_trailing_whitespace = unset
+
 # end of file
