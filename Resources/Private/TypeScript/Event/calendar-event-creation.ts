@@ -1,7 +1,11 @@
 import AjaxRequest from '@typo3/core/ajax/ajax-request.js';
 import Notification from '@typo3/backend/notification.js';
 import Viewport from '@typo3/backend/viewport.js';
-import {chooseCalendarCreationType, type CalendarCreationValues} from './calendar-creation-modal';
+import {
+    chooseCalendarCreationType,
+    type CalendarCreationType,
+    type CalendarCreationValues,
+} from './calendar-creation-modal';
 import type {CalendarConfig} from '../Configuration/calendar-runtime-config';
 import {
     getSelectedDayCount,
@@ -17,6 +21,7 @@ export function createCalendarCreationController(
 ): {
     select: (selection: CalendarSelection) => void;
     dateClick: (click: CalendarDateClick) => void;
+    openForType: (type: CalendarCreationType) => void;
     cancelSelection: () => void;
     setClearCalendarSelection: (clearSelection: () => void) => void;
 } {
@@ -66,17 +71,25 @@ export function createCalendarCreationController(
         start: Date,
         end: Date,
         allDay: boolean,
+        initialType: CalendarCreationType = 'event-appointment',
     ): void => {
+        const types = (['event', 'event-appointment'] as const).filter(canCreate);
+        if (types.length === 0) {
+            return;
+        }
         container.classList.add('xima-calendar-selection-dialog-open');
-        void chooseCalendarCreationType(
-            modalLabels,
-            calendarConfig.calendars,
-            start,
-            end,
-            allDay,
-            calendarConfig.recordTypes,
-            calendarConfig.defaultRecordType,
-        )
+        void chooseCalendarCreationType({
+            labels: modalLabels,
+            types,
+            initialType: types.includes(initialType) ? initialType : types[0],
+            calendars: calendarConfig.calendars,
+            initialCalendarUid: calendarConfig.lastCalendarUid,
+            initialStart: start,
+            initialEnd: end,
+            initialAllDay: allDay,
+            recordTypes: calendarConfig.recordTypes,
+            defaultRecordType: calendarConfig.defaultRecordType,
+        })
             .then((creation) => {
                 if (creation !== null) {
                     return openNewRecordForm(creation);
@@ -116,6 +129,13 @@ export function createCalendarCreationController(
             const end = new Date(start.getTime() + (click.allDay ? 86400000 : 1800000));
             const preparedSelection = prepareSelection({start, end, allDay: click.allDay});
             openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay);
+        },
+        openForType: (type: CalendarCreationType): void => {
+            const start = new Date();
+            start.setHours(0, 0, 0, 0);
+            const end = new Date(start.getTime() + 86400000);
+            const preparedSelection = prepareSelection({start, end, allDay: true});
+            openCreationDialog(preparedSelection.start, preparedSelection.end, preparedSelection.allDay, type);
         },
         cancelSelection,
         setClearCalendarSelection: (clearSelection: () => void): void => {

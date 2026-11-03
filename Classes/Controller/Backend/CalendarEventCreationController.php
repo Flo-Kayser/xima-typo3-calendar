@@ -8,9 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
-use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
 /**
@@ -27,8 +25,6 @@ final class CalendarEventCreationController
     private const CREATION_TYPES = ['event', 'event-appointment'];
 
     public function __construct(
-        private readonly CalendarStoragePidResolver $storagePidResolver,
-        private readonly CalendarPermissionService $permissionService,
         private readonly CalendarSelectionService $calendarSelectionService,
         private readonly UriBuilder $uriBuilder,
     ) {
@@ -48,9 +44,7 @@ final class CalendarEventCreationController
         $recordType = isset($data['recordType']) && (is_string($data['recordType']) || is_int($data['recordType']))
             ? trim((string)$data['recordType'])
             : null;
-        $calendarUid = isset($data['calendarUid']) ? (int)$data['calendarUid'] : null;
-        $calendarUid = $calendarUid > 0 ? $calendarUid : null;
-        $pid = $this->storagePidResolver->resolveStoragePid();
+        $calendarUid = (int)($data['calendarUid'] ?? 0);
 
         if (!in_array($creationType, self::CREATION_TYPES, true)) {
             return new JsonResponse(['success' => false, 'message' => 'Invalid creation type.'], 400);
@@ -62,32 +56,29 @@ final class CalendarEventCreationController
             return new JsonResponse(['success' => false, 'message' => 'Invalid record type.'], 400);
         }
 
-        if ($pid <= 0 || $start <= 0 || $end <= $start) {
+        if ($start <= 0 || $end <= $start) {
             return $this->invalidEventDataResponse();
         }
 
-        $hasPermission = $creationType === 'event'
-            ? $this->permissionService->canCreateEventAndAppointmentAtPid($pid)
-            : $this->permissionService->canCreateAppointmentAtPid($pid);
-        if (!$hasPermission) {
+        // Records are stored next to their calendar. Only calendars on pages where the
+        // user may create appointments are available, so that check is already done here.
+        $calendar = $this->calendarSelectionService->findAvailableCalendar($calendarUid);
+        if ($calendar === null) {
+            return new JsonResponse(['success' => false, 'message' => $this->translate('creation.calendarNotAvailable')], 403);
+        }
+        if ($creationType === 'event' && !$calendar['canCreateEvent']) {
             return new JsonResponse(['success' => false, 'message' => $this->translate('creation.noPermission')], 403);
         }
-
-        $calendars = $this->calendarSelectionService->getAvailableCalendars();
-        if (($calendars !== [] && $calendarUid === null)
-            || ($calendarUid !== null && !$this->calendarSelectionService->isAvailable($calendarUid))) {
-            return new JsonResponse(['success' => false, 'message' => 'Invalid calendar.'], 400);
-        }
+        $pid = $calendar['pid'];
 
         $appointmentDefaults = [
             'record_type' => 'event-appointment',
             'start_date' => $start,
             'end_date' => $end,
             'all_day' => $allDay ? 1 : 0,
+            'calendar' => $calendar['uid'],
         ];
-        if ($calendarUid !== null) {
-            $appointmentDefaults['calendar'] = $calendarUid;
-        }
+        $this->calendarSelectionService->rememberCalendar($calendar['uid']);
 
         if ($creationType === 'event-appointment') {
             return $this->newRecordResponse(self::ENTRY_TABLE, $pid, [self::ENTRY_TABLE => $appointmentDefaults]);

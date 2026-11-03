@@ -12,9 +12,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
-use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
-use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
 use Xima\XimaTypo3Calendar\Tests\Functional\Fixtures\RecordingEventListener;
 
@@ -30,6 +28,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     private const EDITOR_WITHOUT_PAGE_ACCESS = 4;
     private const EDITOR_WITHOUT_MOUNT = 5;
     private const APPOINTMENT_EDITOR = 6;
+    private const SECOND_SITE_EDITOR = 7;
 
     protected function setUp(): void
     {
@@ -37,9 +36,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
 
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/backend-permissions.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/calendar.csv');
-        $this->get(ConnectionPool::class)
-            ->getConnectionForTable('pages')
-            ->update('pages', ['module' => 'events'], ['uid' => 2]);
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/second-site-calendar.csv');
     }
 
     #[Test]
@@ -153,51 +150,94 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     }
 
     /**
-     * @return iterable<string, array{int, string}>
+     * @return iterable<string, array{int, string, int, string}>
      */
     public static function refusedCreationDataProvider(): iterable
     {
-        yield 'editor without tables_modify, event' => [self::EDITOR_WITHOUT_TABLES, 'event'];
-        yield 'editor without tables_modify, appointment' => [self::EDITOR_WITHOUT_TABLES, 'event-appointment'];
-        yield 'editor without content-edit permission, event' => [self::EDITOR_WITHOUT_PAGE_ACCESS, 'event'];
-        yield 'editor without content-edit permission, appointment' => [self::EDITOR_WITHOUT_PAGE_ACCESS, 'event-appointment'];
-        yield 'editor without web mount, appointment' => [self::EDITOR_WITHOUT_MOUNT, 'event-appointment'];
-        yield 'appointment editor, event' => [self::APPOINTMENT_EDITOR, 'event'];
+        $noCalendar = 'You cannot create records in this calendar.';
+        $noPermission = 'No permission to create events.';
+        yield 'editor without tables_modify, event' => [self::EDITOR_WITHOUT_TABLES, 'event', 1, $noCalendar];
+        yield 'editor without tables_modify, appointment' => [self::EDITOR_WITHOUT_TABLES, 'event-appointment', 1, $noCalendar];
+        yield 'editor without content-edit permission, event' => [self::EDITOR_WITHOUT_PAGE_ACCESS, 'event', 1, $noCalendar];
+        yield 'editor without content-edit permission, appointment' => [self::EDITOR_WITHOUT_PAGE_ACCESS, 'event-appointment', 1, $noCalendar];
+        yield 'editor without web mount, appointment' => [self::EDITOR_WITHOUT_MOUNT, 'event-appointment', 1, $noCalendar];
+        yield 'editor, calendar of another site' => [self::EDITOR, 'event-appointment', 2, $noCalendar];
+        yield 'editor, unknown calendar' => [self::EDITOR, 'event-appointment', 999, $noCalendar];
+        yield 'editor, no calendar' => [self::EDITOR, 'event-appointment', 0, $noCalendar];
+        yield 'appointment editor, event' => [self::APPOINTMENT_EDITOR, 'event', 1, $noPermission];
     }
 
     #[Test]
     #[DataProvider('refusedCreationDataProvider')]
-    public function refusesCreationWhenTheUserMayNotEditTheStoragePage(int $backendUserUid, string $type): void
+    public function refusesCreationInCalendarsTheUserCannotWriteTo(
+        int $backendUserUid,
+        string $type,
+        int $calendarUid,
+        string $message,
+    ): void {
+        $this->actAs($backendUserUid);
+
+        $response = $this->newRecord(['type' => $type, 'calendarUid' => $calendarUid]);
+
+        self::assertSame(403, $response->getStatusCode());
+        self::assertSame(['success' => false, 'message' => $message], $this->decode($response));
+    }
+
+    /**
+     * @return iterable<string, array{int, string, string}>
+     */
+    public static function translatedRefusalDataProvider(): iterable
+    {
+        yield 'calendar not available' => [self::EDITOR_WITHOUT_TABLES, 'event-appointment', 'In diesem Kalender können Sie keine Datensätze anlegen.'];
+        yield 'no event permission' => [self::APPOINTMENT_EDITOR, 'event', 'Keine Berechtigung, Events anzulegen.'];
+    }
+
+    #[Test]
+    #[DataProvider('translatedRefusalDataProvider')]
+    public function translatesTheRefusalMessage(int $backendUserUid, string $type, string $message): void
     {
         $this->actAs($backendUserUid);
+        $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('de');
 
         $response = $this->newRecord(['type' => $type]);
 
         self::assertSame(403, $response->getStatusCode());
-        self::assertSame(['success' => false, 'message' => 'No permission to create events.'], $this->decode($response));
+        self::assertSame($message, $this->decode($response)['message'] ?? null);
+    }
+
+    /**
+     * @return iterable<string, array{int, int, int}>
+     */
+    public static function storagePageDataProvider(): iterable
+    {
+        yield 'admin, first site' => [self::ADMIN, 1, 2];
+        yield 'admin, second site' => [self::ADMIN, 2, 11];
+        yield 'second site editor, calendar on a hidden sysfolder' => [self::SECOND_SITE_EDITOR, 2, 11];
     }
 
     #[Test]
-    public function translatesTheRefusalMessage(): void
+    #[DataProvider('storagePageDataProvider')]
+    public function storesNewRecordsOnThePageOfTheSelectedCalendar(int $backendUserUid, int $calendarUid, int $expectedPid): void
     {
-        $this->actAs(self::EDITOR_WITHOUT_TABLES);
-        $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('de');
+        $this->actAs($backendUserUid);
 
-        $response = $this->newRecord();
+        foreach ([self::TABLE_EVENT => 'event', self::TABLE_ENTRY => 'event-appointment'] as $table => $type) {
+            $query = $this->formQuery($this->newRecord(['type' => $type, 'calendarUid' => $calendarUid]));
 
-        self::assertSame(403, $response->getStatusCode());
-        self::assertSame('Keine Berechtigung, Events anzulegen.', $this->decode($response)['message'] ?? null);
+            self::assertSame([$table => [$expectedPid => 'new']], $query['edit'] ?? null);
+            self::assertSame((string)$calendarUid, $query['defVals'][self::TABLE_ENTRY]['calendar'] ?? null);
+        }
     }
 
     #[Test]
-    public function refusesACalendarThatDoesNotBelongToTheStoragePage(): void
+    public function remembersTheCalendarOfTheLastCreation(): void
     {
-        $this->actAs(self::EDITOR);
+        $this->actAs(self::ADMIN);
+        $selection = $this->get(CalendarSelectionService::class);
 
-        $response = $this->newRecord(['calendarUid' => 999]);
+        $this->newRecord(['calendarUid' => 2]);
 
-        self::assertSame(400, $response->getStatusCode());
-        self::assertSame(['success' => false, 'message' => 'Invalid calendar.'], $this->decode($response));
+        self::assertSame(2, $selection->getLastUsedCalendarUid($selection->getAvailableCalendars()));
     }
 
     private function actAs(int $backendUserUid): void
@@ -245,8 +285,6 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     private function controller(): CalendarEventCreationController
     {
         return new CalendarEventCreationController(
-            $this->get(CalendarStoragePidResolver::class),
-            new CalendarPermissionService(),
             $this->get(CalendarSelectionService::class),
             $this->get(UriBuilder::class),
         );

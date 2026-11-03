@@ -67,6 +67,7 @@
 			<trans-unit id="newEventType.allDay" resname="newEventType.allDay"><source /><target>Ganztägig</target></trans-unit>
 			<trans-unit id="newEventType.create" resname="newEventType.create"><source /><target>Erstellen</target></trans-unit>
 			<trans-unit id="creation.noPermission" resname="creation.noPermission"><source /><target>Keine Berechtigung, Events anzulegen.</target></trans-unit>
+			<trans-unit id="creation.calendarNotAvailable" resname="creation.calendarNotAvailable"><source /><target>In diesem Kalender können Sie keine Datensätze anlegen.</target></trans-unit>
 		</body>
 	</file>
 </xliff>

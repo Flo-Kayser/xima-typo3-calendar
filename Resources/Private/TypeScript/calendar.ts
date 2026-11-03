@@ -206,6 +206,17 @@ DocumentService.ready().then(async () => {
     });
     creationController.setClearCalendarSelection(() => ec.unselect());
 
+    const openCreationFromButton = (event: MouseEvent): void => {
+        const button = (event.target as Element | null)?.closest<HTMLElement>('[data-xima-calendar-new]');
+        const type = button?.dataset.ximaCalendarNew;
+        if (type !== 'event' && type !== 'event-appointment') {
+            return;
+        }
+        event.preventDefault();
+        creationController.openForType(type);
+    };
+    document.addEventListener('click', openCreationFromButton);
+
     let destroyed = false;
     const cleanup = async (): Promise<void> => {
         if (destroyed) {
@@ -213,6 +224,7 @@ DocumentService.ready().then(async () => {
         }
 
         destroyed = true;
+        document.removeEventListener('click', openCreationFromButton);
         miniCalendarSync.destroy();
         filterSync.destroy();
         interactionController.destroy();

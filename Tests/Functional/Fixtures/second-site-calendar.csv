@@ -1,0 +1,13 @@
+"pages",,,,,,,,,,,,,,
+,"uid","pid","title","slug","doktype","is_siteroot","hidden","deleted","perms_userid","perms_groupid","perms_user","perms_group","perms_everybody","sys_language_uid"
+,10,0,"Second site","/",1,1,0,0,7,5,31,31,1,0
+,11,10,"Hidden calendar storage","/hidden-calendar-storage",254,0,1,0,7,5,31,31,1,0
+"be_groups",,,,,,
+,"uid","pid","title","tables_select","tables_modify","non_exclude_fields","db_mountpoints"
+,5,0,"Second site calendar editors","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event:record_type,tx_ximatypo3calendar_domain_model_entry:record_type,tx_ximatypo3calendar_domain_model_entry:event,tx_ximatypo3calendar_domain_model_entry:calendar,tx_ximatypo3calendar_domain_model_entry:start_date,tx_ximatypo3calendar_domain_model_entry:end_date,tx_ximatypo3calendar_domain_model_entry:all_day","10"
+"be_users",,,,,,,,
+,"uid","pid","username","admin","usergroup","options","disable","deleted"
+,7,0,"second-site-editor",0,"5",3,0,0
+"tx_ximatypo3calendar_domain_model_calendar",,,,,
+,"uid","pid","title","hidden","deleted"
+,2,11,"Second site calendar",0,0

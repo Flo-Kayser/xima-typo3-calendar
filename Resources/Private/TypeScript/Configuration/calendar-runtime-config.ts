@@ -49,6 +49,7 @@ export type CalendarConfig = {
     timeSlotMinutes: number;
     scrollStartTime: string;
     calendars: CalendarOption[];
+    lastCalendarUid: number | null;
     recordTypes: CalendarRecordTypeOption[];
     tooltipOrder: string[];
   filterColors: Record<string, Record<string, string>>; eventAppearance: EventAppearanceConfiguration;
@@ -142,6 +143,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         && hasValues(config, ['timeSlotMinutes'], isNumber)
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
+        && (config.lastCalendarUid === null || isNumber(config.lastCalendarUid))
         && isRecordTypeOptions(config.recordTypes)
         && isStringArray(config.tooltipOrder)
         && isFilterColors(config.filterColors)

@@ -35,16 +35,34 @@ const getInitialEnd = (date: Date, allDay: boolean): Date => {
     return end;
 };
 
-export function chooseCalendarCreationType(
-    labels: CalendarModalLabels,
-    calendars: CalendarOption[],
-    initialStart: Date,
-    initialEnd: Date,
-    initialAllDay: boolean,
-    recordTypes: CalendarRecordTypeOption[],
-    defaultRecordType: string | null,
-): Promise<CalendarCreationValues | null> {
+export type CalendarCreationModalOptions = {
+    labels: CalendarModalLabels;
+    types: CalendarCreationType[];
+    initialType: CalendarCreationType;
+    calendars: CalendarOption[];
+    initialCalendarUid: number | null;
+    initialStart: Date;
+    initialEnd: Date;
+    initialAllDay: boolean;
+    recordTypes: CalendarRecordTypeOption[];
+    defaultRecordType: string | null;
+};
+
+export function chooseCalendarCreationType({
+    labels,
+    types,
+    initialType,
+    calendars,
+    initialCalendarUid,
+    initialStart,
+    initialEnd,
+    initialAllDay,
+    recordTypes,
+    defaultRecordType,
+}: CalendarCreationModalOptions): Promise<CalendarCreationValues | null> {
     return new Promise((resolve) => {
+        // With a single calendar there is nothing to choose, so the select is not rendered.
+        const selectedCalendarUid = calendars.length === 1 ? calendars[0].uid : initialCalendarUid;
         const initialRecordType = defaultRecordType && recordTypes.some(option => option.value === defaultRecordType)
             ? defaultRecordType
             : recordTypes[0]?.value ?? '';
@@ -70,18 +88,21 @@ export function chooseCalendarCreationType(
                     <div class="form-group" style="margin-bottom:2.5rem">
                         <label class="form-label" for="xima-calendar-creation-type">${labels.title}</label>
                         <select id="xima-calendar-creation-type" class="form-select">
-                            <option value="event">${labels.event}</option>
-                            <option value="event-appointment">${labels.appointment}</option>
+                            ${types.map(type => html`
+                                <option value=${type} ?selected=${type === initialType}>
+                                    ${type === 'event' ? labels.event : labels.appointment}
+                                </option>
+                            `)}
                         </select>
                     </div>
                     ${renderRecordTypeField()}
-                    ${calendars.length > 0 ? html`
+                    ${calendars.length > 1 ? html`
                         <div class="form-group">
                             <label class="form-label" for="xima-calendar-creation-calendar">${labels.calendar}</label>
-                            <select id="xima-calendar-creation-calendar" class="form-select" ?disabled=${calendars.length === 1}>
-                                ${calendars.length > 1 ? html`<option value="">${labels.selectCalendar}</option>` : ''}
+                            <select id="xima-calendar-creation-calendar" class="form-select" required>
+                                <option value="">${labels.selectCalendar}</option>
                                 ${calendars.map(calendar => html`
-                                    <option value=${calendar.uid} ?selected=${calendars.length === 1}>${calendar.title}</option>
+                                    <option value=${calendar.uid} ?selected=${calendar.uid === selectedCalendarUid}>${calendar.title}</option>
                                 `)}
                             </select>
                         </div>
@@ -178,17 +199,18 @@ export function chooseCalendarCreationType(
             const recordType = type === 'event'
                 ? modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type')?.value ?? null
                 : null;
-            const calendarValue = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar')?.value;
+            const calendarSelect = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar');
             const startValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-start')?.value;
             const endValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-end')?.value;
             const allDay = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-all-day')?.checked ?? false;
             const start = startValue ? new Date(startValue) : null;
             const end = endValue ? new Date(endValue) : null;
-            const calendarUid = calendarValue ? Number(calendarValue) : null;
+            const calendarUid = calendarSelect ? Number(calendarSelect.value) || null : selectedCalendarUid;
             if ((type !== 'event' && type !== 'event-appointment') || !start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) {
                 return;
             }
-            if (calendars.length > 0 && !calendarUid) {
+            if (calendarUid === null) {
+                calendarSelect?.reportValidity();
                 return;
             }
 

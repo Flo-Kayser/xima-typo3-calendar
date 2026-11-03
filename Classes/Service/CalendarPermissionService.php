@@ -74,15 +74,6 @@ final class CalendarPermissionService
             && $backendUser->recordEditAccessInternals($table, ['pid' => $pid], true);
     }
 
-    public function canCreateEventAndAppointmentAtPid(
-        int $pid,
-        ?BackendUserAuthentication $backendUser = null,
-    ): bool {
-        return $pid > 0
-            && $this->canCreateEventAtPid($pid, $backendUser)
-            && $this->canCreateAppointmentAtPid($pid, $backendUser);
-    }
-
     private function checkCustomOption(string $option, ?BackendUserAuthentication $backendUser): bool
     {
         $backendUser ??= $this->getBackendUser();
