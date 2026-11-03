@@ -12,7 +12,6 @@ tscommand-*.tmp.txt
 config/system
 .tscache
 package-lock.json
-Resources/Public/JavaScript/*.js.map
-Resources/Public/JavaScript/*.css.map
+Resources/Public/**/*.map
 coverage/
 coverage.*.xml

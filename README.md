@@ -30,7 +30,7 @@ application is left to the consuming project — see
 - [Requirements](#requirements) · [Installation](#installation) · [Features](#features)
 - [Record Types](#record-types) · [Backend Modules](#backend-modules) · [Frontend Plugins](#frontend-plugins)
 - [Configuration](#configuration) · [Access Control](#access-control) · [Notifications](#notifications) · [Dashboard Widgets](#dashboard-widgets)
-- Guides: [Access Control](Documentation/AccessControl.md) · [Notifications](Documentation/Notifications.md) · [Calendar Feed](Documentation/CalendarFeed.md) · [Calendar Export](Documentation/Ics.md) · [XML Sitemap](Documentation/Sitemap.md) · [ke_search](Documentation/KeSearch.md) · [Extending](Documentation/Extending.md) · [DataHandler Events](Documentation/DataHandlerEvents.md) · [Contributing](CONTRIBUTING.md)
+- Guides: [Calendar Module](Documentation/BackendModule.md) · [Access Control](Documentation/AccessControl.md) · [Notifications](Documentation/Notifications.md) · [Calendar Feed](Documentation/CalendarFeed.md) · [Calendar Export](Documentation/Ics.md) · [XML Sitemap](Documentation/Sitemap.md) · [ke_search](Documentation/KeSearch.md) · [Extending](Documentation/Extending.md) · [DataHandler Events](Documentation/DataHandlerEvents.md) · [Contributing](CONTRIBUTING.md)
 
 ## Requirements
 
@@ -66,8 +66,8 @@ Then, per site:
 - **Structured event model** — events, their appointments (dates/occurrences), organizers,
   locations, and optional requirements as first-class record types; speakers are captured as
   free text on each appointment.
-- **Backend modules** — a record-list module for the calendar records and an interactive
-  calendar overview.
+- **Backend modules** — a record-list module for the calendar records and a calendar planning
+  surface with filters, colour coding and creation from the calendar.
 - **Frontend plugins** — event list and combined event/appointment detail view, with clean
   URLs via the shipped route enhancers.
 - **Calendar export** — RFC 5545 `.ics` download of an appointment or a whole event, plus
@@ -112,8 +112,10 @@ The extension registers a **Calendar** module group with two modules:
   requirements feature enabled — requirement. Records are collected from all pages whose page
   module is set to `events`, including one level of subpages. Requirement bookings are edited
   inline on the appointment.
-- **Calendar** — an interactive month/week/list overview of all appointments, backed by the
-  AJAX route `ajax_xima_calendar_events`. Clicking an entry opens its event edit form.
+- **Calendar** — a planning surface for all appointments: month/week/list views, a filter
+  sidebar (categories, status, record type) with colour coding, view and filters remembered
+  per user, and creation of events and appointments straight from the calendar. Configured
+  through page TSconfig; see **[Calendar Module](Documentation/BackendModule.md)**.
 
 ## Frontend Plugins
 
@@ -228,13 +230,14 @@ Widget queries are mutable from other extensions via `BeforeWidgetItemsFetchedEv
 
 | Guide | Contents |
 |-------|----------|
+| [Calendar Module](Documentation/BackendModule.md) | Views, filters, creation from the calendar, page TSconfig |
 | [Access Control](Documentation/AccessControl.md) | Permissions, query restrictions, record-type exemptions |
 | [Notifications](Documentation/Notifications.md) | Workflow transitions, recipients, templates |
 | [Calendar Feed](Documentation/CalendarFeed.md) | The vkurko/calendar JSON feed; building your own frontend API |
 | [Calendar Export](Documentation/Ics.md) | ICS download and provider deep links; what belongs to the project |
 | [XML Sitemap](Documentation/Sitemap.md) | The shipped sitemap definition, what it lists, how to narrow or disable it |
 | [ke_search](Documentation/KeSearch.md) | The optional event indexer: what it selects, setup, project hooks |
-| [Extending](Documentation/Extending.md) | PSR-14 events, extension points, template overrides |
+| [Extending](Documentation/Extending.md) | PSR-14 events, calendar module filters, extension points, template overrides |
 | [DataHandler Events](Documentation/DataHandlerEvents.md) | Record change events in detail |
 | [Contributing](CONTRIBUTING.md) | Local setup, tests, static analysis, asset build |
 | [Changelog](CHANGELOG.md) | Notable changes, incl. breaking ones and upgrade notes |

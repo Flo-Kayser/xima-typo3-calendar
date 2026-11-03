@@ -1,7 +1,7 @@
 # Calendar Feed
 
-The backend Calendar module renders appointments with the
-[vkurko/calendar](https://github.com/vkurko/calendar) JS component, fed with JSON.
+The backend Calendar module renders appointments with
+[`@event-calendar/core` v5](https://github.com/vkurko/calendar), fed with JSON.
 
 Two entry points produce that JSON, both through `Serializer\VkurkoCalendarSerializer`:
 
@@ -24,21 +24,28 @@ One object per appointment row, in the vkurko/calendar event shape:
   "extendedProps": {
     "url": "https://example.org/1-annual-conference/a42",
     "calendarUid": 3, "calendarTitle": "Main",
-    "recordType": "event-appointment",
+    "recordType": "event",
     "eventUid": 1, "eventTitle": "Annual Conference",
     "eventDescription": null,
     "eventCategoryTitle": null, "eventCategoryId": null,
     "eventStatus": 2, "eventLanguage": "de", "eventOwner": null,
     "appointmentDescription": null, "appointmentLocation": null,
-    "appointmentCanceled": false, "appointmentSpeakers": null
+    "appointmentCanceled": false, "appointmentSpeakers": null,
+    "filterValues": {"categories": null, "statuses": 2}
   }
 }]
 ```
 
+`filterValues` maps each [calendar module filter](BackendModule.md#filter-sidebar) to the
+item the entry belongs to; the module colours and styles entries from it. Listeners on
+`CalendarEntrySerializationEvent` add further properties, see
+[Extending → Calendar module filters](Extending.md#calendar-module-filters).
+
 Behaviour worth knowing:
 
-- A missing `end` is filled with `start + 30 minutes`, because vkurko/calendar requires one —
-  including for all-day events.
+- `end` is exclusive, as Event Calendar expects: an all-day appointment ends at midnight after
+  its last day. A timed appointment without an end gets `start + 30 minutes`.
+- `recordType` is the record type of the appointment's **event**.
 - `title` is `"<appointment title> (<event title>)"`, falling back to the event title alone when
   the appointment has none.
 - `extendedProps.url` is a frontend URI for the event detail view, built from the

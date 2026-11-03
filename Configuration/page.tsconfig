@@ -16,3 +16,33 @@ TCEMAIN.preview {
     }
   }
 }
+
+mod.tx_ximatypo3calendar {
+    filterOrder = recordTypes, categories, statuses
+    tooltipOrder = recordTypes, categories, statuses, location
+
+    weekViewGrid {
+        timeSlotMinutes = 15
+        scrollStartTime = 07:00
+    }
+
+    eventAppearance {
+        iconSource = recordTypes
+        appearanceSource = statuses
+        colorSource = categories
+    }
+
+    newEvent {
+        interaction {
+            enableDrag = 1
+            enableClick = 1
+        }
+
+        defaults {
+            startTime = 10:00
+            endTime = 15:30
+            allDay = 0
+            recordType = event
+        }
+    }
+}

@@ -13,6 +13,10 @@ What other extensions can hook into, and how to register it.
 | `Event\ModifyEventDetailViewEvent` | `Controller\EventController::showAction()` | Add or replace the detail view's assigned variables |
 | `Event\ModifyKeSearchIndexerQueryEvent` | `Indexer\EventIndexer` | Narrow which events the ke_search indexer picks up |
 | `Event\ModifyKeSearchIndexEntryEvent` | same | Shape a single ke_search index entry |
+| `Event\ConfigureCalendarFilterEvent` | `Service\CalendarFilterService` | Add or remove filters of the calendar module's sidebar |
+| `Event\BuildCalendarEntriesQueryEvent` | `Domain\Repository\EntryRepository::getBackendCalendarEntries()` | Join tables and select columns for the calendar module's feed |
+| `Event\ApplyCalendarFilterEvent` | same | Restrict the feed query to the filter values the editor selected |
+| `Event\CalendarEntrySerializationEvent` | `Serializer\VkurkoCalendarSerializer::serializeBackendEntries()` | Add properties and filter values to one feed entry |
 
 The three record-change events share `AbstractRecordChangedEvent` (`uid`, `table`, `changeType`,
 `changedFields`) and are documented in detail in [DataHandler Events](DataHandlerEvents.md). They
@@ -140,6 +144,100 @@ final readonly class ShapeEventIndexEntry
 }
 ```
 
+### Calendar module filters
+
+The filters of the [calendar module](BackendModule.md#filter-sidebar) are listeners on four
+events; the shipped `categories`, `statuses` and `recordTypes` filters use exactly the same API
+(`EventListener\CalendarFilter*`). A filter needs up to four steps:
+
+| Event | Step |
+|-------|------|
+| `ConfigureCalendarFilterEvent` | Describe the filter: a `CheckboxCalendarFilter` (flat list) or a `TreeCalendarFilter` (nested, optional colour coding), with its items. `getRequest()` returns the backend request. |
+| `BuildCalendarEntriesQueryEvent` | Add joins and selected columns the other steps need. The query reads the entry table as `e`, the calendar as `c`, the event as `v` and the location as `loc`. |
+| `ApplyCalendarFilterEvent` | Restrict the query to the selected values: `getFilters()['filters'][<identifier>]` is a list of the selected item values. Treat them as user input. |
+| `CalendarEntrySerializationEvent` | Tell the client which item an entry belongs to with `addFilterValue()`, and add data with `addExtendedProperty()`. The client uses the filter values for colours, icons, appearances and tooltips. |
+
+The three query and serialization events are dispatched for the
+[frontend feed](CalendarFeed.md) as well, with no filters selected. Keep `buildQuery()` and
+`serialize()` cheap and side-effect free.
+
+A filter is only shown when its identifier is listed in the `filterOrder` page TSconfig (or used
+by `eventAppearance`), see [Calendar Module → Page TSconfig](BackendModule.md#page-tsconfig).
+The selection is validated against the configured items before it is stored in the user
+settings.
+
+Example: filter appointments by their type (in person, online, hybrid). The class lives in your
+extension, e.g. `Classes/EventListener/AppointmentTypeFilter.php`; with the usual autowired and
+autoconfigured `Services.yaml` the attributes register it.
+
+```php
+namespace MyVendor\MyExt\EventListener;
+
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Database\Connection;
+use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilter;
+use Xima\XimaTypo3Calendar\Domain\Model\Dto\CheckboxCalendarFilterItem;
+use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
+use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
+use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
+
+final readonly class AppointmentTypeFilter
+{
+    private const TYPES = ['inPerson' => 'In person', 'online' => 'Online', 'hybrid' => 'Hybrid'];
+
+    #[AsEventListener(identifier: 'my-ext/calendar-filter-appointment-type')]
+    public function build(ConfigureCalendarFilterEvent $event): void
+    {
+        $filter = new CheckboxCalendarFilter(identifier: 'appointmentTypes', title: 'Appointment type');
+        foreach (self::TYPES as $value => $label) {
+            $filter->addItem(new CheckboxCalendarFilterItem(label: $label, value: $value));
+        }
+        $event->addFilter($filter);
+    }
+
+    #[AsEventListener(identifier: 'my-ext/calendar-query-appointment-type')]
+    public function buildQuery(BuildCalendarEntriesQueryEvent $event): void
+    {
+        $event->getQueryBuilder()->addSelect('e.type AS appointment_type');
+    }
+
+    #[AsEventListener(identifier: 'my-ext/calendar-apply-appointment-type')]
+    public function apply(ApplyCalendarFilterEvent $event): void
+    {
+        $selected = array_intersect(
+            $event->getFilters()['filters']['appointmentTypes'] ?? [],
+            array_keys(self::TYPES),
+        );
+        if ($selected === []) {
+            return;
+        }
+
+        $queryBuilder = $event->getQueryBuilder();
+        $queryBuilder->andWhere($queryBuilder->expr()->in(
+            'e.type',
+            $queryBuilder->createNamedParameter(array_values($selected), Connection::PARAM_STR_ARRAY),
+        ));
+    }
+
+    #[AsEventListener(identifier: 'my-ext/calendar-serialize-appointment-type')]
+    public function serialize(CalendarEntrySerializationEvent $event): void
+    {
+        $event->addFilterValue('appointmentTypes', $event->getSourceRow()['appointment_type'] ?? null);
+    }
+}
+```
+
+```typoscript
+mod.tx_ximatypo3calendar.filterOrder = recordTypes, categories, statuses, appointmentTypes
+```
+
+To remove a shipped filter, leave its identifier out of `filterOrder` and point
+`eventAppearance` sources that use it to another filter (they keep a filter visible), or
+remove it in a
+`ConfigureCalendarFilterEvent` listener that runs after the shipped one (`after:` its listener
+identifier, e.g. `xima-typo3-calendar/configure-status-filter`) and calls `setFilters()`.
+
 ## Fluid ViewHelpers
 
 `ViewHelpers\Backend\CanPublishLiveEventsViewHelper` exposes the publish permission to backend
@@ -214,10 +312,13 @@ Useful when writing listeners against the raw field values:
 
 ## Backend integration points
 
+The calendar module's page TSconfig is documented in
+[Calendar Module → Page TSconfig](BackendModule.md#page-tsconfig).
+
 | Surface | Key |
 |---------|-----|
 | Module identifiers | `calendar_modules` (group), `calendar_events`, `calendar_calendar` |
-| AJAX routes | `xima_calendar_events` → `/xima/calendar/events`; `calendar_event_status_update` → `/xima/calendar/event/status` |
+| AJAX routes | `xima_calendar_events` → `/xima/calendar/events`; `calendar_event_status_update` → `/xima/calendar/event/status`; calendar module: `xima_calendar_filter_options`, `xima_calendar_filter_state`, `xima_calendar_view_state`, `xima_calendar_new_record` |
 | Custom permissions | `TYPO3_CONF_VARS['BE']['customPermOptions']['tx_ximatypo3calendar_permissions']` |
 | Dashboard widget group | `xima_typo3_calendar` |
 | JavaScript import map | `@xima/xima-typo3-calendar/` → `EXT:xima_typo3_calendar/Resources/Public/JavaScript/` |

@@ -1,0 +1,18 @@
+"pages",,,,,,,,,,,,,,
+,"uid","pid","title","slug","doktype","is_siteroot","hidden","deleted","perms_userid","perms_groupid","perms_user","perms_group","perms_everybody","sys_language_uid"
+,1,0,"Root","/",1,1,0,0,5,1,31,31,1,0
+,2,1,"Calendar storage","/calendar-storage",254,0,0,0,5,1,31,31,1,0
+"be_groups",,,,,,
+,"uid","pid","title","tables_select","tables_modify","non_exclude_fields","db_mountpoints"
+,1,0,"Storage page editors","","","","1"
+,2,0,"Calendar editors","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event:record_type,tx_ximatypo3calendar_domain_model_entry:record_type,tx_ximatypo3calendar_domain_model_entry:event,tx_ximatypo3calendar_domain_model_entry:calendar,tx_ximatypo3calendar_domain_model_entry:start_date,tx_ximatypo3calendar_domain_model_entry:end_date,tx_ximatypo3calendar_domain_model_entry:all_day","1"
+,3,0,"Calendar editors without mount","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_event:record_type,tx_ximatypo3calendar_domain_model_entry:record_type,tx_ximatypo3calendar_domain_model_entry:event,tx_ximatypo3calendar_domain_model_entry:calendar,tx_ximatypo3calendar_domain_model_entry:start_date,tx_ximatypo3calendar_domain_model_entry:end_date,tx_ximatypo3calendar_domain_model_entry:all_day",""
+,4,0,"Appointment editors","tx_ximatypo3calendar_domain_model_event,tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_entry","tx_ximatypo3calendar_domain_model_entry:record_type,tx_ximatypo3calendar_domain_model_entry:event,tx_ximatypo3calendar_domain_model_entry:calendar,tx_ximatypo3calendar_domain_model_entry:start_date,tx_ximatypo3calendar_domain_model_entry:end_date,tx_ximatypo3calendar_domain_model_entry:all_day","1"
+"be_users",,,,,,,,
+,"uid","pid","username","admin","usergroup","options","disable","deleted"
+,1,0,"admin",1,"",3,0,0
+,2,0,"editor",0,"1,2",3,0,0
+,3,0,"editor-without-tables",0,"1",3,0,0
+,4,0,"editor-without-page-access",0,"2",3,0,0
+,5,0,"editor-without-mount",0,"3",3,0,0
+,6,0,"appointment-editor",0,"1,4",3,0,0

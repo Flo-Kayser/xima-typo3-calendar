@@ -19,7 +19,7 @@ use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 final class EventStatusItemsProcessor
 {
     /**
-     * @param array{items: array<int, array<string, mixed>>, row: array<string, mixed>} $params
+     * @param array{items: array<int, array<array-key, mixed>>, row: array<string, mixed>} $params
      */
     public function removeUnauthorizedItems(array &$params): void
     {
@@ -33,7 +33,13 @@ final class EventStatusItemsProcessor
         }
 
         foreach ($params['items'] as $key => $item) {
-            if ((int)($item['value'] ?? $item[1] ?? -1) === EventStatus::LIVE->value) {
+            $itemValue = $item['value'] ?? null;
+            if ($itemValue === null) {
+                $itemValues = array_values($item);
+                $itemValue = $itemValues[1] ?? -1;
+            }
+
+            if ((int)$itemValue === EventStatus::LIVE->value) {
                 unset($params['items'][$key]);
             }
         }

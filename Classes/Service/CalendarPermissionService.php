@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 
 /**
  * Central place for the calendar-specific backend permissions.
@@ -16,6 +18,9 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
  */
 final class CalendarPermissionService
 {
+    private const APPOINTMENT_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
+    private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
+
     public const PERMISSION_GROUP = 'tx_ximatypo3calendar_permissions';
 
     /** Grants publishing events (setting the LIVE status). */
@@ -34,6 +39,41 @@ final class CalendarPermissionService
         return $this->checkCustomOption(self::PERMISSION_VIEW_ALL_EVENTS, $backendUser);
     }
 
+    public function canCreateAppointmentAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        return $this->canEditTableAtPid(self::APPOINTMENT_TABLE, $pid, $backendUser);
+    }
+
+    public function canCreateEventAtPid(
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        return $this->canEditTableAtPid(self::EVENT_TABLE, $pid, $backendUser);
+    }
+
+    private function canEditTableAtPid(
+        string $table,
+        int $pid,
+        ?BackendUserAuthentication $backendUser = null,
+    ): bool {
+        $backendUser ??= $this->getBackendUser();
+        if (!$backendUser instanceof BackendUserAuthentication) {
+            return false;
+        }
+
+        // Same checks DataHandler runs before an insert. recordEditAccessInternals() alone
+        // ignores table and page permissions.
+        $page = BackendUtility::getRecord('pages', $pid);
+
+        return $page !== null
+            && $backendUser->check('tables_modify', $table)
+            && $backendUser->isInWebMount($page) !== null
+            && $backendUser->doesUserHaveAccess($page, Permission::CONTENT_EDIT)
+            && $backendUser->recordEditAccessInternals($table, ['pid' => $pid], true);
+    }
+
     private function checkCustomOption(string $option, ?BackendUserAuthentication $backendUser): bool
     {
         $backendUser ??= $this->getBackendUser();
@@ -41,7 +81,6 @@ final class CalendarPermissionService
             return false;
         }
 
-        // BackendUserAuthentication::check() returns true for administrators.
         return $backendUser->check('custom_options', self::PERMISSION_GROUP . ':' . $option);
     }
 

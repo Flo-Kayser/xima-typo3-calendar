@@ -43,6 +43,33 @@ Every event records the backend user that created it in `owner_be_user`, set aut
 `Hooks\EventOwnerBackendUserHook` and shown in the *Workflow* palette. An explicit assignment in
 the create datamap is respected. This is the field `view_all_events` scopes against.
 
+### Creating records in the calendar module
+
+A selection in the calendar, or the *New Event* / *New Event Appointment* button, opens a modal
+in which the editor picks the calendar. The record is stored on the **page of that calendar
+record**, so on a multi-site installation each site's events end up in that site's storage
+folder without any configuration. Hidden sysfolders work.
+
+The modal only offers calendars the user can create appointments in, i.e. the calendar's page
+is inside the user's web mounts, the user has *Edit content* on it and `tables_modify` for
+appointments (`Service\CalendarSelectionService`). Creating an event additionally needs
+`tables_modify` for events. Administrators see every calendar. Without any available calendar
+the module offers no creation at all.
+
+- One available calendar: it is used, and the modal shows no calendar field.
+- Several: the calendar of the user's last creation is preselected, as long as it is still
+  available.
+
+The modal opens the native record form with the chosen dates as default values. Nothing is
+stored until the editor saves that form, and closing it leaves no record behind.
+
+The server checks the submitted calendar against the same list and refuses others with HTTP 403.
+
+The record types offered for a new event, and in the *Type* filter, are resolved like in the
+record form: page TSconfig of the calendar's page (`TCEFORM.tx_ximatypo3calendar_domain_model_event.record_type.removeItems`,
+`keepItems`, `addItems`, `altLabels`), `itemsProcFunc` and the `authMode` of the editor's groups
+all apply.
+
 ## Query restrictions
 
 `Database\EventRestriction` and `Database\EntryRestriction` are registered globally in
