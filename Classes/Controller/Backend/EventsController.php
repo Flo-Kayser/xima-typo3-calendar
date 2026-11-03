@@ -14,7 +14,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Xima\XimaTypo3Calendar\Domain\Model\Enum\EventStatus;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\StatusChangeContext;
-use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 use Xima\XimaTypo3Recordlist\Controller\AbstractBackendController;
 use Xima\XimaTypo3Recordlist\Dto\RecordSource;
 
@@ -156,12 +155,6 @@ class EventsController extends AbstractBackendController
         $defVals = $this->getActiveLanguage() > 0
             ? [$tableName => ['sys_language_uid' => $this->getActiveLanguage()]]
             : [];
-        if ($tableName === self::EVENT_TABLE) {
-            $eventRecordType = RecordTypeUtility::getDefault(self::EVENT_TABLE);
-            if ($eventRecordType !== null) {
-                $defVals[$tableName]['record_type'] = $eventRecordType;
-            }
-        }
 
         $buttonBar = $this->moduleTemplate->getDocHeaderComponent()->getButtonBar();
         $recordLabel = $this->getLanguageService()->sL($GLOBALS['TCA'][$tableName]['ctrl']['title']);

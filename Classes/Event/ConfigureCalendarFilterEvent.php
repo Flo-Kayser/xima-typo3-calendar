@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Event;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\AbstractCalendarFilter;
 
 final class ConfigureCalendarFilterEvent
@@ -16,9 +17,16 @@ final class ConfigureCalendarFilterEvent
     /**
      * @param list<AbstractCalendarFilter> $filters
      */
-    public function __construct(array $filters = [])
-    {
+    public function __construct(
+        private readonly ServerRequestInterface $request,
+        array $filters = [],
+    ) {
         $this->filters = $filters;
+    }
+
+    public function getRequest(): ServerRequestInterface
+    {
+        return $this->request;
     }
 
     /**

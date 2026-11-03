@@ -65,6 +65,11 @@ stored until the editor saves that form, and closing it leaves no record behind.
 
 The server checks the submitted calendar against the same list and refuses others with HTTP 403.
 
+The record types offered for a new event, and in the *Type* filter, are resolved like in the
+record form: page TSconfig of the calendar's page (`TCEFORM.tx_ximatypo3calendar_domain_model_event.record_type.removeItems`,
+`keepItems`, `addItems`, `altLabels`), `itemsProcFunc` and the `authMode` of the editor's groups
+all apply.
+
 ## Query restrictions
 
 `Database\EventRestriction` and `Database\EntryRestriction` are registered globally in

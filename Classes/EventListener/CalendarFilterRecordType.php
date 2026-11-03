@@ -13,9 +13,15 @@ use Xima\XimaTypo3Calendar\Event\ApplyCalendarFilterEvent;
 use Xima\XimaTypo3Calendar\Event\BuildCalendarEntriesQueryEvent;
 use Xima\XimaTypo3Calendar\Event\CalendarEntrySerializationEvent;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
+use Xima\XimaTypo3Calendar\Service\EventRecordTypeService;
 
 final readonly class CalendarFilterRecordType implements CalendarFilterListenerInterface
 {
+    public function __construct(
+        private EventRecordTypeService $recordTypeService,
+    ) {
+    }
+
     #[AsEventListener(
         identifier: 'xima-typo3-calendar/configure-filter-record-type',
         event: ConfigureCalendarFilterEvent::class,
@@ -23,15 +29,8 @@ final readonly class CalendarFilterRecordType implements CalendarFilterListenerI
     )]
     public function build(ConfigureCalendarFilterEvent $event): void
     {
-        $items = $GLOBALS['TCA']
-            ['tx_ximatypo3calendar_domain_model_event']
-            ['columns']
-            ['record_type']
-            ['config']
-            ['items']
-            ?? [];
-
-        if (!$this->hasRelevantRecordTypes()) {
+        $recordTypes = $this->recordTypeService->getRecordTypesOnCalendarPages($event->getRequest());
+        if (count($recordTypes) < 2) {
             return;
         }
 
@@ -42,34 +41,17 @@ final readonly class CalendarFilterRecordType implements CalendarFilterListenerI
                 'xima_typo3_calendar',
             ) ?? 'Type',
         );
-        foreach ($items as $item) {
-            if (!is_array($item)) {
-                continue;
-            }
-
-            $value = (string)($item['value'] ?? '');
-            if ($value === '') {
-                continue;
-            }
-
-            $label = (string)($item['label'] ?? $value);
-            $translatedLabel = LocalizationUtility::translate(
-                $label,
-                'xima_typo3_calendar',
-            ) ?? $value;
-
+        foreach ($recordTypes as $recordType) {
             $filter->addItem(
                 new CheckboxCalendarFilterItem(
-                    label: $translatedLabel,
-                    value: $value,
-                    icon: is_string($item['icon'] ?? null) ? $item['icon'] : null,
+                    label: $recordType['label'],
+                    value: $recordType['value'],
+                    icon: $recordType['icon'],
                 ),
             );
         }
 
-        if ($filter->items !== []) {
-            $event->addFilter($filter);
-        }
+        $event->addFilter($filter);
     }
 
     #[AsEventListener(

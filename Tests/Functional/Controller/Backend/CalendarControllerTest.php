@@ -7,12 +7,14 @@ namespace Xima\XimaTypo3Calendar\Tests\Functional\Controller\Backend;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Form\FormDataCompiler;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
+use Xima\XimaTypo3Calendar\Service\EventRecordTypeService;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
 use Xima\XimaTypo3Calendar\Tests\Functional\Fixtures\RecordingEventListener;
 
@@ -230,6 +232,49 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     }
 
     #[Test]
+    public function refusesARecordTypeRemovedByThePageTsConfigOfTheCalendarPage(): void
+    {
+        $this->get(ConnectionPool::class)->getConnectionForTable('pages')->update(
+            'pages',
+            ['TSconfig' => 'TCEFORM.tx_ximatypo3calendar_domain_model_event.record_type.removeItems = plain-event'],
+            ['uid' => 11],
+        );
+        $this->actAs(self::ADMIN);
+
+        $refused = $this->newRecord(['type' => 'event', 'recordType' => 'plain-event', 'calendarUid' => 2]);
+        $allowedElsewhere = $this->newRecord(['type' => 'event', 'recordType' => 'plain-event', 'calendarUid' => 1]);
+
+        self::assertSame(400, $refused->getStatusCode());
+        self::assertSame(['success' => false, 'message' => 'Invalid record type.'], $this->decode($refused));
+        self::assertSame(200, $allowedElsewhere->getStatusCode());
+    }
+
+    #[Test]
+    public function refusesARecordTypeDeniedByAuthMode(): void
+    {
+        $GLOBALS['TCA'][self::TABLE_EVENT]['columns']['record_type']['config']['authMode'] = 'explicitAllow';
+        $this->get(ConnectionPool::class)->getConnectionForTable('be_groups')->update(
+            'be_groups',
+            ['explicit_allowdeny' => self::TABLE_EVENT . ':record_type:event'],
+            ['uid' => 2],
+        );
+        $this->actAs(self::EDITOR);
+
+        self::assertSame(400, $this->newRecord(['type' => 'event', 'recordType' => 'plain-event'])->getStatusCode());
+        self::assertSame(200, $this->newRecord(['type' => 'event', 'recordType' => 'event'])->getStatusCode());
+    }
+
+    #[Test]
+    public function leavesTheRecordTypeToFormEngineWhenNoneIsChosen(): void
+    {
+        $this->actAs(self::EDITOR);
+
+        $query = $this->formQuery($this->newRecord(['type' => 'event']));
+
+        self::assertArrayNotHasKey(self::TABLE_EVENT, $query['defVals'] ?? []);
+    }
+
+    #[Test]
     public function remembersTheCalendarOfTheLastCreation(): void
     {
         $this->actAs(self::ADMIN);
@@ -286,6 +331,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     {
         return new CalendarEventCreationController(
             $this->get(CalendarSelectionService::class),
+            new EventRecordTypeService($this->get(FormDataCompiler::class), $this->get(ConnectionPool::class)),
             $this->get(UriBuilder::class),
         );
     }

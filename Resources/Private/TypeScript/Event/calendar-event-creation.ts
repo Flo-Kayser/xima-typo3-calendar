@@ -87,7 +87,6 @@ export function createCalendarCreationController(
             initialStart: start,
             initialEnd: end,
             initialAllDay: allDay,
-            recordTypes: calendarConfig.recordTypes,
             defaultRecordType: calendarConfig.defaultRecordType,
         })
             .then((creation) => {

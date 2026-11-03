@@ -7,6 +7,7 @@ namespace Xima\XimaTypo3Calendar\Tests\Functional\Service;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilter;
 use Xima\XimaTypo3Calendar\Domain\Model\Dto\TreeCalendarFilterItem;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
@@ -55,7 +56,8 @@ final class CalendarFilterServiceTest extends AbstractCalendarFunctionalTestCase
                 $eventDispatcher,
                 $this->get(CalendarPageConfigurationReader::class),
             );
-            $service->saveState([
+            $request = new ServerRequest('https://example.com/typo3/');
+            $service->saveState($request, [
                 'trees' => [
                     'categories' => [
                         'activeItems' => [],
@@ -66,7 +68,7 @@ final class CalendarFilterServiceTest extends AbstractCalendarFunctionalTestCase
 
             self::assertSame(
                 ['1' => true],
-                $service->getState()['trees']['categories']['expandedItems'],
+                $service->getState($request)['trees']['categories']['expandedItems'],
             );
         } finally {
             $GLOBALS['BE_USER'] = $previousBackendUser;

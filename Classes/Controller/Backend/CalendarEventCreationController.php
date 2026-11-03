@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
-use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
+use Xima\XimaTypo3Calendar\Service\EventRecordTypeService;
 
 /**
  * Turns a selection in the calendar module into the URL of the native new-record form.
@@ -26,6 +26,7 @@ final class CalendarEventCreationController
 
     public function __construct(
         private readonly CalendarSelectionService $calendarSelectionService,
+        private readonly EventRecordTypeService $recordTypeService,
         private readonly UriBuilder $uriBuilder,
     ) {
     }
@@ -50,12 +51,6 @@ final class CalendarEventCreationController
             return new JsonResponse(['success' => false, 'message' => 'Invalid creation type.'], 400);
         }
 
-        if ($creationType === 'event'
-            && $recordType !== null
-            && !RecordTypeUtility::isAvailable(self::EVENT_TABLE, $recordType)) {
-            return new JsonResponse(['success' => false, 'message' => 'Invalid record type.'], 400);
-        }
-
         if ($start <= 0 || $end <= $start) {
             return $this->invalidEventDataResponse();
         }
@@ -71,6 +66,12 @@ final class CalendarEventCreationController
         }
         $pid = $calendar['pid'];
 
+        if ($creationType === 'event'
+            && $recordType !== null
+            && !$this->recordTypeService->isAvailable($request, $pid, $recordType)) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid record type.'], 400);
+        }
+
         $appointmentDefaults = [
             'record_type' => 'event-appointment',
             'start_date' => $start,
@@ -84,10 +85,10 @@ final class CalendarEventCreationController
             return $this->newRecordResponse(self::ENTRY_TABLE, $pid, [self::ENTRY_TABLE => $appointmentDefaults]);
         }
 
+        // Without a chosen record type, FormEngine applies the TCA and TSconfig defaults.
         $defaultValues = [self::ENTRY_TABLE => $appointmentDefaults];
-        $eventRecordType = $recordType ?? RecordTypeUtility::getDefault(self::EVENT_TABLE);
-        if ($eventRecordType !== null) {
-            $defaultValues[self::EVENT_TABLE] = ['record_type' => $eventRecordType];
+        if ($recordType !== null) {
+            $defaultValues[self::EVENT_TABLE] = ['record_type' => $recordType];
         }
 
         return $this->newRecordResponse(self::EVENT_TABLE, $pid, $defaultValues);

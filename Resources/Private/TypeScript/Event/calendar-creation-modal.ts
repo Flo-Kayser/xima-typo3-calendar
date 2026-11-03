@@ -44,7 +44,6 @@ export type CalendarCreationModalOptions = {
     initialStart: Date;
     initialEnd: Date;
     initialAllDay: boolean;
-    recordTypes: CalendarRecordTypeOption[];
     defaultRecordType: string | null;
 };
 
@@ -57,30 +56,31 @@ export function chooseCalendarCreationType({
     initialStart,
     initialEnd,
     initialAllDay,
-    recordTypes,
     defaultRecordType,
 }: CalendarCreationModalOptions): Promise<CalendarCreationValues | null> {
     return new Promise((resolve) => {
         // With a single calendar there is nothing to choose, so the select is not rendered.
         const selectedCalendarUid = calendars.length === 1 ? calendars[0].uid : initialCalendarUid;
-        const initialRecordType = defaultRecordType && recordTypes.some(option => option.value === defaultRecordType)
-            ? defaultRecordType
-            : recordTypes[0]?.value ?? '';
-        const renderRecordTypeField = (): unknown => (recordTypes.length > 1 ? html`
+        // Record types come from the TSconfig of each calendar's storage page.
+        const getRecordTypes = (calendarUid: number | null): CalendarRecordTypeOption[] => (
+            calendars.find(calendar => calendar.uid === calendarUid)?.recordTypes ?? []
+        );
+        const renderRecordTypeOptions = (select: HTMLSelectElement, calendarUid: number | null): void => {
+            const recordTypes = getRecordTypes(calendarUid);
+            const selected = recordTypes.some(option => option.value === select.value)
+                ? select.value
+                : recordTypes.find(option => option.value === defaultRecordType)?.value ?? recordTypes[0]?.value ?? '';
+            select.replaceChildren(...recordTypes.map(option => new Option(option.label, option.value, false, option.value === selected)));
+        };
+        const renderRecordTypeField = (): unknown => html`
                 <div
                     class="form-group xima-calendar-creation-form__record-type"
                     data-record-type-field
                 >
                     <label class="form-label" for="xima-calendar-creation-record-type">${labels.recordType}</label>
-                    <select id="xima-calendar-creation-record-type" class="form-select">
-                        ${recordTypes.map(option => html`
-                            <option value=${option.value} ?selected=${option.value === initialRecordType}>
-                                ${option.label}
-                            </option>
-                        `)}
-                    </select>
+                    <select id="xima-calendar-creation-record-type" class="form-select"></select>
                 </div>
-            ` : '');
+            `;
         const modal = Modal.advanced({
             title: labels.title,
             content: html`
@@ -151,8 +151,22 @@ export function chooseCalendarCreationType({
             const typeInput = form.querySelector<HTMLSelectElement>('#xima-calendar-creation-type');
             const recordTypeField = form.querySelector<HTMLElement>('[data-record-type-field]');
             const recordTypeInput = form.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type');
+            const calendarInput = form.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar');
+            const currentCalendarUid = (): number | null => (calendarInput ? Number(calendarInput.value) || null : selectedCalendarUid);
             const updateRecordTypeField = (): void => {
-                const visible = typeInput?.value === 'event';
+                // Events need table rights the user may only have on some calendar pages.
+                const isEvent = typeInput?.value === 'event';
+                calendarInput?.querySelectorAll<HTMLOptionElement>('option[value]:not([value=""])').forEach((option: HTMLOptionElement) => {
+                    option.disabled = isEvent && !calendars.find(calendar => calendar.uid === Number(option.value))?.canCreateEvent;
+                });
+                if (calendarInput?.selectedOptions[0]?.disabled) {
+                    calendarInput.value = '';
+                }
+                if (recordTypeInput) {
+                    renderRecordTypeOptions(recordTypeInput, currentCalendarUid());
+                }
+                // A single record type needs no choice.
+                const visible = isEvent && (recordTypeInput?.options.length ?? 0) > 1;
                 if (recordTypeField) {
                     recordTypeField.style.visibility = visible ? 'visible' : 'hidden';
                     recordTypeField.setAttribute('aria-hidden', String(!visible));
@@ -184,6 +198,7 @@ export function chooseCalendarCreationType({
             endInput?.addEventListener('click', enableDateFields);
             allDayInput?.addEventListener('change', updateDateFields);
             typeInput?.addEventListener('change', updateRecordTypeField);
+            calendarInput?.addEventListener('change', updateRecordTypeField);
             updateDateFields();
             updateRecordTypeField();
             (form.elements.namedItem('xima-calendar-creation-type') as HTMLSelectElement | null)?.focus();
@@ -197,7 +212,7 @@ export function chooseCalendarCreationType({
 
             const type = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-type')?.value;
             const recordType = type === 'event'
-                ? modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type')?.value ?? null
+                ? modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-record-type')?.value || null
                 : null;
             const calendarSelect = modal.querySelector<HTMLSelectElement>('#xima-calendar-creation-calendar');
             const startValue = modal.querySelector<HTMLInputElement>('#xima-calendar-creation-start')?.value;

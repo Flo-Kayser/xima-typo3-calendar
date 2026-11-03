@@ -27,9 +27,9 @@ final class CalendarFilterController
 
         return new JsonResponse([
             'success' => true,
-            'filters' => $this->filterService->getFilters($pageId),
+            'filters' => $this->filterService->getFilters($request, $pageId),
             'filterColors' => $this->pageConfigurationService->getFilterColors($request),
-            'state' => $this->filterService->getState($pageId),
+            'state' => $this->filterService->getState($request, $pageId),
             'labels' => [
                 'moreActions' => $this->getLanguageLabel('filter.moreActions', 'More actions'),
                 'selectAllChildren' => $this->getLanguageLabel(
@@ -62,7 +62,7 @@ final class CalendarFilterController
         }
 
         $pageId = $this->getPageId($request);
-        $this->filterService->saveState($state, $pageId);
+        $this->filterService->saveState($request, $state, $pageId);
 
         return new JsonResponse(['success' => true]);
     }
@@ -75,7 +75,7 @@ final class CalendarFilterController
         }
 
         $pageId = $this->getPageId($request);
-        $this->filterService->saveView($body['view'], $pageId);
+        $this->filterService->saveView($request, $body['view'], $pageId);
 
         return new JsonResponse(['success' => true]);
     }

@@ -19,13 +19,11 @@ use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
 use Xima\XimaTypo3Calendar\Service\CalendarRecordButtonService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
+use Xima\XimaTypo3Calendar\Service\EventRecordTypeService;
 use Xima\XimaTypo3Calendar\Utility\CalendarFeedRequestUtility;
-use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
 class CalendarController extends ActionController
 {
-    private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
-
     public function __construct(
         protected PageRenderer $pageRenderer,
         protected UriBuilder $backendUriBuilder,
@@ -33,6 +31,7 @@ class CalendarController extends ActionController
         protected EntryRepository $entryRepository,
         protected CalendarPageConfigurationService $pageConfigurationService,
         protected CalendarSelectionService $calendarSelectionService,
+        protected EventRecordTypeService $recordTypeService,
         protected CalendarFilterService $filterService,
         protected CalendarRecordButtonService $recordButtonService,
         protected EventDispatcherInterface $eventDispatcher,
@@ -62,6 +61,21 @@ class CalendarController extends ActionController
         $calendars = $this->calendarSelectionService->getAvailableCalendars();
         $canCreateAppointment = $calendars !== [];
         $canCreateEvent = in_array(true, array_column($calendars, 'canCreateEvent'), true);
+        // Record types can differ per storage page (TSconfig), so each calendar brings its own.
+        $calendarOptions = array_map(
+            fn (array $calendar): array => [
+                'uid' => $calendar['uid'],
+                'title' => $calendar['title'],
+                'canCreateEvent' => $calendar['canCreateEvent'],
+                'recordTypes' => $calendar['canCreateEvent']
+                    ? array_map(
+                        static fn (array $recordType): array => ['value' => $recordType['value'], 'label' => $recordType['label']],
+                        $this->recordTypeService->getRecordTypes($request, $calendar['pid']),
+                    )
+                    : [],
+            ],
+            $calendars,
+        );
 
         $this->recordButtonService->addButtons(
             $moduleTemplate,
@@ -101,7 +115,6 @@ class CalendarController extends ActionController
         );
 
         $newEventConfiguration = $this->pageConfigurationService->getNewEventConfiguration($request);
-        $recordTypes = $this->getCreationRecordTypes(self::EVENT_TABLE, 'event');
         $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
             'newRecordUrl' => $newRecordUrl,
@@ -110,11 +123,10 @@ class CalendarController extends ActionController
             'locale' => $locale,
             'canCreateEvent' => $canCreateEvent,
             'canCreateAppointment' => $canCreateAppointment,
-            'calendars' => $calendars,
+            'calendars' => $calendarOptions,
             'lastCalendarUid' => $this->calendarSelectionService->getLastUsedCalendarUid($calendars),
             'filterColors' => $filterColors,
             'eventAppearance' => $eventAppearance,
-            'recordTypes' => $recordTypes,
             'tooltipOrder' => $this->pageConfigurationService->getTooltipOrder($request),
             ...$newEventConfiguration,
             'labels' => [
@@ -165,27 +177,5 @@ class CalendarController extends ActionController
         );
 
         return $label === '' || str_starts_with($label, 'LLL:') ? $fallback : $label;
-    }
-
-    /** @return list<array{value: string, label: string}> */
-    private function getCreationRecordTypes(string $table, string $defaultValue): array
-    {
-        return array_map(
-            fn (array $item): array => [
-                'value' => $item['value'],
-                'label' => $this->resolveLanguageLabel($item['label'], $item['value']),
-            ],
-            RecordTypeUtility::getAdditionalItems($table, $defaultValue),
-        );
-    }
-
-    private function resolveLanguageLabel(string $label, string $fallback): string
-    {
-        if (!str_starts_with($label, 'LLL:')) {
-            return $label !== '' ? $label : $fallback;
-        }
-
-        $resolved = $GLOBALS['LANG']->sL($label);
-        return $resolved === '' || str_starts_with($resolved, 'LLL:') ? $fallback : $resolved;
     }
 }

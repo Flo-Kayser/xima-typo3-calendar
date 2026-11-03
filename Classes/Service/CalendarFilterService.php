@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use Xima\XimaTypo3Calendar\Event\ConfigureCalendarFilterEvent;
@@ -22,7 +23,7 @@ final class CalendarFilterService
     }
 
     /** @return array<string, array<string, mixed>> */
-    public function getFilters(int $pageId = 0): array
+    public function getFilters(ServerRequestInterface $request, int $pageId = 0): array
     {
         if (array_key_exists($pageId, $this->filtersByPageId)) {
             return $this->filtersByPageId[$pageId];
@@ -30,7 +31,7 @@ final class CalendarFilterService
 
         $filters = [];
 
-        $event = new ConfigureCalendarFilterEvent();
+        $event = new ConfigureCalendarFilterEvent($request);
 
         $this->eventDispatcher->dispatch($event);
 
@@ -107,12 +108,12 @@ final class CalendarFilterService
      *     view: string,
      * }
      */
-    public function getState(int $pageId = 0): array
+    public function getState(ServerRequestInterface $request, int $pageId = 0): array
     {
-        return $this->normalizeState($this->getStoredState(), $pageId);
+        return $this->normalizeState($request, $this->getStoredState(), $pageId);
     }
 
-    public function saveState(array $state, int $pageId = 0): void
+    public function saveState(ServerRequestInterface $request, array $state, int $pageId = 0): void
     {
         $backendUser = $GLOBALS['BE_USER'] ?? null;
         if (!$backendUser instanceof BackendUserAuthentication) {
@@ -121,7 +122,7 @@ final class CalendarFilterService
 
         $backendUser->pushModuleData(
             self::MODULE_IDENTIFIER,
-            $this->normalizeState(array_merge($this->getStoredState(), $state), $pageId),
+            $this->normalizeState($request, array_merge($this->getStoredState(), $state), $pageId),
         );
     }
 
@@ -130,7 +131,7 @@ final class CalendarFilterService
         return $this->normalizeView($this->getStoredState()['view'] ?? null);
     }
 
-    public function saveView(string $view, int $pageId = 0): void
+    public function saveView(ServerRequestInterface $request, string $view, int $pageId = 0): void
     {
         $backendUser = $GLOBALS['BE_USER'] ?? null;
         if (!$backendUser instanceof BackendUserAuthentication) {
@@ -141,13 +142,13 @@ final class CalendarFilterService
         $state['view'] = $view;
         $backendUser->pushModuleData(
             self::MODULE_IDENTIFIER,
-            $this->normalizeState($state, $pageId),
+            $this->normalizeState($request, $state, $pageId),
         );
     }
 
-    private function normalizeState(array $state, int $pageId): array
+    private function normalizeState(ServerRequestInterface $request, array $state, int $pageId): array
     {
-        $filters = $this->getFilters($pageId);
+        $filters = $this->getFilters($request, $pageId);
 
         return [
             'checkboxLists' => $this->normalizeCheckboxLists($state, $filters),

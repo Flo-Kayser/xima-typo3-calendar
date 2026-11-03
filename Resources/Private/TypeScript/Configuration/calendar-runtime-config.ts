@@ -19,6 +19,8 @@ export type CalendarRecordTypeOption = {
 export type CalendarOption = {
     uid: number;
     title: string;
+    canCreateEvent: boolean;
+    recordTypes: CalendarRecordTypeOption[];
 };
 
 export type EventAppearanceConfiguration = {
@@ -50,7 +52,6 @@ export type CalendarConfig = {
     scrollStartTime: string;
     calendars: CalendarOption[];
     lastCalendarUid: number | null;
-    recordTypes: CalendarRecordTypeOption[];
     tooltipOrder: string[];
   filterColors: Record<string, Record<string, string>>; eventAppearance: EventAppearanceConfiguration;
     labels: CalendarModalLabels;
@@ -95,6 +96,8 @@ const isCalendarOptions = (value: unknown): value is CalendarOption[] => (
         && typeof option === 'object'
         && isNumber((option as Record<string, unknown>).uid)
         && isString((option as Record<string, unknown>).title)
+        && isBoolean((option as Record<string, unknown>).canCreateEvent)
+        && isRecordTypeOptions((option as Record<string, unknown>).recordTypes)
     ))
 );
 
@@ -144,7 +147,6 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
         && hasValues(config, ['scrollStartTime'], isString)
         && isCalendarOptions(config.calendars)
         && (config.lastCalendarUid === null || isNumber(config.lastCalendarUid))
-        && isRecordTypeOptions(config.recordTypes)
         && isStringArray(config.tooltipOrder)
         && isFilterColors(config.filterColors)
         && isEventAppearanceConfiguration(config.eventAppearance)
