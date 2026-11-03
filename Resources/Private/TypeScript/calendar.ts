@@ -93,7 +93,7 @@ DocumentService.ready().then(async () => {
         (event, element) => eventTooltip.attach(event, element),
     );
 
-    const creationController = createCalendarCreationController(container, typo3Top, calendarConfig);
+    const creationController = createCalendarCreationController(container, calendarConfig);
     let currentView = calendarConfig.initialView;
     const persistCalendarView = (view: string): void => {
         if (view === currentView) {
@@ -207,28 +207,12 @@ DocumentService.ready().then(async () => {
     creationController.setClearCalendarSelection(() => ec.unselect());
 
     let destroyed = false;
-    const cleanupPendingCreation = (): void => {
-        void creationController.cleanupPendingCreation().then((cleanedUp) => {
-            if (cleanedUp && !destroyed) {
-                ec.refetchEvents();
-            }
-        });
-    };
-
-    cleanupPendingCreation();
-    window.addEventListener('pageshow', cleanupPendingCreation);
-    window.addEventListener('popstate', cleanupPendingCreation);
-    filterWindow.document.addEventListener('typo3-module-loaded', cleanupPendingCreation, true);
-
     const cleanup = async (): Promise<void> => {
         if (destroyed) {
             return;
         }
 
         destroyed = true;
-        window.removeEventListener('pageshow', cleanupPendingCreation);
-        window.removeEventListener('popstate', cleanupPendingCreation);
-        filterWindow.document.removeEventListener('typo3-module-loaded', cleanupPendingCreation, true);
         miniCalendarSync.destroy();
         filterSync.destroy();
         interactionController.destroy();

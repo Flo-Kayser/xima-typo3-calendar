@@ -6,28 +6,35 @@ namespace Xima\XimaTypo3Calendar\Controller\Backend;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Http\JsonResponse;
-use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
-use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Utility\RecordTypeUtility;
 
+/**
+ * Turns a selection in the calendar module into the URL of the native new-record form.
+ *
+ * Nothing is written here. The selected range reaches the form as `defVals`, and the
+ * records only exist once the editor saves. NewEventAppointmentFromDefaultValues adds
+ * the prefilled appointment to a new event.
+ */
 final class CalendarEventCreationController
 {
+    private const EVENT_TABLE = 'tx_ximatypo3calendar_domain_model_event';
+    private const ENTRY_TABLE = 'tx_ximatypo3calendar_domain_model_entry';
     private const CREATION_TYPES = ['event', 'event-appointment'];
 
     public function __construct(
         private readonly CalendarStoragePidResolver $storagePidResolver,
         private readonly CalendarPermissionService $permissionService,
         private readonly CalendarSelectionService $calendarSelectionService,
-        private readonly CalendarEventCreationService $eventCreationService,
-        private readonly CalendarPendingCreationService $pendingCreationService,
+        private readonly UriBuilder $uriBuilder,
     ) {
     }
 
-    public function createEventAction(ServerRequestInterface $request): ResponseInterface
+    public function newRecordAction(ServerRequestInterface $request): ResponseInterface
     {
         $data = $request->getParsedBody();
         if (!is_array($data)) {
@@ -51,7 +58,7 @@ final class CalendarEventCreationController
 
         if ($creationType === 'event'
             && $recordType !== null
-            && !RecordTypeUtility::isAvailable('tx_ximatypo3calendar_domain_model_event', $recordType)) {
+            && !RecordTypeUtility::isAvailable(self::EVENT_TABLE, $recordType)) {
             return new JsonResponse(['success' => false, 'message' => 'Invalid record type.'], 400);
         }
 
@@ -72,33 +79,41 @@ final class CalendarEventCreationController
             return new JsonResponse(['success' => false, 'message' => 'Invalid calendar.'], 400);
         }
 
-        $result = $creationType === 'event'
-            ? $this->eventCreationService->create($pid, $start, $end, $allDay, $calendarUid, $recordType)
-            : $this->eventCreationService->createAppointment($pid, $start, $end, $allDay, $calendarUid);
-        return new JsonResponse($result, $result['success'] ? 200 : 500);
+        $appointmentDefaults = [
+            'record_type' => 'event-appointment',
+            'start_date' => $start,
+            'end_date' => $end,
+            'all_day' => $allDay ? 1 : 0,
+        ];
+        if ($calendarUid !== null) {
+            $appointmentDefaults['calendar'] = $calendarUid;
+        }
+
+        if ($creationType === 'event-appointment') {
+            return $this->newRecordResponse(self::ENTRY_TABLE, $pid, [self::ENTRY_TABLE => $appointmentDefaults]);
+        }
+
+        $defaultValues = [self::ENTRY_TABLE => $appointmentDefaults];
+        $eventRecordType = $recordType ?? RecordTypeUtility::getDefault(self::EVENT_TABLE);
+        if ($eventRecordType !== null) {
+            $defaultValues[self::EVENT_TABLE] = ['record_type' => $eventRecordType];
+        }
+
+        return $this->newRecordResponse(self::EVENT_TABLE, $pid, $defaultValues);
     }
 
-    public function cleanupEventAction(ServerRequestInterface $request): ResponseInterface
+    /**
+     * @param array<string, array<string, int|string>> $defaultValues
+     */
+    private function newRecordResponse(string $table, int $pid, array $defaultValues): JsonResponse
     {
-        $eventUid = (int)($request->getQueryParams()['eventUid'] ?? 0);
-        $entryUid = (int)($request->getQueryParams()['entryUid'] ?? 0);
-        if (($eventUid <= 0 && $entryUid <= 0) || ($eventUid > 0 && $entryUid > 0)) {
-            return new JsonResponse(['success' => false], 400);
-        }
+        $url = $this->uriBuilder->buildUriFromRoute('record_edit', [
+            'edit' => [$table => [$pid => 'new']],
+            'defVals' => $defaultValues,
+            'returnUrl' => (string)$this->uriBuilder->buildUriFromRoute('calendar_calendar'),
+        ]);
 
-        $pid = $this->storagePidResolver->resolveStoragePid();
-        $hasPermission = $eventUid > 0
-            ? $this->permissionService->canCreateEventAndAppointmentAtPid($pid)
-            : $this->permissionService->canCreateAppointmentAtPid($pid);
-        if (!$hasPermission) {
-            return new JsonResponse(['success' => false], 403);
-        }
-
-        $success = $eventUid > 0
-            ? $this->pendingCreationService->cleanupEvent($eventUid, $pid)
-            : $this->pendingCreationService->cleanupEntry($entryUid, $pid);
-
-        return new JsonResponse(['success' => $success]);
+        return new JsonResponse(['success' => true, 'url' => (string)$url]);
     }
 
     private function invalidEventDataResponse(): JsonResponse

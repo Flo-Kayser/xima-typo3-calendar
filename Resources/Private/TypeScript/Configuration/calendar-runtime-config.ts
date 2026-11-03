@@ -34,8 +34,7 @@ export type Typo3TopWindow = Window & {
 
 export type CalendarConfig = {
     ajaxUrl: string;
-    createEventUrl: string;
-    cleanupEventUrl: string;
+    newRecordUrl: string;
     viewStateUrl: string;
     initialView: 'dayGridMonth' | 'timeGridWeek' | 'listMonth';
     locale: string;
@@ -131,7 +130,7 @@ const isCalendarConfig = (value: unknown): value is CalendarConfig => {
     }
 
     const config = value as Record<string, unknown>;
-    return hasValues(config, ['ajaxUrl', 'createEventUrl', 'cleanupEventUrl', 'viewStateUrl', 'initialView', 'locale'], isString)
+    return hasValues(config, ['ajaxUrl', 'newRecordUrl', 'viewStateUrl', 'initialView', 'locale'], isString)
         && ['dayGridMonth', 'timeGridWeek', 'listMonth'].includes(config.initialView as string)
         && hasValues(
             config,

@@ -17,7 +17,6 @@ use Xima\XimaTypo3Calendar\Domain\Repository\EntryRepository;
 use Xima\XimaTypo3Calendar\Serializer\VkurkoCalendarSerializer;
 use Xima\XimaTypo3Calendar\Service\CalendarFilterService;
 use Xima\XimaTypo3Calendar\Service\CalendarPageConfigurationService;
-use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarRecordButtonService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
@@ -38,7 +37,6 @@ class CalendarController extends ActionController
         protected CalendarPageConfigurationService $pageConfigurationService,
         protected CalendarStoragePidResolver $storagePidResolver,
         protected CalendarSelectionService $calendarSelectionService,
-        protected CalendarPendingCreationService $pendingCreationService,
         protected CalendarFilterService $filterService,
         protected CalendarRecordButtonService $recordButtonService,
         protected EventDispatcherInterface $eventDispatcher,
@@ -47,7 +45,6 @@ class CalendarController extends ActionController
 
     public function processRequest(RequestInterface $request): ResponseInterface
     {
-        $this->cleanupPendingCreation($request);
         $moduleTemplate = $this->moduleTemplateFactory->create($request);
         $pageId = (int)($request->getQueryParams()['id'] ?? 0);
 
@@ -64,8 +61,7 @@ class CalendarController extends ActionController
             'ajax_xima_calendar_view_state',
             ['id' => $pageId],
         );
-        $createEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_create_event');
-        $cleanupEventUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_cleanup_event');
+        $newRecordUrl = (string)$this->backendUriBuilder->buildUriFromRoute('ajax_xima_calendar_new_record');
         $locale = $GLOBALS['LANG']->getLocale()?->getName() ?? 'en';
         $appointmentPid = $this->storagePidResolver->resolveStoragePid();
         $calendars = $this->calendarSelectionService->getAvailableCalendars();
@@ -119,8 +115,7 @@ class CalendarController extends ActionController
         $recordTypes = $this->getCreationRecordTypes(self::EVENT_TABLE, 'event');
         $calendarConfig = json_encode([
             'ajaxUrl' => $ajaxUrl,
-            'createEventUrl' => $createEventUrl,
-            'cleanupEventUrl' => $cleanupEventUrl,
+            'newRecordUrl' => $newRecordUrl,
             'viewStateUrl' => $viewStateUrl,
             'initialView' => $this->filterService->getView(),
             'locale' => $locale,
@@ -151,22 +146,6 @@ class CalendarController extends ActionController
         ]);
 
         return $moduleTemplate->renderResponse('Backend/Calendar');
-    }
-
-    private function cleanupPendingCreation(RequestInterface $request): void
-    {
-        $params = $request->getQueryParams();
-        $pid = $this->storagePidResolver->resolveStoragePid();
-
-        $eventUid = (int)($params['ximaCalendarPendingEvent'] ?? 0);
-        if ($eventUid > 0) {
-            $this->pendingCreationService->cleanupEvent($eventUid, $pid);
-        }
-
-        $entryUid = (int)($params['ximaCalendarPendingEntry'] ?? 0);
-        if ($entryUid > 0) {
-            $this->pendingCreationService->cleanupEntry($entryUid, $pid);
-        }
     }
 
     public function eventsAction(ServerRequestInterface $request): ResponseInterface

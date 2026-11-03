@@ -7,16 +7,16 @@ namespace Xima\XimaTypo3Calendar\Tests\Functional\Controller\Backend;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
 use Xima\XimaTypo3Calendar\Controller\Backend\CalendarEventCreationController;
-use Xima\XimaTypo3Calendar\Service\CalendarEventCreationService;
-use Xima\XimaTypo3Calendar\Service\CalendarPendingCreationService;
 use Xima\XimaTypo3Calendar\Service\CalendarPermissionService;
 use Xima\XimaTypo3Calendar\Service\CalendarSelectionService;
 use Xima\XimaTypo3Calendar\Service\CalendarStoragePidResolver;
 use Xima\XimaTypo3Calendar\Tests\Functional\AbstractCalendarFunctionalTestCase;
+use Xima\XimaTypo3Calendar\Tests\Functional\Fixtures\RecordingEventListener;
 
 /**
  * Runs as real backend users from Fixtures/backend-permissions.csv, so the
@@ -47,7 +47,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     {
         $this->actAs(self::ADMIN);
 
-        $response = $this->controller()->createEventAction(
+        $response = $this->controller()->newRecordAction(
             (new ServerRequest('https://example.com/typo3/'))->withParsedBody(new \stdClass())
         );
 
@@ -60,10 +60,72 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     {
         $this->actAs(self::ADMIN);
 
-        $response = $this->createEvent(['type' => 'unknown']);
+        $response = $this->newRecord(['type' => 'unknown']);
 
         self::assertSame(400, $response->getStatusCode());
         self::assertSame(['success' => false, 'message' => 'Invalid creation type.'], $this->decode($response));
+    }
+
+    #[Test]
+    public function opensANewAppointmentFormPrefilledWithTheSelection(): void
+    {
+        $this->actAs(self::EDITOR);
+
+        $query = $this->formQuery($this->newRecord(['type' => 'event-appointment', 'allDay' => 1]));
+
+        self::assertSame([self::TABLE_ENTRY => [2 => 'new']], $query['edit'] ?? null);
+        self::assertSame(
+            [
+                self::TABLE_ENTRY => [
+                    'record_type' => 'event-appointment',
+                    'start_date' => '1767225600',
+                    'end_date' => '1767229200',
+                    'all_day' => '1',
+                    'calendar' => '1',
+                ],
+            ],
+            $query['defVals'] ?? null,
+        );
+        self::assertStringContainsString('/module/calendar/calendar', (string)($query['returnUrl'] ?? ''));
+    }
+
+    #[Test]
+    public function opensANewEventFormWithTheSelectionAsAppointmentDefaults(): void
+    {
+        $this->actAs(self::EDITOR);
+
+        $query = $this->formQuery($this->newRecord(['type' => 'event', 'recordType' => 'plain-event']));
+
+        self::assertSame([self::TABLE_EVENT => [2 => 'new']], $query['edit'] ?? null);
+        self::assertSame(['record_type' => 'plain-event'], $query['defVals'][self::TABLE_EVENT] ?? null);
+        self::assertSame(
+            [
+                'record_type' => 'event-appointment',
+                'start_date' => '1767225600',
+                'end_date' => '1767229200',
+                'all_day' => '0',
+                'calendar' => '1',
+            ],
+            $query['defVals'][self::TABLE_ENTRY] ?? null,
+        );
+    }
+
+    #[Test]
+    public function writesNoRecordAndDispatchesNoChangeEventBeforeTheFormIsSaved(): void
+    {
+        $this->actAs(self::ADMIN);
+        $listener = $this->get(RecordingEventListener::class);
+        $listener->reset();
+        $eventsBefore = $this->countRows(self::TABLE_EVENT);
+        $entriesBefore = $this->countRows(self::TABLE_ENTRY);
+
+        foreach (['event', 'event-appointment'] as $type) {
+            self::assertSame(200, $this->newRecord(['type' => $type])->getStatusCode());
+        }
+
+        self::assertSame($eventsBefore, $this->countRows(self::TABLE_EVENT));
+        self::assertSame($entriesBefore, $this->countRows(self::TABLE_ENTRY));
+        self::assertSame([], $listener->all());
     }
 
     /**
@@ -80,20 +142,14 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
 
     #[Test]
     #[DataProvider('allowedCreationDataProvider')]
-    public function createsTheRecordWhenTheUserMayEditTheStoragePage(int $backendUserUid, string $type): void
+    public function opensTheFormWhenTheUserMayEditTheStoragePage(int $backendUserUid, string $type): void
     {
         $this->actAs($backendUserUid);
 
-        $response = $this->createEvent(['type' => $type]);
+        $response = $this->newRecord(['type' => $type]);
 
         self::assertSame(200, $response->getStatusCode(), (string)$response->getBody());
-        $result = $this->decode($response);
-        self::assertTrue($result['success'] ?? false);
-        $entry = $this->fetchRawRecord(self::TABLE_ENTRY, (int)($result['entryUid'] ?? 0));
-        self::assertSame(
-            [1767225600, 1767229200, 1, 2],
-            [(int)($entry['start_date'] ?? 0), (int)($entry['end_date'] ?? 0), (int)($entry['calendar'] ?? 0), (int)($entry['pid'] ?? 0)],
-        );
+        self::assertTrue($this->decode($response)['success'] ?? false);
     }
 
     /**
@@ -115,7 +171,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     {
         $this->actAs($backendUserUid);
 
-        $response = $this->createEvent(['type' => $type]);
+        $response = $this->newRecord(['type' => $type]);
 
         self::assertSame(403, $response->getStatusCode());
         self::assertSame(['success' => false, 'message' => 'No permission to create events.'], $this->decode($response));
@@ -127,7 +183,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
         $this->actAs(self::EDITOR_WITHOUT_TABLES);
         $GLOBALS['LANG'] = $this->get(LanguageServiceFactory::class)->create('de');
 
-        $response = $this->createEvent();
+        $response = $this->newRecord();
 
         self::assertSame(403, $response->getStatusCode());
         self::assertSame('Keine Berechtigung, Events anzulegen.', $this->decode($response)['message'] ?? null);
@@ -138,35 +194,10 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     {
         $this->actAs(self::EDITOR);
 
-        $response = $this->createEvent(['calendarUid' => 999]);
+        $response = $this->newRecord(['calendarUid' => 999]);
 
         self::assertSame(400, $response->getStatusCode());
         self::assertSame(['success' => false, 'message' => 'Invalid calendar.'], $this->decode($response));
-    }
-
-    #[Test]
-    public function rejectsCleanupWithoutExactlyOneRecordUid(): void
-    {
-        $this->actAs(self::ADMIN);
-
-        $request = new ServerRequest('https://example.com/typo3/');
-        $response = $this->controller()->cleanupEventAction($request);
-
-        self::assertSame(400, $response->getStatusCode());
-    }
-
-    #[Test]
-    public function rejectsCleanupWithEventAndEntryUid(): void
-    {
-        $this->actAs(self::ADMIN);
-
-        $request = (new ServerRequest('https://example.com/typo3/'))->withQueryParams([
-            'eventUid' => 1,
-            'entryUid' => 1,
-        ]);
-        $response = $this->controller()->cleanupEventAction($request);
-
-        self::assertSame(400, $response->getStatusCode());
     }
 
     private function actAs(int $backendUserUid): void
@@ -178,7 +209,7 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
     /**
      * @param array<string, mixed> $overrides
      */
-    private function createEvent(array $overrides = []): ResponseInterface
+    private function newRecord(array $overrides = []): ResponseInterface
     {
         $payload = array_replace([
             'start' => 1767225600,
@@ -188,24 +219,36 @@ final class CalendarControllerTest extends AbstractCalendarFunctionalTestCase
             'calendarUid' => 1,
         ], $overrides);
 
-        return $this->controller()->createEventAction(
+        return $this->controller()->newRecordAction(
             (new ServerRequest('https://example.com/typo3/'))->withParsedBody($payload)
         );
     }
 
+    /**
+     * @return array<string, mixed> the query of the returned record_edit URL
+     */
+    private function formQuery(ResponseInterface $response): array
+    {
+        self::assertSame(200, $response->getStatusCode(), (string)$response->getBody());
+        $url = (string)($this->decode($response)['url'] ?? '');
+        self::assertStringContainsString('/record/edit', $url);
+        parse_str((string)parse_url($url, PHP_URL_QUERY), $query);
+
+        return $query;
+    }
+
+    private function countRows(string $table): int
+    {
+        return $this->get(ConnectionPool::class)->getConnectionForTable($table)->count('*', $table, []);
+    }
+
     private function controller(): CalendarEventCreationController
     {
-        $connectionPool = $this->get(ConnectionPool::class);
-
         return new CalendarEventCreationController(
             $this->get(CalendarStoragePidResolver::class),
             new CalendarPermissionService(),
             $this->get(CalendarSelectionService::class),
-            new CalendarEventCreationService(
-                $connectionPool,
-                $this->get(CalendarPendingCreationService::class),
-            ),
-            $this->get(CalendarPendingCreationService::class),
+            $this->get(UriBuilder::class),
         );
     }
 

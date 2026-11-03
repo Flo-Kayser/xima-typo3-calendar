@@ -35,6 +35,12 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRe
     ],
 ];
 
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\Xima\XimaTypo3Calendar\Backend\FormDataProvider\NewEventAppointmentFromDefaultValues::class] = [
+    'depends' => [
+        \TYPO3\CMS\Backend\Form\FormDataProvider\TcaInline::class,
+    ],
+];
+
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['xima_typo3_calendar2']
     = \Xima\XimaTypo3Calendar\Hooks\DataHandlerEventDispatcherHook::class;
 
