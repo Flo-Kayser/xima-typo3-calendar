@@ -63,7 +63,7 @@ final class CalendarEventCreationController
             ? $this->permissionService->canCreateEventAndAppointmentAtPid($pid)
             : $this->permissionService->canCreateAppointmentAtPid($pid);
         if (!$hasPermission) {
-            return new JsonResponse(['success' => false, 'message' => 'No permission to create events.'], 403);
+            return new JsonResponse(['success' => false, 'message' => $this->translate('creation.noPermission')], 403);
         }
 
         $calendars = $this->calendarSelectionService->getAvailableCalendars();
@@ -104,5 +104,10 @@ final class CalendarEventCreationController
     private function invalidEventDataResponse(): JsonResponse
     {
         return new JsonResponse(['success' => false, 'message' => 'Invalid event data.'], 400);
+    }
+
+    private function translate(string $key): string
+    {
+        return $GLOBALS['LANG']->sL('LLL:EXT:xima_typo3_calendar/Resources/Private/Language/locallang_mod_calendar.xlf:' . $key);
     }
 }

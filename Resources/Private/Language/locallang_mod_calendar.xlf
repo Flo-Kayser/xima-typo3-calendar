@@ -54,6 +54,7 @@
 			<trans-unit id="newEventType.end" resname="newEventType.end"><source>End</source></trans-unit>
 			<trans-unit id="newEventType.allDay" resname="newEventType.allDay"><source>All-day</source></trans-unit>
 			<trans-unit id="newEventType.create" resname="newEventType.create"><source>Create</source></trans-unit>
+			<trans-unit id="creation.noPermission" resname="creation.noPermission"><source>No permission to create events.</source></trans-unit>
 		</body>
 	</file>
 </xliff>

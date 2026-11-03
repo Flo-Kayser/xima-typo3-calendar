@@ -44,8 +44,10 @@ DocumentService.ready().then(async () => {
         return;
     }
 
-    const enableDragNewEvent = calendarConfig.enableDragNewEvent;
-    const enableClickNewEvent = calendarConfig.enableClickNewEvent;
+    // Every creation type writes an appointment, so without that permission click and drag would
+    // only open a dialog that can't save.
+    const enableDragNewEvent = calendarConfig.enableDragNewEvent && calendarConfig.canCreateAppointment;
+    const enableClickNewEvent = calendarConfig.enableClickNewEvent && calendarConfig.canCreateAppointment;
     const timeSlotDuration = `00:${String(calendarConfig.timeSlotMinutes).padStart(2, '0')}:00`;
     const typo3Top = window.top as unknown as Typo3TopWindow;
     const filterWindow = window.top as unknown as CalendarFilterWindow;

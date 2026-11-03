@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3Calendar\Service;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 
 /**
  * Central place for the calendar-specific backend permissions.
@@ -61,11 +63,15 @@ final class CalendarPermissionService
             return false;
         }
 
-        return $backendUser->recordEditAccessInternals(
-            $table,
-            ['pid' => $pid],
-            true,
-        );
+        // Same checks DataHandler runs before an insert. recordEditAccessInternals() alone
+        // ignores table and page permissions.
+        $page = BackendUtility::getRecord('pages', $pid);
+
+        return $page !== null
+            && $backendUser->check('tables_modify', $table)
+            && $backendUser->isInWebMount($page) !== null
+            && $backendUser->doesUserHaveAccess($page, Permission::CONTENT_EDIT)
+            && $backendUser->recordEditAccessInternals($table, ['pid' => $pid], true);
     }
 
     public function canCreateEventAndAppointmentAtPid(
