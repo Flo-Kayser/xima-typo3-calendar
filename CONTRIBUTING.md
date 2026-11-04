@@ -68,7 +68,7 @@ check, run `ddev composer ci:php:stan` or `vendor/bin/phpstan` directly.
 The backend calendar view is bundled with esbuild:
 
 ```bash
-npm install
+npm ci
 npm run build   # minified, no sourcemaps
 npm run watch   # sourcemaps, rebuild on change
 ```
@@ -83,7 +83,7 @@ popup views.
 
 **Built assets are committed.** `.gitignore` excludes `public` but re-includes
 `!Resources/Public`, so run the build and commit its output with your change. There is no
-`package-lock.json` in the repo.
+`package-lock.json` in the repo. Use `npm ci` for a clean, reproducible install.
 
 Two files in `Resources/Public/JavaScript/` are hand-written and have no TypeScript source —
 edit them directly: `recordlist-event-status-modal.js`, `usersettings-notification-categories.js`.
