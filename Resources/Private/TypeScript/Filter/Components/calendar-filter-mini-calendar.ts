@@ -32,6 +32,10 @@ const YEARS_BEFORE_CURRENT = 3;
 const YEARS_AFTER_CURRENT = 5;
 
 export class CalendarFilterMiniCalendar extends LitElement {
+  static properties = {
+    firstDay: {attribute: false},
+  };
+
   public firstDay = 'monday';
 
   private get topWindow(): Window {
