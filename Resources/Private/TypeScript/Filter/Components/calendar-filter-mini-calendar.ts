@@ -1,5 +1,8 @@
 import {html, LitElement, nothing} from 'lit';
-import {formatLocalCalendarDate} from '../Services/calendar-date-utils';
+import {
+  formatLocalCalendarDate,
+  parseCalendarDate,
+} from '../Services/calendar-date-utils';
 import {
   miniCalendarEvents,
   type MainCalendarDateDetail,
@@ -59,34 +62,8 @@ export class CalendarFilterMiniCalendar extends LitElement {
       return;
     }
 
-    const parsedDate = new Date(date);
+    const parsedDate = parseCalendarDate(date);
     if (Number.isNaN(parsedDate.getTime())) {
-      return;
-    }
-
-    if (this.pendingClickedDate !== null) {
-      if (
-        detail?.viewType !== 'timeGridWeek'
-        || !this.isSameMiniWeek(parsedDate, this.pendingClickedDate)
-      ) {
-        this.mainViewDate = this.startOfDay(parsedDate);
-        this.mainViewType = detail?.viewType ?? '';
-        this.requestUpdate();
-        return;
-      }
-    }
-
-    if (
-      this.pendingNavigationMonth !== null
-      && (
-        detail?.viewType === 'timeGridWeek'
-          ? !this.isSameMiniWeek(parsedDate, this.pendingNavigationMonth)
-          : !this.isSameMonth(parsedDate, this.pendingNavigationMonth)
-      )
-    ) {
-      this.mainViewDate = this.startOfDay(parsedDate);
-      this.mainViewType = detail?.viewType ?? '';
-      this.requestUpdate();
       return;
     }
 
@@ -328,14 +305,6 @@ export class CalendarFilterMiniCalendar extends LitElement {
       && first.getDate() === second.getDate();
   }
 
-  private isSameMonth(first: Date, second: Date): boolean {
-    return first.getFullYear() === second.getFullYear()
-      && first.getMonth() === second.getMonth();
-  }
-
-  private isSameMiniWeek(first: Date, second: Date): boolean {
-    return this.isSameDay(this.startOfMiniWeek(first), this.startOfMiniWeek(second));
-  }
 }
 
 customElements.define(

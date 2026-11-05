@@ -199,7 +199,9 @@ DocumentService.ready().then(async () => {
     );
 
     refetchEvents = () => ec.refetchEvents();
-    const miniCalendarSync = createCalendarMiniCalendarSync(ec, filterWindow);
+    const miniCalendarSync = createCalendarMiniCalendarSync(ec, filterWindow, {
+        scrollListToDate: listScrollController.scrollToDate,
+    });
     filterSync.start();
 
     const interactionController = createCalendarInteractionController(container, ec, creationController, {
