@@ -67,6 +67,9 @@
         margin-block: 0;
         margin-inline: 2px;
         transition: none;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
     }
 
     .ec-time-grid .ec-event:not(.ec-all-day) .ec-event-body {
@@ -86,6 +89,11 @@
         margin-block: 0 !important;
         margin-inline: 2px !important;
         clip-path: inset(0);
+    }
+
+    .ec-time-grid .ec-all-day .xima-calendar-event__icon {
+        order: initial;
+        align-self: center;
     }
 
     .ec-event-body .xima-calendar-event__icon {
@@ -164,6 +172,7 @@
 
     .ec-event.xima-calendar-event--outlined .ec-event-body {
         background-color: color-mix(in srgb, var(--xima-event-color) 30%, transparent) !important;
+        color: var(--typo3-component-color) !important;
         border: 2px solid light-dark(
             color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #000 30%),
             color-mix(in srgb, var(--xima-event-color, currentColor) 70%, #fff 30%)

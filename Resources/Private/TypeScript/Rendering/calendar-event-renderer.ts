@@ -141,9 +141,6 @@ export const createCalendarEventRenderer = (
         }
 
         const concurrentEventCount = getConcurrentEventCount(event, events);
-        if (concurrentEventCount >= 1) {
-            element.classList.add('xima-calendar-event--overlap-2');
-        }
         if (concurrentEventCount >= 2) {
             element.classList.add('xima-calendar-event--overlap-3');
         }

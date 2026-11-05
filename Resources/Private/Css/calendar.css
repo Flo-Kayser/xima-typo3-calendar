@@ -170,6 +170,17 @@
             transform: translateY(-2px);
         }
 
+        .ec-day-grid:not(.ec-month-view) .ec-day-head {
+            font-size: 0.7rem;
+        }
+
+        .ec-time-grid .ec-col-head {
+            font-size: 0.6rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .ec-day-grid.ec-month-view .ec-events {
             transform: translateY(6px);
         }
@@ -184,32 +195,6 @@
     }
 }
 
-@container calendar-content (max-width: 899px) {
-    #xima-calendar-mount
-    .ec-time-grid
-    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
-    .ec-event-body {
-        flex-direction: column;
-    }
-
-    #xima-calendar-mount
-    .ec-time-grid
-    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
-    .ec-event-title {
-        order: 1;
-        flex: 0 1 auto;
-        inline-size: 100%;
-    }
-
-    #xima-calendar-mount
-    .ec-time-grid
-    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
-    .xima-calendar-event__icon {
-        order: 2;
-    }
-}
-
-@container calendar-content (min-width: 900px) {
     #xima-calendar-mount
     .ec-time-grid
     .ec-event.xima-calendar-event--overlap-3:not(.ec-all-day)
@@ -232,4 +217,3 @@
     .xima-calendar-event__icon {
         order: 2;
     }
-}

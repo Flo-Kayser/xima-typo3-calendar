@@ -196,7 +196,13 @@
     }
 
     .xima-calendar-list__multi-day-event .xima-calendar-event__icon {
+        display: block;
+        flex: 0 0 auto;
         align-self: flex-start;
+        inline-size: 1em;
+        block-size: 1em;
+        margin: 0;
+        padding: 0;
     }
 
     .xima-calendar-list__multi-day--columns-6
