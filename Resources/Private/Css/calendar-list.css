@@ -181,13 +181,13 @@
         inline-size: 100%;
         min-inline-size: 0;
         padding: 0.35rem 0.5rem;
-        align-items: center;
+        align-items: flex-start;
         overflow: hidden;
     }
 
     .xima-calendar-list__multi-day-event .ec-event-title {
         flex: 1 1 0;
-        align-self: center;
+        align-self: flex-start;
         inline-size: 0;
         min-inline-size: 0;
         overflow: hidden;
@@ -198,29 +198,30 @@
     .xima-calendar-list__multi-day-event .xima-calendar-event__icon {
         display: block;
         flex: 0 0 auto;
-        align-self: center;
+        align-self: flex-start;
         inline-size: 1em;
         block-size: 1em;
         margin: 0;
         padding: 0;
     }
 
-    .xima-calendar-list__multi-day--columns-6
+    .xima-calendar-list__multi-day--columns-5
     .xima-calendar-list__multi-day-event .ec-event-body {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .xima-calendar-list__multi-day--columns-6
+    .xima-calendar-list__multi-day--columns-5
     .xima-calendar-list__multi-day-event .ec-event-title {
         order: 1;
         flex: 0 1 auto;
         inline-size: 100%;
     }
 
-    .xima-calendar-list__multi-day--columns-6
+    .xima-calendar-list__multi-day--columns-5
     .xima-calendar-list__multi-day-event .xima-calendar-event__icon {
         order: 2;
+        align-self: flex-start;
     }
 
     .xima-calendar-list__multi-day--columns-5
@@ -262,12 +263,14 @@
         }
 
         .ec-list.xima-calendar-list-main--has-sidebar
+        .xima-calendar-list__multi-day--columns-3
         .xima-calendar-list__multi-day-event .ec-event-body {
             flex-direction: column;
             align-items: flex-start;
         }
 
         .ec-list.xima-calendar-list-main--has-sidebar
+        .xima-calendar-list__multi-day--columns-3
         .xima-calendar-list__multi-day-event .ec-event-title {
             order: 1;
             flex: 0 1 auto;
@@ -275,8 +278,10 @@
         }
 
         .ec-list.xima-calendar-list-main--has-sidebar
+        .xima-calendar-list__multi-day--columns-3
         .xima-calendar-list__multi-day-event .xima-calendar-event__icon {
             order: 2;
+            align-self: flex-start;
         }
     }
 }

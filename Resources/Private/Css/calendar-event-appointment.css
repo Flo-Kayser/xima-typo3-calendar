@@ -80,6 +80,11 @@
         align-self: flex-start;
     }
 
+    .ec-time-grid .ec-event:not(.ec-all-day) .xima-calendar-event__icon {
+        order: -1;
+        align-self: flex-start;
+    }
+
     .ec-time-grid .ec-all-day .ec-event:not(.ec-preview):not(.ec-pointer):hover .ec-event-body,
     .ec-time-grid .ec-all-day .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible .ec-event-body {
         z-index: 1;

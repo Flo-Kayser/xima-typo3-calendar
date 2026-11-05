@@ -50,14 +50,11 @@ export const renderCalendarListMultiDayEvents = (
     const panel = document.createElement('aside');
     panel.className = 'xima-calendar-list__multi-day';
     const columnCount = Math.max(1, layout.columnCount);
-    if (columnCount >= 4) {
-        panel.classList.add('xima-calendar-list__multi-day--columns-4');
+    if (columnCount >= 3) {
+        panel.classList.add('xima-calendar-list__multi-day--columns-3');
     }
     if (columnCount >= 5) {
         panel.classList.add('xima-calendar-list__multi-day--columns-5');
-    }
-    if (columnCount >= 6) {
-        panel.classList.add('xima-calendar-list__multi-day--columns-6');
     }
     panel.style.insetBlockStart = `${scrollContainer.offsetTop}px`;
     panel.style.blockSize = `${scrollContainer.offsetHeight}px`;
