@@ -103,12 +103,27 @@
 }
 
 #xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-body {
+    display: flex;
+    flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
 }
 
 #xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-title {
+    order: 0;
+    flex: 1 1 auto;
+    min-inline-size: 0;
     position: static;
     inset-inline-start: auto;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .xima-calendar-event__icon {
+    order: -1;
+    position: static;
+    inset: auto;
+    align-self: center;
+    margin-inline: 0 0.35rem;
 }
 
 #xima-calendar-mount .ec-time-grid .ec-all-day .ec-events {
@@ -160,6 +175,11 @@
 
         .ec-day-grid .ec-event-time {
             display: none;
+        }
+
+        .xima-calendar-event__icon {
+            inline-size: 0.8em;
+            block-size: 0.8em;
         }
 
         .ec-day-grid.ec-month-view .ec-day-head {

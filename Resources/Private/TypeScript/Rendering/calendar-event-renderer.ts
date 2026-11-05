@@ -57,13 +57,14 @@ const getConcurrentEventCount = (
     const start = eventTime(event.start);
     const end = eventTime(event.end);
 
-    if (start === null || end === null) {
+    if (event.allDay || start === null || end === null) {
         return 0;
     }
 
     return events.filter((other) => {
         if (
             other === event
+            || other.allDay
             || (
                 other.id !== undefined
                 && event.id !== undefined

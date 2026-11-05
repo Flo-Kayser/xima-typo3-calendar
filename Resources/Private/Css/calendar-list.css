@@ -181,13 +181,13 @@
         inline-size: 100%;
         min-inline-size: 0;
         padding: 0.35rem 0.5rem;
-        align-items: flex-start;
+        align-items: center;
         overflow: hidden;
     }
 
     .xima-calendar-list__multi-day-event .ec-event-title {
         flex: 1 1 0;
-        align-self: flex-start;
+        align-self: center;
         inline-size: 0;
         min-inline-size: 0;
         overflow: hidden;
@@ -198,7 +198,7 @@
     .xima-calendar-list__multi-day-event .xima-calendar-event__icon {
         display: block;
         flex: 0 0 auto;
-        align-self: flex-start;
+        align-self: center;
         inline-size: 1em;
         block-size: 1em;
         margin: 0;
@@ -208,6 +208,7 @@
     .xima-calendar-list__multi-day--columns-6
     .xima-calendar-list__multi-day-event .ec-event-body {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .xima-calendar-list__multi-day--columns-6
@@ -263,6 +264,7 @@
         .ec-list.xima-calendar-list-main--has-sidebar
         .xima-calendar-list__multi-day-event .ec-event-body {
             flex-direction: column;
+            align-items: flex-start;
         }
 
         .ec-list.xima-calendar-list-main--has-sidebar
