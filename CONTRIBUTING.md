@@ -82,8 +82,8 @@ calendar styling code. Changes to those selectors should be checked in month, we
 popup views.
 
 **Built assets are committed.** `.gitignore` excludes `public` but re-includes
-`!Resources/Public`, so run the build and commit its output with your change. There is no
-`package-lock.json` in the repo. Use `npm ci` for a clean, reproducible install.
+`!Resources/Public`, so run the build and commit its output with your change. Use `npm ci` for a
+clean, reproducible install from `package-lock.json`.
 
 Two files in `Resources/Public/JavaScript/` are hand-written and have no TypeScript source —
 edit them directly: `recordlist-event-status-modal.js`, `usersettings-notification-categories.js`.
