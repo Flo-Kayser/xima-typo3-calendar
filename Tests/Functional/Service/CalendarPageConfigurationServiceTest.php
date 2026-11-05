@@ -38,7 +38,7 @@ final class CalendarPageConfigurationServiceTest extends AbstractCalendarFunctio
                 'defaultRecordType' => 'event',
                 'timeSlotMinutes' => 15,
                 'scrollStartTime' => '07:00:00',
-                'firstDay' => 'sunday',
+                'firstDay' => 'monday',
             ],
             $service->getNewEventConfiguration($request),
         );
