@@ -226,19 +226,20 @@ export const createCalendarEventTooltip = (
             return;
         }
 
-        tooltip = document.createElement('div');
-        tooltip.className = 'xima-calendar-event-tooltip';
-        tooltip.setAttribute('role', 'tooltip');
+        const tooltipElement = document.createElement('div');
+        tooltip = tooltipElement;
+        tooltipElement.className = 'xima-calendar-event-tooltip';
+        tooltipElement.setAttribute('role', 'tooltip');
 
         if (eventTitle) {
             const title = document.createElement('div');
             title.className = 'xima-calendar-event-tooltip__title';
             title.textContent = eventTitle;
-            tooltip.append(title);
+            tooltipElement.append(title);
         }
 
         if (dateRange) {
-            appendTimeRow(tooltip, dateRange);
+            appendTimeRow(tooltipElement, dateRange);
         }
 
         const filterConfiguration = configuration.getFilterConfiguration();
@@ -254,7 +255,7 @@ export const createCalendarEventTooltip = (
                 return;
             }
 
-            appendRow(tooltip, `${filter.title}:`, formattedValue);
+            appendRow(tooltipElement, `${filter.title}:`, formattedValue);
         });
 
         const location = getExtendedProperty(event, 'appointmentLocation');
@@ -264,16 +265,16 @@ export const createCalendarEventTooltip = (
             && location.trim() !== ''
         ) {
             appendRow(
-                tooltip,
+                tooltipElement,
                 configuration.locale.startsWith('de') ? 'Ort:' : 'Location:',
                 location,
             );
         }
 
-        document.body.append(tooltip);
+        document.body.append(tooltipElement);
 
         const eventBounds = element.getBoundingClientRect();
-        const tooltipBounds = tooltip.getBoundingClientRect();
+        const tooltipBounds = tooltipElement.getBoundingClientRect();
         const spacing = 8;
         const left = Math.min(
             Math.max(spacing, eventBounds.left),
@@ -283,8 +284,8 @@ export const createCalendarEventTooltip = (
             ? eventBounds.bottom + spacing
             : eventBounds.top - tooltipBounds.height - spacing;
 
-        tooltip.style.left = `${left}px`;
-        tooltip.style.top = `${Math.max(spacing, top)}px`;
+        tooltipElement.style.left = `${left}px`;
+        tooltipElement.style.top = `${Math.max(spacing, top)}px`;
     };
 
     const attach = (event: CalendarEventData, element: HTMLElement): void => {
