@@ -9,13 +9,13 @@
         flex: 1 1 auto;
         min-block-size: 0;
 
-        .ec-event:not(.ec-preview):not(.ec-pointer) {
+        .ec-event:not(.ec-preview):not(.ec-pointer) .ec-event-body {
             transform-origin: center;
             transition: inline-size 120ms ease, margin-inline 120ms ease, scale 120ms ease;
         }
 
-        .ec-event:not(.ec-preview):not(.ec-pointer):hover,
-        .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible {
+        .ec-event:not(.ec-preview):not(.ec-pointer):hover .ec-event-body,
+        .ec-event:not(.ec-preview):not(.ec-pointer):focus-visible .ec-event-body {
             inline-size: calc(100% - 6px);
             margin-inline: 3px;
             scale: 1 .9;
