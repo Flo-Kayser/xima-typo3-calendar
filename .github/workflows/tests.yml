@@ -24,9 +24,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
       - name: Install frontend dependencies
-        run: npm install --no-progress
+        run: npm ci
 
       - name: Run TypeScript type-check
         run: npm run typecheck
