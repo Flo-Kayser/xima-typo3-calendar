@@ -93,6 +93,10 @@
         color: var(--xima-event-text-color) !important;
     }
 
+    .ec-event.xima-calendar-event--color-coded {
+        background-color: transparent !important;
+    }
+
     .ec-event.xima-calendar-event--hatched .ec-event-body {
         opacity: 0.8;
         border: 2px solid transparent;

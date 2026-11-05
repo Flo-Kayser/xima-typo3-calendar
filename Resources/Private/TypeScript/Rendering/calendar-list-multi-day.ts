@@ -109,13 +109,6 @@ export const renderCalendarListMultiDayEvents = (
             ? eventStyles.join(';')
             : eventStyles;
 
-        if (lane.event.backgroundColor) {
-            eventElement.style.backgroundColor = lane.event.backgroundColor;
-        }
-        if (lane.event.textColor) {
-            eventElement.style.color = lane.event.textColor;
-        }
-
         const eventBody = document.createElement('div');
         eventBody.className = 'ec-event-body';
 
