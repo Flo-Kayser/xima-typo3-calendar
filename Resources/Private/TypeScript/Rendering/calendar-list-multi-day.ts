@@ -56,8 +56,11 @@ export const renderCalendarListMultiDayEvents = (
     if (columnCount >= 5) {
         panel.classList.add('xima-calendar-list__multi-day--columns-5');
     }
+    if (columnCount >= 6) {
+        panel.classList.add('xima-calendar-list__multi-day--columns-6');
+    }
     panel.style.insetBlockStart = `${scrollContainer.offsetTop}px`;
-    panel.style.blockSize = `${scrollContainer.clientHeight}px`;
+    panel.style.blockSize = `${scrollContainer.offsetHeight}px`;
     panel.style.setProperty('--xima-list-column-count', String(columnCount));
     panel.style.setProperty('--xima-list-day-count', String(layout.dayCount));
 

@@ -81,11 +81,18 @@
 #xima-calendar-mount .ec-time-grid .ec-event-body {
     box-sizing: border-box;
     min-inline-size: 0;
-    align-self: flex-start;
+    align-self: stretch;
+    inline-size: calc(100% - 2px);
+    block-size: calc(100% - 2px);
+    margin: 1px;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
     padding: 0.15rem 0.35rem;
+}
+
+#xima-calendar-mount .ec-time-grid .ec-all-day .ec-event-body {
+    block-size: auto;
 }
 
 #xima-calendar-mount .ec-time-grid .ec-event-title {
@@ -154,5 +161,75 @@
         .ec-day-grid .ec-event-time {
             display: none;
         }
+
+        .ec-day-grid.ec-month-view .ec-day-head {
+            padding-block-start: 0;
+            padding-inline-start: 0.5rem;
+            padding-inline-end: 0;
+            font-size: 0.75rem;
+            transform: translateY(-2px);
+        }
+
+        .ec-day-grid.ec-month-view .ec-events {
+            transform: translateY(6px);
+        }
+
+        .ec-day-grid.ec-month-view .ec-day-foot {
+            font-size: 0.7rem;
+        }
+
+        .ec-day-grid.ec-month-view .ec-day-foot a {
+            text-align: center;
+        }
+    }
+}
+
+@container calendar-content (max-width: 899px) {
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
+    .ec-event-body {
+        flex-direction: column;
+    }
+
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
+    .ec-event-title {
+        order: 1;
+        flex: 0 1 auto;
+        inline-size: 100%;
+    }
+
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event:is(.xima-calendar-event--overlap-2, .xima-calendar-event--overlap-3):not(.ec-all-day)
+    .xima-calendar-event__icon {
+        order: 2;
+    }
+}
+
+@container calendar-content (min-width: 900px) {
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event.xima-calendar-event--overlap-3:not(.ec-all-day)
+    .ec-event-body {
+        flex-direction: column;
+    }
+
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event.xima-calendar-event--overlap-3:not(.ec-all-day)
+    .ec-event-title {
+        order: 1;
+        flex: 0 1 auto;
+        inline-size: 100%;
+    }
+
+    #xima-calendar-mount
+    .ec-time-grid
+    .ec-event.xima-calendar-event--overlap-3:not(.ec-all-day)
+    .xima-calendar-event__icon {
+        order: 2;
     }
 }
