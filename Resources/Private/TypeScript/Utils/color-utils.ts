@@ -3,11 +3,11 @@ export type ColorOverrides = Record<string, Record<string, string>>;
 const COLOR_PALETTE_SIZE = 200;
 const GOLDEN_ANGLE = 137.508;
 const COLOR_VARIANTS = [
-    {hueOffset: 0, saturation: 76, lightness: 44},
-    {hueOffset: 37, saturation: 88, lightness: 50},
-    {hueOffset: 151, saturation: 72, lightness: 38},
-    {hueOffset: 233, saturation: 92, lightness: 56},
-    {hueOffset: 311, saturation: 78, lightness: 62},
+    {saturation: 76, lightness: 44},
+    {saturation: 88, lightness: 50},
+    {saturation: 72, lightness: 38},
+    {saturation: 92, lightness: 56},
+    {saturation: 78, lightness: 62},
 ] as const;
 
 const hashColorKey = (key: string): number => {
@@ -39,7 +39,7 @@ export const getColor = (
     const seed = hashColorKey(`${identifier}:${value}`);
     const paletteIndex = seed % COLOR_PALETTE_SIZE;
     const variant = COLOR_VARIANTS[Math.floor(paletteIndex / (COLOR_PALETTE_SIZE / COLOR_VARIANTS.length))];
-    const hue = Math.round((paletteIndex * GOLDEN_ANGLE + variant.hueOffset) % 360);
+    const hue = Math.round((paletteIndex * GOLDEN_ANGLE) % 360);
 
     return `hsl(${hue} ${variant.saturation}% ${variant.lightness}%)`;
 };
