@@ -211,7 +211,11 @@ DocumentService.ready().then(async () => {
                 renderer: eventRenderer,
                 onEventsLoaded: (events) => {
                     currentEvents = events;
-                    publishTreeEventValues(events);
+                    const hasActiveFilters = Object.values(filterSync.getActiveFilters().filters)
+                        .some((values) => values.length > 0);
+                    if (!hasActiveFilters) {
+                        publishTreeEventValues(events);
+                    }
                     listScrollController.eventsLoaded(events);
                 },
             })],
