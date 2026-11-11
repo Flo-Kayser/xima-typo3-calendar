@@ -202,12 +202,14 @@
 
         .ec-time-grid .ec-event:not(.ec-all-day) .ec-event-body {
             flex-direction: column;
+            align-items: flex-start;
         }
 
         .ec-time-grid .ec-event:not(.ec-all-day) .ec-event-title {
             order: 1;
             flex: 0 1 auto;
             inline-size: 100%;
+            align-self: flex-start;
         }
 
         .ec-time-grid .ec-event:not(.ec-all-day) .xima-calendar-event__icon {
@@ -233,6 +235,7 @@
 .ec-event.xima-calendar-event--overlap-2:not(.ec-all-day)
 .ec-event-body {
     flex-direction: column;
+    align-items: flex-start;
 }
 
 #xima-calendar-mount
