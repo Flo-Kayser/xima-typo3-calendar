@@ -1,5 +1,29 @@
 export type ColorOverrides = Record<string, Record<string, string>>;
 
+const COLOR_HUE_SLOTS = 50;
+const COLOR_VARIANTS = [
+    {saturation: 72, lightness: 45},
+    {saturation: 82, lightness: 50},
+    {saturation: 68, lightness: 40},
+    {saturation: 78, lightness: 58},
+] as const;
+
+const hashColorKey = (key: string): number => {
+    let hash = 2166136261;
+
+    for (const character of key) {
+        hash ^= character.charCodeAt(0);
+        hash = Math.imul(hash, 16777619);
+    }
+
+    hash ^= hash >>> 16;
+    hash = Math.imul(hash, 2246822507);
+    hash ^= hash >>> 13;
+    hash = Math.imul(hash, 3266489909);
+
+    return (hash ^ (hash >>> 16)) >>> 0;
+};
+
 export const getColor = (
     identifier: string,
     value: string | number,
@@ -10,12 +34,12 @@ export const getColor = (
         return override;
     }
 
-    const seed = [...`${identifier}:${value}`].reduce(
-        (hash, character) => ((hash * 31) + character.charCodeAt(0)) >>> 0,
-        0,
-    );
-    const hue = Math.round((seed * 137.508) % 360);
-    return `hsl(${hue} 68% 46%)`;
+    const seed = hashColorKey(`${identifier}:${value}`);
+    const hueSlot = seed % COLOR_HUE_SLOTS;
+    const variant = COLOR_VARIANTS[(seed >>> 8) % COLOR_VARIANTS.length];
+    const hue = Math.round((hueSlot * 360) / COLOR_HUE_SLOTS);
+
+    return `hsl(${hue} ${variant.saturation}% ${variant.lightness}%)`;
 };
 
 export const getTextColor = (
