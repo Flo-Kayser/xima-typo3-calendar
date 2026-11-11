@@ -10,7 +10,6 @@ import {
 import {getEventIcon} from './calendar-event-icons';
 
 export type CalendarEventRendererConfiguration = {
-    locale: string;
     filterColors: Record<string, Record<string, string>>;
     appearanceSource: string;
     colorSource: string;
@@ -115,9 +114,11 @@ export const createCalendarEventRenderer = (
 
             if (titleElement) {
                 const previousMarker = titleElement.dataset.ximaCanceledMarker;
-                const title = previousMarker
-                    ? (titleElement.textContent ?? '').replace(`${previousMarker} `, '')
-                    : titleElement.textContent ?? '';
+                const currentTitle = titleElement.textContent ?? '';
+                const previousPrefix = previousMarker ? `${previousMarker} ` : '';
+                const title = previousPrefix && currentTitle.startsWith(previousPrefix)
+                    ? currentTitle.slice(previousPrefix.length)
+                    : currentTitle;
 
                 titleElement.textContent = `${canceledMarker} ${title}`;
                 titleElement.dataset.ximaCanceledMarker = canceledMarker;
