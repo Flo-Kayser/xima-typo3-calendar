@@ -36,53 +36,6 @@ const isCanceledEvent = (event: CalendarEventData): boolean => {
         || canceled === '1';
 };
 
-const eventTime = (
-  value: string | Date | undefined,
-): number | null => {
-    if (!value) {
-        return null;
-    }
-
-    const timestamp = value instanceof Date
-        ? value.getTime()
-        : Date.parse(value);
-
-    return Number.isFinite(timestamp) ? timestamp : null;
-};
-
-const hasConcurrentEvent = (
-  event: CalendarEventData,
-  events: CalendarEventData[],
-): boolean => {
-    const start = eventTime(event.start);
-    const end = eventTime(event.end);
-
-    if (start === null || end === null) {
-        return false;
-    }
-
-  return events.some((other) => {
-        if (
-            other === event
-            || (
-                other.id !== undefined
-                && event.id !== undefined
-                && other.id === event.id
-            )
-        ) {
-            return false;
-        }
-
-        const otherStart = eventTime(other.start);
-        const otherEnd = eventTime(other.end);
-
-        return otherStart !== null
-            && otherEnd !== null
-            && start < otherEnd
-            && end > otherStart;
-  });
-};
-
 const getCanceledMarker = (
     configuration: CalendarFilterConfiguration,
 ): string | null => {
@@ -142,7 +95,7 @@ export const createCalendarEventRenderer = (
         ];
     },
 
-    didMount(event, element, events): void {
+    didMount(event, element): void {
         const filterConfiguration = configuration.getFilterConfiguration();
 
         const eventBody = element.querySelector<HTMLElement>(
@@ -155,15 +108,19 @@ export const createCalendarEventRenderer = (
 
         const canceledMarker = getCanceledMarker(filterConfiguration);
 
-        if (canceledMarker && isCanceledEvent(event) && hasConcurrentEvent(event, events)) {
+        if (canceledMarker && isCanceledEvent(event)) {
             const titleElement = eventBody.querySelector<HTMLElement>(
                 '.ec-event-title',
             );
 
             if (titleElement) {
-                titleElement.textContent = `${canceledMarker} ${
-                    titleElement.textContent ?? ''
-                }`;
+                const previousMarker = titleElement.dataset.ximaCanceledMarker;
+                const title = previousMarker
+                    ? (titleElement.textContent ?? '').replace(`${previousMarker} `, '')
+                    : titleElement.textContent ?? '';
+
+                titleElement.textContent = `${canceledMarker} ${title}`;
+                titleElement.dataset.ximaCanceledMarker = canceledMarker;
             }
         }
 
