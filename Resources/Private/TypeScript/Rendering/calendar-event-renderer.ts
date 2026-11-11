@@ -83,9 +83,22 @@ const hasConcurrentEvent = (
   });
 };
 
-const getCanceledMarker = (locale: string): string => (
-  locale.startsWith('de') ? '[A]' : '[C]'
-);
+const getCanceledMarker = (
+    configuration: CalendarFilterConfiguration,
+): string | null => {
+    for (const filter of Object.values(configuration)) {
+        const item = filter.items.find(item => (
+            String(item.value) === 'canceled'
+            || String(item.value) === 'cancelled'
+        ));
+
+        if (item?.marker) {
+            return item.marker;
+        }
+    }
+
+    return null;
+};
 
 export const createCalendarEventRenderer = (
     configuration: CalendarEventRendererConfiguration,
@@ -140,13 +153,15 @@ export const createCalendarEventRenderer = (
             return;
         }
 
-        if (isCanceledEvent(event) && hasConcurrentEvent(event, events)) {
+        const canceledMarker = getCanceledMarker(filterConfiguration);
+
+        if (canceledMarker && isCanceledEvent(event) && hasConcurrentEvent(event, events)) {
             const titleElement = eventBody.querySelector<HTMLElement>(
                 '.ec-event-title',
             );
 
             if (titleElement) {
-                titleElement.textContent = `${getCanceledMarker(configuration.locale)} ${
+                titleElement.textContent = `${canceledMarker} ${
                     titleElement.textContent ?? ''
                 }`;
             }
