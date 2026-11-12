@@ -224,6 +224,15 @@
         font-weight: 600;
     }
 
+    .xima-calendar-list__multi-day-grid-row--hovered {
+        background: color-mix(
+            in srgb,
+            var(--typo3-state-default-bg),
+            var(--typo3-component-color) 18%
+        );
+        color: var(--typo3-state-default-color);
+    }
+
     .xima-calendar-list__multi-day-event {
         z-index: 2;
         align-self: stretch;
